@@ -1,0 +1,31 @@
+#babelbox{
+	padding:10px;
+	background:#ccc;
+	height:25px;
+	margin:15px 0 0;
+	padding:11px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	display: inline-block;
+	
+}
+
+#babelbox a{
+	display:block;
+	float:left;
+	padding:5px 12px 4px 12px;
+	background:#779937;
+	color:white;
+	margin:0 12px 0 0;
+	text-decoration:none;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	text-shadow: 0 2px 1px #666;
+}
+
+#babelbox a.selected{
+	background:#666;
+}
+#babelbox a:hover{
+	background:#628f2c;
+}

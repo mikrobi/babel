@@ -1,0 +1,28 @@
+Changelog for Babel.
+
+
+Babel 2.0.0
+==============
+- Total reengineering of the whole extra (code structure and logic, too).
+  => NOT BACKWARD COMPATIBLE to older versions.
+- Fixed issue with primary key validation errors when linking the Babel TV to templates
+- Added build script
+- Added multilanguage support for the extra itself
+- Easier but more powerfull configuration:
+	No need to specify names/caption of context anymore (caption is derived from the contexts' cultureKey).
+	3 system settings which can be set during package installation.
+	* babel.contextKeys:
+		Define which context should be used to link translation.
+		Defining several groups of context is supported, too (see readme.txt).
+	* babel.babelTvName:
+		Name of TV in which links between translated resources are keept.
+	* babel.syncTvs:
+		IDs of TVs which should be synchronized by Babel.
+- Moved CSS into asset folder
+- Moved codebase to https://github.com/mikrobi/babel/
+- This version is NOT BACKWARD COMPATIBLE to older versions
+
+
+Babel 1.0.0
+==============
+- Initial release from Sylvain Aerni <enzyms@gmail.com> see https://github.com/enzyms/babel
