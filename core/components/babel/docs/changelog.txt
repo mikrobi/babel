@@ -1,7 +1,7 @@
 Changelog for Babel.
 
 
-Babel 2.0.0
+Babel 2.0.0beta1
 ==============
 - Total reengineering of the whole extra (code structure and logic, too).
   => NOT BACKWARD COMPATIBLE to older versions.
