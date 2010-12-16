@@ -12,7 +12,7 @@
 
 $_lang['babel.tv_caption'] = 'Babel Translation Links';
 $_lang['babel.tv_description'] = 'Maintained by Babel Plugin. Please do not change!';
-$_lang['babel.create_translation'] = 'Create translations';
+$_lang['babel.create_translations'] = 'Create translations';
 $_lang['babel.translation_pending'] = '[translations pending]';
 
 /* language names */
