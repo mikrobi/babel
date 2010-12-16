@@ -9,7 +9,7 @@ License: GNU GPLv2 (or later at your option)
 
 Babel is an Extra for MODx Revolution that creates linked resources across different contexts.
 
-The easy way for your multilingual site!
+The easy way to manage your multilingual site!
 
 It's based on ideas of Sylvain Aerni <enzyms@gmail.com>.
 
