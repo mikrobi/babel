@@ -21,6 +21,8 @@ Babel 2.0.0
 - Moved CSS into asset folder
 - Moved codebase to https://github.com/mikrobi/babel/
 - Plugin listens to OnEmptyTrash event to remove links to non-existing resources stored in the Babel TV
+- Plugin listens to OnContextRemove event to remove links to non-existing context stored in the Babel TV
+  and to clean the babel.contextKeys setting
 - This version is NOT BACKWARD COMPATIBLE to older versions
 
 

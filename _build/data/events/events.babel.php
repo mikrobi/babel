@@ -30,4 +30,11 @@ $events['OnEmptyTrash']->fromArray(array(
     'propertyset' => 0,
 ),'',true,true);
 
+$events['OnContextRemove'] = $modx->newObject('modPluginEvent');
+$events['OnContextRemove']->fromArray(array(
+    'event' => 'OnContextRemove',
+    'priority' => 0,
+    'propertyset' => 0,
+),'',true,true);
+
 return $events;

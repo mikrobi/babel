@@ -50,17 +50,7 @@ class Babel {
         $assetsUrl = $this->modx->getOption('babel.assets_url',null,$modx->getOption('assets_url').'components/babel/');
         
         $contextKeysOption = $this->modx->getOption('babel.contextKeys',$config,'');
-		$contextGroups = explode(';', $contextKeysOption);
-		$contextGroups = array_map('trim', $contextGroups);
-		/* maps a context key to it's context group */
-		$contextKeyToGroup = array();
-		foreach($contextGroups as $contextGroup) {
-			$groupContextKeys = explode(',',$contextGroup);
-			$groupContextKeys = array_map('trim', $groupContextKeys);
-			foreach($groupContextKeys as $contextKey) {
-				$contextKeyToGroup[$contextKey] = $groupContextKeys;
-			}			
-		}
+		$contextKeyToGroup = $this->decodeContextKeySetting($contextKeysOption);
 		$syncTvs = $this->modx->getOption('babel.syncTvs',$config,'');
 		$syncTvs = explode(',', $syncTvs);
 		$syncTvs = array_map('trim', $syncTvs);
@@ -175,6 +165,32 @@ class Babel {
 	}
 	
 	/**
+	 * Creates an associative array which maps context keys to there 
+	 * context groups out of an $contextKeyString
+	 * 
+	 * @param string $contextKeyString example: ctx1,ctx2;ctx3,ctx4,ctx5;ctx5,ctx6
+	 * 
+	 * @return array associative array which maps context keys to there 
+	 * context groups.
+	 */
+	public function decodeContextKeySetting($contextKeyString) {
+		$contextGroups = explode(';', $contextKeyString);
+		$contextGroups = array_map('trim', $contextGroups);
+		/* maps a context key to it's context group */
+		$contextKeyToGroup = array();
+		foreach($contextGroups as $contextGroup) {
+			$groupContextKeys = explode(',',$contextGroup);
+			$groupContextKeys = array_map('trim', $groupContextKeys);
+			foreach($groupContextKeys as $contextKey) {
+				if(!empty($contextKey)) {
+					$contextKeyToGroup[$contextKey] = $groupContextKeys;
+				}
+			}			
+		}
+		return $contextKeyToGroup;
+	}
+	
+	/**
 	 * Creates an associative array of linked resources ot of string.
 	 * 
 	 * @param string string which contains the translation links: [contextKey1]:[resourceId1];[contextKey2]:[resourceId2]
@@ -216,7 +232,7 @@ class Babel {
 	/**
 	 * Removes all translation links to the specified resource.
 	 * 
-	 * @param int $resourceId id of resource
+	 * @param int $resourceId id of resource.
 	 */
 	public function removeLanguageLinksToResource($resourceId) {
 		/* search for resource which contain a ':$resourceId' in their Babel TV */
@@ -236,6 +252,50 @@ class Babel {
 			$newValue = $this->encodeTranslationLinks($linkedResources);
 			$templateVarResource->set('value', $newValue);
 			$templateVarResource->save();
+		}
+	}
+	
+	/**
+	 * Removes all translation links to the specified context.
+	 * 
+	 * @param int $contextKey key of context.
+	 */
+	public function removeLanguageLinksToContext($contextKey) {
+		/* search for resource which contain a '$contextKey:' in their Babel TV */
+		$templateVarResources = $this->modx->getCollection('modTemplateVarResource', array(
+			'value:LIKE' => '%'.$contextKey.':%'));
+		if(!is_array($templateVarResources)) {
+			return;
+		}
+		foreach($templateVarResources as $templateVarResource) {
+			/* go through each resource and remove the link of the specified context */
+			$oldValue = $templateVarResource->get('value');
+			$linkedResources = $this->decodeTranslationLinks($oldValue);
+			/* array maps context keys to resource ids */
+			unset($linkedResources[$contextKey]);
+			$newValue = $this->encodeTranslationLinks($linkedResources);
+			$templateVarResource->set('value', $newValue);
+			$templateVarResource->save();
+		}
+		/* finaly clean the babel.contextKeys setting */
+		$setting = $this->modx->getObject('modSystemSetting',array(
+    		'key' => 'babel.contextKeys'));
+		if($setting) {
+			/* remove all spaces */
+			$newValue = str_replace(' ','',$setting->get('value'));
+			/* replace context key with leading comma */
+			$newValue = str_replace(','.$contextKey,'',$newValue);
+			/* replace context key without leading comma (if still present) */
+			$newValue = str_replace($contextKey,'',$newValue);
+			$setting->set('value', $newValue);
+			if($setting->save()) {
+				$this->modx->reloadConfig();
+				$this->modx->cacheManager->deleteTree($this->modx->getOption('core_path',null,MODX_CORE_PATH).'cache/mgr/smarty/',array(
+				   'deleteTop' => false,
+				    'skipDirs' => false,
+				    'extensions' => array('.cache.php','.php'),
+				));
+			}
 		}
 	}
 	

@@ -4,7 +4,8 @@
  * 
  * Based on ideas of Sylvain Aerni <enzyms@gmail.com>
  *
- * Events: OnDocFormPrerender,OnDocFormSave,OnEmptyTrash
+ * Events:
+ * OnDocFormPrerender,OnDocFormSave,OnEmptyTrash,OnContextRemove
  *
  * @author Jakob Class <jakob.class@class-zec.de>
  *
@@ -124,13 +125,19 @@ switch ($modx->event->name) {
 		break;
 	case 'OnEmptyTrash':
 		/* remove translation links to non-existing resources */
-		$deletedResourceIds = $modx->event->params['ids'];
-		if(!is_array($deletedResourceIds)) {
-			break;
+		$deletedResourceIds =& $modx->event->params['ids'];
+		if(is_array($deletedResourceIds)) {
+			foreach ($deletedResourceIds as $deletedResourceId) {
+				$babel->removeLanguageLinksToResource($deletedResourceId);
+			}
 		}
 		
-		foreach ($deletedResourceIds as $deletedResourceId) {
-			$babel->removeLanguageLinksToResource($deletedResourceId);
+		break;
+	case 'OnContextRemove':
+		/* remove translation links to non-existing contexts */
+		$context =& $modx->event->params['context'];
+		if($context) {
+			$babel->removeLanguageLinksToContext($context->get('key'));
 		}
 		break;
 }
