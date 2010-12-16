@@ -150,8 +150,8 @@ class Babel {
 		$newResource->set('context_key', $contextKey);
 		if($newResource->save()) {
 			/* copy all TV values */
-		    $tvs = $resource->getMany('TemplateVarResources');
-	        foreach ($tvs as $oldTemplateVarResource) {
+		    $templateVarResources = $resource->getMany('TemplateVarResources');
+	        foreach ($templateVarResources as $oldTemplateVarResource) {
 	            $newTemplateVarResource = $this->modx->newObject('modTemplateVarResource');
 	            $newTemplateVarResource->set('contentid',$newResource->get('id'));
 	            $newTemplateVarResource->set('tmplvarid',$oldTemplateVarResource->get('tmplvarid'));
@@ -175,17 +175,16 @@ class Babel {
 	}
 	
 	/**
-	 * Parses the the babel TV of the specified resource.
+	 * Creates an associative array of linked resources ot of string.
 	 * 
-	 * @param int $resourceId id of resource
+	 * @param string string which contains the translation links: [contextKey1]:[resourceId1];[contextKey2]:[resourceId2]
 	 * 
 	 * @return array associative array with linked resources: [contextKey] = resourceId
 	 */
-	public function decodeBabelTv($resourceId) {
-		$tvValue = $this->babelTv->getValue($resourceId);
+	public function decodeTranslationLinks($linkedResourcesString) {
 		$linkedResources = array();
-		if(!empty($tvValue)) {
-			$contextResourcePairs = explode(';', $tvValue);
+		if(!empty($linkedResourcesString)) {
+			$contextResourcePairs = explode(';', $linkedResourcesString);
 			foreach($contextResourcePairs as $contextResourcePair) {
 				$contextResourcePair = explode(':', $contextResourcePair);
 				$contextKey = $contextResourcePair[0];
@@ -197,13 +196,13 @@ class Babel {
 	}
 	
 	/**
-	 * Creates an string which can be stored in the babel TV out of an associative array with linked resource
+	 * Creates an string which contains the translation links out of an associative array.
 	 * 
 	 * @param array associative array with linked resources: [contextKey] = resourceId
 	 * 
-	 * return string which can be stored in the babel TV: [contextKey1]:[resourceId1];[contextKey2]:[resourceId2]
+	 * return string which contains the translation links: [contextKey1]:[resourceId1];[contextKey2]:[resourceId2]
 	 */
-	public function encodeBabelTv($linkedResources) {
+	public function encodeTranslationLinks($linkedResources) {
 		if(!is_array($linkedResources)) {
 			return;
 		}
@@ -212,6 +211,32 @@ class Babel {
 			$contextResourcePairs[] = $contextKey.':'.$resourceId;
 		}
 		return implode(';', $contextResourcePairs);
+	}
+	
+	/**
+	 * Removes all translation links to the specified resource.
+	 * 
+	 * @param int $resourceId id of resource
+	 */
+	public function removeLanguageLinksToResource($resourceId) {
+		/* search for resource which contain a ':$resourceId' in their Babel TV */
+		$templateVarResources = $this->modx->getCollection('modTemplateVarResource', array(
+			'value:LIKE' => '%:'.$resourceId.'%'));
+		if(!is_array($templateVarResources)) {
+			return;
+		}
+		foreach($templateVarResources as $templateVarResource) {
+			/* go through each resource and remove the link of the specified resource */
+			$oldValue = $templateVarResource->get('value');
+			$linkedResources = $this->decodeTranslationLinks($oldValue);
+			/* array maps context keys to resource ids
+			 * -> search for the context key of the specified resource id */
+			$contextKey = array_search($resourceId, $linkedResources);
+			unset($linkedResources[$contextKey]);
+			$newValue = $this->encodeTranslationLinks($linkedResources);
+			$templateVarResource->set('value', $newValue);
+			$templateVarResource->save();
+		}
 	}
 	
     /**

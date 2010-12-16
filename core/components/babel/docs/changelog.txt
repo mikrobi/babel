@@ -20,6 +20,7 @@ Babel 2.0.0
 		IDs of TVs which should be synchronized by Babel.
 - Moved CSS into asset folder
 - Moved codebase to https://github.com/mikrobi/babel/
+- Plugin listens to OnEmptyTrash event to remove links to non-existing resources stored in the Babel TV
 - This version is NOT BACKWARD COMPATIBLE to older versions
 
 

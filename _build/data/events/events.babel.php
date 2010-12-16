@@ -23,4 +23,11 @@ $events['OnDocFormSave']->fromArray(array(
     'propertyset' => 0,
 ),'',true,true);
 
+$events['OnEmptyTrash'] = $modx->newObject('modPluginEvent');
+$events['OnEmptyTrash']->fromArray(array(
+    'event' => 'OnEmptyTrash',
+    'priority' => 0,
+    'propertyset' => 0,
+),'',true,true);
+
 return $events;

@@ -4,7 +4,7 @@
  * 
  * Based on ideas of Sylvain Aerni <enzyms@gmail.com>
  *
- * Events: OnDocFormPrerender,OnDocFormSave,OnContextRemove
+ * Events: OnDocFormPrerender,OnDocFormSave,OnEmptyTrash
  *
  * @author Jakob Class <jakob.class@class-zec.de>
  *
@@ -28,7 +28,8 @@ switch ($modx->event->name) {
 			break;
 		}
 		$contextKeys = $babel->getGroupContextKeys($resource->get('context_key'));
-		$linkedResources = $babel->decodeBabelTv($resource->get('id'));
+		$babelTvValue = $babel->babelTv->getValue($resource->get('id'));
+		$linkedResources = $babel->decodeTranslationLinks($babelTvValue);
 		
 		switch($_GET['babel_action']) {
 			case 'translate':
@@ -58,7 +59,7 @@ switch ($modx->event->name) {
 				}
 				
 				/* update babel TV for above linked resources */
-				$linkedResourcesString = $babel->encodeBabelTv($linkedResources);
+				$linkedResourcesString = $babel->encodeTranslationLinks($linkedResources);
 				foreach($linkedResources as $resourceId){
 					$babel->babelTv->setValue($resourceId,$linkedResourcesString);
 				}
@@ -105,7 +106,8 @@ switch ($modx->event->name) {
 		if(empty($syncTvs) || !is_array($syncTvs)) break;
 		
 		$resource =& $modx->event->params['resource'];
-		$linkedResources = $babel->decodeBabelTv($resource->get('id'));
+		$babelTvValue = $babel->babelTv->getValue($resource->get('id'));
+		$linkedResources = $babel->decodeTranslationLinks($babelTvValue);
 		
 		foreach($linkedResources as $resourceId){
 			/* go through each linked resource */
@@ -119,6 +121,17 @@ switch ($modx->event->name) {
 		}
 		$modx->cacheManager->clearCache();
 		
+		break;
+	case 'OnEmptyTrash':
+		/* remove translation links to non-existing resources */
+		$deletedResourceIds = $modx->event->params['ids'];
+		if(!is_array($deletedResourceIds)) {
+			break;
+		}
+		
+		foreach ($deletedResourceIds as $deletedResourceId) {
+			$babel->removeLanguageLinksToResource($deletedResourceId);
+		}
 		break;
 }
 return;
