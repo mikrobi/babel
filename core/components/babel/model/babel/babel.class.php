@@ -61,6 +61,7 @@ class Babel {
             'chunksPath' => $corePath.'elements/chunks/',
         	'chunkSuffix' => '.chunk.tpl',
        		'cssUrl' => $assetsUrl.'css/',
+        	'jsUrl' => $assetsUrl.'js/',
         	'contextKeyToGroup' => $contextKeyToGroup,
         	'syncTvs' => $syncTvs,
         	'babelTvName' => $babelTvName,
@@ -191,9 +192,60 @@ class Babel {
 	}
 	
 	/**
-	 * Creates an associative array of linked resources ot of string.
+	 * Init/reset the Babel TV of the specified resource.
 	 * 
-	 * @param string string which contains the translation links: [contextKey1]:[resourceId1];[contextKey2]:[resourceId2]
+	 * @param modResource $resource resource object.
+	 */
+	public function initBabelTv($resource) {
+		$linkedResources = array ($resource->get('context_key') => $resource->get('id'));
+		return $this->updateBabelTv($resource->get('id'), $linkedResources, false);
+	}
+	
+	/**
+	 * Init/reset the Babel TV of a resource specified by the id of the resource.
+	 * 
+	 * @param int $resourceId id of resource (int).
+	 */
+	public function initBabelTvById($resourceId) {
+		$resource = $this->modx->getObject('modResource', $resource);
+		return $this->initBabelTv($resource);		
+	}
+	
+	/**
+	 * Updates the Babel TV of the specified resource(s).
+	 * 
+	 * @param mixed $resourceIds id of resource or array of resource ids which should be updated.
+	 * @param array $linkedResources associative array with linked resources: [contextKey] = resourceId
+	 * @param boolean $clearCache flag to empty cache after update.
+	 */
+	public function updateBabelTv($resourceIds, $linkedResources, $clearCache = true) {
+		if(!is_array($resourceIds)) {			
+			$resourceIds = array(intval($resourceIds));
+		}
+		$newValue = $this->encodeTranslationLinks($linkedResources);
+		foreach($resourceIds as $resourceId){
+			$this->babelTv->setValue($resourceId,$newValue);
+		}
+		$this->babelTv->save();
+		if($clearCache) {
+			$this->modx->cacheManager->clearCache();
+		}
+		return;
+	}
+	
+	/**
+	 * Returns an associative array of the linked resources of the specified resource.
+	 * 
+	 * @param unknown_type $resourceId id of resource.
+	 */
+	public function getLinkedResources($resourceId) {
+		return $this->decodeTranslationLinks($this->babelTv->getValue($resourceId));
+	}
+	
+	/**
+	 * Creates an associative array of linked resources out of string.
+	 * 
+	 * @param string $linkedResourcesString string which contains the translation links: [contextKey1]:[resourceId1];[contextKey2]:[resourceId2]
 	 * 
 	 * @return array associative array with linked resources: [contextKey] = resourceId
 	 */
@@ -214,7 +266,7 @@ class Babel {
 	/**
 	 * Creates an string which contains the translation links out of an associative array.
 	 * 
-	 * @param array associative array with linked resources: [contextKey] = resourceId
+	 * @param array $linkedResources associative array with linked resources: [contextKey] = resourceId
 	 * 
 	 * return string which contains the translation links: [contextKey1]:[resourceId1];[contextKey2]:[resourceId2]
 	 */
@@ -337,17 +389,14 @@ class Babel {
 	*/
     private function _getTplChunk($name,$suffix = '.chunk.tpl') {
         $chunk = false;
-        $f = $this->config['chunksPath'].strtolower($name).$suffix;
-        if (file_exists($f)) {
-            $o = file_get_contents($f);
-            $chunk = $this->modx->newObject('modChunk');
-            $chunk->set('name',$name);
-            $chunk->setContent($o);
-        }
+$f = $this->config['chunksPath'].strtolower($name).$suffix;
+if (file_exists($f)) {
+	$o = file_get_contents($f);
+	$chunk = $this->modx->newObject('modChunk');
+	$chunk->set('name',$name);
+	$chunk->setContent($o);
+}
         return $chunk;
     }
 	
 }
-
-
-

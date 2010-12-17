@@ -1,7 +1,22 @@
 Changelog for Babel.
 
+Babel 2.1.0-beta
+==============
+- Added Frech translation: Thanks to Romain <romain@meltingmedia.net>
+- New Babel-Box:
+  - A chunk is used to generate the language links (mgr/babelBoxItem).
+  - Changed CSS.
+  - Added JavaScript (for the langauge layers, see below).
+  - All languages (contexts) of current group are displayed even if there are no links defined.
+  - If there is no link to a language it's background is light gray.
+  - When mouseovering a language link a layer is displayed where you can
+	- create a translation (new resource) if no link is defined.
+  	- manually link the translation to an existing resource if no link is defined.
+  	- remove a link if a link is defined.
+  - Added validation to keep the babel TV clear
+  - Added several keys to the lexicon: French translation still pending.
 
-Babel 2.0.0beta
+Babel 2.0.0-beta
 ==============
 - Total reengineering of the whole extra (code structure and logic, too).
   => NOT BACKWARD COMPATIBLE to older versions.

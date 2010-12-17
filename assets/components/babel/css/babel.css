@@ -1,31 +1,82 @@
-#babelbox{
-	padding:10px;
+/**
+ * Babel CSS file
+ * 
+ * @author Jakob Class <jakob.class@class-zec.de>
+ *
+ * @package babel
+ */
+#babel-box{
 	background:#ccc;
-	height:25px;
 	margin:15px 0 0;
-	padding:11px;
+	padding:10px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
 	display: inline-block;
-	
 }
 
-#babelbox a{
+#babel-box a{
 	display:block;
-	float:left;
 	padding:5px 12px 4px 12px;
 	background:#779937;
 	color:white;
-	margin:0 12px 0 0;
 	text-decoration:none;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 	text-shadow: 0 2px 1px #666;
 }
 
-#babelbox a.selected{
+#babel-box div.selected a{
 	background:#666;
 }
-#babelbox a:hover{
+#babel-box div.notset a{
+	background:#999;
+	cursor:default;
+}
+#babel-box a:hover{
 	background:#628f2c;
+}
+#babel-box div.notset a:hover{
+	background:#999;
+}
+#babel-box div.babel-language {
+	position: relative;
+	float:left;
+	margin:0 12px 0 0;
+}
+#babel-box div.babel-language-layer {
+	z-index: 1000;
+	display: none;
+	position: absolute;
+	padding:11px;
+	background:#ddd;
+	border: 1px solid #ccc;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-moz-box-shadow: 2px 2px 3px #666;
+	-webkit-box-shadow: 2px 2px 3px #666;
+	box-shadow: 2px 2px 3px #666;
+	/* For IE 8 */
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=3, Direction=135, Color='#666666')";
+	/* For IE 5.5 - 7 */
+	filter: progid:DXImageTransform.Microsoft.Shadow(Strength=3, Direction=135, Color='#666666');
+}
+#babel-box input.x-form-text {
+	padding: 0 2px;
+	width: 20px;
+	font-size: 11px;
+	line-height: 18px;
+	margin-right: 5px;
+}
+#babel-box input.x-btn {
+	line-height: 14px;
+	padding: 3px;
+	margin: 2px 0;
+}
+#babel-second-row {
+	white-space: nowrap;
+}
+#babel-error{
+	padding-bottom:10px;
+	color: red;
+	font-weight: bold;
 }

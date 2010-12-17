@@ -23,8 +23,7 @@ $tpl = $modx->getOption('tpl',$scriptProperties,'babelLink');
 $activeCls = $modx->getOption('activeCls',$scriptProperties,'active');
 
 $contextKeys = $babel->getGroupContextKeys($modx->resource->get('context_key'));
-$babelTvValue = $babel->babelTv->getValue($modx->resource->get('id'));
-$linkedResources = $babel->decodeTranslationLinks($babelTvValue);
+$linkedResources = $babel->getLinkedResources($modx->resource->get('id'));
 
 $output = '';
 
