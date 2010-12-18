@@ -1,6 +1,6 @@
 <?php
 /**
- * Default properties for BabelLinks snippet
+ * Default properties for BabelTranslation snippet
  * 
  * @author Jakob Class <jakob.class@class-zec.de>
  *
@@ -10,26 +10,18 @@
 $properties = array(
     array(
         'name' => 'resourceId',
-        'desc' => 'babellinks.resourceId',
+        'desc' => 'babeltranslation.resourceId',
         'type' => 'textfield',
         'options' => '',
         'value' => '',
         'lexicon' => 'babel:properties',
     ),
 	array(
-        'name' => 'tpl',
-        'desc' => 'babellinks.tpl',
+        'name' => 'contextKey',
+        'desc' => 'babeltranslation.contextKey',
         'type' => 'textfield',
         'options' => '',
-        'value' => 'babelLink',
-        'lexicon' => 'babel:properties',
-    ),
-    array(
-        'name' => 'activeCls',
-        'desc' => 'babellinks.activeCls',
-        'type' => 'textfield',
-        'options' => '',
-        'value' => 'active',
+        'value' => '',
         'lexicon' => 'babel:properties',
     ),
 );

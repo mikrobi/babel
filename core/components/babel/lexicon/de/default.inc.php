@@ -28,11 +28,11 @@ $_lang['babel.language_ru'] = 'Russisch';
 
 /* error messages */
 $_lang['error.invalid_context_key'] = '[[+context]] ist kein gültiger Kontext-Schlüssel.';
-$_lang['error.invalid_resource_id'] = '[[+resource]] ist keine gültige Resourcen-ID.';
-$_lang['error.resource_from_other_context'] = 'Resource [[+resource]] befindet sich nicht im Kontext [[+context]].';
-$_lang['error.resource_already_linked'] = 'Resource [[+resource]] ist bereits mit anderen Resourcen verknüpft.';
+$_lang['error.invalid_resource_id'] = '[[+resource]] ist keine gültige Ressourcen-ID.';
+$_lang['error.resource_from_other_context'] = 'Ressource [[+resource]] befindet sich nicht im Kontext [[+context]].';
+$_lang['error.resource_already_linked'] = 'Ressource [[+resource]] ist bereits mit anderen Ressourcen verknüpft.';
 $_lang['error.no_link_to_context'] = 'Für den Kontext [[+context]] existiert noch keine Verknüpfung.';
-$_lang['error.unlink_of_selflink_not_possible'] = 'Die Verknüpfung einer Resource auf sich selbst kann nciht entfernt werden.';
+$_lang['error.unlink_of_selflink_not_possible'] = 'Die Verknüpfung einer Ressource auf sich selbst kann nciht entfernt werden.';
 $_lang['error.translation_in_same_context'] = 'Eine Übersetzung kann nicht im gleichen Kontext angelegt werden.';
 $_lang['error.translation_already_exists'] = 'Es existiert bereits eine Übersetzung im Kontext [[+context]].';
 $_lang['error.could_not_create_translation'] = 'Beim Erstellen der Übersetzung im Kontext [[+context]] ist ein Fehler aufgetreten.';

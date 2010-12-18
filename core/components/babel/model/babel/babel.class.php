@@ -236,7 +236,9 @@ class Babel {
 	/**
 	 * Returns an associative array of the linked resources of the specified resource.
 	 * 
-	 * @param unknown_type $resourceId id of resource.
+	 * @param int $resourceId id of resource.
+	 * 
+	 * @return array associative array with linked resources: [contextKey] = resourceId.
 	 */
 	public function getLinkedResources($resourceId) {
 		return $this->decodeTranslationLinks($this->babelTv->getValue($resourceId));
@@ -247,7 +249,7 @@ class Babel {
 	 * 
 	 * @param string $linkedResourcesString string which contains the translation links: [contextKey1]:[resourceId1];[contextKey2]:[resourceId2]
 	 * 
-	 * @return array associative array with linked resources: [contextKey] = resourceId
+	 * @return array associative array with linked resources: [contextKey] = resourceId.
 	 */
 	public function decodeTranslationLinks($linkedResourcesString) {
 		$linkedResources = array();

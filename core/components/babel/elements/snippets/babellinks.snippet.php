@@ -8,7 +8,7 @@
  *
  * @package babel
  * 
- * @param resourceId	optional: id of resource of which links should be displayed. Default: current resource
+ * @param resourceId	optional: id of resource of which links to translations should be displayed. Default: current resource
  * @param tpl			optional: Chunk to display a language link. Default: babelLink
  * @param activeCls		optional: CSS class name for the current active language. Default: active
  */
@@ -20,7 +20,10 @@ if (!($babel instanceof Babel)) return;
 if(!$babel->babelTv) return;
 
 /* get plugin properties */
-$resourceId = intval($modx->getOption('resourceId',$scriptProperties,$modx->resource->get('id')));
+$resourceId = $modx->resource->get('id');
+if(!empty($scriptProperties['resourceId'])) {
+	$resourceId = intval($modx->getOption('resourceId',$scriptProperties,$resourceId));
+}
 $tpl = $modx->getOption('tpl',$scriptProperties,'babelLink');
 $activeCls = $modx->getOption('activeCls',$scriptProperties,'active');
 
@@ -34,10 +37,9 @@ if($resourceId == $modx->resource->get('id')) {
 	$contextKeys = $babel->getGroupContextKeys($resource->get('context_key'));
 }
 
-$linkedResources = $babel->getLinkedResources(resourceId);
+$linkedResources = $babel->getLinkedResources($resourceId);
 
 $output = '';
-
 foreach($contextKeys as $contextKey) {
 	$context = $modx->getObject('modContext', $contextKey);
 	if(!$context) {
