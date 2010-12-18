@@ -123,21 +123,21 @@ class Babel {
 		}
 		/* create new resource */
 		$newResource = $this->modx->newObject($resource->get('class_key'));
-        $newResource->fromArray($resource->toArray('', true), '', false, true);
-        $newResource->set('id',0);
-        $newResource->set('pagetitle', $resource->get('pagetitle').' '.$this->modx->lexicon('babel.translation_pending'));
-        $newResource->set('parent',intval($newParentId));
-        $newResource->set('createdby',$this->modx->user->get('id'));
-        $newResource->set('createdon',time());
-        $newResource->set('editedby',0);
-        $newResource->set('editedon',0);
-        $newResource->set('deleted',false);
-        $newResource->set('deletedon',0);
-        $newResource->set('deletedby',0);
-        $newResource->set('published',false);
-        $newResource->set('publishedon',0);
-        $newResource->set('publishedby',0);
-        $newResource->set('alias', '');
+		$newResource->fromArray($resource->toArray('', true), '', false, true);
+		$newResource->set('id',0);
+		$newResource->set('pagetitle', $resource->get('pagetitle').' '.$this->modx->lexicon('babel.translation_pending'));
+		$newResource->set('parent',intval($newParentId));
+		$newResource->set('createdby',$this->modx->user->get('id'));
+		$newResource->set('createdon',time());
+		$newResource->set('editedby',0);
+		$newResource->set('editedon',0);
+		$newResource->set('deleted',false);
+		$newResource->set('deletedon',0);
+		$newResource->set('deletedby',0);
+		$newResource->set('published',false);
+		$newResource->set('publishedon',0);
+		$newResource->set('publishedby',0);
+		$newResource->set('alias', '');
 		$newResource->set('context_key', $contextKey);
 		if($newResource->save()) {
 			/* copy all TV values */
@@ -256,7 +256,7 @@ class Babel {
 			foreach($contextResourcePairs as $contextResourcePair) {
 				$contextResourcePair = explode(':', $contextResourcePair);
 				$contextKey = $contextResourcePair[0];
-				$resourceId = $contextResourcePair[1];
+				$resourceId = intval($contextResourcePair[1]);
 				$linkedResources[$contextKey] = $resourceId;
 			}
 		}
@@ -276,7 +276,7 @@ class Babel {
 		}
 		$contextResourcePairs = array();
 		foreach($linkedResources as $contextKey => $resourceId){
-			$contextResourcePairs[] = $contextKey.':'.$resourceId;
+			$contextResourcePairs[] = $contextKey.':'.intval($resourceId);
 		}
 		return implode(';', $contextResourcePairs);
 	}
