@@ -1,6 +1,6 @@
 <?php
 /**
- * BabelLink snippet to display links to translated resources
+ * BabelLinks snippet to display links to translated resources
  * 
  * Based on ideas of Sylvain Aerni <enzyms@gmail.com>
  *
@@ -8,8 +8,9 @@
  *
  * @package babel
  * 
- * @param tpl			Chunk to display a language link.
- * @param activeCls		CSS class name for the current active language.
+ * @param resourceId	optional: id of resource of which links should be displayed. Default: current resource
+ * @param tpl			optional: Chunk to display a language link. Default: babelLink
+ * @param activeCls		optional: CSS class name for the current active language. Default: active
  */
 $babel = $modx->getService('babel','Babel',$modx->getOption('babel.core_path',null,$modx->getOption('core_path').'components/babel/').'model/babel/',$scriptProperties);
 
@@ -19,11 +20,21 @@ if (!($babel instanceof Babel)) return;
 if(!$babel->babelTv) return;
 
 /* get plugin properties */
+$resourceId = intval($modx->getOption('resourceId',$scriptProperties,$modx->resource->get('id')));
 $tpl = $modx->getOption('tpl',$scriptProperties,'babelLink');
 $activeCls = $modx->getOption('activeCls',$scriptProperties,'active');
 
-$contextKeys = $babel->getGroupContextKeys($modx->resource->get('context_key'));
-$linkedResources = $babel->getLinkedResources($modx->resource->get('id'));
+if($resourceId == $modx->resource->get('id')) {
+	$contextKeys = $babel->getGroupContextKeys($modx->resource->get('context_key'));
+} else {
+	$resource = $modx->getObject('modResource', $resourceId);
+	if(!$resource) {
+		return;
+	}
+	$contextKeys = $babel->getGroupContextKeys($resource->get('context_key'));
+}
+
+$linkedResources = $babel->getLinkedResources(resourceId);
 
 $output = '';
 
