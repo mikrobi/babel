@@ -13,9 +13,9 @@
 $_lang['babel.tv_caption'] = 'Liens de traduction de Babel';
 $_lang['babel.tv_description'] = 'Mis à jour par le plugin Babel. Veuillez ne pas modifier!';
 $_lang['babel.create_translation'] = 'Créer une traduction';
-$_lang['babel.unlink_translation'] = 'Unlink translation';
-$_lang['babel.link_translation_manually'] = 'Link translation manually:';
-$_lang['babel.save'] = 'Save';
+$_lang['babel.unlink_translation'] = 'Délier la traduction';
+$_lang['babel.link_translation_manually'] = 'Lier manuellement une traduction :';
+$_lang['babel.save'] = 'Sauvegarder';
 $_lang['babel.translation_pending'] = '[traduction en attente]';
 
 /* language names */
