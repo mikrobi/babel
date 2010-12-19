@@ -51,9 +51,12 @@ class Babel {
         
         $contextKeysOption = $this->modx->getOption('babel.contextKeys',$config,'');
 		$contextKeyToGroup = $this->decodeContextKeySetting($contextKeysOption);
-		$syncTvs = $this->modx->getOption('babel.syncTvs',$config,'');
-		$syncTvs = explode(',', $syncTvs);
-		$syncTvs = array_map('trim', $syncTvs);
+		$syncTvsOption = $this->modx->getOption('babel.syncTvs',$config,'');
+		$syncTvs = array();
+		if(!empty($syncTvsOption)) {
+			$syncTvs = explode(',', $syncTvsOption);
+			$syncTvs = array_map('intval', $syncTvs);
+		}
 		$babelTvName = $this->modx->getOption('babel.babelTvName',$config,'babelLanguageLinks');
 
         $this->config = array_merge(array(
@@ -175,18 +178,19 @@ class Babel {
 	 * context groups.
 	 */
 	public function decodeContextKeySetting($contextKeyString) {
-		$contextGroups = explode(';', $contextKeyString);
-		$contextGroups = array_map('trim', $contextGroups);
-		/* maps a context key to it's context group */
 		$contextKeyToGroup = array();
-		foreach($contextGroups as $contextGroup) {
-			$groupContextKeys = explode(',',$contextGroup);
-			$groupContextKeys = array_map('trim', $groupContextKeys);
-			foreach($groupContextKeys as $contextKey) {
-				if(!empty($contextKey)) {
-					$contextKeyToGroup[$contextKey] = $groupContextKeys;
-				}
-			}			
+		if(!empty($contextKeyString)) {
+			$contextGroups = explode(';', $contextKeyString);
+			$contextGroups = array_map('trim', $contextGroups);		
+			foreach($contextGroups as $contextGroup) {
+				$groupContextKeys = explode(',',$contextGroup);
+				$groupContextKeys = array_map('trim', $groupContextKeys);
+				foreach($groupContextKeys as $contextKey) {
+					if(!empty($contextKey)) {
+						$contextKeyToGroup[$contextKey] = $groupContextKeys;
+					}
+				}			
+			}
 		}
 		return $contextKeyToGroup;
 	}
