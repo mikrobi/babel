@@ -82,7 +82,7 @@ class Babel {
 			$this->modx->log(modX::LOG_LEVEL_WARN, 'Could not load babel TV: '.$babelTvName.' will try to create it...');
 			$fields = array(
 				'name' => $babelTvName,
-				'type' => 'text',
+				'type' => 'hidden',
 				'default_text' => '',
 				'caption' => $this->modx->lexicon('babel.tv_caption'),
 				'description'=>$this->modx->lexicon('babel.tv_description'));
