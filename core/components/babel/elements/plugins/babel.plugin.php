@@ -242,8 +242,10 @@ switch ($modx->event->name) {
 				/* go through each TV which should be synchronized */
 				$tv = $modx->getObject('modTemplateVar',$tvId);
 				$tvValue = $tv->getValue($resource->get('id'));
-				$tv->setValue($resourceId, $tvValue);
-				$tv->save();
+				if($tvValue) {
+					$tv->setValue($resourceId, $tvValue);
+					$tv->save();
+				}
 			}
 		}
 		$modx->cacheManager->clearCache();
