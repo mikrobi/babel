@@ -23,3 +23,10 @@ Screenshots of the Babel Box
 
 ![unlink a translation](https://github.com/mikrobi/babel/raw/master/screenshots/babel-box-unlink.png "unlink a translation")
 
+
+Installation via the MODx Package Management
+-------------
+
+Babel is available in the MODx Package Manager at <http://modxcms.com/extras/package/?package=781>
+
+For the latest version please refer to this GitHub repository
