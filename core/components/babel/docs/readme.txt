@@ -13,11 +13,11 @@ multilingual websites within one MODx instance by using so called context groups
 
 Babel maintains links between translated resources. In the manager you can use 
 the Babel Box to easily switch between the different language versions
-of your resource. Translations can be created automatically by Babel or defined 
+of your resources. Translations can be created automatically by Babel or defined 
 manually.
 
 Additionally Babel can be used to synchronize certain template variables (TVs)
-of translated resource which should be the same in every context (language).
+of translated resources which should be the same in every context (language).
 
 Feel free to suggest ideas/improvements/bugs on GitHub:
 https://github.com/mikrobi/babel/issues
