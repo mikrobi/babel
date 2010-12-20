@@ -11,13 +11,13 @@ Babel is an Extra for MODx Revolution that helps you managing your multilingual
 websites using different contexts. Babel even supports managing several differnet
 multilingual websites within one MODx instance by using so called context groups.
 
-Bable maintains links between translated resources. In the manager you can use 
+Babel maintains links between translated resources. In the manager you can use 
 the Babel Box to easily switch between the different language versions
-of a resource. Translations can be created automatically by Babel or defined 
+of your resource. Translations can be created automatically by Babel or defined 
 manually.
 
 Additionally Babel can be used to synchronize certain template variables (TVs)
-of translated resource which should be the same in ervery context (language).
+of translated resource which should be the same in every context (language).
 
 Feel free to suggest ideas/improvements/bugs on GitHub:
 https://github.com/mikrobi/babel/issues
@@ -49,10 +49,10 @@ Installation
 		multilingual resources.
 		For advanced configuration you may define several groups of context keys 
 		by using a semicolon (;) as delimiter. This is usefull if your're 
-		administrating multiple multilingual site within one MODx instance.
+		administrating multiple multilingual sites within one MODx instance.
 		Example scenario:
 			site1: en, de, fr. Using contexts: web, site1de, site1fr
-			site2: en, de. Usinf contexts: site2en, site2de
+			site2: en, de. Using contexts: site2en, site2de
 			You would set babel.contextKeys to "web,site1de,site1fr;site2en,site2de".
 			
 	- Name of Babel TV (babel.babelTvName):
@@ -68,8 +68,8 @@ Installation
 Usage
 ====================
 
-You can now create resources. When you open a resource for editing, the Babel Box
-will be displayed on top of the resource form. There will be button like links for
+When you open a resource for editing, the Babel Box
+will be displayed on top of the resource form. There will be button-like links for
 each language (context) you have defined in the babel.contextKeys system setting.
 
 The buttons may have three different colors according to their state:
@@ -83,16 +83,17 @@ The buttons may have three different colors according to their state:
 By clicking on the (green) language buttons you can easily switch between the
 different language versions of your resources.
 
-If there are no translations defined for certain language (gray button) mousover
-the language's button: a layer will appears where you can tell Babel to create
-a translation of the current resource or you can set the translation link to an
-existing resource manually by entering the ID of the translated resource.
+If there are no translations defined for certain language (gray button),
+mousover the language's button: a layer appears where you can tell Babel to 
+create a translation of the current resource or you can set the translation link
+to an existing resource manually by entering the ID of the translated resource.
+
 When clicking on "Create Translation" Babel will create a new resource in the
-language's context and copy all the content of the current resource the newly
+language's context and copy all the content of the current resource to the newly
 created resource. You now can translated all the content and TVs and publish
 the translated resource.
 
-If you'd like to remove a translation link just mouseover the (green) language
+If you'd like to remove a translation link, just mouseover the (green) language
 button: a layer appears where you can click on "Unlink translation" button to
 remove the translation link to this language.
 
@@ -100,7 +101,7 @@ remove the translation link to this language.
 Snippet usage 
 ====================
 
-Currently there are two snippet available for Babel:
+Currently there are two snippets available for Babel:
 BabelLinks and BabelTranslation.
 
 
