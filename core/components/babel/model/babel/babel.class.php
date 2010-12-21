@@ -119,7 +119,7 @@ class Babel {
 		$newParentId = null;
 		$parentId = $resource->get('parent');
 		if ($parentId != null) {
-			$linkedParentResources = $this->parseBabelTv($parentId);
+			$linkedParentResources = $this->getLinkedResources($parentId);
 			if(isset($linkedParentResources[$contextKey])) {
 				$newParentId = $linkedParentResources[$contextKey];
 			}
