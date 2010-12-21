@@ -1,5 +1,27 @@
 <?php
 /**
+ * Babel
+ *
+ * Copyright 2010 by Jakob Class <jakob.class@class-zec.de>
+ *
+ * This file is part of Babel.
+ *
+ * Babel is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ *
+ * Babel is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * Quip; if not, write to the Free Software Foundation, Inc., 59 Temple Place,
+ * Suite 330, Boston, MA 02111-1307 USA
+ *
+ * @package babel
+ */
+/**
  * Babel Plugin to link and synchronize multilingual resources
  * 
  * Based on ideas of Sylvain Aerni <enzyms@gmail.com>
@@ -222,6 +244,10 @@ switch ($modx->event->name) {
 	
 	case 'OnDocFormSave':
 		$resource =& $modx->event->params['resource'];
+		if(!$resource) {
+			$modx->log(modX::LOG_LEVEL_ERROR, 'No resource provided for OnDocFormSave event');
+			break;
+		}
 		$linkedResources = $babel->getLinkedResources($resource->get('id'));
 		/* check if Babel TV has been set */
 		if(empty($linkedResources)) {
@@ -238,6 +264,7 @@ switch ($modx->event->name) {
 				/* don't synchronize resource with itself */
 				continue;
 			}
+			/* TODO: cache TVs in an arry */
 			foreach($syncTvs as $tvId){
 				/* go through each TV which should be synchronized */
 				$tv = $modx->getObject('modTemplateVar',$tvId);
