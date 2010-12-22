@@ -248,36 +248,9 @@ switch ($modx->event->name) {
 			$modx->log(modX::LOG_LEVEL_ERROR, 'No resource provided for OnDocFormSave event');
 			break;
 		}
-		$linkedResources = $babel->getLinkedResources($resource->get('id'));
-		/* check if Babel TV has been set */
-		if(empty($linkedResources)) {
-			$babel->initBabelTv($resource);
-		}
-		
-		/* synchronize the specified TVs of linked resources */
-		$syncTvs = $babel->config['syncTvs'];
-		if(empty($syncTvs) || !is_array($syncTvs)) break;
-		
-		foreach($linkedResources as $resourceId){
-			/* go through each linked resource */
-			if($resourceId == $resource->get('id')) {
-				/* don't synchronize resource with itself */
-				continue;
-			}
-			/* TODO: cache TVs in an arry */
-			foreach($syncTvs as $tvId){
-				/* go through each TV which should be synchronized */
-				$tv = $modx->getObject('modTemplateVar',$tvId);
-				$tvValue = $tv->getValue($resource->get('id'));
-				if($tvValue) {
-					$tv->setValue($resourceId, $tvValue);
-					$tv->save();
-				}
-			}
-		}
-		$modx->cacheManager->clearCache();
-		
+		$babel->sychronizeTvs($resource->get('id'));		
 		break;
+		
 	case 'OnEmptyTrash':
 		/* remove translation links to non-existing resources */
 		$deletedResourceIds =& $modx->event->params['ids'];
@@ -285,9 +258,9 @@ switch ($modx->event->name) {
 			foreach ($deletedResourceIds as $deletedResourceId) {
 				$babel->removeLanguageLinksToResource($deletedResourceId);
 			}
-		}
-		
+		}		
 		break;
+		
 	case 'OnContextRemove':
 		/* remove translation links to non-existing contexts */
 		$context =& $modx->event->params['context'];

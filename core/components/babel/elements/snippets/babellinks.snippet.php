@@ -63,7 +63,7 @@ $linkedResources = $babel->getLinkedResources($resourceId);
 
 $output = '';
 foreach($contextKeys as $contextKey) {
-	$context = $modx->getObject('modContext', $contextKey);
+	$context = $modx->getObject('modContext', array('key' => $contextKey));
 	if(!$context) {
 		$modx->log(modX::LOG_LEVEL_ERROR, 'Could not load context: '.$contextKey);
 		continue;

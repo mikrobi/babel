@@ -117,6 +117,49 @@ class Babel {
 		}
 	}
 	
+
+	/**
+	 * Synchronizes the TVs of the specified resource with its translated resources.
+	 * 
+	 * @param int $resourceId id of resource.
+	 */
+	public function sychronizeTvs($resourceId) {
+		$linkedResources = $this->getLinkedResources($resourceId);
+		/* check if Babel TV has been initiated for the specified resource */
+		if(empty($linkedResources)) {
+			$this->initBabelTvById($resourceId);
+		}
+		
+		/* synchronize the TVs of linked resources */
+		$syncTvs = $this->config['syncTvs'];
+		if(empty($syncTvs) || !is_array($syncTvs)) {
+			/* there are no TVs to synchronize */
+			return;
+		}
+		
+		foreach($syncTvs as $tvId){
+			/* go through each TV which should be synchronized */
+			$tv = $this->modx->getObject('modTemplateVar',$tvId);
+			if(!$tv) {
+				continue;
+			}
+			$tvValue = $tv->getValue($resourceId);
+			if($tvValue) {
+				foreach($linkedResources as $linkedResourceId){
+					/* go through each linked resource */
+					if($resourceId == $linkedResourceId) {
+						/* don't synchronize resource with itself */
+						continue;
+					}
+					$tv->setValue($linkedResourceId, $tvValue);
+				}				
+				$tv->save();
+			}
+		}
+
+		$this->modx->cacheManager->clearCache();
+	}
+	
 	/**
 	 * Returns an array with the context keys of the specified context's group.
 	 * 
