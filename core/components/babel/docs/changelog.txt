@@ -2,7 +2,8 @@ Changelog for Babel.
 
 Babel 2.2.0-pl
 ==============
-- Improved performance for TV synchronization.
+- Fixed bug in validation which is performed on setting a link manually.
+- Improved performance of TV synchronization.
 - Regarding issue #10: Added checks to handle invalid Babel settings (defined by the user).
 
 Babel 2.1.1-pl1

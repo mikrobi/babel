@@ -91,7 +91,7 @@ switch ($modx->event->name) {
 						throw new Exception('error.resource_from_other_context');
 					}
 					$targetLinkedResources = $babel->getLinkedResources($targetResource->get('id'));
-					if(!empty($targetLinkedResources)) {
+					if(count($targetLinkedResources) > 1) {
 						/* error: target resource is already linked with other resources */
 						$errorParameter = array('resource' => $targetResource->get('id'));
 						throw new Exception('error.resource_already_linked');
