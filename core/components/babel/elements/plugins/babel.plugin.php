@@ -248,6 +248,11 @@ switch ($modx->event->name) {
 			$modx->log(modX::LOG_LEVEL_ERROR, 'No resource provided for OnDocFormSave event');
 			break;
 		}
+		if($modx->event->params['mode'] == modSystemEvent::MODE_NEW) {
+			/* no TV synchronization for new resources, just init Babel TV */
+			$babel->initBabelTv($resource);
+			break;
+		}
 		$babel->sychronizeTvs($resource->get('id'));		
 		break;
 		

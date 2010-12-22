@@ -127,7 +127,7 @@ class Babel {
 		$linkedResources = $this->getLinkedResources($resourceId);
 		/* check if Babel TV has been initiated for the specified resource */
 		if(empty($linkedResources)) {
-			$this->initBabelTvById($resourceId);
+			$linkedResources = $this->initBabelTvById($resourceId);
 		}
 		
 		/* synchronize the TVs of linked resources */
@@ -264,10 +264,13 @@ class Babel {
 	 * Init/reset the Babel TV of the specified resource.
 	 * 
 	 * @param modResource $resource resource object.
+	 * 
+	 * @return  array associative array with linked resources (array contains only the resource itself).
 	 */
 	public function initBabelTv($resource) {
 		$linkedResources = array ($resource->get('context_key') => $resource->get('id'));
-		return $this->updateBabelTv($resource->get('id'), $linkedResources, false);
+		$this->updateBabelTv($resource->get('id'), $linkedResources, false);
+		return $linkedResources;
 	}
 	
 	/**
