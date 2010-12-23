@@ -38,7 +38,7 @@ if (!($babel instanceof Babel)) return;
 /* be sure babel TV is loaded */
 if(!$babel->babelTv) return;
 
-/* get plugin properties */
+/* get snippet properties */
 $resourceId = $modx->resource->get('id');
 if(!empty($scriptProperties['resourceId'])) {
 	$resourceId = intval($modx->getOption('resourceId',$scriptProperties,$resourceId));

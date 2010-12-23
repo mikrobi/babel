@@ -1,5 +1,9 @@
 Changelog for Babel.
 
+Babel [next]
+==============
+- Alias is duplicated when creating an translation, too.
+
 Babel 2.2.0-pl
 ==============
 - Fixed bug which occured when creating new resources.

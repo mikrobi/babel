@@ -205,7 +205,6 @@ class Babel {
 		$newResource->set('published',false);
 		$newResource->set('publishedon',0);
 		$newResource->set('publishedby',0);
-		$newResource->set('alias', '');
 		$newResource->set('context_key', $contextKey);
 		if($newResource->save()) {
 			/* copy all TV values */
@@ -463,13 +462,13 @@ class Babel {
 	*/
     private function _getTplChunk($name,$suffix = '.chunk.tpl') {
         $chunk = false;
-$f = $this->config['chunksPath'].strtolower($name).$suffix;
-if (file_exists($f)) {
-	$o = file_get_contents($f);
-	$chunk = $this->modx->newObject('modChunk');
-	$chunk->set('name',$name);
-	$chunk->setContent($o);
-}
+		$f = $this->config['chunksPath'].strtolower($name).$suffix;
+		if (file_exists($f)) {
+			$o = file_get_contents($f);
+			$chunk = $this->modx->newObject('modChunk');
+			$chunk->set('name',$name);
+			$chunk->setContent($o);
+		}
         return $chunk;
     }
 	
