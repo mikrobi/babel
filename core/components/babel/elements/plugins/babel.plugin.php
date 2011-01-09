@@ -60,6 +60,9 @@ switch ($modx->event->name) {
 			$babel->initBabelTv($resource);
 		}
 		
+		/* grab manager actions IDs */
+		$actions = $modx->request->getAllActionIDs();
+		
 		if(isset($_POST['babel-context-key'])) {
 			/* one of the following babel actions has been performed: link, unlink or translate */
 			try {
@@ -159,7 +162,9 @@ switch ($modx->event->name) {
 						$errorParameter = array('context' => $contextKey);
 						throw new Exception('error.could_not_create_translation');
 					}
-					
+					/* redirect to new resource */
+					$url = $modx->getOption('manager_url',null,MODX_MANAGER_URL).'?a='.$actions['resource/update'].'&amp;id='.$newResource->get('id');
+					$modx->sendRedirect(rtrim($url,'/'),'','','full');
 				}
 			} catch (Exception $exception) {
 				$errorKey = $exception->getMessage();
@@ -175,8 +180,6 @@ switch ($modx->event->name) {
 		
 		/* create babel-box with links to translations */
 		$linkedResources = $babel->getLinkedResources($resource->get('id'));
-		/* grab actions */
-		$actions = $modx->request->getAllActionIDs();
 		$outputLanguageItems = '';
 		foreach($contextKeys as $contextKey) {
 			/* for each (valid/existing) context of the context group a button will be displayed */

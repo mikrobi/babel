@@ -2,6 +2,7 @@ Changelog for Babel.
 
 Babel 2.2.1-rc1
 ==============
+- Added feature #11: User is redirect to new resource after creating a translation.
 - Fixed issue #15: Babel TV of duplicated resources is being initiated.
 - Alias is duplicated when creating an translation, too.
 
