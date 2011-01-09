@@ -36,9 +36,9 @@ Installation
 ====================
 
 0.	Create a context for each language and set the cultureKey and site_url settings
-	according to your needs. You may refer to this tutorial to setup your
+	according to your needs. You may refer to our tutorial to setup your
 	multilingual site(s):
-	http://churn.butter.com.hk/posts/2010/08/internationalization-in-modx-revolution.html).
+	http://en.class-zec.de/blog/2011/multilingual-websites-with-modx-and-babel.html
 	
 	Be sure that your context switches work well.
 
