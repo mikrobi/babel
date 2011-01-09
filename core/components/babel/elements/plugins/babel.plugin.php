@@ -27,7 +27,7 @@
  * Based on ideas of Sylvain Aerni <enzyms@gmail.com>
  *
  * Events:
- * OnDocFormPrerender,OnDocFormSave,OnEmptyTrash,OnContextRemove
+ * OnDocFormPrerender,OnDocFormSave,OnEmptyTrash,OnContextRemove,OnResourceDuplicate
  *
  * @author Jakob Class <jakob.class@class-zec.de>
  *
@@ -272,6 +272,12 @@ switch ($modx->event->name) {
 		if($context) {
 			$babel->removeLanguageLinksToContext($context->get('key'));
 		}
+		break;
+	
+	case 'OnResourceDuplicate':
+		/* init Babel TV of duplicated resources */
+		$resource =& $modx->event->params['newResource'];
+		$babel->initBabelTv($resource);
 		break;
 }
 return;

@@ -59,4 +59,11 @@ $events['OnContextRemove']->fromArray(array(
     'propertyset' => 0,
 ),'',true,true);
 
+$events['OnResourceDuplicate'] = $modx->newObject('modPluginEvent');
+$events['OnResourceDuplicate']->fromArray(array(
+    'event' => 'OnResourceDuplicate',
+    'priority' => 0,
+    'propertyset' => 0,
+),'',true,true);
+
 return $events;
