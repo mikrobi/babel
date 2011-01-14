@@ -80,3 +80,9 @@
 	color: red;
 	font-weight: bold;
 }
+#babel-box hr {
+	margin: 8px 0;
+}
+#babel-box strong {
+	font-weight: bold;
+}

@@ -105,6 +105,12 @@ switch ($modx->event->name) {
 						 * -> reset Babel TV of old resource */
 						$babel->initBabelTvById($linkedResources[$contextKey]);
 					}
+					
+					/* copy values of synchronized TVs to target resource */
+					if(isset($_POST['babel-link-copy-tvs']) && intval($_POST['babel-link-copy-tvs']) == 1) {
+						$babel->sychronizeTvs($resource->get('id'));
+					}
+					
 					$linkedResources[$contextKey] = $targetResource->get('id');
 					$babel->updateBabelTv($linkedResources, $linkedResources);
 				}
@@ -241,7 +247,7 @@ switch ($modx->event->name) {
 		$modx->event->output($output);
 		
 		/* include CSS */
-		$modx->regClientCSS($babel->config['cssUrl'].'babel.css?v=4');
+		$modx->regClientCSS($babel->config['cssUrl'].'babel.css?v=5');
 		$modx->regClientStartupScript($babel->config['jsUrl'].'babel.js?v=3');
 		break;
 	
@@ -256,7 +262,7 @@ switch ($modx->event->name) {
 			$babel->initBabelTv($resource);
 			break;
 		}
-		$babel->sychronizeTvs($resource->get('id'));		
+		$babel->sychronizeTvs($resource->get('id'));
 		break;
 		
 	case 'OnEmptyTrash':

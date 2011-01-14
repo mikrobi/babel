@@ -13,10 +13,20 @@
 					`]]
 				</div>
 				[[+showSecondRow:notempty=`
+					<hr />
 					<div id="babel-second-row">
 						<div>[[%babel.link_translation_manually]]</div>
-						<input type="text" name="babel-link-target" class="x-form-text" value="[[+resourceId]]" />
-						<input type="submit" name="babel-link" value="[[%babel.save]]" class="x-btn button" />
+						<div>
+							<label>[[%babel.id_of_target]]</label>
+							<input type="text" name="babel-link-target" class="x-form-text" value="[[+resourceId]]" />
+						</div>
+						<div>
+							<input type="checkbox" name="babel-link-copy-tvs" value="1" checked="checked" id="babel-link-copy-tvs-[[+contextKey]]" />
+							<label for="babel-link-copy-tvs-[[+contextKey]]">[[%babel.copy_tv_values]]</label>
+						</div>
+						<div>
+							<input type="submit" name="babel-link" value="[[%babel.save]]" class="x-btn button" />
+						</div>
 					</div>
 				`]]
 			</form>

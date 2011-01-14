@@ -36,7 +36,9 @@ $_lang['babel.tv_caption'] = 'Babel-Übersetzungslinks';
 $_lang['babel.tv_description'] = 'Wird über das Babel-Plugin verwaltet. Bitte nicht ändern';
 $_lang['babel.create_translation'] = 'Übersetzung anlegen';
 $_lang['babel.unlink_translation'] = 'Verknüpfung aufheben';
-$_lang['babel.link_translation_manually'] = 'Übersetzung manuell verknüpfen:';
+$_lang['babel.link_translation_manually'] = 'oder <strong>Übersetzung manuell verknüpfen</strong>:';
+$_lang['babel.id_of_target'] = 'Ziel-ID:';
+$_lang['babel.copy_tv_values'] = 'Synchronisierte TVs zum Ziel kopieren';
 $_lang['babel.save'] = 'Speichern';
 $_lang['babel.translation_pending'] = '[Übersetzung ausstehend]';
 

@@ -2,6 +2,7 @@ Changelog for Babel.
 
 Babel
 ==============
+- Added feature #16: Values of synchronized TVs of the source resource(s) can be copied to the target resource when setting a translation link manually.
 - Added showUnpublished parameter to BabelLinks and BabelTranslation snippets.
 
 Babel 2.2.1-rc1

@@ -36,7 +36,9 @@ $_lang['babel.tv_caption'] = 'Babel Translation Links';
 $_lang['babel.tv_description'] = 'Maintained by Babel plugin. Please do not change!';
 $_lang['babel.create_translation'] = 'Create translation';
 $_lang['babel.unlink_translation'] = 'Unlink translation';
-$_lang['babel.link_translation_manually'] = 'Link translation manually:';
+$_lang['babel.link_translation_manually'] = 'or <strong>link translation manually</strong>:';
+$_lang['babel.id_of_target'] = 'ID of target:';
+$_lang['babel.copy_tv_values'] = 'Copy synchronized TVs to target';
 $_lang['babel.save'] = 'Save';
 $_lang['babel.translation_pending'] = '[translations pending]';
 
