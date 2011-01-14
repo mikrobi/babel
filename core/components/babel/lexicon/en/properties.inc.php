@@ -34,7 +34,9 @@
 $_lang['babellinks.tpl'] = 'Chunk to display a language link';
 $_lang['babellinks.activeCls'] = 'CSS class for the active language link';
 $_lang['babellinks.resourceId'] = 'Id of resource of which links to translations should be displayed';
+$_lang['babellinks.showUnpublished'] = 'Flag whether to show unpublished translations';
 
 /* BabelTranslation snippet */
 $_lang['babeltranslation.resourceId'] = 'ID of resource of which a translated resource should be determined';
 $_lang['babeltranslation.contextKey'] = 'Key of context in which translated resource should be determined';
+$_lang['babeltranslation.showUnpublished'] = 'Flag whether to show unpublished translations';

@@ -46,6 +46,14 @@ $properties = array(
         'value' => '',
         'lexicon' => 'babel:properties',
     ),
+    array(
+        'name' => 'showUnpublished',
+        'desc' => 'babeltranslation.showUnpublished',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '0',
+        'lexicon' => 'babel:properties',
+    ),
 );
 
 return $properties;

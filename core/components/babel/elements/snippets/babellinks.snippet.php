@@ -30,9 +30,10 @@
  *
  * @package babel
  * 
- * @param resourceId	optional: id of resource of which links to translations should be displayed. Default: current resource
- * @param tpl			optional: Chunk to display a language link. Default: babelLink
- * @param activeCls		optional: CSS class name for the current active language. Default: active
+ * @param resourceId		optional: id of resource of which links to translations should be displayed. Default: current resource
+ * @param tpl				optional: Chunk to display a language link. Default: babelLink
+ * @param activeCls			optional: CSS class name for the current active language. Default: active
+ * @param showUnpublished	optional: flag whether to show unpublished translations. Default: 0
  */
 $babel = $modx->getService('babel','Babel',$modx->getOption('babel.core_path',null,$modx->getOption('core_path').'components/babel/').'model/babel/',$scriptProperties);
 
@@ -48,6 +49,7 @@ if(!empty($scriptProperties['resourceId'])) {
 }
 $tpl = $modx->getOption('tpl',$scriptProperties,'babelLink');
 $activeCls = $modx->getOption('activeCls',$scriptProperties,'active');
+$showUnpublished = $modx->getOption('showUnpublished',$scriptProperties,0);
 
 if($resourceId == $modx->resource->get('id')) {
 	$contextKeys = $babel->getGroupContextKeys($modx->resource->get('context_key'));
@@ -73,7 +75,7 @@ foreach($contextKeys as $contextKey) {
 	$translationAvailable = false;
 	if(isset($linkedResources[$contextKey])) {
 		$resource = $modx->getObject('modResource',$linkedResources[$contextKey]);
-		if($resource && $resource->get('published') == 1) {
+		if($resource && ($showUnpublished || $resource->get('published') == 1)) {
 			$translationAvailable = true;
 		}
 	}
