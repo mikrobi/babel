@@ -1,5 +1,9 @@
 Changelog for Babel.
 
+Babel 
+==============
+- Fixed bug: Initial synchronization of TV values when setting a link manually didn't work.
+
 Babel 2.2.2-rc1
 ==============
 - Added feature #16: Values of synchronized TVs of the source resource(s) can be copied to the target resource when setting a translation link manually.
