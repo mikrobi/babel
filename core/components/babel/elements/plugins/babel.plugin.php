@@ -106,13 +106,13 @@ switch ($modx->event->name) {
 						$babel->initBabelTvById($linkedResources[$contextKey]);
 					}
 					
+					$linkedResources[$contextKey] = $targetResource->get('id');
+					$babel->updateBabelTv($linkedResources, $linkedResources);
+					
 					/* copy values of synchronized TVs to target resource */
 					if(isset($_POST['babel-link-copy-tvs']) && intval($_POST['babel-link-copy-tvs']) == 1) {
 						$babel->sychronizeTvs($resource->get('id'));
 					}
-					
-					$linkedResources[$contextKey] = $targetResource->get('id');
-					$babel->updateBabelTv($linkedResources, $linkedResources);
 				}
 				
 				/* remove an existing translation link */
