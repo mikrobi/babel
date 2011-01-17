@@ -1,6 +1,6 @@
 Changelog for Babel.
 
-Babel 
+Babel 2.2.2-rc2
 ==============
 - Fixed bug: Initial synchronization of TV values when setting a link manually didn't work.
 

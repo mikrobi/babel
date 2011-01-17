@@ -1,7 +1,7 @@
 --------------------
 Babel
 --------------------
-Version: 2.2.2-rc1
+Version: 2.2.2-rc2
 Author: Jakob Class <jakob.class@class-zec.de>
 		
 License: GNU GPLv2 (or later at your option)
