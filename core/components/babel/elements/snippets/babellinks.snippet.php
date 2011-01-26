@@ -88,7 +88,8 @@ foreach($contextKeys as $contextKey) {
 	$placeholders = array(
 		'cultureKey' => $cultureKey,
 		'url' => $url,
-		'active' => $active);
+		'active' => $active,
+		'id' => $translationAvailable? $linkedResources[$contextKey] : '');
 	$output .= $babel->getChunk($tpl,$placeholders);
 }
   

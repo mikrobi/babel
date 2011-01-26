@@ -124,6 +124,9 @@ The following parameters are supported by BabelLinks:
 - activeCls (optional):
 	CSS class name for the current active language.
 	Default: active.
+- showUnpublished (optional):
+	Flag whether to show unpublished translations.
+	Default: 0
 
 You can use your own chunk to display the links
 
@@ -141,6 +144,9 @@ In this Chunk you have access to the following placeholders:
 	If link points to a resource of the current active language (context)
 	this placeholder is set to the active CSS class name specified by the
 	&activeCls parameter (default=active). Otherwise this placeholder is empty.
+- [[+id]]:
+	ID of tranlated resource. If no translation is available this placeholder
+	is empty ('').
 
 
 BabelTranslation
@@ -154,6 +160,9 @@ The following parameters are supported by BabelLinks:
 	Default: current resource's ID.
 - contextKey (required):
 	Key of context in which translated resource should be determined.
+- showUnpublished (optional):
+	Flag whether to show unpublished translations.
+	Default: 0
 	
 Example usage:
 
