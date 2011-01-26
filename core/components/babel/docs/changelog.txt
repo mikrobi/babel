@@ -1,6 +1,6 @@
 Changelog for Babel.
 
-Babel
+Babel 2.2.3-rc1
 ==============
 - Issue #18: Added 'id' placeholder for BabelLink chunk which is used by the BabelLinks snippet.
 - Fixed issue #21: Manager redirect causes error in Google Chrome browser.
