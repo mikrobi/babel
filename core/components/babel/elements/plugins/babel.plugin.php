@@ -169,7 +169,7 @@ switch ($modx->event->name) {
 						throw new Exception('error.could_not_create_translation');
 					}
 					/* redirect to new resource */
-					$url = $modx->getOption('manager_url',null,MODX_MANAGER_URL).'?a='.$actions['resource/update'].'&amp;id='.$newResource->get('id');
+					$url = $modx->getOption('manager_url',null,MODX_MANAGER_URL).'?a='.$actions['resource/update'].'&id='.$newResource->get('id');
 					$modx->sendRedirect(rtrim($url,'/'),'','','full');
 				}
 			} catch (Exception $exception) {

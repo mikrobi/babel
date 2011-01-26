@@ -1,5 +1,9 @@
 Changelog for Babel.
 
+Babel
+==============
+- Fixed issue #21: Manager redirect causes error in Google Chrome browser.
+
 Babel 2.2.2-rc2
 ==============
 - Fixed bug: Initial synchronization of TV values when setting a link manually didn't work.
