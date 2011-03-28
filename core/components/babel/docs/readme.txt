@@ -127,6 +127,9 @@ The following parameters are supported by BabelLinks:
 - showUnpublished (optional):
 	Flag whether to show unpublished translations.
 	Default: 0
+- showCurrent (optional):
+	Flag whether to show a link to a translation of the current language.
+	Default: 1
 
 You can use your own chunk to display the links
 

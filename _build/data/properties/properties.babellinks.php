@@ -62,6 +62,14 @@ $properties = array(
         'value' => '0',
         'lexicon' => 'babel:properties',
     ),
+    array(
+        'name' => 'showCurrent',
+        'desc' => 'babellinks.showCurrent',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '1',
+        'lexicon' => 'babel:properties',
+    ),
 );
 
 return $properties;

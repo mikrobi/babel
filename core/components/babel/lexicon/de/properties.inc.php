@@ -34,7 +34,8 @@
 $_lang['babellinks.tpl'] = 'Chunk zur Darstellung eines Sprach-Links';
 $_lang['babellinks.activeCls'] = 'CSS-Klasse für den Sprach-Link der aktiven Sprache';
 $_lang['babellinks.resourceId'] = 'Id der Ressource, von der die Links zu Übersetzungen dargestellt werden sollen';
-$_lang['babellinks.showUnpublished'] = 'Flag das betsimmt, ob unveröffentliche Übersetzungen angezeigt werden sollen';
+$_lang['babellinks.showUnpublished'] = 'Flag das bestimmt, ob unveröffentliche Übersetzungen angezeigt werden sollen';
+$_lang['babellinks.showCurrent'] = 'Flag das bestimmt, ob ein Link zu einer Übersetzung der aktuellen Sprache angezeigt werden soll';
 
 /* BabelTranslation snippet */
 $_lang['babeltranslation.resourceId'] = 'ID der Ressource, von der eine Übersetzung ermittelt werden soll';

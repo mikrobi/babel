@@ -34,9 +34,7 @@
  * @param tpl				optional: Chunk to display a language link. Default: babelLink
  * @param activeCls			optional: CSS class name for the current active language. Default: active
  * @param showUnpublished	optional: flag whether to show unpublished translations. Default: 0
- * @param showUntranslated	optional: flag whether to show links to homepage of inactive language(s) if current page is not translated in that language. Default: 1 //***mod
- * @param showCurrent		optional: include current page in outputted links. Default: 1 //***mod
- * @param urlScheme			optional: flag whether to show unpublished translations. Default: full //***mod
+ * @param showCurrent		optional: flag whether to show a link to a translation of the current language. Default: 1
  */
 $babel = $modx->getService('babel','Babel',$modx->getOption('babel.core_path',null,$modx->getOption('core_path').'components/babel/').'model/babel/',$scriptProperties);
 
@@ -53,9 +51,7 @@ if(!empty($scriptProperties['resourceId'])) {
 $tpl = $modx->getOption('tpl',$scriptProperties,'babelLink');
 $activeCls = $modx->getOption('activeCls',$scriptProperties,'active');
 $showUnpublished = $modx->getOption('showUnpublished',$scriptProperties,0);
-$showUntranslated = $modx->getOption('showUntranslated',$scriptProperties,0);//***mod
-$showCurrent = $modx->getOption('showCurrent',$scriptProperties,1);//***mod
-$urlScheme = $modx->getOption('urlScheme',$scriptProperties,'full');//***mod
+$showCurrent = $modx->getOption('showCurrent',$scriptProperties,1);
 
 if($resourceId == $modx->resource->get('id')) {
 	$contextKeys = $babel->getGroupContextKeys($modx->resource->get('context_key'));
@@ -71,41 +67,35 @@ $linkedResources = $babel->getLinkedResources($resourceId);
 
 $output = '';
 foreach($contextKeys as $contextKey) {
-	$continue = true;//***mod
-	if(!$showCurrent && $contextKey !== $modx->resource->get('context_key')) {//***mod - Check to see if user has chosen not to show current page and if this is the current context page
-		$continue = false;//***mod
-	}//***mod
-	if($continue) { //***mod - Option to only include links to other translated pages. I may not need to include a link to the page I am currently on.
-		$context = $modx->getObject('modContext', array('key' => $contextKey));
-		if(!$context) {
-			$modx->log(modX::LOG_LEVEL_ERROR, 'Could not load context: '.$contextKey);
-			continue;
+	if(!$showCurrent && $contextKey == $modx->resource->get('context_key')) {
+		continue;
+	}
+	$context = $modx->getObject('modContext', array('key' => $contextKey));
+	if(!$context) {
+		$modx->log(modX::LOG_LEVEL_ERROR, 'Could not load context: '.$contextKey);
+		continue;
+	}
+	$context->prepare();
+	$cultureKey = $context->getOption('cultureKey',$modx->getOption('cultureKey'));
+	$translationAvailable = false;
+	if(isset($linkedResources[$contextKey])) {
+		$resource = $modx->getObject('modResource',$linkedResources[$contextKey]);
+		if($resource && ($showUnpublished || $resource->get('published') == 1)) {
+			$translationAvailable = true;
 		}
-		$context->prepare();
-		$cultureKey = $context->getOption('cultureKey',$modx->getOption('cultureKey'));
-		$translationAvailable = false;
-		if(isset($linkedResources[$contextKey])) {
-			$resource = $modx->getObject('modResource',$linkedResources[$contextKey]);
-			if($resource && ($showUnpublished || $resource->get('published') == 1)) {
-				$translationAvailable = true;
-			}
-		}
-		if($translationAvailable || $showUntranslated) {//***mod - Give user the option to display/not display link to homepage if translation is not available
-			if($translationAvailable) {//***mod
-				$url = $context->makeUrl($linkedResources[$contextKey],'',$urlScheme);//***mod - Give user more control over generated links url scheme
-			} else {//***mod - Give user the option to display/not display link to alternate homepage if translation is not available
-				$url = $context->getOption('site_url', $modx->getOption('site_url'));//***mod
-			}//***mod
-	
-			$active = ($modx->resource->get('context_key') == $contextKey) ? $activeCls : '';
-			$placeholders = array(
-				'cultureKey' => $cultureKey,
-				'url' => $url,
-				'active' => $active,
-				'id' => $translationAvailable? $linkedResources[$contextKey] : '');
-			$output .= $babel->getChunk($tpl,$placeholders);
-		}//***mod
-	}//***mod
+	}
+	if($translationAvailable) {
+		$url = $context->makeUrl($linkedResources[$contextKey],'','full');
+	} else {
+		$url = $context->getOption('site_url', $modx->getOption('site_url'));
+	}
+	$active = ($modx->resource->get('context_key') == $contextKey) ? $activeCls : '';
+	$placeholders = array(
+		'cultureKey' => $cultureKey,
+		'url' => $url,
+		'active' => $active,
+		'id' => $translationAvailable? $linkedResources[$contextKey] : '');
+	$output .= $babel->getChunk($tpl,$placeholders);
 }
   
 return $output;

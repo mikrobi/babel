@@ -3,6 +3,7 @@ Changelog for Babel.
 Babel 2.2.4-pl
 ==============
 - Fixed issue #25: Unchecked "checkbox" TVs are now synchronized correctly.
+- Issue #22: Added showCurrent parameter to BabelLinks snippet.
 
 Babel 2.2.3-rc1
 ==============
