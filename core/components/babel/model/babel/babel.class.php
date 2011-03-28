@@ -144,17 +144,15 @@ class Babel {
 				continue;
 			}
 			$tvValue = $tv->getValue($resourceId);
-			if($tvValue) {
-				foreach($linkedResources as $linkedResourceId){
-					/* go through each linked resource */
-					if($resourceId == $linkedResourceId) {
-						/* don't synchronize resource with itself */
-						continue;
-					}
-					$tv->setValue($linkedResourceId, $tvValue);
-				}				
-				$tv->save();
-			}
+			foreach($linkedResources as $linkedResourceId){
+				/* go through each linked resource */
+				if($resourceId == $linkedResourceId) {
+					/* don't synchronize resource with itself */
+					continue;
+				}
+				$tv->setValue($linkedResourceId, $tvValue);
+			}				
+			$tv->save();
 		}
 
 		$this->modx->cacheManager->clearCache();

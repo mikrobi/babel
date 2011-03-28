@@ -1,5 +1,9 @@
 Changelog for Babel.
 
+Babel 2.2.4-pl
+==============
+- Fixed issue #25: Unchecked "checkbox" TVs are now synchronized correctly.
+
 Babel 2.2.3-rc1
 ==============
 - Issue #18: Added 'id' placeholder for BabelLink chunk which is used by the BabelLinks snippet.

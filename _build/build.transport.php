@@ -38,8 +38,8 @@ set_time_limit(0);
 /* define package */
 define('PKG_NAME','Babel');
 define('PKG_NAME_LOWER',strtolower(PKG_NAME));
-define('PKG_VERSION','2.2.3');
-define('PKG_RELEASE','rc1');
+define('PKG_VERSION','2.2.4');
+define('PKG_RELEASE','pl');
 
 /* define sources */
 $root = dirname(dirname(__FILE__)).'/';
