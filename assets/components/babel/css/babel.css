@@ -6,14 +6,17 @@
  * @package babel
  */
 #babel-box{
-	background:#ccc;
-	margin:15px 0 0;
-	padding:10px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
-	display: inline-block;
+    background: rgba(224, 224, 224, 0.75);
+    margin:15px 0 0;
+    padding:10px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    /*display: inline-block; */
+    position: fixed;
+    top: 124px;
+    right: 20px;
+    z-index: 12;
 }
-
 #babel-box a{
 	display:block;
 	padding:5px 12px 4px 12px;
