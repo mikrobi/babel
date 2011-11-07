@@ -50,6 +50,8 @@
 	z-index: 1000;
 	display: none;
 	position: absolute;
+	top: 24px;
+	right: 0;
 	padding:11px;
 	background:#ddd;
 	border: 1px solid #ccc;
