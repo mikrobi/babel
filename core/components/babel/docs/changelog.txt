@@ -1,5 +1,10 @@
 Changelog for Babel.
 
+Babel 2.2.5-pl
+==============
+- Extended list of languages in translation files and added Romanian translation.
+- Issue #31: Maked babel buttons in manager position fixed and changed look accordingly.
+
 Babel 2.2.4-pl
 ==============
 - Fixed issue #25: Unchecked "checkbox" TVs are now synchronized correctly.

@@ -247,7 +247,7 @@ switch ($modx->event->name) {
 		$modx->event->output($output);
 		
 		/* include CSS */
-		$modx->regClientCSS($babel->config['cssUrl'].'babel.css?v=5');
+		$modx->regClientCSS($babel->config['cssUrl'].'babel.css?v=6');
 		$modx->regClientStartupScript($babel->config['jsUrl'].'babel.js?v=3');
 		break;
 	
