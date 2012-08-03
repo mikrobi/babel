@@ -62,11 +62,12 @@ if($resourceId == $modx->resource->get('id')) {
 	}
 	$contextKeys = $babel->getGroupContextKeys($resource->get('context_key'));
 }
+$totalCtxs = count($contextKeys);
 
 $linkedResources = $babel->getLinkedResources($resourceId);
 
 $output = '';
-foreach($contextKeys as $contextKey) {
+foreach($contextKeys as $index => $contextKey) {
 	if(!$showCurrent && $contextKey == $modx->resource->get('context_key')) {
 		continue;
 	}
@@ -91,6 +92,8 @@ foreach($contextKeys as $contextKey) {
 	}
 	$active = ($modx->resource->get('context_key') == $contextKey) ? $activeCls : '';
 	$placeholders = array(
+		'idx' => ($index + 1),
+        	'total' => $totalCtxs,
 		'cultureKey' => $cultureKey,
 		'url' => $url,
 		'active' => $active,
