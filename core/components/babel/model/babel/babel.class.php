@@ -276,7 +276,7 @@ class Babel {
 	 * @param int $resourceId id of resource (int).
 	 */
 	public function initBabelTvById($resourceId) {
-		$resource = $this->modx->getObject('modResource', $resource);
+		$resource = $this->modx->getObject('modResource', $resourceId);
 		return $this->initBabelTv($resource);		
 	}
 	
