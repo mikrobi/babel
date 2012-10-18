@@ -54,6 +54,10 @@ switch ($modx->event->name) {
 		}
 		$contextKeys = $babel->getGroupContextKeys($resource->get('context_key'));
 		$currentContextKey = $resource->get('context_key');
+        if(!in_array($currentContextKey, $contextKeys)) {
+            // we are not editing a resource within a context defined in Babel
+            break;
+        }
 		$linkedResources = $babel->getLinkedResources($resource->get('id'));
 		if(empty($linkedResources)) {
 			/* always be sure that the Babel TV is set */
