@@ -154,8 +154,10 @@ class Babel {
 			}				
 			$tv->save();
 		}
-
-		$this->modx->cacheManager->clearCache();
+		//Check if clearCache is set, and clear cache if is.
+		if($clearCache) {
+			$this->modx->cacheManager->clearCache();
+		}
 	}
 	
 	/**
