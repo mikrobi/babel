@@ -52,6 +52,7 @@ $tpl = $modx->getOption('tpl',$scriptProperties,'babelLink');
 $activeCls = $modx->getOption('activeCls',$scriptProperties,'active');
 $showUnpublished = $modx->getOption('showUnpublished',$scriptProperties,0);
 $showCurrent = $modx->getOption('showCurrent',$scriptProperties,1);
+$outputSeparator = $modx->getOption('outputSeparator',$scriptProperties,"\n");
 
 if($resourceId == $modx->resource->get('id')) {
 	$contextKeys = $babel->getGroupContextKeys($modx->resource->get('context_key'));
@@ -65,7 +66,7 @@ if($resourceId == $modx->resource->get('id')) {
 
 $linkedResources = $babel->getLinkedResources($resourceId);
 
-$output = '';
+$output = array();
 foreach($contextKeys as $contextKey) {
 	if(!$showCurrent && $contextKey == $modx->resource->get('context_key')) {
 		continue;
@@ -95,7 +96,8 @@ foreach($contextKeys as $contextKey) {
 		'url' => $url,
 		'active' => $active,
 		'id' => $translationAvailable? $linkedResources[$contextKey] : '');
-	$output .= $babel->getChunk($tpl,$placeholders);
+	$chunk = $babel->getChunk($tpl,$placeholders);
+	if($chunk !== '') $output[] = $chunk;
 }
   
-return $output;
+return implode($outputSeparator, $output);
