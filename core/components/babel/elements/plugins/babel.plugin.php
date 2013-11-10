@@ -291,7 +291,7 @@ switch ($modx->event->name) {
 		    if ( $id && $depth > 0) {
 		      
 		      	$q = $modx->newQuery('modResource');
-		      	$q->select(array('id'));
+		        $q->select(array('id'));
 			$q->where(array('parent' => $id ));
 		      	$children = $modx->getCollection('modResource', $q );
 		      
