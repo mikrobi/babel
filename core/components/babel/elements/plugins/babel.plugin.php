@@ -292,7 +292,7 @@ switch ($modx->event->name) {
 		      
 		      	$q = $modx->newQuery('modResource');
 		        $q->select(array('id'));
-			$q->where(array('parent' => $id ));
+                        $q->where(array('parent' => $id ));
 		      	$children = $modx->getCollection('modResource', $q );
 		      
 			foreach ($children as $child) {
