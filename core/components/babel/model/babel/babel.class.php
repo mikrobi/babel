@@ -154,8 +154,10 @@ class Babel {
 			}				
 			$tv->save();
 		}
-
-		$this->modx->cacheManager->clearCache();
+		
+		if($clearCache) {
+			$this->modx->cacheManager->refresh();
+		}
 	}
 	
 	/**
@@ -297,7 +299,7 @@ class Babel {
 		}
 		$this->babelTv->save();
 		if($clearCache) {
-			$this->modx->cacheManager->clearCache();
+			$this->modx->cacheManager->refresh();
 		}
 		return;
 	}
