@@ -47,6 +47,14 @@ $properties = array(
         'lexicon' => 'babel:properties',
     ),
     array(
+        'name' => 'cultureKey',
+        'desc' => 'babeltranslation.cultureKey',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '',
+        'lexicon' => 'babel:properties',
+    ),
+    array(
         'name' => 'showUnpublished',
         'desc' => 'babeltranslation.showUnpublished',
         'type' => 'textfield',
