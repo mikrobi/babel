@@ -64,6 +64,7 @@ switch ($modx->event->name) {
 		$actions = $modx->request->getAllActionIDs();
 		
 		if(isset($_POST['babel-context-key'])) {
+			if (!$modx->hasPermission('save')) {die($modx->lexicon('permission_denied'));}
 			/* one of the following babel actions has been performed: link, unlink or translate */
 			try {
 				$contextKey = $_POST['babel-context-key'];
@@ -252,6 +253,7 @@ switch ($modx->event->name) {
 		break;
 	
 	case 'OnDocFormSave':
+  		if (!$modx->hasPermission('save')) {return $modx->error->failure($modx->lexicon('permission_denied'));}
 		$resource =& $modx->event->params['resource'];
 		if(!$resource) {
 			$modx->log(modX::LOG_LEVEL_ERROR, 'No resource provided for OnDocFormSave event');
@@ -284,6 +286,7 @@ switch ($modx->event->name) {
 		break;
 	
 	case 'OnResourceDuplicate':
+  		if (!$modx->hasPermission('save')) {return $modx->error->failure($modx->lexicon('permission_denied'));}
 		/* init Babel TV of duplicated resources */
 		$resource =& $modx->event->params['newResource'];
   
