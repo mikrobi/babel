@@ -287,18 +287,24 @@ switch ($modx->event->name) {
 		/* init Babel TV of duplicated resources */
 		$resource =& $modx->event->params['newResource'];
   
-		function initBabelTvsRecursive(&$modx, &$babel, $resource = null, $depth= 100) {
-		    if ( $resource && $depth > 0) {
-			$children = $resource->getMany('Children');
+		function initBabelTvsRecursive(&$modx, &$babel, $id = null, $depth= 100) {
+		    if ( $id && $depth > 0) {
+		      
+		      	$q = $modx->newQuery('modResource');
+		        $q->select(array('id'));
+                        $q->where(array('parent' => $id ));
+		      	$children = $modx->getCollection('modResource', $q );
+		      
 			foreach ($children as $child) {
 			    $processDepth = $depth - 1;
-			    initBabelTvsRecursive($modx, $babel, $child,$processDepth);
+			    initBabelTvsRecursive($modx, $babel, $child->get('id'), $processDepth);
 			}
-			$babel->initBabelTv($resource);
+			$babel->initBabelTvById($id);
+//$modx->log(1, 'ResourceCHildren :'. $id);
 		    }
 		}
   
-  		initBabelTvsRecursive($modx,$babel,$resource); 
+  		initBabelTvsRecursive($modx,$babel,$resource->get('id'));  
 		break;
 }
 return;
