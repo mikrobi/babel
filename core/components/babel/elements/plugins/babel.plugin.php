@@ -131,7 +131,7 @@ switch ($modx->event->name) {
 			$babel->initBabelTv($resource);
 			break;
 		}
-		$babel->sychronizeTvs($resource->get('id'));
+		$babel->synchronizeTvs($resource->get('id'));
 		break;
 		
 	case 'OnEmptyTrash':

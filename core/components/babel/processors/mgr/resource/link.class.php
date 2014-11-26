@@ -111,7 +111,7 @@ class BabelLinkResourceProcessor extends modObjectGetProcessor {
 
         /* copy values of synchronized TVs to target resource */
         if(isset($props['copy-tv-values']) && intval($props['copy-tv-values']) == 1) {
-            $this->modx->babel->sychronizeTvs($this->object->get('id'));
+            $this->modx->babel->synchronizeTvs($this->object->get('id'));
         }
         
         return $this->cleanup();

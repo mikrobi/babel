@@ -134,7 +134,7 @@ class Babel {
 	 * 
 	 * @param int $resourceId id of resource.
 	 */
-	public function sychronizeTvs($resourceId) {
+	public function synchronizeTvs($resourceId) {
 		$linkedResources = $this->getLinkedResources($resourceId);
 		/* check if Babel TV has been initiated for the specified resource */
 		if(empty($linkedResources)) {
