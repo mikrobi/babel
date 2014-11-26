@@ -27,11 +27,15 @@
  * Based on ideas of Sylvain Aerni <enzyms@gmail.com>
  * 
  * @author Jakob Class <jakob.class@class-zec.de>
- *
+ *         goldsky <goldsky@virtudraft.com>
+ * 
  * @package babel
  */
 class Babel {
 	
+    const VERSION = '3.0.0';
+    const RELEASE = 'dev';
+
     /**
      * @access protected
      * @var array A collection of preprocessed chunk values.
@@ -54,6 +58,8 @@ class Babel {
      * 		Example: web:1;de:4;es:7;fr:10
      */
     public $babelTv = null;
+    
+    protected $contextKeyToGroup;
 
     /**
      * The Babel Constructor.
@@ -72,7 +78,7 @@ class Babel {
         $assetsUrl = $this->modx->getOption('babel.assets_url',null,$modx->getOption('assets_url').'components/babel/');
         
         $contextKeysOption = $this->modx->getOption('babel.contextKeys',$config,'');
-		$contextKeyToGroup = $this->decodeContextKeySetting($contextKeysOption);
+		$this->contextKeyToGroup = $this->decodeContextKeySetting($contextKeysOption);
 		$syncTvsOption = $this->modx->getOption('babel.syncTvs',$config,'');
 		$syncTvs = array();
 		if(!empty($syncTvsOption)) {
@@ -82,23 +88,28 @@ class Babel {
 		$babelTvName = $this->modx->getOption('babel.babelTvName',$config,'babelLanguageLinks');
 
         $this->config = array_merge(array(
+            'version' => self::VERSION . '-' . self::RELEASE,
+            'basePath' => $corePath,
             'corePath' => $corePath,
+            'modelPath' => $corePath . 'model/',
+            'processorsPath' => $corePath . 'processors/',
             'chunksPath' => $corePath.'elements/chunks/',
         	'chunkSuffix' => '.chunk.tpl',
+            'templatesPath' => $corePath . 'templates/',
        		'cssUrl' => $assetsUrl.'css/',
         	'jsUrl' => $assetsUrl.'js/',
-        	'contextKeyToGroup' => $contextKeyToGroup,
         	'syncTvs' => $syncTvs,
         	'babelTvName' => $babelTvName,
+        	'connector_url' => $assetsUrl . 'conn/mgr.php',
         ),$config);
 
         /* load babel lexicon */
-        if ($this->modx->lexicon) {
-            $this->modx->lexicon->load('babel:default');
+        if (!$this->modx->lexicon) {
+            $this->modx->getService('lexicon','modLexicon');
         }
+        $this->modx->lexicon->load('babel:default');
 	
         /* load babel TV */
-        
 		$this->babelTv = $modx->getObject('modTemplateVar',array('name' => $babelTvName));
 		if(!$this->babelTv) {
 			$this->modx->log(modX::LOG_LEVEL_WARN, 'Could not load babel TV: '.$babelTvName.' will try to create it...');
@@ -165,8 +176,8 @@ class Babel {
 	 */
 	public function getGroupContextKeys($contextKey) {
 		$contextKeys = array();
-		if(isset($this->config['contextKeyToGroup'][$contextKey]) && is_array($this->config['contextKeyToGroup'][$contextKey])) {
-			$contextKeys = $this->config['contextKeyToGroup'][$contextKey];
+		if(isset($this->contextKeyToGroup[$contextKey]) && is_array($this->contextKeyToGroup[$contextKey])) {
+			$contextKeys = $this->contextKeyToGroup[$contextKey];
 		}
 		return $contextKeys;
 	}
@@ -270,6 +281,29 @@ class Babel {
 		return $linkedResources;
 	}
 	
+    /**
+     * Run \Babel\initBabelTv recursively
+     * 
+     * @author https://github.com/manu37
+     * 
+     * @param object $modx
+     * @param object $babel
+     * @param object $resource
+     * @param int $depth
+     * 
+     * @return void
+     */
+    public function initBabelTvsRecursive(&$modx, &$babel, $resource = null, $depth = 100) {
+        if ($resource && $depth > 0) {
+            $children = $resource->getMany('Children');
+            foreach ($children as $child) {
+                $processDepth = $depth - 1;
+                $this->initBabelTvsRecursive($modx, $babel, $child, $processDepth);
+            }
+            $this->initBabelTv($resource);
+        }
+    }
+    
 	/**
 	 * Init/reset the Babel TV of a resource specified by the id of the resource.
 	 * 
@@ -279,8 +313,8 @@ class Babel {
 		$resource = $this->modx->getObject('modResource', $resourceId);
 		return $this->initBabelTv($resource);		
 	}
-	
-	/**
+
+    /**
 	 * Updates the Babel TV of the specified resource(s).
 	 * 
 	 * @param mixed $resourceIds id of resource or array of resource ids which should be updated.

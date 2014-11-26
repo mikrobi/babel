@@ -2,7 +2,7 @@
  * Babel
  *
  * Copyright 2010 by Jakob Class <jakob.class@class-zec.de>
- *
+ * 
  * This file is part of Babel.
  *
  * Babel is free software; you can redistribute it and/or modify it under the
@@ -21,17 +21,13 @@
  * @package babel
  */
 /**
- * Babel JavaScript file for the babel-box in the manager.
+ * Babel JavaScript file for the menu in the manager.
  * 
- * @author Jakob Class <jakob.class@class-zec.de>
+ * @author goldsky <goldsky@virtudraft.com>
  *
  * @package babel
  */
-Ext.onReady(function() {
-	Ext.select('div.babel-language:has(.babel-language-layer)').on('mouseenter', function(){
-		Ext.get(this).child('.babel-language-layer').show();
-	})
-	.on('mouseleave', function(){
-		Ext.get(this).child('.babel-language-layer').hide();
-	});
+
+Ext.onReady(function () {
+    Babel.getMenu(Babel.config.menu);
 });

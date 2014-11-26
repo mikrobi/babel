@@ -1,5 +1,13 @@
 Changelog for Babel.
 
+Babel 3.0.0-dev
+==============
+- [#27][#90][#92] Refactor language selection, runs using AJAX
+- [#83][#59] extend babel plugin OnResourceDuplicate for nested resources
+- [#67] italian translation
+- [#60] Added Dutch translation
+- [#58][#64] Fixed the error with updating a resource, at least in the quick update window
+
 Babel 2.2.5-pl
 ==============
 - Extended list of languages in translation files and added Romanian translation.
