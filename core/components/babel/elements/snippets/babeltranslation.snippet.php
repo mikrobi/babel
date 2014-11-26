@@ -35,11 +35,16 @@
  */
 $babel = $modx->getService('babel','Babel',$modx->getOption('babel.core_path',null,$modx->getOption('core_path').'components/babel/').'model/babel/',$scriptProperties);
 
-if (!($babel instanceof Babel)) return;
+/* be sure babel and babel TV is loaded */
+if (!($babel instanceof Babel) || !$babel->babelTv) return;
 
-/* be sure babel TV is loaded */
-if(!$babel->babelTv) return;
-
+/* get snippet properties */
+$resourceId = intval($modx->getOption('resourceId',$scriptProperties));
+if(empty($resourceId) && !empty($modx->resource) && is_object($modx->resource)) {
+	$resourceId = $modx->resource->get('id');
+} else {
+	return;
+}
 /* get snippet properties */
 $resourceId = $modx->resource->get('id');
 if(!empty($scriptProperties['resourceId'])) {
