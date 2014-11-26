@@ -77,7 +77,10 @@ foreach($contextKeys as $contextKey) {
 		continue;
 	}
 	$context->prepare();
-	$cultureKey = $context->getOption('cultureKey',$modx->getOption('cultureKey'));
+    if (!$context->getOption('site_status', null, true)) {
+        continue;
+    }
+    $cultureKey = $context->getOption('cultureKey',$modx->getOption('cultureKey'));
 	$translationAvailable = false;
 	if(isset($linkedResources[$contextKey])) {
 		$resource = $modx->getObject('modResource',$linkedResources[$contextKey]);

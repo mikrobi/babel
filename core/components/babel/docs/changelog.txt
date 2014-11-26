@@ -2,6 +2,7 @@ Changelog for Babel.
 
 Babel 3.0.0-dev
 ==============
+- [#88] Skip unpublished contexts
 - [#82] Check for resourceId parameter before defaulting.
 - [#78][#62] added outputSeparator for BabelLinks
 - [#75] Replaced deprecated method clearCache() with refresh()
