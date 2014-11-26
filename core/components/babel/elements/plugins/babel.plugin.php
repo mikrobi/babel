@@ -155,7 +155,7 @@ switch ($modx->event->name) {
 	case 'OnResourceDuplicate':
 		/* init Babel TV of duplicated resources */
 		$resource =& $modx->event->params['newResource'];
-        $babel->initBabelTvsRecursive($modx,$babel,$resource); 
+        $babel->initBabelTvsRecursive($modx,$babel,$resource->get('id')); 
 		break;
 }
 return;

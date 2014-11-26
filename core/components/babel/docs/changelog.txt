@@ -2,6 +2,7 @@ Changelog for Babel.
 
 Babel 3.0.0-dev
 ==============
+- [#84] optimize OnResourceDuplicate
 - [#44][#29] Using cultureKey instead of contextKey on BabelTranslation snippet
 - [#70] fix is_folder to isfolder
 - [#27][#90][#92] Refactor language selection, runs using AJAX

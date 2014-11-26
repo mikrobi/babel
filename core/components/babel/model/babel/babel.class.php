@@ -288,23 +288,26 @@ class Babel {
      * 
      * @param object $modx
      * @param object $babel
-     * @param object $resource
+     * @param int $id
      * @param int $depth
      * 
      * @return void
      */
-    public function initBabelTvsRecursive(&$modx, &$babel, $resource = null, $depth = 100) {
-        if ($resource && $depth > 0) {
-            $children = $resource->getMany('Children');
+    public function initBabelTvsRecursive(&$modx, &$babel, $id = null, $depth = 100) {
+        if ($id && $depth > 0) {
+            $q = $modx->newQuery('modResource');
+            $q->select(array('id'));
+            $q->where(array('parent' => $id));
+            $children = $modx->getCollection('modResource', $q);
             foreach ($children as $child) {
                 $processDepth = $depth - 1;
-                $this->initBabelTvsRecursive($modx, $babel, $child, $processDepth);
+                $this->initBabelTvsRecursive($modx, $babel, $child->get('id'), $processDepth);
             }
-            $this->initBabelTv($resource);
+            $this->initBabelTvById($id);
         }
     }
-    
-	/**
+
+    /**
 	 * Init/reset the Babel TV of a resource specified by the id of the resource.
 	 * 
 	 * @param int $resourceId id of resource (int).
