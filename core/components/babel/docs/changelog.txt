@@ -2,6 +2,7 @@ Changelog for Babel.
 
 Babel 3.0.0-dev
 ==============
+- [#70] fix is_folder to isfolder
 - [#27][#90][#92] Refactor language selection, runs using AJAX
 - [#83][#59] extend babel plugin OnResourceDuplicate for nested resources
 - [#67] italian translation

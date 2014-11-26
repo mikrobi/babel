@@ -230,7 +230,7 @@ class Babel {
 			if($newParentId) {							
 				$newParent = $this->modx->getObject('modResource', $newParentId);
 				if($newParent) {
-					$newParent->set('is_folder', 1);
+					$newParent->set('isfolder', 1);
 					$newParent->save();
 				}
 			}
