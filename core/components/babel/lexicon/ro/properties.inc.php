@@ -40,4 +40,5 @@ $_lang['babellinks.showCurrent'] = 'Afișează o legătură către limba curent�
 /* BabelTranslation snippet */
 $_lang['babeltranslation.resourceId'] = 'IDul resursei de tradus';
 $_lang['babeltranslation.contextKey'] = 'Cheia de context a resursei de tradus';
+$_lang['babeltranslation.cultureKey'] = 'Key of culture in which translated resource should be determined. Used only in case contextKey was not specified.  If both omitted: uses currently set cultureKey.';
 $_lang['babeltranslation.showUnpublished'] = 'Afișează traducerile nepublicate';

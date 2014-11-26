@@ -29,7 +29,8 @@
  * @package babel
  * 
  * @param resourceId		optional: id of resource of which a translated resource should be determined. Default: current resource
- * @param contextKey		Key of context in which translated resource should be determined.
+ * @param contextKey		optional: Key of context in which translated resource should be determined.
+ * @param cultureKey		optional: Key of culture in which translated resource should be determined. Used only in case contextKey was not specified.  If both omitted: uses currently set cultureKey.
  * @param showUnpublished	optional: flag whether to show unpublished translations. Default: 0
  */
 $babel = $modx->getService('babel','Babel',$modx->getOption('babel.core_path',null,$modx->getOption('core_path').'components/babel/').'model/babel/',$scriptProperties);
@@ -45,6 +46,10 @@ if(!empty($scriptProperties['resourceId'])) {
 	$resourceId = intval($modx->getOption('resourceId',$scriptProperties,$resourceId));
 }
 $contextKey = $modx->getOption('contextKey',$scriptProperties,'');
+if (empty($contextKey)) {
+	$cultureKey = $modx->getOption('cultureKey',$scriptProperties,'');
+	$contextKey = $babel->getContextKey($cultureKey);
+}
 $showUnpublished = $modx->getOption('showUnpublished',$scriptProperties,0);
 
 /* determine id of tranlated resource */

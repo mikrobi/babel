@@ -40,4 +40,5 @@ $_lang['babellinks.showCurrent'] = 'Flag das bestimmt, ob ein Link zu einer Übe
 /* BabelTranslation snippet */
 $_lang['babeltranslation.resourceId'] = 'ID der Ressource, von der eine Übersetzung ermittelt werden soll';
 $_lang['babeltranslation.contextKey'] = 'Schlüssel des Kontexts, in dem eine Übersetzung ermittelt werden soll';
+$_lang['babeltranslation.cultureKey'] = 'Key of culture in which translated resource should be determined. Used only in case contextKey was not specified.  If both omitted: uses currently set cultureKey.';
 $_lang['babeltranslation.showUnpublished'] = 'Flag das betsimmt, ob unveröffentliche Übersetzungen angezeigt werden sollen';

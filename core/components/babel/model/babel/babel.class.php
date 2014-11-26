@@ -456,6 +456,21 @@ class Babel {
 		}
 	}
 	
+	/**
+     * Gets the contextKey by cultureKey
+     * 
+     * @param string $cultureKey the culture key
+     * @return string context key
+     */
+    public function getContextKey($cultureKey) {
+		/* Search for Context Setting */
+		$ctxSetting = $this->modx->getObject("modContextSetting", array(
+			"key" => "cultureKey",
+			"value" => $cultureKey
+		));
+		return (($ctxSetting)? $ctxSetting->get("context_key") : false);
+	}
+    
     /**
 	* Gets a Chunk and caches it; also falls back to file-based templates
 	* for easier debugging.
