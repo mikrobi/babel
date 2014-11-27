@@ -38,7 +38,7 @@ Installation
 0.	Create a context for each language and set the cultureKey and site_url settings
 	according to your needs. You may refer to our tutorial to setup your
 	multilingual site(s):
-	http://www.class-zec.com/en/blog/2011/multilingual-websites-with-modx-and-babel.html
+	http://www.multilingual-modx.com/blog/2011/multilingual-websites-with-modx-and-babel.html
 	
 	Be sure that your context switches work well.
 
@@ -129,7 +129,10 @@ The following parameters are supported by BabelLinks:
 	Default: 0
 - showCurrent (optional):
 	Flag whether to show a link to a translation of the current language.
-	Default: 1
+	Default: 0
+- includeUnlinked (optional):
+	Flag whether to show unlinked context.
+	Default: 0
 
 You can use your own chunk to display the links
 
