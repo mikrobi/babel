@@ -53,24 +53,19 @@ switch ($modx->event->name) {
 			 * -> skip rendering the babel box */
 			break;
 		}
-		$contextKeys = $babel->getGroupContextKeys($resource->get('context_key'));
-		$currentContextKey = $resource->get('context_key');
 		$linkedResources = $babel->getLinkedResources($resource->get('id'));
 		if(empty($linkedResources)) {
 			/* always be sure that the Babel TV is set */
 			$babel->initBabelTv($resource);
 		}
 
-		/* grab manager actions IDs */
-		$actions = $modx->request->getAllActionIDs();
-		
 		/* create babel-box with links to translations */
 		$outputLanguageItems = '';
         if (!$modx->lexicon) {
             $modx->getService('lexicon','modLexicon');
         }
         $languagesStore = array();
-        $menu = array();
+		$contextKeys = $babel->getGroupContextKeys($resource->get('context_key'));
 		foreach($contextKeys as $contextKey) {
 			/* for each (valid/existing) context of the context group a button will be displayed */
 			$context = $modx->getObject('modContext', array('key' => $contextKey));
@@ -80,44 +75,27 @@ switch ($modx->event->name) {
 			}
 			$context->prepare();
 			$cultureKey = $context->getOption('cultureKey',$modx->getOption('cultureKey'));
-			if(isset($linkedResources[$contextKey])) {
-				$resourceId = $linkedResources[$contextKey];
-				$resourceUrl = '?a='.$actions['resource/update'].'&id='.$resourceId;
-				$linkResource = $modx->getObject('modResource', $linkedResources[$contextKey]);
-                $resourceTitle = $linkResource->get('pagetitle');
-			} else {
-				$resourceId = '';
-				$resourceUrl = '#';
-                $resourceTitle = '';
-			}
-			$placeholders = array(
-				'resourceId' => $resourceId,
-				'resourceUrl' => $resourceUrl,
-				'resourceTitle' => $resourceTitle,
-				'displayText' => $modx->lexicon('babel.language_' . $cultureKey) . " ($contextKey)",
-			);
-            $languagesStore[] = array($modx->lexicon('babel.language_' . $cultureKey) . " ($contextKey)", $contextKey);
-            $menu[$contextKey] = $placeholders;
+            $languagesStore[] = array($modx->lexicon('babel.language_'.$cultureKey)." ($contextKey)", $contextKey);
         }
 		
         $babel->config['context_key'] = $resource->get('context_key');
         $babel->config['languagesStore'] = $languagesStore;
-        $babel->config['menu'] = $menu;
+        $babel->config['menu'] = $babel->getMenu($resource);
 
         $version = str_replace(' ', '', $babel->config['version']);
         $isCSSCompressed = $modx->getOption('compress_css');
-        $withVersion = $isCSSCompressed ? '' : '?v=' . $version;
-        $modx->controller->addCss($babel->config['cssUrl'] . 'babel.css' . $withVersion);
+        $withVersion = $isCSSCompressed ? '' : '?v='.$version;
+        $modx->controller->addCss($babel->config['cssUrl'].'babel.css'.$withVersion);
 
         $modx->controller->addLexiconTopic('babel:default');
         $isJsCompressed = $modx->getOption('compress_js');
-        $withVersion = $isJsCompressed ? '' : '?v=' . $version;
-        $modx->controller->addJavascript($babel->config['jsUrl'] . 'babel.class.js' . $withVersion);
+        $withVersion = $isJsCompressed ? '' : '?v='.$version;
+        $modx->controller->addJavascript($babel->config['jsUrl'].'babel.class.js'.$withVersion);
         $modx->controller->addHtml('
 <script type="text/javascript">
-    var Babel = new Babel(' . json_encode($babel->config) . ');
+    var Babel = new Babel('.json_encode($babel->config).');
 </script>');
-        $modx->controller->addLastJavascript($babel->config['jsUrl'] . 'babel.js' . $withVersion);
+        $modx->controller->addLastJavascript($babel->config['jsUrl'].'babel.js'.$withVersion);
         break;
 	
 	case 'OnDocFormSave':

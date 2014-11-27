@@ -522,4 +522,51 @@ class Babel {
         return $chunk;
     }
 	
+    /**
+     * Get placeholders to create language selection menu.
+     * Used in plugin and processors.
+     * 
+     * @param object $resource
+     * @return array menu
+     */
+    public function getMenu($resource) {
+        $menu = array();
+		/* grab manager actions IDs */
+		$actions = $this->modx->request->getAllActionIDs();
+		$contextKeys = $this->getGroupContextKeys($resource->get('context_key'));
+		$linkedResources = $this->getLinkedResources($resource->get('id'));
+		if(empty($linkedResources)) {
+			/* always be sure that the Babel TV is set */
+			$this->initBabelTv($resource);
+		}
+		foreach($contextKeys as $contextKey) {
+			/* for each (valid/existing) context of the context group a button will be displayed */
+			$context = $this->modx->getObject('modContext', array('key' => $contextKey));
+			if(!$context) {
+				$this->modx->log(modX::LOG_LEVEL_ERROR, 'Could not load context: '.$contextKey);
+				continue;
+			}
+			$context->prepare();
+			$cultureKey = $context->getOption('cultureKey',$this->modx->getOption('cultureKey'));
+			if(isset($linkedResources[$contextKey])) {
+				$resourceId = $linkedResources[$contextKey];
+				$resourceUrl = '?a='.$actions['resource/update'].'&id='.$resourceId;
+				$linkResource = $this->modx->getObject('modResource', $linkedResources[$contextKey]);
+                $resourceTitle = $linkResource->get('pagetitle');
+			} else {
+				$resourceId = '';
+				$resourceUrl = '#';
+                $resourceTitle = '';
+			}
+			$placeholders = array(
+				'resourceId' => $resourceId,
+				'resourceUrl' => $resourceUrl,
+				'resourceTitle' => $resourceTitle,
+				'displayText' => $this->modx->lexicon('babel.language_'.$cultureKey)." ($contextKey)",
+			);
+            $menu[$contextKey] = $placeholders;
+        }
+
+        return $menu;
+    }
 }

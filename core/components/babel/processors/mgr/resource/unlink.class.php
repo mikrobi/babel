@@ -90,7 +90,7 @@ class BabelUnlinkResourceProcessor extends modObjectGetProcessor {
                                 'context' => $props['context'],
             )));
         }
-        
+
         $linkedResources = $this->modx->babel->getLinkedResources($this->object->get('id'));
         if (!isset($linkedResources[$props['context']])) {
             return $this->failure($this->modx->lexicon('error.no_link_to_context', array(
@@ -110,7 +110,9 @@ class BabelUnlinkResourceProcessor extends modObjectGetProcessor {
      * @return array
      */
     public function cleanup() {
-        return $this->success('', $this->object);
+        $output = $this->object->toArray();
+        $output['menu'] = $this->modx->babel->getMenu($this->object);
+        return $this->success('', $output);
     }
 
 }

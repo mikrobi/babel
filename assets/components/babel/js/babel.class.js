@@ -34,6 +34,11 @@ function Babel(config) {
 
 Babel.prototype.getMenu = function (menus) {
     var _this = this;
+    // destroy existing
+    var buttonMenu = Ext.getCmp('babel-language-select');
+    if (buttonMenu) {
+        buttonMenu.destroy();
+    }
     var actionButtons = Ext.getCmp("modx-action-buttons");
     if (actionButtons) {
         var menu = [];
@@ -89,7 +94,8 @@ Babel.prototype.getMenu = function (menus) {
                 });
             }
         }
-        var buttonMenu = new Ext.Button({
+        buttonMenu = new Ext.Button({
+            id: 'babel-language-select',
             text: 'Select Language',
             menu: menu,
             listeners: {
@@ -123,6 +129,7 @@ Babel.prototype.linkTranslation = function (ctx, id) {
                         title: _('success'),
                         message: r.message || _('save_successful')
                     });
+                    this.getMenu(r.a.result.object.menu);
                     this.hideMask();
                 },
                 scope: this
@@ -194,6 +201,7 @@ Babel.prototype.unlinkTranslation = function (ctx, id, target) {
                         title: _('success'),
                         message: r.message || _('save_successful')
                     });
+                    this.getMenu(r.object.menu);
                     this.hideMask();
                 },
                 scope: this

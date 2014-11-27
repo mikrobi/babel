@@ -63,7 +63,7 @@ class BabelLinkResourceProcessor extends modObjectGetProcessor {
         }
 
         $context = $this->modx->getObject('modContext', array('key' => $contextKey));
-        if(!$context) {
+        if (!$context) {
             return $this->modx->lexicon('error.invalid_context_key', array('context' => $contextKey));
         }
 
@@ -83,24 +83,24 @@ class BabelLinkResourceProcessor extends modObjectGetProcessor {
      */
     public function process() {
         $props = $this->getProperties();
-        
+
         $targetResources = $this->modx->babel->getLinkedResources($props['target']);
         if (count($targetResources) > 1 && isset($targetResources[$this->object->get('context_key')])) {
             return $this->failure($this->modx->lexicon('error.translation_already_exists', array(
-                        'context' => $props['context'],
-                        'resource' => $targetResources[$props['context']],
-                        'pagetitle' => $this->modx->getObject('modResource', $targetResources[$props['context']])->get('pagetitle'),
+                                'context' => $props['context'],
+                                'resource' => $targetResources[$props['context']],
+                                'pagetitle' => $this->modx->getObject('modResource', $targetResources[$props['context']])->get('pagetitle'),
             )));
         }
 
-		$linkedResources = $this->modx->babel->getLinkedResources($this->object->get('id'));
-		if(empty($linkedResources)) {
-			/* always be sure that the Babel TV is set */
-			$this->modx->babel->initBabelTv($this->object);
-		}
-        
+        $linkedResources = $this->modx->babel->getLinkedResources($this->object->get('id'));
+        if (empty($linkedResources)) {
+            /* always be sure that the Babel TV is set */
+            $this->modx->babel->initBabelTv($this->object);
+        }
+
         /* add or change a translation link */
-        if(isset($linkedResources[$props['context']])) {
+        if (isset($linkedResources[$props['context']])) {
             /* existing link has been changed:
              * -> reset Babel TV of old resource */
             $this->modx->babel->initBabelTvById($linkedResources[$props['context']]);
@@ -110,10 +110,10 @@ class BabelLinkResourceProcessor extends modObjectGetProcessor {
         $this->modx->babel->updateBabelTv($linkedResources, $linkedResources);
 
         /* copy values of synchronized TVs to target resource */
-        if(isset($props['copy-tv-values']) && intval($props['copy-tv-values']) == 1) {
+        if (isset($props['copy-tv-values']) && intval($props['copy-tv-values']) == 1) {
             $this->modx->babel->synchronizeTvs($this->object->get('id'));
         }
-        
+
         return $this->cleanup();
     }
 
@@ -122,7 +122,9 @@ class BabelLinkResourceProcessor extends modObjectGetProcessor {
      * @return array
      */
     public function cleanup() {
-        return $this->success('', $this->targetResource);
+        $output = $this->object->toArray();
+        $output['menu'] = $this->modx->babel->getMenu($this->object);
+        return $this->success('', $output);
     }
 
 }
