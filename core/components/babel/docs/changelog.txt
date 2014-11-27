@@ -2,6 +2,7 @@ Changelog for Babel.
 
 Babel 3.0.0-dev
 ==============
+- [#56] Emptying the MODX trash can corrupt values in modx_site_tmplvar_contentvalues
 - [#88] Skip unpublished contexts
 - [#82] Check for resourceId parameter before defaulting.
 - [#78][#62] added outputSeparator for BabelLinks

@@ -408,11 +408,14 @@ class Babel {
 			/* array maps context keys to resource ids
 			 * -> search for the context key of the specified resource id */
 			$contextKey = array_search($resourceId, $linkedResources);
-			unset($linkedResources[$contextKey]);
-			$newValue = $this->encodeTranslationLinks($linkedResources);
-			$templateVarResource->set('value', $newValue);
-			$templateVarResource->save();
-		}
+            /* sanity check, is the contextKey really a context in babel's settings? */
+            if (array_key_exists($contextKey, $this->contextKeyToGroup)) {
+                unset($linkedResources[$contextKey]);
+                $newValue = $this->encodeTranslationLinks($linkedResources);
+                $templateVarResource->set('value', $newValue);
+                $templateVarResource->save();
+            }
+        }
 	}
 	
 	/**
