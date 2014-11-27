@@ -34,11 +34,6 @@ function Babel(config) {
 
 Babel.prototype.getMenu = function (menus) {
     var _this = this;
-    // destroy existing
-    var buttonMenu = Ext.getCmp('babel-language-select');
-    if (buttonMenu) {
-        buttonMenu.destroy();
-    }
     var actionButtons = Ext.getCmp("modx-action-buttons");
     if (actionButtons) {
         var menu = [];
@@ -94,6 +89,13 @@ Babel.prototype.getMenu = function (menus) {
                 });
             }
         }
+        // destroy existing
+        var buttonMenu = Ext.getCmp('babel-language-select');
+        if (buttonMenu) {
+            buttonMenu.destroy();
+        } else {
+            actionButtons.insertButton(0, ["-"]);
+        }
         buttonMenu = new Ext.Button({
             id: 'babel-language-select',
             text: 'Select Language',
@@ -107,7 +109,7 @@ Babel.prototype.getMenu = function (menus) {
                 }
             }
         });
-        actionButtons.insertButton(0, [buttonMenu, "-"]);
+        actionButtons.insertButton(0, [buttonMenu]);
         actionButtons.doLayout();
     }
 };
