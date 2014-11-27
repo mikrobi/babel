@@ -25,6 +25,7 @@
  * Babel build script
  * 
  * @author Jakob Class <jakob.class@class-zec.de>
+ *         goldsky <goldsky@virtudraft.com>
  *
  * @package babel
  * @subpackage build
@@ -38,8 +39,6 @@ set_time_limit(0);
 /* define package */
 define('PKG_NAME','Babel');
 define('PKG_NAME_LOWER',strtolower(PKG_NAME));
-define('PKG_VERSION','2.2.5');
-define('PKG_RELEASE','pl');
 
 /* define sources */
 $root = dirname(dirname(__FILE__)).'/';
@@ -69,6 +68,14 @@ $modx->initialize('mgr');
 echo '<pre>'; /* used for nice formatting of log messages */
 $modx->setLogLevel(modX::LOG_LEVEL_INFO);
 $modx->setLogTarget('ECHO');
+
+$babel = $modx->getService('babel', 'Babel', MODX_CORE_PATH . 'components/babel/model/babel/');
+
+if (!($babel instanceof Babel)) {
+    return '';
+}
+define('PKG_VERSION', Babel::VERSION);
+define('PKG_RELEASE', Babel::RELEASE);
 
 $modx->loadClass('transport.modPackageBuilder','',false, true);
 $builder = new modPackageBuilder($modx);
