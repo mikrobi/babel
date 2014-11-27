@@ -1,6 +1,6 @@
 Changelog for Babel.
 
-Babel 3.0.0-dev
+Babel 3.0.0-beta1 (November 28, 2014)
 ==============
 - [#77] Update readme.txt
 - [#51] Append URL parameters of current page if any

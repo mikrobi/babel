@@ -34,7 +34,7 @@
 class Babel {
 	
     const VERSION = '3.0.0';
-    const RELEASE = 'dev';
+    const RELEASE = 'beta1';
 
     /**
      * @access protected
