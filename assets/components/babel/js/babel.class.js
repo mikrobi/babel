@@ -116,14 +116,28 @@ Babel.prototype.linkTranslation = function (ctx, id) {
             id: id
         },
         listeners: {
-            'success': {
+            success: {
                 fn: function (r) {
                     MODx.msg.status({
                         title: _('success'),
                         message: r.message || _('save_successful')
                     });
+                    this.hideMask();
                 },
-                scope: this}
+                scope: this
+            },
+            failure: {
+                fn: function (r) {
+                    this.hideMask();
+                },
+                scope: this
+            },
+            beforeSubmit: {
+                fn: function (r) {
+                    this.loadMask();
+                },
+                scope: this
+            }
         },
         fields: [
             {
@@ -161,6 +175,7 @@ Babel.prototype.linkTranslation = function (ctx, id) {
 };
 
 Babel.prototype.unlinkTranslation = function (ctx, id, target) {
+    this.loadMask();
     return MODx.msg.confirm({
         title: _('confirm'),
         text: _('babel.unlink_translation_confirm', {context: ctx, id: id}),
@@ -172,19 +187,34 @@ Babel.prototype.unlinkTranslation = function (ctx, id, target) {
             target: target
         },
         listeners: {
-            'success': {
+            success: {
                 fn: function (r) {
                     MODx.msg.status({
                         title: _('success'),
                         message: r.message || _('save_successful')
                     });
+                    this.hideMask();
                 },
-                scope: this}
+                scope: this
+            },
+            failure: {
+                fn: function (r) {
+                    this.hideMask();
+                },
+                scope: this
+            },
+            cancel: {
+                fn: function (r) {
+                    this.hideMask();
+                },
+                scope: this
+            }
         }
     });
 };
 
 Babel.prototype.createTranslation = function (ctx, id) {
+    this.loadMask();
     return MODx.msg.confirm({
         title: _('confirm'),
         text: _('babel.create_translation_confirm', {context: ctx, id: id}),
@@ -195,11 +225,40 @@ Babel.prototype.createTranslation = function (ctx, id) {
             id: id
         },
         listeners: {
-            'success': {
+            success: {
                 fn: function (r) {
                     MODx.loadPage('resource/update', 'id=' + r.object.id);
                 },
-                scope: this}
+                scope: this
+            },
+            failure: {
+                fn: function (r) {
+                    this.hideMask();
+                },
+                scope: this
+            },
+            cancel: {
+                fn: function (r) {
+                    this.hideMask();
+                },
+                scope: this
+            }
         }
     });
+};
+
+Babel.prototype.loadMask = function () {
+    if (!this.overlayMask) {
+        var domHandler = Ext.getBody().dom;
+        this.overlayMask = new Ext.LoadMask(domHandler, {
+            msg: _('babel.please_wait')
+        });
+    }
+    this.overlayMask.show();
+};
+
+Babel.prototype.hideMask = function () {
+    if (this.overlayMask) {
+        this.overlayMask.hide();
+    }
 };

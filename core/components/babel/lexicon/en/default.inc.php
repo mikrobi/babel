@@ -47,6 +47,7 @@ $_lang['babel.copy_tv_values'] = 'Copy synchronized TVs to target';
 $_lang['babel.save'] = 'Save';
 $_lang['babel.translation_pending'] = '[translations pending]';
 $_lang['babel.open'] = 'Open';
+$_lang['babel.please_wait'] = 'Please wait...';
 
 /* language names */
 $_lang['babel.language_ar'] = 'Arabic';
