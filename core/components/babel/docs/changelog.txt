@@ -2,6 +2,7 @@ Changelog for Babel.
 
 Babel 3.0.0-dev
 ==============
+- [#51] Append URL parameters of current page if any
 - add &includeUnlinked property to BabelLinks, option to skip/include unlinked context
 - [#56] Emptying the MODX trash can corrupt values in modx_site_tmplvar_contentvalues
 - [#88] Skip unpublished contexts

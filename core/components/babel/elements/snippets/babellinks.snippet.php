@@ -27,6 +27,7 @@
  * Based on ideas of Sylvain Aerni <enzyms@gmail.com>
  *
  * @author Jakob Class <jakob.class@class-zec.de>
+ *         goldsky <goldsky@virtudraft.com>
  *
  * @package babel
  * 
@@ -93,7 +94,9 @@ foreach($contextKeys as $contextKey) {
 		}
 	}
 	if($translationAvailable) {
-		$url = $context->makeUrl($linkedResources[$contextKey],'','full');
+        $getParams = $_GET;
+        unset($getParams['id']);
+		$url = $context->makeUrl($linkedResources[$contextKey],$getParams,'full');
 	} else {
 		$url = $context->getOption('site_url', $modx->getOption('site_url'));
 	}
