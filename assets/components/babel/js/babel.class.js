@@ -33,6 +33,7 @@ function Babel(config) {
 }
 
 Babel.prototype.getMenu = function (menus) {
+    var _this = this;
     var actionButtons = Ext.getCmp("modx-action-buttons");
     if (actionButtons) {
         var menu = [];
@@ -40,7 +41,7 @@ Babel.prototype.getMenu = function (menus) {
             if (typeof(menus[ctx]["resourceUrl"]) !== 'undefined' &&
                     menus[ctx]["resourceUrl"] !== "" &&
                     menus[ctx]["resourceUrl"] !== "#" ) {
-                if (ctx === Babel.config.context_key) {
+                if (ctx === _this.config.context_key) {
                     continue;
                 }
                 menu.push({
@@ -58,7 +59,7 @@ Babel.prototype.getMenu = function (menus) {
                                 contextKey: ctx,
                                 target: menus[ctx]["resourceId"],
                                 handler: function() {
-                                    Babel.unlinkTranslation(this.contextKey, MODx.request.id, this.target);
+                                    _this.unlinkTranslation(this.contextKey, MODx.request.id, this.target);
                                 }
                             }
                         ]
@@ -74,13 +75,13 @@ Babel.prototype.getMenu = function (menus) {
                                 text: _('babel.create_translation'),
                                 contextKey: ctx,
                                 handler: function() {
-                                    Babel.createTranslation(this.contextKey, MODx.request.id);
+                                    _this.createTranslation(this.contextKey, MODx.request.id);
                                 }
                             }, '-', {
                                 text: _('babel.link_translation'),
                                 contextKey: ctx,
                                 handler: function() {
-                                    Babel.linkTranslation(this.contextKey, MODx.request.id);
+                                    _this.linkTranslation(this.contextKey, MODx.request.id);
                                 }
                             }
                         ]
@@ -94,7 +95,7 @@ Babel.prototype.getMenu = function (menus) {
             listeners: {
                 render: {
                     fn: function (btn) {
-                        btn.setText(menus[Babel.config.context_key]["displayText"]);
+                        btn.setText(menus[_this.config.context_key]["displayText"]);
                     },
                     scope: this
                 }
@@ -109,7 +110,7 @@ Babel.prototype.linkTranslation = function (ctx, id) {
     var win = MODx.load({
         xtype: 'modx-window',
         title: _('babel.link_translation'),
-        url: Babel.config.connector_url,
+        url: this.config.connector_url,
         baseParams: {
             action: 'mgr/resource/link',
             context: ctx,
@@ -179,7 +180,7 @@ Babel.prototype.unlinkTranslation = function (ctx, id, target) {
     return MODx.msg.confirm({
         title: _('confirm'),
         text: _('babel.unlink_translation_confirm', {context: ctx, id: id}),
-        url: Babel.config.connector_url,
+        url: this.config.connector_url,
         params: {
             action: 'mgr/resource/unlink',
             context: ctx,
@@ -218,7 +219,7 @@ Babel.prototype.createTranslation = function (ctx, id) {
     return MODx.msg.confirm({
         title: _('confirm'),
         text: _('babel.create_translation_confirm', {context: ctx, id: id}),
-        url: Babel.config.connector_url,
+        url: this.config.connector_url,
         params: {
             action: 'mgr/resource/duplicate',
             context_key: ctx,
