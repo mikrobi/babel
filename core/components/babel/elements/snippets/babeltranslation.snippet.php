@@ -45,11 +45,6 @@ if(empty($resourceId) && !empty($modx->resource) && is_object($modx->resource)) 
 } else {
 	return;
 }
-/* get snippet properties */
-$resourceId = $modx->resource->get('id');
-if(!empty($scriptProperties['resourceId'])) {
-	$resourceId = intval($modx->getOption('resourceId',$scriptProperties,$resourceId));
-}
 $contextKey = $modx->getOption('contextKey',$scriptProperties,'');
 if (empty($contextKey)) {
 	$cultureKey = $modx->getOption('cultureKey',$scriptProperties,'');
