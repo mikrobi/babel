@@ -51,8 +51,9 @@ if(empty($resourceId) && !empty($modx->resource) && is_object($modx->resource)) 
 $tpl = $modx->getOption('tpl',$scriptProperties,'babelLink');
 $activeCls = $modx->getOption('activeCls',$scriptProperties,'active');
 $showUnpublished = $modx->getOption('showUnpublished',$scriptProperties,0);
-$showCurrent = $modx->getOption('showCurrent',$scriptProperties,1);
+$showCurrent = $modx->getOption('showCurrent',$scriptProperties,0);
 $outputSeparator = $modx->getOption('outputSeparator',$scriptProperties,"\n");
+$includeUnlinked = $modx->getOption('includeUnlinked',$scriptProperties,0);
 
 if($resourceId == $modx->resource->get('id')) {
 	$contextKeys = $babel->getGroupContextKeys($modx->resource->get('context_key'));
@@ -68,9 +69,12 @@ $linkedResources = $babel->getLinkedResources($resourceId);
 
 $output = array();
 foreach($contextKeys as $contextKey) {
-	if(!$showCurrent && $contextKey == $modx->resource->get('context_key')) {
+	if(!$showCurrent && $contextKey === $modx->resource->get('context_key')) {
 		continue;
 	}
+    if (!$includeUnlinked && !isset($linkedResources[$contextKey])) {
+        continue;
+    }
 	$context = $modx->getObject('modContext', array('key' => $contextKey));
 	if(!$context) {
 		$modx->log(modX::LOG_LEVEL_ERROR, 'Could not load context: '.$contextKey);

@@ -70,6 +70,14 @@ $properties = array(
         'value' => '1',
         'lexicon' => 'babel:properties',
     ),
+    array(
+        'name' => 'includeUnlinked',
+        'desc' => 'babellinks.includeUnlinked',
+        'type' => 'textfield',
+        'options' => '',
+        'value' => '0',
+        'lexicon' => 'babel:properties',
+    ),
 );
 
 return $properties;
