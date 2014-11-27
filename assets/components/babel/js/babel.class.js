@@ -238,7 +238,7 @@ Babel.prototype.createTranslation = function (ctx, id) {
         listeners: {
             success: {
                 fn: function (r) {
-                    MODx.loadPage('resource/update', 'id=' + r.object.id);
+                    MODx.loadPage(MODx.action['resource/update'], 'id=' + r.object.id);
                 },
                 scope: this
             },
