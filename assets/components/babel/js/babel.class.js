@@ -46,10 +46,12 @@ Babel.prototype.getMenu = function (menus) {
                 }
                 menu.push({
                     text: menus[ctx]["displayText"],
+                    iconCls: 'icon-link',
                     menu: {
                         items: [
                             {
                                 text: _('babel.open') + " <b>" + menus[ctx]["resourceTitle"] + " (" + menus[ctx]["resourceId"] + ")</b>",
+                                iconCls: 'icon-page-go',
                                 resourceUrl: menus[ctx]["resourceUrl"],
                                 resourceId: menus[ctx]["resourceId"],
                                 handler: function() {
@@ -57,6 +59,7 @@ Babel.prototype.getMenu = function (menus) {
                                 }
                             }, '-', {
                                 text: _('babel.unlink') + " <b>" + menus[ctx]["resourceTitle"] + " (" + menus[ctx]["resourceId"] + ")</b>",
+                                iconCls: 'icon-unlink',
                                 contextKey: ctx,
                                 target: menus[ctx]["resourceId"],
                                 handler: function() {
@@ -74,12 +77,14 @@ Babel.prototype.getMenu = function (menus) {
                         items: [
                             {
                                 text: _('babel.create_translation'),
+                                iconCls: 'icon-pencil-go',
                                 contextKey: ctx,
                                 handler: function() {
                                     _this.createTranslation(this.contextKey, MODx.request.id);
                                 }
                             }, '-', {
                                 text: _('babel.link_translation'),
+                                iconCls: 'icon-link',
                                 contextKey: ctx,
                                 handler: function() {
                                     _this.linkTranslation(this.contextKey, MODx.request.id);

@@ -93,8 +93,8 @@ switch ($modx->event->name) {
         $modx->controller->addJavascript($babel->config['jsUrl'].'babel.class.js'.$withVersion);
         $modx->controller->addHtml('
 <script type="text/javascript">
-    var babel = new Babel('.json_encode($babel->config).');
     Ext.onReady(function () {
+        var babel = new Babel('.json_encode($babel->config).');
         babel.getMenu(babel.config.menu);
     });
 </script>');

@@ -1,5 +1,11 @@
 Changelog for Babel.
 
+Babel 3.0.0-dev
+==============
+- add icons
+- [#97] Add ru lexicon
+- [#73] Add AjaxManager support
+
 Babel 3.0.0-beta1 (November 28, 2014)
 ==============
 - [#77] Update readme.txt
