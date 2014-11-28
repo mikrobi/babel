@@ -170,6 +170,9 @@ Babel.prototype.linkTranslation = function (ctx, id) {
                     if (!t)
                         return;
                     p.d = p.d || p.v;
+                    t.removeListener('click',this.handleChangeParent,this);
+                    t.on('click',t._handleClick,t);
+                    t.disableHref = false;
                     win.fp.getForm().findField('target').setValue(p.v);
                     this.setValue(p.d);
                     this.oldValue = false;
