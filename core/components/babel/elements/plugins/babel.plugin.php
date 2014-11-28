@@ -93,7 +93,7 @@ switch ($modx->event->name) {
         $modx->controller->addJavascript($babel->config['jsUrl'].'babel.class.js'.$withVersion);
         $modx->controller->addHtml('
 <script type="text/javascript">
-    var Babel = new Babel('.json_encode($babel->config).');
+    var babel = new Babel('.json_encode($babel->config).');
 </script>');
         $modx->controller->addLastJavascript($babel->config['jsUrl'].'babel.js'.$withVersion);
         break;

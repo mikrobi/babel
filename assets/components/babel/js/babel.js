@@ -29,5 +29,5 @@
  */
 
 Ext.onReady(function () {
-    Babel.getMenu(Babel.config.menu);
+    babel.getMenu(babel.config.menu);
 });
