@@ -94,8 +94,10 @@ switch ($modx->event->name) {
         $modx->controller->addHtml('
 <script type="text/javascript">
     var babel = new Babel('.json_encode($babel->config).');
+    Ext.onReady(function () {
+        babel.getMenu(babel.config.menu);
+    });
 </script>');
-        $modx->controller->addLastJavascript($babel->config['jsUrl'].'babel.js'.$withVersion);
         break;
 	
 	case 'OnDocFormSave':
