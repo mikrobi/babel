@@ -51,8 +51,9 @@ Babel.prototype.getMenu = function (menus) {
                             {
                                 text: _('babel.open') + " <b>" + menus[ctx]["resourceTitle"] + " (" + menus[ctx]["resourceId"] + ")</b>",
                                 resourceUrl: menus[ctx]["resourceUrl"],
+                                resourceId: menus[ctx]["resourceId"],
                                 handler: function() {
-                                    window.location.href = window.location.origin + window.location.pathname + this.resourceUrl;
+                                    MODx.loadPage(MODx.action['resource/update'], 'id=' + this.resourceId);
                                 }
                             }, '-', {
                                 text: _('babel.unlink') + " <b>" + menus[ctx]["resourceTitle"] + " (" + menus[ctx]["resourceId"] + ")</b>",
@@ -169,6 +170,9 @@ Babel.prototype.linkTranslation = function (ctx, id) {
                     if (!t)
                         return;
                     p.d = p.d || p.v;
+                    t.removeListener('click',this.handleChangeParent,this);
+                    t.on('click',t._handleClick,t);
+                    t.disableHref = false;
                     win.fp.getForm().findField('target').setValue(p.v);
                     this.setValue(p.d);
                     this.oldValue = false;
@@ -238,6 +242,7 @@ Babel.prototype.createTranslation = function (ctx, id) {
         listeners: {
             success: {
                 fn: function (r) {
+                    this.hideMask();
                     MODx.loadPage(MODx.action['resource/update'], 'id=' + r.object.id);
                 },
                 scope: this

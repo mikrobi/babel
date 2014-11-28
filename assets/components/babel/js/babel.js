@@ -28,6 +28,3 @@
  * @package babel
  */
 
-Ext.onReady(function () {
-    Babel.getMenu(Babel.config.menu);
-});
