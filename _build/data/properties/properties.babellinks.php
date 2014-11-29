@@ -67,7 +67,7 @@ $properties = array(
         'desc' => 'babellinks.showCurrent',
         'type' => 'textfield',
         'options' => '',
-        'value' => '1',
+        'value' => '0',
         'lexicon' => 'babel:properties',
     ),
     array(
