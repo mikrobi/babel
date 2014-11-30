@@ -2,7 +2,7 @@ Changelog for Babel.
 
 Babel 3.0.0-dev
 ==============
-- remove "q" url parameter on BabelLinks
+- remove "q" and "cultureKey" url parameters on BabelLinks
 - add optional &toArray property to BabelLinks snippet
 - add optional &toPlaceholder property to BabelLinks snippet
 - add optional &wrapperTpl property to BabelLinks snippet

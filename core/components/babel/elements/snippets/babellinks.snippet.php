@@ -110,6 +110,7 @@ foreach($contextKeys as $contextKey) {
         $getRequest = $_GET;
         unset($getRequest['id']);
         unset($getRequest[$modx->getOption('request_param_alias', null, 'q')]);
+        unset($getRequest['cultureKey']);
         $url = $context->makeUrl($linkedResources[$contextKey],$getRequest,'full');
         $active = ($resource->get('context_key') == $contextKey) ? $activeCls : '';
         $placeholders = array(
