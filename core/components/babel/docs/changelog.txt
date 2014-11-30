@@ -2,6 +2,10 @@ Changelog for Babel.
 
 Babel 3.0.0-dev
 ==============
+- remove "q" url parameter on BabelLinks
+- add optional &toArray property to BabelLinks snippet
+- add optional &toPlaceholder property to BabelLinks snippet
+- add optional &wrapperTpl property to BabelLinks snippet
 - add icons
 - [#97] Add ru lexicon
 - [#73] Add AjaxManager support

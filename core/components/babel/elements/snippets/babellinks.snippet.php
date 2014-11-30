@@ -50,14 +50,16 @@ if(empty($resourceId) && !empty($modx->resource) && is_object($modx->resource)) 
 	return;
 }
 $tpl = $modx->getOption('tpl',$scriptProperties,'babelLink');
+$wrapperTpl = $modx->getOption('wrapperTpl',$scriptProperties);
 $activeCls = $modx->getOption('activeCls',$scriptProperties,'active');
 $showUnpublished = $modx->getOption('showUnpublished',$scriptProperties,0);
 $showCurrent = $modx->getOption('showCurrent',$scriptProperties,0);
 $outputSeparator = $modx->getOption('outputSeparator',$scriptProperties,"\n");
 $includeUnlinked = $modx->getOption('includeUnlinked',$scriptProperties,0);
 
-if($resourceId == $modx->resource->get('id')) {
+if(!empty($modx->resource) && is_object($modx->resource) && $resourceId === $modx->resource->get('id')) {
 	$contextKeys = $babel->getGroupContextKeys($modx->resource->get('context_key'));
+    $resource = $modx->resource;
 } else {
 	$resource = $modx->getObject('modResource', $resourceId);
 	if(!$resource) {
@@ -68,9 +70,9 @@ if($resourceId == $modx->resource->get('id')) {
 
 $linkedResources = $babel->getLinkedResources($resourceId);
 
-$output = array();
+$outputArray = array();
 foreach($contextKeys as $contextKey) {
-	if(!$showCurrent && $contextKey === $modx->resource->get('context_key')) {
+	if(!$showCurrent && $contextKey === $resource->get('context_key')) {
 		continue;
 	}
     if (!$includeUnlinked && !isset($linkedResources[$contextKey])) {
@@ -88,28 +90,60 @@ foreach($contextKeys as $contextKey) {
     $cultureKey = $context->getOption('cultureKey',$modx->getOption('cultureKey'));
 	$translationAvailable = false;
 	if(isset($linkedResources[$contextKey])) {
-		$resource = $modx->getObject('modResource',$linkedResources[$contextKey]);
-		if($resource && ($showUnpublished || $resource->get('published') == 1)) {
+        $c = $modx->newQuery('modResource');
+        $c->where(array(
+            'id' => $linkedResources[$contextKey],
+            'deleted:!=' => 1,
+            'published:=' => 1,
+        ));
+        if ($showUnpublished) {
+            $c->where(array(
+                'OR:published:=' => 0,
+            ));
+        }
+		$count = $modx->getCount('modResource',$c);
+		if($count) {
 			$translationAvailable = true;
 		}
 	}
 	if($translationAvailable) {
-        $getParams = $_GET;
-        unset($getParams['id']);
-		$url = $context->makeUrl($linkedResources[$contextKey],$getParams,'full');
-	} else {
-		$url = $context->getOption('site_url', $modx->getOption('site_url'));
+        $getRequest = $_GET;
+        unset($getRequest['id']);
+        unset($getRequest[$modx->getOption('request_param_alias', null, 'q')]);
+        $url = $context->makeUrl($linkedResources[$contextKey],$getRequest,'full');
+        $active = ($resource->get('context_key') == $contextKey) ? $activeCls : '';
+        $placeholders = array(
+            'cultureKey' => $cultureKey,
+            'url' => $url,
+            'active' => $active,
+            'id' => $translationAvailable? $linkedResources[$contextKey] : ''
+        );
+
+        if (!empty($toArray)) {
+            $outputArray[] = $placeholders;
+        } else {
+            $chunk = $babel->getChunk($tpl,$placeholders);
+            if(!empty($chunk)) {
+                $outputArray[] = $chunk;
+            }
+        }
 	}
-	$active = ($modx->resource->get('context_key') == $contextKey) ? $activeCls : '';
-	$placeholders = array(
-		'cultureKey' => $cultureKey,
-		'url' => $url,
-		'active' => $active,
-		'id' => $translationAvailable? $linkedResources[$contextKey] : '');
-	$chunk = $babel->getChunk($tpl,$placeholders);
-	if(!empty($chunk)) {
-        $output[] = $chunk;
-    }
 }
-  
-return implode($outputSeparator, $output);
+
+if (!empty($toArray)) {
+    return '<pre>'.  print_r($outputArray, 1).'</pre>';
+}
+
+$output = implode($outputSeparator, $outputArray);
+if (!empty($wrapperTpl)) {
+    $output = $babel->getChunk($wrapperTpl,array(
+        'babelLinks' => $output
+    ));
+}
+
+if (!empty($toPlaceholder)) {
+    $modx->setPlaceholder($toPlaceholder, $output);
+    return;
+}
+
+return $output;
