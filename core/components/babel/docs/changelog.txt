@@ -1,6 +1,6 @@
 Changelog for Babel.
 
-Babel 3.0.0-dev
+Babel 3.0.0-beta2 (December 2, 2014)
 ==============
 - remove "q" and "cultureKey" url parameters on BabelLinks
 - add optional &toArray property to BabelLinks snippet
