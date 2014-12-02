@@ -31,11 +31,11 @@
  *
  * @package babel
  * 
- * @param resourceId		optional: id of resource of which links to translations should be displayed. Default: current resource
- * @param tpl				optional: Chunk to display a language link. Default: babelLink
- * @param activeCls			optional: CSS class name for the current active language. Default: active
- * @param showUnpublished	optional: flag whether to show unpublished translations. Default: 0
- * @param showCurrent		optional: flag whether to show a link to a translation of the current language. Default: 1
+ * @param resourceId        optional: id of resource of which links to translations should be displayed. Default: current resource
+ * @param tpl               optional: Chunk to display a language link. Default: babelLink
+ * @param activeCls         optional: CSS class name for the current active language. Default: active
+ * @param showUnpublished   optional: flag whether to show unpublished translations. Default: 0
+ * @param showCurrent       optional: flag whether to show a link to a translation of the current language. Default: 1
  */
 $babel = $modx->getService('babel','Babel',$modx->getOption('babel.core_path',null,$modx->getOption('core_path').'components/babel/').'model/babel/',$scriptProperties);
 
@@ -45,9 +45,9 @@ if (!($babel instanceof Babel) || !$babel->babelTv) return;
 /* get snippet properties */
 $resourceId = intval($modx->getOption('resourceId',$scriptProperties));
 if(empty($resourceId) && !empty($modx->resource) && is_object($modx->resource)) {
-	$resourceId = $modx->resource->get('id');
+    $resourceId = $modx->resource->get('id');
 } else {
-	return;
+    return;
 }
 $tpl = $modx->getOption('tpl',$scriptProperties,'babelLink');
 $wrapperTpl = $modx->getOption('wrapperTpl',$scriptProperties);
@@ -58,38 +58,38 @@ $outputSeparator = $modx->getOption('outputSeparator',$scriptProperties,"\n");
 $includeUnlinked = $modx->getOption('includeUnlinked',$scriptProperties,0);
 
 if(!empty($modx->resource) && is_object($modx->resource) && $resourceId === $modx->resource->get('id')) {
-	$contextKeys = $babel->getGroupContextKeys($modx->resource->get('context_key'));
+    $contextKeys = $babel->getGroupContextKeys($modx->resource->get('context_key'));
     $resource = $modx->resource;
 } else {
-	$resource = $modx->getObject('modResource', $resourceId);
-	if(!$resource) {
-		return;
-	}
-	$contextKeys = $babel->getGroupContextKeys($resource->get('context_key'));
+    $resource = $modx->getObject('modResource', $resourceId);
+    if(!$resource) {
+        return;
+    }
+    $contextKeys = $babel->getGroupContextKeys($resource->get('context_key'));
 }
 
 $linkedResources = $babel->getLinkedResources($resourceId);
 
 $outputArray = array();
 foreach($contextKeys as $contextKey) {
-	if(!$showCurrent && $contextKey === $resource->get('context_key')) {
-		continue;
-	}
+    if(!$showCurrent && $contextKey === $resource->get('context_key')) {
+        continue;
+    }
     if (!$includeUnlinked && !isset($linkedResources[$contextKey])) {
         continue;
     }
-	$context = $modx->getObject('modContext', array('key' => $contextKey));
-	if(!$context) {
-		$modx->log(modX::LOG_LEVEL_ERROR, 'Could not load context: '.$contextKey);
-		continue;
-	}
-	$context->prepare();
+    $context = $modx->getObject('modContext', array('key' => $contextKey));
+    if(!$context) {
+        $modx->log(modX::LOG_LEVEL_ERROR, 'Could not load context: '.$contextKey);
+        continue;
+    }
+    $context->prepare();
     if (!$context->getOption('site_status', null, true)) {
         continue;
     }
     $cultureKey = $context->getOption('cultureKey',$modx->getOption('cultureKey'));
-	$translationAvailable = false;
-	if(isset($linkedResources[$contextKey])) {
+    $translationAvailable = false;
+    if(isset($linkedResources[$contextKey])) {
         $c = $modx->newQuery('modResource');
         $c->where(array(
             'id' => $linkedResources[$contextKey],
@@ -101,12 +101,12 @@ foreach($contextKeys as $contextKey) {
                 'OR:published:=' => 0,
             ));
         }
-		$count = $modx->getCount('modResource',$c);
-		if($count) {
-			$translationAvailable = true;
-		}
-	}
-	if($translationAvailable) {
+        $count = $modx->getCount('modResource',$c);
+        if($count) {
+            $translationAvailable = true;
+        }
+    }
+    if($translationAvailable) {
         $getRequest = $_GET;
         unset($getRequest['id']);
         unset($getRequest[$modx->getOption('request_param_alias', null, 'q')]);
@@ -128,7 +128,7 @@ foreach($contextKeys as $contextKey) {
                 $outputArray[] = $chunk;
             }
         }
-	}
+    }
 }
 
 if (!empty($toArray)) {

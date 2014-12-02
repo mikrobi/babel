@@ -38,10 +38,8 @@
 
 $babel = $modx->getService('babel','Babel',$modx->getOption('babel.core_path',null,$modx->getOption('core_path').'components/babel/').'model/babel/');
 
-if (!($babel instanceof Babel)) return;
-
 /* be sure babel TV is loaded */
-if(!$babel->babelTv) return;
+if (!($babel instanceof Babel) || !$babel->babelTv) return;
 
 switch ($modx->event->name) {
 	case 'OnDocFormPrerender':
