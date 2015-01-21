@@ -4,3 +4,7 @@ core.config.php
 .project
 .buildpath
 /nbproject
+*.iml
+.idea/
+*.ipr
+*.iws
