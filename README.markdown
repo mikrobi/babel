@@ -5,9 +5,9 @@ Babel is an Extra for MODx Revolution that helps you managing your multilingual
 websites using different contexts. Babel even supports managing several different
 multilingual websites within one MODx instance by using so called context groups.
 
-Babel maintains links between translated resources. In the manager you can use 
+Babel maintains links between translated resources. In the manager you can use
 the Babel Box to easily switch between the different language versions
-of your resources. Translations can be created automatically by Babel or defined 
+of your resources. Translations can be created automatically by Babel or defined
 manually.
 
 Additionally Babel can be used to synchronize certain template variables (TVs)
@@ -17,11 +17,11 @@ For detailed information please refer to [core/components/babel/docs/readme.txt]
 
 Screenshots of the Babel Box
 -------------
-![Babel Box](https://github.com/mikrobi/babel/raw/master/screenshots/babel-box.png "Babel Box")
+![Link translation](https://github.com/mikrobi/babel/raw/master/screenshots/babel-linked-resource.png "Link translation")
 
-![create a translation](https://github.com/mikrobi/babel/raw/master/screenshots/babel-box-translate.png "create a translation")
+![Menu of linked resources](https://github.com/mikrobi/babel/raw/master/screenshots/babel-linked-menu.png "Menu of linked resources")
 
-![unlink a translation](https://github.com/mikrobi/babel/raw/master/screenshots/babel-box-unlink.png "unlink a translation")
+![Menu of unlinked resources](https://github.com/mikrobi/babel/raw/master/screenshots/babel-unlinked-menu.png "Menu of unlinked resources")
 
 
 Installation via the MODx Package Management
