@@ -17,7 +17,7 @@ For detailed information please refer to [core/components/babel/docs/readme.txt]
 
 Screenshots of the Babel Box
 -------------
-![Link translation](https://github.com/mikrobi/babel/raw/master/screenshots/babel-linked-resource.png "Link translation")
+![Link translation](https://github.com/mikrobi/babel/raw/master/screenshots/babel-linking-window.png "Link translation")
 
 ![Menu of linked resources](https://github.com/mikrobi/babel/raw/master/screenshots/babel-linked-menu.png "Menu of linked resources")
 
