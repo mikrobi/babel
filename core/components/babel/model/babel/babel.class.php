@@ -23,18 +23,18 @@
  */
 /**
  * This file is the main class file for Babel.
- * 
+ *
  * Based on ideas of Sylvain Aerni <enzyms@gmail.com>
- * 
+ *
  * @author Jakob Class <jakob.class@class-zec.de>
  *         goldsky <goldsky@virtudraft.com>
- * 
+ *
  * @package babel
  */
 class Babel {
-	
+
     const VERSION = '3.0.0';
-    const RELEASE = 'beta2';
+    const RELEASE = 'beta3';
 
     /**
      * @access protected
@@ -50,7 +50,7 @@ class Babel {
      * @access public
      * @var array A collection of properties to adjust Babel behaviour.
      */
-    public $config = array();    
+    public $config = array();
     /**
      * @access public
      * @var	modTemplateVar A reference to the babel TV which is used to store linked resources.
@@ -58,7 +58,7 @@ class Babel {
      * 		Example: web:1;de:4;es:7;fr:10
      */
     public $babelTv = null;
-    
+
     protected $contextKeyToGroup;
 
     /**
@@ -73,10 +73,10 @@ class Babel {
      */
     function __construct(modX &$modx,array $config = array()) {
         $this->modx =& $modx;
-        
+
         $corePath = $this->modx->getOption('babel.core_path',null,$modx->getOption('core_path').'components/babel/');
         $assetsUrl = $this->modx->getOption('babel.assets_url',null,$modx->getOption('assets_url').'components/babel/');
-        
+
         $contextKeysOption = $this->modx->getOption('babel.contextKeys',$config,'');
 		$this->contextKeyToGroup = $this->decodeContextKeySetting($contextKeysOption);
 		$syncTvsOption = $this->modx->getOption('babel.syncTvs',$config,'');
@@ -108,7 +108,7 @@ class Babel {
             $this->modx->getService('lexicon','modLexicon');
         }
         $this->modx->lexicon->load('babel:default');
-	
+
         /* load babel TV */
 		$this->babelTv = $modx->getObject('modTemplateVar',array('name' => $babelTvName));
 		if(!$this->babelTv) {
@@ -127,11 +127,11 @@ class Babel {
 			}
 		}
 	}
-	
+
 
 	/**
 	 * Synchronizes the TVs of the specified resource with its translated resources.
-	 * 
+	 *
 	 * @param int $resourceId id of resource.
 	 */
 	public function synchronizeTvs($resourceId) {
@@ -140,14 +140,14 @@ class Babel {
 		if(empty($linkedResources)) {
 			$linkedResources = $this->initBabelTvById($resourceId);
 		}
-		
+
 		/* synchronize the TVs of linked resources */
 		$syncTvs = $this->config['syncTvs'];
 		if(empty($syncTvs) || !is_array($syncTvs)) {
 			/* there are no TVs to synchronize */
 			return;
 		}
-		
+
 		foreach($syncTvs as $tvId){
 			/* go through each TV which should be synchronized */
 			$tv = $this->modx->getObject('modTemplateVar',$tvId);
@@ -162,16 +162,16 @@ class Babel {
 					continue;
 				}
 				$tv->setValue($linkedResourceId, $tvValue);
-			}				
+			}
 			$tv->save();
 		}
 
 		$this->modx->cacheManager->refresh();
 	}
-	
+
 	/**
 	 * Returns an array with the context keys of the specified context's group.
-	 * 
+	 *
 	 * @param string $contextKey key of context.
 	 */
 	public function getGroupContextKeys($contextKey) {
@@ -181,10 +181,10 @@ class Babel {
 		}
 		return $contextKeys;
 	}
-	
+
 	/**
 	 * Creates a duplicate of the specified resource in the specified context.
-	 * 
+	 *
 	 * @param modResource $resource
 	 * @param string $contextKey
 	 */
@@ -224,10 +224,10 @@ class Babel {
 	            $newTemplateVarResource->set('tmplvarid',$oldTemplateVarResource->get('tmplvarid'));
 	            $newTemplateVarResource->set('value',$oldTemplateVarResource->get('value'));
 	            $newTemplateVarResource->save();
-	        }						
-									
+	        }
+
 			/* set parent of duplicate as a folder */
-			if($newParentId) {							
+			if($newParentId) {
 				$newParent = $this->modx->getObject('modResource', $newParentId);
 				if($newParent) {
 					$newParent->set('isfolder', 1);
@@ -240,21 +240,21 @@ class Babel {
 		}
 		return $newResource;
 	}
-	
+
 	/**
-	 * Creates an associative array which maps context keys to there 
+	 * Creates an associative array which maps context keys to there
 	 * context groups out of an $contextKeyString
-	 * 
+	 *
 	 * @param string $contextKeyString example: ctx1,ctx2;ctx3,ctx4,ctx5;ctx5,ctx6
-	 * 
-	 * @return array associative array which maps context keys to there 
+	 *
+	 * @return array associative array which maps context keys to there
 	 * context groups.
 	 */
 	public function decodeContextKeySetting($contextKeyString) {
 		$contextKeyToGroup = array();
 		if(!empty($contextKeyString)) {
 			$contextGroups = explode(';', $contextKeyString);
-			$contextGroups = array_map('trim', $contextGroups);		
+			$contextGroups = array_map('trim', $contextGroups);
 			foreach($contextGroups as $contextGroup) {
 				$groupContextKeys = explode(',',$contextGroup);
 				$groupContextKeys = array_map('trim', $groupContextKeys);
@@ -262,17 +262,17 @@ class Babel {
 					if(!empty($contextKey)) {
 						$contextKeyToGroup[$contextKey] = $groupContextKeys;
 					}
-				}			
+				}
 			}
 		}
 		return $contextKeyToGroup;
 	}
-	
+
 	/**
 	 * Init/reset the Babel TV of the specified resource.
-	 * 
+	 *
 	 * @param modResource $resource resource object.
-	 * 
+	 *
 	 * @return  array associative array with linked resources (array contains only the resource itself).
 	 */
 	public function initBabelTv($resource) {
@@ -280,17 +280,17 @@ class Babel {
 		$this->updateBabelTv($resource->get('id'), $linkedResources, false);
 		return $linkedResources;
 	}
-	
+
     /**
      * Run \Babel\initBabelTv recursively
-     * 
+     *
      * @author https://github.com/manu37
-     * 
+     *
      * @param object $modx
      * @param object $babel
      * @param int $id
      * @param int $depth
-     * 
+     *
      * @return void
      */
     public function initBabelTvsRecursive(&$modx, &$babel, $id = null, $depth = 100) {
@@ -309,23 +309,23 @@ class Babel {
 
     /**
 	 * Init/reset the Babel TV of a resource specified by the id of the resource.
-	 * 
+	 *
 	 * @param int $resourceId id of resource (int).
 	 */
 	public function initBabelTvById($resourceId) {
 		$resource = $this->modx->getObject('modResource', $resourceId);
-		return $this->initBabelTv($resource);		
+		return $this->initBabelTv($resource);
 	}
 
     /**
 	 * Updates the Babel TV of the specified resource(s).
-	 * 
+	 *
 	 * @param mixed $resourceIds id of resource or array of resource ids which should be updated.
 	 * @param array $linkedResources associative array with linked resources: [contextKey] = resourceId
 	 * @param boolean $clearCache flag to empty cache after update.
 	 */
 	public function updateBabelTv($resourceIds, $linkedResources, $clearCache = true) {
-		if(!is_array($resourceIds)) {			
+		if(!is_array($resourceIds)) {
 			$resourceIds = array(intval($resourceIds));
 		}
 		$newValue = $this->encodeTranslationLinks($linkedResources);
@@ -338,23 +338,23 @@ class Babel {
 		}
 		return;
 	}
-	
+
 	/**
 	 * Returns an associative array of the linked resources of the specified resource.
-	 * 
+	 *
 	 * @param int $resourceId id of resource.
-	 * 
+	 *
 	 * @return array associative array with linked resources: [contextKey] = resourceId.
 	 */
 	public function getLinkedResources($resourceId) {
 		return $this->decodeTranslationLinks($this->babelTv->getValue($resourceId));
 	}
-	
+
 	/**
 	 * Creates an associative array of linked resources out of string.
-	 * 
+	 *
 	 * @param string $linkedResourcesString string which contains the translation links: [contextKey1]:[resourceId1];[contextKey2]:[resourceId2]
-	 * 
+	 *
 	 * @return array associative array with linked resources: [contextKey] = resourceId.
 	 */
 	public function decodeTranslationLinks($linkedResourcesString) {
@@ -368,14 +368,14 @@ class Babel {
 				$linkedResources[$contextKey] = $resourceId;
 			}
 		}
-		return $linkedResources;		
+		return $linkedResources;
 	}
-	
+
 	/**
 	 * Creates an string which contains the translation links out of an associative array.
-	 * 
+	 *
 	 * @param array $linkedResources associative array with linked resources: [contextKey] = resourceId
-	 * 
+	 *
 	 * return string which contains the translation links: [contextKey1]:[resourceId1];[contextKey2]:[resourceId2]
 	 */
 	public function encodeTranslationLinks($linkedResources) {
@@ -388,10 +388,10 @@ class Babel {
 		}
 		return implode(';', $contextResourcePairs);
 	}
-	
+
 	/**
 	 * Removes all translation links to the specified resource.
-	 * 
+	 *
 	 * @param int $resourceId id of resource.
 	 */
 	public function removeLanguageLinksToResource($resourceId) {
@@ -417,10 +417,10 @@ class Babel {
             }
         }
 	}
-	
+
 	/**
 	 * Removes all translation links to the specified context.
-	 * 
+	 *
 	 * @param int $contextKey key of context.
 	 */
 	public function removeLanguageLinksToContext($contextKey) {
@@ -461,10 +461,10 @@ class Babel {
 			}
 		}
 	}
-	
+
 	/**
      * Gets the contextKey by cultureKey
-     * 
+     *
      * @param string $cultureKey the culture key
      * @return string context key
      */
@@ -476,7 +476,7 @@ class Babel {
 		));
 		return (($ctxSetting)? $ctxSetting->get("context_key") : false);
 	}
-    
+
     /**
 	* Gets a Chunk and caches it; also falls back to file-based templates
 	* for easier debugging.
@@ -503,7 +503,7 @@ class Babel {
         $chunk->setCacheable(false);
         return $chunk->process($properties);
     }
-    
+
     /**
 	* Returns a modChunk object from a template file.
 	*
@@ -524,11 +524,11 @@ class Babel {
 		}
         return $chunk;
     }
-	
+
     /**
      * Get placeholders to create language selection menu.
      * Used in plugin and processors.
-     * 
+     *
      * @param object $resource
      * @return array menu
      */

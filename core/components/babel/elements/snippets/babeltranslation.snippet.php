@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Babel
  *
@@ -27,38 +28,41 @@
  * @author Jakob Class <jakob.class@class-zec.de>
  *
  * @package babel
- * 
+ *
  * @param resourceId		optional: id of resource of which a translated resource should be determined. Default: current resource
  * @param contextKey		optional: Key of context in which translated resource should be determined.
  * @param cultureKey		optional: Key of culture in which translated resource should be determined. Used only in case contextKey was not specified.  If both omitted: uses currently set cultureKey.
  * @param showUnpublished	optional: flag whether to show unpublished translations. Default: 0
  */
-$babel = $modx->getService('babel','Babel',$modx->getOption('babel.core_path',null,$modx->getOption('core_path').'components/babel/').'model/babel/',$scriptProperties);
+$babel = $modx->getService('babel', 'Babel', $modx->getOption('babel.core_path', null, $modx->getOption('core_path') . 'components/babel/') . 'model/babel/', $scriptProperties);
 
 /* be sure babel and babel TV is loaded */
-if (!($babel instanceof Babel) || !$babel->babelTv) return;
+if (!($babel instanceof Babel) || !$babel->babelTv)
+    return;
 
 /* get snippet properties */
-$resourceId = intval($modx->getOption('resourceId',$scriptProperties));
-if(empty($resourceId) && !empty($modx->resource) && is_object($modx->resource)) {
-	$resourceId = $modx->resource->get('id');
-} else {
-	return;
+$resourceId = intval($modx->getOption('resourceId', $scriptProperties));
+if (empty($resourceId)) {
+    if (!empty($modx->resource) && is_object($modx->resource)) {
+        $resourceId = $modx->resource->get('id');
+    } else {
+        return;
+    }
 }
-$contextKey = $modx->getOption('contextKey',$scriptProperties,'');
+$contextKey = $modx->getOption('contextKey', $scriptProperties, '');
 if (empty($contextKey)) {
-	$cultureKey = $modx->getOption('cultureKey',$scriptProperties,'');
-	$contextKey = $babel->getContextKey($cultureKey);
+    $cultureKey = $modx->getOption('cultureKey', $scriptProperties, '');
+    $contextKey = $babel->getContextKey($cultureKey);
 }
-$showUnpublished = $modx->getOption('showUnpublished',$scriptProperties,0);
+$showUnpublished = $modx->getOption('showUnpublished', $scriptProperties, 0);
 
 /* determine id of tranlated resource */
 $linkedResources = $babel->getLinkedResources($resourceId);
 $output = null;
-if(isset($linkedResources[$contextKey])) {
-	$resource = $modx->getObject('modResource',$linkedResources[$contextKey]);
-	if($resource && ($showUnpublished || $resource->get('published') == 1)) {
-		$output = $resource->get('id');
-	}
+if (isset($linkedResources[$contextKey])) {
+    $resource = $modx->getObject('modResource', $linkedResources[$contextKey]);
+    if ($resource && ($showUnpublished || $resource->get('published') == 1)) {
+        $output = $resource->get('id');
+    }
 }
 return $output;
