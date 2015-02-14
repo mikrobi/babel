@@ -23,13 +23,13 @@
  */
 /**
  * Babel English language file
- * 
+ *
  * @author Jakob Class <jakob.class@class-zec.de>
  *         goldsky <goldsky@virtudraft.com>
  *
  * @package babel
  * @subpackage lexicon
- * 
+ *
  * @todo complete babel.language_xx entries for every language
  */
 
@@ -43,6 +43,8 @@ $_lang['babel.unlink_translation_confirm'] = 'Are you sure you want to unlink tr
 $_lang['babel.link_translation_manually'] = 'or <strong>link translation manually</strong>:';
 $_lang['babel.link_translation'] = 'Link to existing resource';
 $_lang['babel.id_of_target'] = 'ID of target:';
+$_lang['babel....or'] = '... or';
+$_lang['babel.pagetitle_of_target'] = 'Pagetitle of target:';
 $_lang['babel.copy_tv_values'] = 'Copy synchronized TVs to target';
 $_lang['babel.save'] = 'Save';
 $_lang['babel.translation_pending'] = '[translations pending]';
@@ -82,7 +84,7 @@ $_lang['babel.language_sv'] = 'Swedish';
 $_lang['babel.language_tr'] = 'Turkish';
 $_lang['babel.language_uk'] = 'Ukrainian';
 $_lang['babel.language_vi'] = 'Vietnamese';
-$_lang['babel.language_zh'] = 'Chinese'; 
+$_lang['babel.language_zh'] = 'Chinese';
 
 /* error messages */
 $_lang['error.invalid_context_key'] = '[[+context]] is no valid context key.';

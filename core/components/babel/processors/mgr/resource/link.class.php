@@ -25,9 +25,9 @@
 
 /**
  * Processor file for Babel.
- * 
+ *
  * @author goldsky <goldsky@virtudraft.com>
- * 
+ *
  * @package babel
  */
 class BabelLinkResourceProcessor extends modObjectGetProcessor {

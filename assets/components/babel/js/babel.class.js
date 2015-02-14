@@ -2,7 +2,7 @@
  * Babel
  *
  * Copyright 2010 by Jakob Class <jakob.class@class-zec.de>
- * 
+ *
  * This file is part of Babel.
  *
  * Babel is free software; you can redistribute it and/or modify it under the
@@ -22,7 +22,7 @@
  */
 /**
  * Babel JavaScript class file for the menu in the manager.
- * 
+ *
  * @author goldsky <goldsky@virtudraft.com>
  *
  * @package babel
@@ -168,7 +168,7 @@ Babel.prototype.linkTranslation = function (ctx, id) {
                 xtype: 'modx-field-parent-change',
                 fieldLabel: _('babel.id_of_target'),
                 id: '',
-                width: 370,
+                anchor: '100%',
                 name: 'target-combo',
                 end: function (p) {
                     var t = Ext.getCmp('modx-resource-tree');
@@ -179,8 +179,47 @@ Babel.prototype.linkTranslation = function (ctx, id) {
                     t.on('click',t._handleClick,t);
                     t.disableHref = false;
                     win.fp.getForm().findField('target').setValue(p.v);
+                    win.fp.getForm().findField('page_id').setValue(null);
                     this.setValue(p.d);
                     this.oldValue = false;
+                }
+            }, {
+                xtype: 'modx-combo',
+                fieldLabel: _('babel....or') + ' ' + _('babel.pagetitle_of_target'),
+                name: 'page_id',
+                anchor: '100%',
+                url: this.config.connector_url,
+                baseParams: {
+                    action: 'mgr/resource/getlist',
+                    context: ctx,
+                    combo: true
+                },
+                displayField: 'pagetitle',
+                valueField: 'id',
+                fields: ['id','pagetitle'],
+                editable: true,
+                typeAhead: true,
+                forceSelection: false,
+                listeners: {
+                    select: {
+                        fn: function(combo, record, index) {
+                            if (combo.getValue() === "" || combo.getValue() === "&nbsp;") {
+                                combo.setValue(null);
+                            } else {
+                                win.fp.getForm().findField('target').setValue(record.id);
+                            }
+                            win.fp.getForm().findField('target-combo').reset();
+                        },
+                        scope: this
+                    },
+                    blur: {
+                        fn: function(combo) {
+                            if (combo.getValue() === "" || combo.getValue() === "&nbsp;") {
+                                combo.setValue(null);
+                            }
+                        },
+                        scope: this
+                    }
                 }
             }, {
                 xtype: 'xcheckbox',
