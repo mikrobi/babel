@@ -23,14 +23,14 @@
  */
 /**
  * BabelLinks snippet to display links to translated resources
- * 
+ *
  * Based on ideas of Sylvain Aerni <enzyms@gmail.com>
  *
  * @author Jakob Class <jakob.class@class-zec.de>
  *         goldsky <goldsky@virtudraft.com>
  *
  * @package babel
- * 
+ *
  * @param resourceId        optional: id of resource of which links to translations should be displayed. Default: current resource
  * @param tpl               optional: Chunk to display a language link. Default: babelLink
  * @param activeCls         optional: CSS class name for the current active language. Default: active
@@ -44,10 +44,12 @@ if (!($babel instanceof Babel) || !$babel->babelTv) return;
 
 /* get snippet properties */
 $resourceId = intval($modx->getOption('resourceId',$scriptProperties));
-if(empty($resourceId) && !empty($modx->resource) && is_object($modx->resource)) {
-    $resourceId = $modx->resource->get('id');
-} else {
-    return;
+if (empty($resourceId)) {
+    if (!empty($modx->resource) && is_object($modx->resource)) {
+        $resourceId = $modx->resource->get('id');
+    } else {
+        return;
+    }
 }
 $tpl = $modx->getOption('tpl',$scriptProperties,'babelLink');
 $wrapperTpl = $modx->getOption('wrapperTpl',$scriptProperties);
