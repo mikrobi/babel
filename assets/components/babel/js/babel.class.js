@@ -203,7 +203,7 @@ Babel.prototype.linkTranslation = function (ctx, id) {
                 listeners: {
                     select: {
                         fn: function(combo, record, index) {
-                            if (combo.getValue() === "" || combo.getValue() === "&nbsp;") {
+                            if (combo.getValue() === "" || combo.getValue() === 0 || combo.getValue() === "&nbsp;") {
                                 combo.setValue(null);
                             } else {
                                 win.fp.getForm().findField('target').setValue(record.id);
@@ -214,7 +214,7 @@ Babel.prototype.linkTranslation = function (ctx, id) {
                     },
                     blur: {
                         fn: function(combo) {
-                            if (combo.getValue() === "" || combo.getValue() === "&nbsp;") {
+                            if (combo.getValue() === "" || combo.getValue() === 0 || combo.getValue() === "&nbsp;") {
                                 combo.setValue(null);
                             }
                         },

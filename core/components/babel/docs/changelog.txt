@@ -1,5 +1,9 @@
 Changelog for Babel.
 
+Babel 3.0.0-dev
+=====================================
+- [#106] fix resource selection when selecting empty text (&nbsp;)
+
 Babel 3.0.0-beta3 (February 14, 2015)
 =====================================
 - [#101] fix BabelTranslation
