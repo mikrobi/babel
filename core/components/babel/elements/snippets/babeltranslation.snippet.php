@@ -52,6 +52,8 @@ if (empty($resourceId)) {
 $contextKey = $modx->getOption('contextKey', $scriptProperties, '');
 if (empty($contextKey)) {
     $cultureKey = $modx->getOption('cultureKey', $scriptProperties, '');
+    if( !$cultureKey )
+	$cultureKey = $modx->getOption('cultureKey');
     $contextKey = $babel->getContextKey($cultureKey);
 }
 $showUnpublished = $modx->getOption('showUnpublished', $scriptProperties, 0);
