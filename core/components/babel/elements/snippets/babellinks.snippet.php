@@ -108,18 +108,36 @@ foreach($contextKeys as $contextKey) {
             $translationAvailable = true;
         }
     }
+    $getRequest = $_GET;
+    unset($getRequest['id']);
+    unset($getRequest[$modx->getOption('request_param_alias', null, 'q')]);
+    unset($getRequest['cultureKey']);
     if($translationAvailable) {
-        $getRequest = $_GET;
-        unset($getRequest['id']);
-        unset($getRequest[$modx->getOption('request_param_alias', null, 'q')]);
-        unset($getRequest['cultureKey']);
         $url = $context->makeUrl($linkedResources[$contextKey],$getRequest,'full');
         $active = ($resource->get('context_key') == $contextKey) ? $activeCls : '';
         $placeholders = array(
             'cultureKey' => $cultureKey,
             'url' => $url,
             'active' => $active,
-            'id' => $translationAvailable? $linkedResources[$contextKey] : ''
+            'id' => $linkedResources[$contextKey]
+        );
+
+        if (!empty($toArray)) {
+            $outputArray[] = $placeholders;
+        } else {
+            $chunk = $babel->getChunk($tpl,$placeholders);
+            if(!empty($chunk)) {
+                $outputArray[] = $chunk;
+            }
+        }
+    } elseif ($includeUnlinked) {
+        $url = $context->makeUrl($context->getOption('site_start'),$getRequest,'full');
+        $active = ($resource->get('context_key') == $contextKey) ? $activeCls : '';
+        $placeholders = array(
+            'cultureKey' => $cultureKey,
+            'url' => $url,
+            'active' => $active,
+            'id' => $context->getOption('site_start')
         );
 
         if (!empty($toArray)) {
