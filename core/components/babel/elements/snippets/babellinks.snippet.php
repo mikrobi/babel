@@ -58,6 +58,7 @@ $showUnpublished = $modx->getOption('showUnpublished',$scriptProperties,0);
 $showCurrent = $modx->getOption('showCurrent',$scriptProperties,0);
 $outputSeparator = $modx->getOption('outputSeparator',$scriptProperties,"\n");
 $includeUnlinked = $modx->getOption('includeUnlinked',$scriptProperties,0);
+$ignoreSiteStatus = $modx->getOption('ignoreSiteStatus',$scriptProperties,0);
 
 if(!empty($modx->resource) && is_object($modx->resource) && $resourceId === $modx->resource->get('id')) {
     $contextKeys = $babel->getGroupContextKeys($modx->resource->get('context_key'));
@@ -86,7 +87,7 @@ foreach($contextKeys as $contextKey) {
         continue;
     }
     $context->prepare();
-    if (!$context->getOption('site_status', null, true)) {
+    if (!$context->getOption('site_status', null, true) && !$ignoreSiteStatus) {
         continue;
     }
     $cultureKey = $context->getOption('cultureKey',$modx->getOption('cultureKey'));

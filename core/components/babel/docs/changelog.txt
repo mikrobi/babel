@@ -2,6 +2,7 @@ Changelog for Babel.
 
 Babel 3.0.0-dev
 =====================================
+- [#105] add &ignoreSiteStatus option to ignore site_status (when the site is offline)
 - [#108] fix context's link then there's no translation on &includeUnlinked=`1` option
 - [#106] fix resource selection when selecting empty text (&nbsp;)
 
