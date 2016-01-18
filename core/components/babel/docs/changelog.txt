@@ -2,6 +2,7 @@ Changelog for Babel.
 
 Babel 3.0.0-dev
 =====================================
+- [#114] Fixed context on linking
 - [#115] BabelLinks: Add &language Parameter
 - [#110] Updated dutch lexicon
 

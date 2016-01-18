@@ -100,7 +100,7 @@ class Babel {
         	'jsUrl' => $assetsUrl.'js/',
         	'syncTvs' => $syncTvs,
         	'babelTvName' => $babelTvName,
-        	'connector_url' => $assetsUrl . 'conn/mgr.php',
+        	'connectorUrl' => $assetsUrl . 'conn/mgr.php',
         ),$config);
 
         /* load babel lexicon */
