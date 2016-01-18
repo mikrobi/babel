@@ -565,7 +565,7 @@ class Babel {
 				'resourceId' => $resourceId,
 				'resourceUrl' => $resourceUrl,
 				'resourceTitle' => $resourceTitle,
-				'displayText' => $this->modx->lexicon('babel.language_'.$cultureKey)." ($contextKey)",
+				'displayText' => $this->modx->lexicon('babel.language_'.$cultureKey).' ('. (!empty($cultureKey) ? $cultureKey : $contextKey) .')',
 			);
             $menu[$contextKey] = $placeholders;
         }
