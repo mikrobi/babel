@@ -2,6 +2,7 @@ Changelog for Babel.
 
 Babel 3.0.0-dev
 =====================================
+- changed link & unlink logics, no reset whatsoever
 - [#103] Added mouseover action on babel's button to show menu
 - [#66] fixed moving resource to another context
 - [#107] Replaced contextKey with cultureKey on drop down selection

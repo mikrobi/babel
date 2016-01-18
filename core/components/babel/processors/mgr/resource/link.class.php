@@ -85,13 +85,13 @@ class BabelLinkResourceProcessor extends modObjectGetProcessor {
         $props = $this->getProperties();
 
         $targetResources = $this->modx->babel->getLinkedResources($props['target']);
-        if (count($targetResources) > 1 && isset($targetResources[$this->object->get('context_key')])) {
-            return $this->failure($this->modx->lexicon('error.translation_already_exists', array(
-                                'context' => $props['context'],
-                                'resource' => $targetResources[$props['context']],
-                                'pagetitle' => $this->modx->getObject('modResource', $targetResources[$props['context']])->get('pagetitle'),
-            )));
-        }
+//        if (count($targetResources) > 1 && isset($targetResources[$this->object->get('context_key')])) {
+//            return $this->failure($this->modx->lexicon('error.translation_already_exists', array(
+//                                'context' => $props['context'],
+//                                'resource' => $targetResources[$props['context']],
+//                                'pagetitle' => $this->modx->getObject('modResource', $targetResources[$props['context']])->get('pagetitle'),
+//            )));
+//        }
 
         $linkedResources = $this->modx->babel->getLinkedResources($this->object->get('id'));
         if (empty($linkedResources)) {
@@ -107,7 +107,11 @@ class BabelLinkResourceProcessor extends modObjectGetProcessor {
         }
 
         $linkedResources[$props['context']] = $this->targetResource->get('id');
-        $this->modx->babel->updateBabelTv($linkedResources, $linkedResources);
+        /**
+         * Join all existing linked resources from both resources
+         */
+        $mergedResources = array_merge($targetResources, $linkedResources);
+        $this->modx->babel->updateBabelTv($mergedResources, $mergedResources);
 
         /* copy values of synchronized TVs to target resource */
         if (isset($props['copy-tv-values']) && intval($props['copy-tv-values']) == 1) {
