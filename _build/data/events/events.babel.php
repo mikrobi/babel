@@ -23,7 +23,7 @@
  */
 /**
  *  Adds events to Babel plugin
- * 
+ *
  * @author Jakob Class <jakob.class@class-zec.de>
  *
  * @package babel
@@ -62,6 +62,13 @@ $events['OnContextRemove']->fromArray(array(
 $events['OnResourceDuplicate'] = $modx->newObject('modPluginEvent');
 $events['OnResourceDuplicate']->fromArray(array(
     'event' => 'OnResourceDuplicate',
+    'priority' => 0,
+    'propertyset' => 0,
+),'',true,true);
+
+$events['OnResourceSort'] = $modx->newObject('modPluginEvent');
+$events['OnResourceSort']->fromArray(array(
+    'event' => 'OnResourceSort',
     'priority' => 0,
     'propertyset' => 0,
 ),'',true,true);

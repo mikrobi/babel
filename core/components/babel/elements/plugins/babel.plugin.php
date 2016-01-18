@@ -23,7 +23,7 @@
  */
 /**
  * Babel Plugin to link and synchronize multilingual resources
- * 
+ *
  * Based on ideas of Sylvain Aerni <enzyms@gmail.com>
  *
  * Events:
@@ -31,9 +31,9 @@
  *
  * @author Jakob Class <jakob.class@class-zec.de>
  *         goldsky <goldsky@virtudraft.com>
- * 
+ *
  * @package babel
- * 
+ *
  */
 
 $babel = $modx->getService('babel','Babel',$modx->getOption('babel.core_path',null,$modx->getOption('core_path').'components/babel/').'model/babel/');
@@ -75,7 +75,7 @@ switch ($modx->event->name) {
 			$cultureKey = $context->getOption('cultureKey',$modx->getOption('cultureKey'));
             $languagesStore[] = array($modx->lexicon('babel.language_'.$cultureKey)." ($contextKey)", $contextKey);
         }
-		
+
         $babel->config['context_key'] = $resource->get('context_key');
         $babel->config['languagesStore'] = $languagesStore;
         $babel->config['menu'] = $babel->getMenu($resource);
@@ -97,7 +97,7 @@ switch ($modx->event->name) {
     });
 </script>');
         break;
-	
+
 	case 'OnDocFormSave':
 		$resource =& $modx->event->params['resource'];
 		if(!$resource) {
@@ -111,7 +111,7 @@ switch ($modx->event->name) {
 		}
 		$babel->synchronizeTvs($resource->get('id'));
 		break;
-		
+
 	case 'OnEmptyTrash':
 		/* remove translation links to non-existing resources */
 		$deletedResourceIds =& $modx->event->params['ids'];
@@ -119,9 +119,9 @@ switch ($modx->event->name) {
 			foreach ($deletedResourceIds as $deletedResourceId) {
 				$babel->removeLanguageLinksToResource($deletedResourceId);
 			}
-		}		
+		}
 		break;
-		
+
 	case 'OnContextRemove':
 		/* remove translation links to non-existing contexts */
 		$context =& $modx->event->params['context'];
@@ -129,11 +129,26 @@ switch ($modx->event->name) {
 			$babel->removeLanguageLinksToContext($context->get('key'));
 		}
 		break;
-	
+
 	case 'OnResourceDuplicate':
 		/* init Babel TV of duplicated resources */
 		$resource =& $modx->event->params['newResource'];
-        $babel->initBabelTvsRecursive($modx,$babel,$resource->get('id')); 
+        $babel->initBabelTvsRecursive($modx,$babel,$resource->get('id'));
 		break;
+
+    case 'OnResourceSort':
+        $nodesAffected =& $modx->event->params['nodesAffected'];
+        foreach ($nodesAffected as $node) {
+            $linkedResources = $babel->getLinkedResources($node->get('id'));
+            foreach ($linkedResources as $key => $id) {
+                if ($id === $node->get('id')) {
+                    unset($linkedResources[$key]);
+                }
+            }
+            $linkedResources[$node->get('context_key')] = $node->get('id');
+            $babel->updateBabelTv($linkedResources, $linkedResources);
+        }
+
+        break;
 }
 return;

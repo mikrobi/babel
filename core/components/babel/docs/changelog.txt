@@ -2,7 +2,8 @@ Changelog for Babel.
 
 Babel 3.0.0-dev
 =====================================
-- [#107] Replace contextKey with cultureKey on drop down selection
+- [#66] fixed moving resource to another context
+- [#107] Replaced contextKey with cultureKey on drop down selection
 - [#114] Fixed context on linking
 - [#115] BabelLinks: Add &language Parameter
 - [#110] Updated dutch lexicon
