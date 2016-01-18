@@ -114,7 +114,8 @@ class BabelUnlinkResourceProcessor extends modObjectGetProcessor {
 //            )));
 //        }
         unset($linkedResources[$props['context']]);
-        $this->modx->babel->updateBabelTv($linkedResources, $linkedResources);
+        $diff = array_diff($linkedResources, $targetResources);
+        $this->modx->babel->updateBabelTv($diff, $diff);
 
         return $this->cleanup();
     }
