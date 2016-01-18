@@ -37,7 +37,7 @@ Babel.prototype.getMenu = function (menus) {
     var actionButtons = Ext.getCmp("modx-action-buttons");
     if (actionButtons) {
         var menu = [];
-        for (ctx in menus) {
+        for (var ctx in menus) {
             if (typeof(menus[ctx]["resourceUrl"]) !== 'undefined' &&
                     menus[ctx]["resourceUrl"] !== "" &&
                     menus[ctx]["resourceUrl"] !== "#" ) {
@@ -112,6 +112,12 @@ Babel.prototype.getMenu = function (menus) {
                         btn.setText(menus[_this.config.context_key]["displayText"]);
                     },
                     scope: this
+                },
+                mouseover: function (btn) {
+                    btn.showMenu();
+                },
+                mouseout: function (btn) {
+//                    btn.hideMenu();
                 }
             }
         });
