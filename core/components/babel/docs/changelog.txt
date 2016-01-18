@@ -1,5 +1,10 @@
 Changelog for Babel.
 
+Babel 3.0.0-dev
+=====================================
+- [#115] BabelLinks: Add &language Parameter
+- [#110] Updated dutch lexicon
+
 Babel 3.0.0-beta4 (March 25, 2015)
 =====================================
 - [#105] add &ignoreSiteStatus option to ignore site_status (when the site is offline)
