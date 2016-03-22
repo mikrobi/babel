@@ -53,7 +53,7 @@ class BabelResourceGetListProcessor extends modResourceGetListProcessor {
         if ($this->getProperty('combo', false)) {
             $empty = array(
                 'id' => 0,
-                'pagetitle' => '&nbsp;',
+                'pagetitle' => '',
             );
             $list[] = $empty;
         }

@@ -231,28 +231,7 @@ Babel.prototype.linkTranslation = function (ctx, id) {
                 fields: ['id','pagetitle'],
                 editable: true,
                 typeAhead: true,
-                forceSelection: false,
-                listeners: {
-                    select: {
-                        fn: function(combo, record, index) {
-                            if (combo.getValue() === "" || combo.getValue() === 0 || combo.getValue() === "&nbsp;") {
-                                combo.setValue(null);
-                            } else {
-                                win.fp.getForm().findField('target').setValue(record.id);
-                            }
-                            win.fp.getForm().findField('target-combo').reset();
-                        },
-                        scope: this
-                    },
-                    blur: {
-                        fn: function(combo) {
-                            if (combo.getValue() === "" || combo.getValue() === 0 || combo.getValue() === "&nbsp;") {
-                                combo.setValue(null);
-                            }
-                        },
-                        scope: this
-                    }
-                }
+                forceSelection: true
             }, {
                 xtype: 'xcheckbox',
                 boxLabel: _('babel.copy_tv_values'),
