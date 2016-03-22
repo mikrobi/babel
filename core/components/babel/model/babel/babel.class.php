@@ -34,7 +34,7 @@
 class Babel {
 
     const VERSION = '3.0.0';
-    const RELEASE = 'beta4';
+    const RELEASE = 'beta5';
 
     /**
      * @access protected
@@ -100,7 +100,7 @@ class Babel {
         	'jsUrl' => $assetsUrl.'js/',
         	'syncTvs' => $syncTvs,
         	'babelTvName' => $babelTvName,
-        	'connector_url' => $assetsUrl . 'conn/mgr.php',
+        	'connectorUrl' => $assetsUrl . 'conn/mgr.php',
         ),$config);
 
         /* load babel lexicon */
@@ -565,7 +565,7 @@ class Babel {
 				'resourceId' => $resourceId,
 				'resourceUrl' => $resourceUrl,
 				'resourceTitle' => $resourceTitle,
-				'displayText' => $this->modx->lexicon('babel.language_'.$cultureKey)." ($contextKey)",
+				'displayText' => $this->modx->lexicon('babel.language_'.$cultureKey).' ('. (!empty($cultureKey) ? $cultureKey : $contextKey) .')',
 			);
             $menu[$contextKey] = $placeholders;
         }

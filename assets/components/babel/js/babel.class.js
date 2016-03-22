@@ -37,7 +37,7 @@ Babel.prototype.getMenu = function (menus) {
     var actionButtons = Ext.getCmp("modx-action-buttons");
     if (actionButtons) {
         var menu = [];
-        for (ctx in menus) {
+        for (var ctx in menus) {
             if (typeof(menus[ctx]["resourceUrl"]) !== 'undefined' &&
                     menus[ctx]["resourceUrl"] !== "" &&
                     menus[ctx]["resourceUrl"] !== "#" ) {
@@ -112,6 +112,12 @@ Babel.prototype.getMenu = function (menus) {
                         btn.setText(menus[_this.config.context_key]["displayText"]);
                     },
                     scope: this
+                },
+                mouseover: function (btn) {
+                    btn.showMenu();
+                },
+                mouseout: function (btn) {
+//                    btn.hideMenu();
                 }
             }
         });
@@ -124,7 +130,7 @@ Babel.prototype.linkTranslation = function (ctx, id) {
     var win = MODx.load({
         xtype: 'modx-window',
         title: _('babel.link_translation'),
-        url: this.config.connector_url,
+        url: this.config.connectorUrl,
         baseParams: {
             action: 'mgr/resource/link',
             context: ctx,
@@ -175,6 +181,9 @@ Babel.prototype.linkTranslation = function (ctx, id) {
                     if (!t)
                         return;
                     p.d = p.d || p.v;
+                    if (p.c !== ctx) {
+                        return;
+                    }
                     t.removeListener('click',this.handleChangeParent,this);
                     t.on('click',t._handleClick,t);
                     t.disableHref = false;
@@ -182,13 +191,36 @@ Babel.prototype.linkTranslation = function (ctx, id) {
                     win.fp.getForm().findField('page_id').setValue(null);
                     this.setValue(p.d);
                     this.oldValue = false;
+                },
+                handleChangeParent: function (node, e) {
+                    var t = Ext.getCmp('modx-resource-tree');
+                    if (!t) {
+                        return false;
+                    }
+                    t.disableHref = true;
+
+                    var id = node.id.split('_');
+                    id = id[1];
+                    if (id == this.config.currentid) {
+                        MODx.msg.alert('', _('resource_err_own_parent'));
+                        return false;
+                    }
+
+                    this.fireEvent('end', {
+                        v: node.attributes.type !== 'modContext' ? id : node.attributes.pk,
+                        d: Ext.util.Format.stripTags(node.text),
+                        c: node.attributes.ctx
+                    });
+                    e.preventDefault();
+                    e.stopEvent();
+                    return true;
                 }
             }, {
                 xtype: 'modx-combo',
                 fieldLabel: _('babel....or') + ' ' + _('babel.pagetitle_of_target'),
                 name: 'page_id',
                 anchor: '100%',
-                url: this.config.connector_url,
+                url: this.config.connectorUrl,
                 baseParams: {
                     action: 'mgr/resource/getlist',
                     context: ctx,
@@ -199,28 +231,7 @@ Babel.prototype.linkTranslation = function (ctx, id) {
                 fields: ['id','pagetitle'],
                 editable: true,
                 typeAhead: true,
-                forceSelection: false,
-                listeners: {
-                    select: {
-                        fn: function(combo, record, index) {
-                            if (combo.getValue() === "" || combo.getValue() === 0 || combo.getValue() === "&nbsp;") {
-                                combo.setValue(null);
-                            } else {
-                                win.fp.getForm().findField('target').setValue(record.id);
-                            }
-                            win.fp.getForm().findField('target-combo').reset();
-                        },
-                        scope: this
-                    },
-                    blur: {
-                        fn: function(combo) {
-                            if (combo.getValue() === "" || combo.getValue() === 0 || combo.getValue() === "&nbsp;") {
-                                combo.setValue(null);
-                            }
-                        },
-                        scope: this
-                    }
-                }
+                forceSelection: true
             }, {
                 xtype: 'xcheckbox',
                 boxLabel: _('babel.copy_tv_values'),
@@ -237,7 +248,7 @@ Babel.prototype.unlinkTranslation = function (ctx, id, target) {
     return MODx.msg.confirm({
         title: _('confirm'),
         text: _('babel.unlink_translation_confirm', {context: ctx, id: id}),
-        url: this.config.connector_url,
+        url: this.config.connectorUrl,
         params: {
             action: 'mgr/resource/unlink',
             context: ctx,
@@ -277,7 +288,7 @@ Babel.prototype.createTranslation = function (ctx, id) {
     return MODx.msg.confirm({
         title: _('confirm'),
         text: _('babel.create_translation_confirm', {context: ctx, id: id}),
-        url: this.config.connector_url,
+        url: this.config.connectorUrl,
         params: {
             action: 'mgr/resource/duplicate',
             context_key: ctx,

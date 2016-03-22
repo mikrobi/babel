@@ -1,6 +1,6 @@
 /**
  * Babel CSS file
- * 
+ *
  * @author goldsky <goldsky@virtudraft.com>
  *
  * @package babel
@@ -8,13 +8,30 @@
 
 .icon-link {
     background-image: url(../icons/link.png) !important;
+    background-repeat: no-repeat;
 }
 .icon-unlink {
     background-image: url(../icons/link_break.png) !important;
+    background-repeat: no-repeat;
 }
 .icon-page-go {
     background-image: url(../icons/page_go.png) !important;
+    background-repeat: no-repeat;
 }
 .icon-pencil-go {
     background-image: url(../icons/pencil_go.png) !important;
+    background-repeat: no-repeat;
+}
+
+.icon-babel-actioncolumn-img {
+    width: 16px;
+    height: 16px;
+    margin-top: 6px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    margin-right: 6px;
+}
+
+.x-combo-list-item {
+    min-height: 20px;
 }

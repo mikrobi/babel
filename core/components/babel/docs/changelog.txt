@@ -1,5 +1,17 @@
 Changelog for Babel.
 
+Babel 3.0.0-beta5 (March 22, 2016)
+=====================================
+- updated plugin to ignore menu if the current context key is not included "babel.contextKeys" in System Settings
+- changed empty item on combobox
+- changed link & unlink logics, no reset whatsoever
+- [#103] Added mouseover action on babel's button to show menu
+- [#66] fixed moving resource to another context
+- [#107] Replaced contextKey with cultureKey on drop down selection
+- [#114] Fixed context on linking
+- [#115] BabelLinks: Add &language Parameter
+- [#110] Updated dutch lexicon
+
 Babel 3.0.0-beta4 (March 25, 2015)
 =====================================
 - [#105] add &ignoreSiteStatus option to ignore site_status (when the site is offline)

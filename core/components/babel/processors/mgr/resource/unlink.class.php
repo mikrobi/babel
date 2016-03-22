@@ -25,9 +25,9 @@
 
 /**
  * Processor file for Babel.
- * 
+ *
  * @author goldsky <goldsky@virtudraft.com>
- * 
+ *
  * @package babel
  */
 class BabelUnlinkResourceProcessor extends modObjectGetProcessor {
@@ -67,12 +67,15 @@ class BabelUnlinkResourceProcessor extends modObjectGetProcessor {
             return $this->modx->lexicon('error.invalid_context_key', array('context' => $contextKey));
         }
 
-        if ($this->targetResource->get('context_key') !== $contextKey) {
-            return $this->modx->lexicon('error.resource_from_other_context', array(
-                        'resource' => $this->targetResource->get('id'),
-                        'context' => $contextKey
-            ));
-        }
+        /**
+         * Comment this out to allow unlinking from missing context
+         */
+//        if ($this->targetResource->get('context_key') !== $contextKey) {
+//            return $this->modx->lexicon('error.resource_from_other_context', array(
+//                        'resource' => $this->targetResource->get('id'),
+//                        'context' => $contextKey
+//            ));
+//        }
 
         return parent::initialize();
     }
@@ -85,22 +88,34 @@ class BabelUnlinkResourceProcessor extends modObjectGetProcessor {
         $props = $this->getProperties();
 
         $targetResources = $this->modx->babel->getLinkedResources($props['target']);
-        if (!isset($targetResources[$this->object->get('context_key')])) {
-            return $this->failure($this->modx->lexicon('error.no_link_to_context', array(
-                                'context' => $props['context'],
-            )));
+        if (empty($targetResources)) {
+            $this->modx->babel->initBabelTv($this->targetResource);
         }
-
+        unset($targetResources[$this->object->get('context_key')]);
+        $this->modx->babel->updateBabelTv($targetResources, $targetResources);
+        /**
+         * Comment this out to allow unlinking from missing context
+         */
+//        if (!isset($targetResources[$this->object->get('context_key')])) {
+//            return $this->failure($this->modx->lexicon('error.no_link_to_context', array(
+//                                'context' => $props['context'],
+//            )));
+//        }
         $linkedResources = $this->modx->babel->getLinkedResources($this->object->get('id'));
-        if (!isset($linkedResources[$props['context']])) {
-            return $this->failure($this->modx->lexicon('error.no_link_to_context', array(
-                                'context' => $this->object->get('context_key'),
-            )));
+        if (empty($linkedResources)) {
+            $this->modx->babel->initBabelTv($this->object);
         }
-
-        $this->modx->babel->initBabelTv($this->targetResource);
+        /**
+         * Comment this out to allow unlinking from missing context
+         */
+//        if (!isset($linkedResources[$props['context']])) {
+//            return $this->failure($this->modx->lexicon('error.no_link_to_context', array(
+//                                'context' => $this->object->get('context_key'),
+//            )));
+//        }
         unset($linkedResources[$props['context']]);
-        $this->modx->babel->updateBabelTv($linkedResources, $linkedResources);
+        $diff = array_diff($linkedResources, $targetResources);
+        $this->modx->babel->updateBabelTv($diff, $diff);
 
         return $this->cleanup();
     }
