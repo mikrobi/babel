@@ -79,7 +79,10 @@ switch ($modx->event->name) {
         $babel->config['context_key'] = $resource->get('context_key');
         $babel->config['languagesStore'] = $languagesStore;
         $babel->config['menu'] = $babel->getMenu($resource);
-
+        if (empty($babel->config['menu'])) {
+            $modx->log(modX::LOG_LEVEL_ERROR, '[Babel] Could not menu for context key: "' . $babel->config['context_key'] . '". Try to check "babel.contextKeys" in System Settings. If this is intended, you can ignore this warning.');
+            return;
+        }
         $version = str_replace(' ', '', $babel->config['version']);
         $isCSSCompressed = $modx->getOption('compress_css');
         $withVersion = $isCSSCompressed ? '' : '?v='.$version;

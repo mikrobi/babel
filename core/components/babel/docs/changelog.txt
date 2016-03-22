@@ -1,7 +1,8 @@
 Changelog for Babel.
 
-Babel 3.0.0-dev
+Babel 3.0.0-beta5 (March 22, 2016)
 =====================================
+- updated plugin to ignore menu if the current context key is not included "babel.contextKeys" in System Settings
 - changed empty item on combobox
 - changed link & unlink logics, no reset whatsoever
 - [#103] Added mouseover action on babel's button to show menu
