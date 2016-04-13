@@ -49,12 +49,12 @@ if (empty($resourceId)) {
         return;
     }
 }
-$contextKey = $modx->getOption('contextKey', $scriptProperties, '');
+$contextKey = $modx->getOption('contextKey', $scriptProperties, '', true);
 if (empty($contextKey)) {
-    $cultureKey = $modx->getOption('cultureKey', $scriptProperties, '');
+    $cultureKey = $modx->getOption('cultureKey', $scriptProperties, '', true);
     $contextKey = $babel->getContextKey($cultureKey);
 }
-$showUnpublished = $modx->getOption('showUnpublished', $scriptProperties, 0);
+$showUnpublished = $modx->getOption('showUnpublished', $scriptProperties, 0, true);
 
 /* determine id of tranlated resource */
 $linkedResources = $babel->getLinkedResources($resourceId);
