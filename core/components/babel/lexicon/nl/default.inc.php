@@ -1,7 +1,7 @@
 <?php
 /**
  * Babel Dutch language file
- * 
+ *
  * @author Bert Oost <bert@oostdesign.nl>
  * @author Wieger Sloot <wieger@sterc.nl>
  *
@@ -62,7 +62,7 @@ $_lang['babel.language_sv'] = 'Zweeds';
 $_lang['babel.language_tr'] = 'Turks';
 $_lang['babel.language_uk'] = 'Oekraïens';
 $_lang['babel.language_vi'] = 'Vietnamees';
-$_lang['babel.language_zh'] = 'Chinees'; 
+$_lang['babel.language_zh'] = 'Chinees';
 
 /* error messages */
 $_lang['error.invalid_context_key'] = '[[+context]] is geen geldige channel key.';
