@@ -33,6 +33,8 @@
  * @todo complete babel.language_xx entries for every language
  */
 
+$_lang['babel'] = 'Babel';
+$_lang['babel.desc'] = 'Managing multilingual system';
 $_lang['babel.tv_caption'] = 'Babel Translation Links';
 $_lang['babel.tv_description'] = 'Maintained by Babel plugin. Please do not change!';
 $_lang['babel.create_translation'] = 'Create translation';
