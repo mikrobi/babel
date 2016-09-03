@@ -189,6 +189,9 @@ $vehicle->resolve('file', array(
 $vehicle->resolve('php', array(
     'source' => $sources['resolvers'].'setupoptions.resolver.php',
 ));
+$vehicle->resolve('php', array(
+    'source' => $sources['resolvers'].'babelevents.resolver.php',
+));
 $builder->putVehicle($vehicle);
 
 /* now pack in the license file, readme and setup options */
