@@ -40,9 +40,7 @@ function createEvent(modX &$modx, $name, $service = 0)
 {
     $success = true;
     $ct = $modx->getCount('modEvent', array(
-        'name' => $name,
-        'service' => $service,
-        'groupname' => 'Babel'
+        'name' => $name
     ));
     if (empty($ct)) {
         /** @var modEvent $event */
@@ -51,7 +49,7 @@ function createEvent(modX &$modx, $name, $service = 0)
             'name' => $name,
             'service' => $service,
             'groupname' => 'Babel'
-        ));
+        ), '', true, true);
         if ($event->save()) {
             $modx->log(xPDO::LOG_LEVEL_INFO, 'System event ' . $name . ' was created.');
         } else {
@@ -93,17 +91,19 @@ $babelEvents = array(
     'OnBabelUnlink' // invoked on unlink the resource from a target resource
 );
 
-$success = false;
+$success = true;
 switch ($options[xPDOTransport::PACKAGE_ACTION]) {
     case xPDOTransport::ACTION_INSTALL:
     case xPDOTransport::ACTION_UPGRADE:
         foreach ($babelEvents as $babelEvent) {
-            $success = ($success && createEvent($object->xpdo, $babelEvent, 2);
+            $created = createEvent($object->xpdo, $babelEvent, 2);
+            $success = $success && $created;
         }
         break;
     case xPDOTransport::ACTION_UNINSTALL:
         foreach ($babelEvents as $babelEvent) {
-            $success = $success && removeEvent($object->xpdo, $babelEvent);
+            $removed = removeEvent($object->xpdo, $babelEvent);
+            $success = $success && $removed;
         }
         break;
 }
