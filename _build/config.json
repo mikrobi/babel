@@ -1,0 +1,137 @@
+{
+  "name": "Babel",
+  "lowCaseName": "babel",
+  "description": "The easy way for your multilingual site!",
+  "author": "Jakob Class, goldsky",
+  "version": "3.0.1",
+  "package": {
+    "menus": [
+      {
+        "text": "babel",
+        "description": "babel.desc",
+        "action": "index"
+      }
+    ],
+    "elements": {
+      "snippets": [
+        {
+          "name": "BabelLinks",
+          "description": "Displays links to translated resources.",
+          "file": "babellinks.snippet.php",
+          "properties": [
+            {
+              "name": "resourceId",
+              "description": "babellinks.resourceId",
+              "value": ""
+            },
+            {
+              "name": "tpl",
+              "description": "babeltranslation.tpl",
+              "value": "babelLink"
+            },
+            {
+              "name": "activeCls",
+              "description": "babeltranslation.activeCls",
+              "value": "active"
+            },
+            {
+              "name": "showUnpublished",
+              "description": "babeltranslation.showUnpublished",
+              "type": "combo-boolean",
+              "value": "0"
+            },
+            {
+              "name": "showCurrent",
+              "description": "babeltranslation.showCurrent",
+              "type": "combo-boolean",
+              "value": "0"
+            },
+            {
+              "name": "includeUnlinked",
+              "description": "babeltranslation.includeUnlinked",
+              "type": "combo-boolean",
+              "value": "0"
+            }
+          ]
+        },
+        {
+          "name": "BabelTranslation",
+          "description": "Returns the id of a translated resource in a given context.",
+          "file": "babeltranslation.snippet.php",
+          "properties": [
+            {
+              "name": "resourceId",
+              "description": "babeltranslation.resourceId",
+              "value": ""
+            },
+            {
+              "name": "contextKey",
+              "description": "babeltranslation.contextKey",
+              "value": ""
+            },
+            {
+              "name": "cultureKey",
+              "description": "babeltranslation.cultureKey",
+              "value": ""
+            },
+            {
+              "name": "showUnpublished",
+              "description": "babeltranslation.showUnpublished",
+              "type": "combo-boolean",
+              "value": "0"
+            }
+          ]
+        }
+      ],
+      "plugins": [
+        {
+          "name": "Babel",
+          "description": "Links and synchronizes multilingual resources.",
+          "file": "babel.plugin.php",
+          "events": [
+            "OnDocFormPrerender",
+            "OnDocFormSave",
+            "OnEmptyTrash",
+            "OnContextRemove",
+            "OnResourceDuplicate",
+            "OnResourceSort"
+          ]
+        }
+      ]
+    },
+    "systemSettings": [
+      {
+        "key": "contextKeys",
+        "type": "textfield",
+        "area": "common",
+        "value": ""
+      },
+      {
+        "key": "babelTvName",
+        "type": "textfield",
+        "area": "common",
+        "value": "babelLanguageLinks"
+      },
+      {
+        "key": "syncTvs",
+        "type": "textfield",
+        "area": "common",
+        "value": ""
+      }
+    ]
+  },
+  "build": {
+    "readme": "docs/readme.txt",
+    "license": "docs/license.txt",
+    "changelog": "docs/changelog.txt",
+    "resolver": {
+      "after": [
+        "setupoptions.resolver.php",
+        "babelevents.resolver.php"
+      ]
+    },
+    "setupOptions": {
+      "source": "setup.options.php"
+    }
+  }
+}
