@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Babel
  *
@@ -35,62 +36,62 @@
  * @package babel
  *
  */
-
-$babel = $modx->getService('babel','Babel',$modx->getOption('babel.core_path',null,$modx->getOption('core_path').'components/babel/').'model/babel/');
+$babel = $modx->getService('babel', 'Babel', $modx->getOption('babel.core_path', null, $modx->getOption('core_path').'components/babel/').'model/babel/');
 
 /* be sure babel TV is loaded */
-if (!($babel instanceof Babel) || !$babel->babelTv) return;
+if (!($babel instanceof Babel) || !$babel->babelTv)
+    return;
 
 switch ($modx->event->name) {
-	case 'OnDocFormPrerender':
-		$output = '';
-		$errorMessage = '';
-		$resource =& $modx->event->params['resource'];
-		if(!$resource) {
-			/* a new resource is being to created
-			 * -> skip rendering the babel box */
-			break;
-		}
-		$linkedResources = $babel->getLinkedResources($resource->get('id'));
-		if(empty($linkedResources)) {
-			/* always be sure that the Babel TV is set */
-			$babel->initBabelTv($resource);
-		}
+    case 'OnDocFormPrerender':
+        $output       = '';
+        $errorMessage = '';
+        $resource     = & $modx->event->params['resource'];
+        if (!$resource) {
+            /* a new resource is being to created
+             * -> skip rendering the babel box */
+            break;
+        }
+        $linkedResources = $babel->getLinkedResources($resource->get('id'));
+        if (empty($linkedResources)) {
+            /* always be sure that the Babel TV is set */
+            $babel->initBabelTv($resource);
+        }
 
-		/* create babel-box with links to translations */
-		$outputLanguageItems = '';
+        /* create babel-box with links to translations */
+        $outputLanguageItems = '';
         if (!$modx->lexicon) {
-            $modx->getService('lexicon','modLexicon');
+            $modx->getService('lexicon', 'modLexicon');
         }
         $languagesStore = array();
-		$contextKeys = $babel->getGroupContextKeys($resource->get('context_key'));
-		foreach($contextKeys as $contextKey) {
-			/* for each (valid/existing) context of the context group a button will be displayed */
-			$context = $modx->getObject('modContext', array('key' => $contextKey));
-			if(!$context) {
-				$modx->log(modX::LOG_LEVEL_ERROR, 'Could not load context: '.$contextKey);
-				continue;
-			}
-			$context->prepare();
-			$cultureKey = $context->getOption('cultureKey',$modx->getOption('cultureKey'));
+        $contextKeys    = $babel->getGroupContextKeys($resource->get('context_key'));
+        foreach ($contextKeys as $contextKey) {
+            /* for each (valid/existing) context of the context group a button will be displayed */
+            $context = $modx->getObject('modContext', array('key' => $contextKey));
+            if (!$context) {
+                $modx->log(modX::LOG_LEVEL_ERROR, 'Could not load context: '.$contextKey);
+                continue;
+            }
+            $context->prepare();
+            $cultureKey       = $context->getOption('cultureKey', $modx->getOption('cultureKey'));
             $languagesStore[] = array($modx->lexicon('babel.language_'.$cultureKey)." ($contextKey)", $contextKey);
         }
 
-        $babel->config['context_key'] = $resource->get('context_key');
+        $babel->config['context_key']    = $resource->get('context_key');
         $babel->config['languagesStore'] = $languagesStore;
-        $babel->config['menu'] = $babel->getMenu($resource);
+        $babel->config['menu']           = $babel->getMenu($resource);
         if (empty($babel->config['menu'])) {
-            $modx->log(modX::LOG_LEVEL_ERROR, '[Babel] Could not load menu for context key: "' . $babel->config['context_key'] . '". Try to check "babel.contextKeys" in System Settings. If this is intended, you can ignore this warning.');
+            $modx->log(modX::LOG_LEVEL_ERROR, '[Babel] Could not load menu for context key: "'.$babel->config['context_key'].'". Try to check "babel.contextKeys" in System Settings. If this is intended, you can ignore this warning.');
             return;
         }
-        $version = str_replace(' ', '', $babel->config['version']);
+        $version         = str_replace(' ', '', $babel->config['version']);
         $isCSSCompressed = $modx->getOption('compress_css');
-        $withVersion = $isCSSCompressed ? '' : '?v='.$version;
+        $withVersion     = $isCSSCompressed ? '' : '?v='.$version;
         $modx->controller->addCss($babel->config['cssUrl'].'babel.css'.$withVersion);
 
         $modx->controller->addLexiconTopic('babel:default');
         $isJsCompressed = $modx->getOption('compress_js');
-        $withVersion = $isJsCompressed ? '' : '?v='.$version;
+        $withVersion    = $isJsCompressed ? '' : '?v='.$version;
         $modx->controller->addJavascript($babel->config['jsUrl'].'babel.class.js'.$withVersion);
         $modx->controller->addHtml('
 <script type="text/javascript">
@@ -101,46 +102,46 @@ switch ($modx->event->name) {
 </script>');
         break;
 
-	case 'OnDocFormSave':
-		$resource =& $modx->event->params['resource'];
-		if(!$resource) {
-			$modx->log(modX::LOG_LEVEL_ERROR, 'No resource provided for OnDocFormSave event');
-			break;
-		}
-		if($modx->event->params['mode'] == modSystemEvent::MODE_NEW) {
-			/* no TV synchronization for new resources, just init Babel TV */
-			$babel->initBabelTv($resource);
-			break;
-		}
-		$babel->synchronizeTvs($resource->get('id'));
-		break;
+    case 'OnDocFormSave':
+        $resource = & $modx->event->params['resource'];
+        if (!$resource) {
+            $modx->log(modX::LOG_LEVEL_ERROR, 'No resource provided for OnDocFormSave event');
+            break;
+        }
+        if ($modx->event->params['mode'] == modSystemEvent::MODE_NEW) {
+            /* no TV synchronization for new resources, just init Babel TV */
+            $babel->initBabelTv($resource);
+            break;
+        }
+        $babel->synchronizeTvs($resource->get('id'));
+        break;
 
-	case 'OnEmptyTrash':
-		/* remove translation links to non-existing resources */
-		$deletedResourceIds =& $modx->event->params['ids'];
-		if(is_array($deletedResourceIds)) {
-			foreach ($deletedResourceIds as $deletedResourceId) {
-				$babel->removeLanguageLinksToResource($deletedResourceId);
-			}
-		}
-		break;
+    case 'OnEmptyTrash':
+        /* remove translation links to non-existing resources */
+        $deletedResourceIds = & $modx->event->params['ids'];
+        if (is_array($deletedResourceIds)) {
+            foreach ($deletedResourceIds as $deletedResourceId) {
+                $babel->removeLanguageLinksToResource($deletedResourceId);
+            }
+        }
+        break;
 
-	case 'OnContextRemove':
-		/* remove translation links to non-existing contexts */
-		$context =& $modx->event->params['context'];
-		if($context) {
-			$babel->removeLanguageLinksToContext($context->get('key'));
-		}
-		break;
+    case 'OnContextRemove':
+        /* remove translation links to non-existing contexts */
+        $context = & $modx->event->params['context'];
+        if ($context) {
+            $babel->removeLanguageLinksToContext($context->get('key'));
+        }
+        break;
 
-	case 'OnResourceDuplicate':
-		/* init Babel TV of duplicated resources */
-		$resource =& $modx->event->params['newResource'];
-        $babel->initBabelTvsRecursive($modx,$babel,$resource->get('id'));
-		break;
+    case 'OnResourceDuplicate':
+        /* init Babel TV of duplicated resources */
+        $resource = & $modx->event->params['newResource'];
+        $babel->initBabelTvsRecursive($modx, $babel, $resource->get('id'));
+        break;
 
     case 'OnResourceSort':
-        $nodesAffected =& $modx->event->params['nodesAffected'];
+        $nodesAffected = & $modx->event->params['nodesAffected'];
         foreach ($nodesAffected as $node) {
             $linkedResources = $babel->getLinkedResources($node->get('id'));
             foreach ($linkedResources as $key => $id) {

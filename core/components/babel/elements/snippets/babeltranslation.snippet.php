@@ -34,7 +34,7 @@
  * @param cultureKey		optional: Key of culture in which translated resource should be determined. Used only in case contextKey was not specified.  If both omitted: uses currently set cultureKey.
  * @param showUnpublished	optional: flag whether to show unpublished translations. Default: 0
  */
-$babel = $modx->getService('babel', 'Babel', $modx->getOption('babel.core_path', null, $modx->getOption('core_path') . 'components/babel/') . 'model/babel/', $scriptProperties);
+$babel = $modx->getService('babel', 'Babel', $modx->getOption('babel.core_path', null, $modx->getOption('core_path').'components/babel/').'model/babel/', $scriptProperties);
 
 /* be sure babel and babel TV is loaded */
 if (!($babel instanceof Babel) || !$babel->babelTv)
@@ -58,7 +58,7 @@ $showUnpublished = $modx->getOption('showUnpublished', $scriptProperties, 0, tru
 
 /* determine id of tranlated resource */
 $linkedResources = $babel->getLinkedResources($resourceId);
-$output = null;
+$output          = null;
 if (isset($linkedResources[$contextKey])) {
     $resource = $modx->getObject('modResource', $linkedResources[$contextKey]);
     if ($resource && ($showUnpublished || $resource->get('published') == 1)) {

@@ -29,19 +29,23 @@
  *
  * @package babel
  */
-include_once MODX_CORE_PATH . 'model/modx/processors/resource/getlist.class.php';
+include_once MODX_CORE_PATH.'model/modx/processors/resource/getlist.class.php';
 
-class BabelResourceGetMatrixListProcessor extends modResourceGetListProcessor {
+class BabelResourceGetMatrixListProcessor extends modResourceGetListProcessor
+{
+
     public $defaultSortField = 'id';
-    private $_contexts = array();
+    private $_contexts       = array();
 
-    public function initialize() {
+    public function initialize()
+    {
         $this->_contexts = array_map('trim', @explode(',', $this->getProperty('contexts')));
 
         return parent::initialize();
     }
 
-    public function prepareQueryBeforeCount(xPDOQuery $c) {
+    public function prepareQueryBeforeCount(xPDOQuery $c)
+    {
         $query = $this->getProperty('query');
         if (!empty($query)) {
             $c->where(array(
@@ -57,7 +61,8 @@ class BabelResourceGetMatrixListProcessor extends modResourceGetListProcessor {
         return $c;
     }
 
-    public function prepareRow(xPDOObject $object) {
+    public function prepareRow(xPDOObject $object)
+    {
         $objectArray = $object->toArray();
         // 'id' conflicts with Indonesian's ISO code 'id'
 
@@ -65,17 +70,17 @@ class BabelResourceGetMatrixListProcessor extends modResourceGetListProcessor {
         foreach ($this->_contexts as $ctx) {
             // 'id' conflicts with Indonesian's ISO code 'id'
             // prepend with a suffix
-            $objectArray['linkedres_id_' . $ctx] = '';
-            $objectArray['linkedres_pagetitle_' . $ctx] = '';
+            $objectArray['linkedres_id_'.$ctx]        = '';
+            $objectArray['linkedres_pagetitle_'.$ctx] = '';
             if ($objectArray['context_key'] === $ctx) {
-                $objectArray['linkedres_id_' . $ctx] = 'x';
-                $objectArray['linkedres_pagetitle_' . $ctx] = 'x';
+                $objectArray['linkedres_id_'.$ctx]        = 'x';
+                $objectArray['linkedres_pagetitle_'.$ctx] = 'x';
             } else {
                 if (isset($linkedResources[$ctx]) && !empty($linkedResources[$ctx])) {
-                    $objectArray['linkedres_id_' . $ctx] = $linkedResources[$ctx];
-                    $resource = $this->modx->getObject('modResource', $linkedResources[$ctx]);
+                    $objectArray['linkedres_id_'.$ctx] = $linkedResources[$ctx];
+                    $resource                            = $this->modx->getObject('modResource', $linkedResources[$ctx]);
                     if ($resource) {
-                        $objectArray['linkedres_pagetitle_' . $ctx] = $resource->get('pagetitle');
+                        $objectArray['linkedres_pagetitle_'.$ctx] = $resource->get('pagetitle');
                     }
                 }
             }
@@ -83,6 +88,7 @@ class BabelResourceGetMatrixListProcessor extends modResourceGetListProcessor {
 
         return $objectArray;
     }
+
 }
 
 return 'BabelResourceGetMatrixListProcessor';

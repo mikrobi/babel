@@ -29,11 +29,13 @@
  *
  * @package babel
  */
-include_once MODX_CORE_PATH . 'model/modx/processors/resource/getlist.class.php';
+include_once MODX_CORE_PATH.'model/modx/processors/resource/getlist.class.php';
 
-class BabelResourceGetListProcessor extends modResourceGetListProcessor {
+class BabelResourceGetListProcessor extends modResourceGetListProcessor
+{
 
-    public function prepareQueryBeforeCount(xPDOQuery $c) {
+    public function prepareQueryBeforeCount(xPDOQuery $c)
+    {
         $query = $this->getProperty('query');
         if (!empty($query)) {
             $c->where(array(
@@ -49,10 +51,11 @@ class BabelResourceGetListProcessor extends modResourceGetListProcessor {
         return $c;
     }
 
-    public function beforeIteration(array $list) {
+    public function beforeIteration(array $list)
+    {
         if ($this->getProperty('combo', false)) {
-            $empty = array(
-                'id' => 0,
+            $empty  = array(
+                'id'        => 0,
                 'pagetitle' => '',
             );
             $list[] = $empty;
@@ -61,11 +64,12 @@ class BabelResourceGetListProcessor extends modResourceGetListProcessor {
         return $list;
     }
 
-    public function prepareRow(xPDOObject $object) {
+    public function prepareRow(xPDOObject $object)
+    {
         $objectArray = parent::prepareRow($object);
         if ($this->getProperty('combo', false)) {
             $objectArray = array(
-                'id' => $objectArray['id'],
+                'id'        => $objectArray['id'],
                 'pagetitle' => $objectArray['pagetitle'],
             );
         }

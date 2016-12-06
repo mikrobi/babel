@@ -29,25 +29,28 @@
  *
  * @package babel
  */
-include_once MODX_CORE_PATH . 'model/modx/processors/context/getlist.class.php';
+include_once MODX_CORE_PATH.'model/modx/processors/context/getlist.class.php';
 
-class BabelContextGetListProcessor extends modContextGetListProcessor {
+class BabelContextGetListProcessor extends modContextGetListProcessor
+{
 
-    public function initialize() {
-        $initialized = parent::initialize();
+    public function initialize()
+    {
+        $initialized     = parent::initialize();
         $this->setDefaultProperties(array(
-            'search' => '',
+            'search'  => '',
             'exclude' => 'mgr',
         ));
-        $this->canEdit = false;
+        $this->canEdit   = false;
         $this->canRemove = false;
         return $initialized;
     }
 
-    public function beforeIteration(array $list) {
+    public function beforeIteration(array $list)
+    {
         if ($this->getProperty('combo', false)) {
-            $empty = array(
-                'key' => '',
+            $empty  = array(
+                'key'  => '',
                 'name' => '&nbsp;',
             );
             $list[] = $empty;
@@ -56,11 +59,12 @@ class BabelContextGetListProcessor extends modContextGetListProcessor {
         return $list;
     }
 
-    public function prepareRow(xPDOObject $object) {
+    public function prepareRow(xPDOObject $object)
+    {
         $objectArray = parent::prepareRow($object);
         if ($this->getProperty('combo', false)) {
             $objectArray = array(
-                'key' => $objectArray['key'],
+                'key'  => $objectArray['key'],
                 'name' => $objectArray['name'],
             );
         }

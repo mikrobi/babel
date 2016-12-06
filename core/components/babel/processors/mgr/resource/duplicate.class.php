@@ -25,29 +25,31 @@
 
 /**
  * Processor file for Babel.
- * 
+ *
  * @author goldsky <goldsky@virtudraft.com>
- * 
+ *
  * @package babel
  */
-class BabelDuplicateResourceProcessor extends modObjectProcessor {
+class BabelDuplicateResourceProcessor extends modObjectProcessor
+{
 
-    public $classKey = 'modResource';
+    public $classKey       = 'modResource';
     public $languageTopics = array('resource', 'babel:default');
-    public $objectType = 'resource';
+    public $objectType     = 'resource';
 
     /** @var xPDOObject $newObject The newly duplicated object */
     public $newObject;
 
-    public function initialize() {
+    public function initialize()
+    {
         $primaryKey = $this->getProperty($this->primaryKeyField, false);
         if (empty($primaryKey)) {
-            return $this->modx->lexicon($this->objectType . '_err_ns');
+            return $this->modx->lexicon($this->objectType.'_err_ns');
         }
 
         $this->object = $this->modx->getObject($this->classKey, $primaryKey);
         if (empty($this->object)) {
-            return $this->modx->lexicon($this->objectType . '_err_nfs', array($this->primaryKeyField => $primaryKey));
+            return $this->modx->lexicon($this->objectType.'_err_nfs', array($this->primaryKeyField => $primaryKey));
         }
 
         if ($this->checkSavePermission && $this->object instanceof modAccessibleObject && !$this->object->checkPolicy('save')) {
@@ -67,15 +69,16 @@ class BabelDuplicateResourceProcessor extends modObjectProcessor {
         return true;
     }
 
-    public function process() {
-        $contextKey = $this->getProperty('context_key');
+    public function process()
+    {
+        $contextKey      = $this->getProperty('context_key');
         $this->newObject = $this->modx->babel->duplicateResource($this->object, $contextKey);
         if (!$this->newObject) {
             /* error: translation could not be created */
             return $this->failure($this->modx->lexicon('error.could_not_create_translation', array('context' => $contextKey)));
         }
 
-        $linkedResources = $this->modx->babel->getLinkedResources($this->object->get('id'));
+        $linkedResources              = $this->modx->babel->getLinkedResources($this->object->get('id'));
         $linkedResources[$contextKey] = $this->newObject->get('id');
         $this->modx->babel->updateBabelTv($linkedResources, $linkedResources);
 
@@ -87,8 +90,9 @@ class BabelDuplicateResourceProcessor extends modObjectProcessor {
      * Log a manager action
      * @return void
      */
-    public function logManagerAction() {
-        $this->modx->logManagerAction($this->objectType . '_duplicate', $this->classKey, $this->newObject->get('id'));
+    public function logManagerAction()
+    {
+        $this->modx->logManagerAction($this->objectType.'_duplicate', $this->classKey, $this->newObject->get('id'));
     }
 
     /**
@@ -96,7 +100,8 @@ class BabelDuplicateResourceProcessor extends modObjectProcessor {
      *
      * @return array
      */
-    public function cleanup() {
+    public function cleanup()
+    {
         return $this->success('', $this->newObject);
     }
 
