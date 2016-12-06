@@ -12,6 +12,7 @@ class BabelIndexManagerController extends modExtraManagerController
     {
         $this->babel = new Babel($this->modx);
         $this->addCss($this->babel->config['cssUrl'].'babel.css');
+        $this->addCss($this->babel->config['cssUrl'].'cmp.css');
         $this->addJavascript($this->babel->config['jsUrl'].'mgr/babel.js');
         $this->addHtml('<script type="text/javascript">
         Ext.onReady(function() {
