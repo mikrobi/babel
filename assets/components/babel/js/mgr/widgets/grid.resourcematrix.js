@@ -4,7 +4,6 @@ Babel.grid.ResourceMatrix = function (config) {
     var columns = [];
     var fields = [];
     var contexts = [];
-    var _this = this;
 
     columns.push({
         header: _('id'),
@@ -122,6 +121,9 @@ Babel.grid.ResourceMatrix = function (config) {
     var cm = new Ext.ux.grid.LockingColumnModel({
         columns: columns
     });
+    var view = new Ext.ux.grid.LockingGridView({
+        syncHeights: true
+    });
 
     Ext.applyIf(config, {
         id: 'babel-grid-resourcematrix',
@@ -136,7 +138,7 @@ Babel.grid.ResourceMatrix = function (config) {
         anchor: '97%',
         autoExpandColumn: 'pagetitle',
         colModel: cm,
-        view: new Ext.ux.grid.LockingGridView(),
+        view: view,
         height: 595,
         autoHeight: false,
         tbar: [
