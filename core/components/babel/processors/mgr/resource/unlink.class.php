@@ -117,6 +117,14 @@ class BabelUnlinkResourceProcessor extends modObjectGetProcessor {
         $diff = array_diff($linkedResources, $targetResources);
         $this->modx->babel->updateBabelTv($diff, $diff);
 
+        $this->modx->invokeEvent('OnBabelUnlink', array(
+            'context_key' => $props['context'],
+            'original_id' => $this->object->get('id'),
+            'original_resource' => &$this->object,
+            'target_id' => $$this->targetResource->get('id'),
+            'target_resource' => &$this->targetResource
+        ));
+
         return $this->cleanup();
     }
 

@@ -79,6 +79,14 @@ class BabelDuplicateResourceProcessor extends modObjectProcessor {
         $linkedResources[$contextKey] = $this->newObject->get('id');
         $this->modx->babel->updateBabelTv($linkedResources, $linkedResources);
 
+        $this->modx->invokeEvent('OnBabelDuplicate', array(
+            'context_key' => $contextKey,
+            'original_id' => $this->object->get('id'),
+            'original_resource' => &$this->object,
+            'duplicate_id' => $this->newObject->get('id'),
+            'duplicate_resource' => &$this->newObject,
+        ));
+
         $this->logManagerAction();
         return $this->cleanup();
     }
