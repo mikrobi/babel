@@ -134,7 +134,6 @@ Babel.grid.ResourceMatrix = function (config) {
         paging: true,
         remoteSort: true,
         anchor: '100%',
-        autoExpandColumn: 'pagetitle',
         colModel: cm,
         view: view,
         autoHeight: false,
