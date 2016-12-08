@@ -9,8 +9,7 @@ Babel.grid.ResourceMatrix = function (config) {
         header: _('id'),
         dataIndex: 'id',
         sortable: true,
-        width: 80,
-        fixed: true,
+        width: 70,
         locked: true,
         id: 'res_id'
     });
@@ -19,7 +18,6 @@ Babel.grid.ResourceMatrix = function (config) {
         dataIndex: 'context_key',
         sortable: true,
         width: 80,
-        fixed: true,
         locked: true,
         id: 'context_key'
     });
@@ -135,11 +133,10 @@ Babel.grid.ResourceMatrix = function (config) {
         fields: fields,
         paging: true,
         remoteSort: true,
-        anchor: '97%',
+        anchor: '100%',
         autoExpandColumn: 'pagetitle',
         colModel: cm,
         view: view,
-        height: 595,
         autoHeight: false,
         tbar: [
             {
@@ -177,6 +174,15 @@ Babel.grid.ResourceMatrix = function (config) {
     });
 
     Babel.grid.ResourceMatrix.superclass.constructor.call(this, config);
+    
+    var originalHeight = this.getHeight();
+    this.store.on('load', function(store, records, options){
+        // fixing height
+        var scrollerHeight = this.getView().scroller.dom.children[0].offsetHeight;
+        var tbarHeight = this.getTopToolbar().getHeight();
+        this.setHeight(tbarHeight + originalHeight + scrollerHeight + 4);
+        
+    }, this);
 
 };
 Ext.extend(Babel.grid.ResourceMatrix, MODx.grid.Grid, {
