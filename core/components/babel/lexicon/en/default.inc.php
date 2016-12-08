@@ -42,6 +42,8 @@ $_lang['babel.create_translation_confirm'] = 'Are you sure you want to create ne
 $_lang['babel.unlink'] = 'Unlink';
 $_lang['babel.unlink_translation'] = 'Unlink translation';
 $_lang['babel.unlink_translation_confirm'] = 'Are you sure you want to unlink translation from this resource to <b>"[[+context]]"</b> context?';
+$_lang['babel.unlink_all_translations'] = 'Unlink all translations';
+$_lang['babel.unlink_all_translations_confirm'] = 'Are you sure you want to unlink all translations from this resource?';
 $_lang['babel.link_translation_manually'] = 'or <strong>link translation manually</strong>:';
 $_lang['babel.link_translation'] = 'Link to existing resource';
 $_lang['babel.id_of_target'] = 'ID of target:';
@@ -52,6 +54,7 @@ $_lang['babel.save'] = 'Save';
 $_lang['babel.translation_pending'] = '[translations pending]';
 $_lang['babel.open'] = 'Open';
 $_lang['babel.please_wait'] = 'Please wait...';
+$_lang['babel.sync_linked_tranlations'] = 'Synchronize all translations from the target';
 
 /* language names */
 $_lang['babel.language_ar'] = 'Arabic';

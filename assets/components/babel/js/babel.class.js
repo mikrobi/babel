@@ -36,14 +36,14 @@ Babel.prototype.getMenu = function (menus) {
     var _this = this;
     var actionButtons = Ext.getCmp("modx-action-buttons");
     if (actionButtons) {
-        var menu = [];
+        var menu = [], i = 0;
         for (var ctx in menus) {
+            if (ctx === _this.config.context_key) {
+                continue;
+            }
             if (typeof(menus[ctx]["resourceUrl"]) !== 'undefined' &&
                     menus[ctx]["resourceUrl"] !== "" &&
                     menus[ctx]["resourceUrl"] !== "#" ) {
-                if (ctx === _this.config.context_key) {
-                    continue;
-                }
                 menu.push({
                     text: menus[ctx]["displayText"],
                     iconCls: 'icon-link',
@@ -63,12 +63,14 @@ Babel.prototype.getMenu = function (menus) {
                                 contextKey: ctx,
                                 target: menus[ctx]["resourceId"],
                                 handler: function() {
-                                    _this.unlinkTranslation(this.contextKey, MODx.request.id, this.target);
+                                    _this.unlinkTranslation(this.contextKey, this.target);
                                 }
                             }
                         ]
                     }
                 });
+
+                ++i;
             } else {
                 menu.push({
                     text: menus[ctx]["displayText"],
@@ -80,20 +82,29 @@ Babel.prototype.getMenu = function (menus) {
                                 iconCls: 'icon-pencil-go',
                                 contextKey: ctx,
                                 handler: function() {
-                                    _this.createTranslation(this.contextKey, MODx.request.id);
+                                    _this.createTranslation(this.contextKey);
                                 }
                             }, '-', {
                                 text: _('babel.link_translation'),
                                 iconCls: 'icon-link',
                                 contextKey: ctx,
                                 handler: function() {
-                                    _this.linkTranslation(this.contextKey, MODx.request.id);
+                                    _this.linkTranslation(this.contextKey);
                                 }
                             }
                         ]
                     }
                 });
             }
+        }
+        if (i > 0) {
+            menu.push('-');
+            menu.push({
+                text: _('babel.unlink_all_translations'),
+                handler: function() {
+                    _this.unlinkTranslation();
+                }
+            });
         }
         // destroy existing
         var buttonMenu = Ext.getCmp('babel-language-select');
@@ -126,7 +137,8 @@ Babel.prototype.getMenu = function (menus) {
     }
 };
 
-Babel.prototype.linkTranslation = function (ctx, id) {
+Babel.prototype.linkTranslation = function (ctx) {
+    var id = MODx.request.id;
     var win = MODx.load({
         xtype: 'modx-window',
         title: _('babel.link_translation'),
@@ -244,23 +256,36 @@ Babel.prototype.linkTranslation = function (ctx, id) {
                 xtype: 'xcheckbox',
                 boxLabel: _('babel.copy_tv_values'),
                 name: 'copy-tv-values'
+            }, {
+                xtype: 'xcheckbox',
+                boxLabel: _('babel.sync_linked_tranlations'),
+                name: 'sync-linked-tranlations',
+                checked: true
             }
         ]
     });
-    win.reset();
+//    win.reset();
     win.show();
 };
 
-Babel.prototype.unlinkTranslation = function (ctx, id, target) {
+Babel.prototype.unlinkTranslation = function (ctx, target) {
     this.loadMask();
+    ctx = ctx || '';
+    target = parseInt(target) || 0;
+    var id = MODx.request.id, text = '';
+    if (target === 0) {
+        text = _('babel.unlink_all_translations_confirm');
+    } else {
+        text = _('babel.unlink_translation_confirm', {context: ctx, id: id});
+    }
     return MODx.msg.confirm({
         title: _('confirm'),
-        text: _('babel.unlink_translation_confirm', {context: ctx, id: id}),
+        text: text,
         url: this.config.connectorUrl,
         params: {
             action: 'mgr/resource/unlink',
-            context: ctx,
             id: id,
+            context: ctx,
             target: target
         },
         listeners: {
@@ -291,8 +316,9 @@ Babel.prototype.unlinkTranslation = function (ctx, id, target) {
     });
 };
 
-Babel.prototype.createTranslation = function (ctx, id) {
+Babel.prototype.createTranslation = function (ctx) {
     this.loadMask();
+    var id = MODx.request.id;
     return MODx.msg.confirm({
         title: _('confirm'),
         text: _('babel.create_translation_confirm', {context: ctx, id: id}),

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Babel
  *
@@ -42,12 +41,12 @@ class BabelLinkResourceProcessor extends modObjectGetProcessor
     {
         $target = $this->getProperty('target', false);
         if (empty($target)) {
-            return $this->modx->lexicon($this->objectType.'_err_ns');
+            return $this->modx->lexicon($this->objectType . '_err_ns');
         }
 
         $primaryKey = $this->getProperty($this->primaryKeyField, false);
         if (empty($primaryKey)) {
-            return $this->modx->lexicon($this->objectType.'_err_ns');
+            return $this->modx->lexicon($this->objectType . '_err_ns');
         }
 
         if ($target === $primaryKey) {
@@ -71,8 +70,8 @@ class BabelLinkResourceProcessor extends modObjectGetProcessor
 
         if ($this->targetResource->get('context_key') !== $contextKey) {
             return $this->modx->lexicon('error.resource_from_other_context', array(
-                        'resource' => $this->targetResource->get('id'),
-                        'context'  => $contextKey
+                    'resource' => $this->targetResource->get('id'),
+                    'context' => $contextKey
             ));
         }
 
@@ -108,13 +107,27 @@ class BabelLinkResourceProcessor extends modObjectGetProcessor
              * -> reset Babel TV of old resource */
             $this->modx->babel->initBabelTvById($linkedResources[$props['context']]);
         }
-
         $linkedResources[$props['context']] = $this->targetResource->get('id');
-        /**
-         * Join all existing linked resources from both resources
-         */
-        $mergedResources                    = array_merge($targetResources, $linkedResources);
-        $this->modx->babel->updateBabelTv($mergedResources, $mergedResources);
+
+        if (isset($props['sync-linked-tranlations']) && intval($props['sync-linked-tranlations']) == 1) {
+            /**
+             * Join all existing linked resources from both resources
+             */
+            $mergedResources = array_merge($targetResources, $linkedResources);
+            $this->modx->babel->updateBabelTv($mergedResources, $mergedResources);
+        } else {
+            /**
+             * Only join between 2 resources
+             */
+            $merge1 = array_merge($linkedResources, array(
+                $props['context'] => $this->targetResource->get('id')
+            ));
+            $this->modx->babel->updateBabelTv($this->object->get('id'), $merge1);
+            $merge2 = array_merge($targetResources, array(
+                $this->object->get('context_key') => $this->object->get('id')
+            ));
+            $this->modx->babel->updateBabelTv($this->targetResource->get('id'), $merge2);
+        }
 
         /* copy values of synchronized TVs to target resource */
         if (isset($props['copy-tv-values']) && intval($props['copy-tv-values']) == 1) {
@@ -130,11 +143,10 @@ class BabelLinkResourceProcessor extends modObjectGetProcessor
      */
     public function cleanup()
     {
-        $output         = $this->object->toArray();
+        $output = $this->object->toArray();
         $output['menu'] = $this->modx->babel->getMenu($this->object);
         return $this->success('', $output);
     }
-
 }
 
 return 'BabelLinkResourceProcessor';
