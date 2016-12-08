@@ -2,6 +2,7 @@ Changelog for Babel.
 
 Babel 3.0.0-dev
 =====================================
+- [#123] Minor cosmetic update
 - [#139][#140] Fixed Unable to link translations by searching by pagetitle
 - fixed resource title's width
 - added config to set table's height

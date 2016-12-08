@@ -35,3 +35,8 @@
 .x-combo-list-item {
     min-height: 20px;
 }
+
+#babel-language-select .x-btn-arrow button {
+    border-right-width: 0px;
+    padding-right: 0px;
+}
