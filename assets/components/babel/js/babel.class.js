@@ -231,7 +231,15 @@ Babel.prototype.linkTranslation = function (ctx, id) {
                 fields: ['id','pagetitle'],
                 editable: true,
                 typeAhead: true,
-                forceSelection: true
+                forceSelection: true,
+                listeners: {
+                    select: {
+                        fn: function(cmp, record) {
+                            win.fp.getForm().findField('target').setValue(record.get('id'));
+                        }
+                        ,scope: this
+                    }
+                },
             }, {
                 xtype: 'xcheckbox',
                 boxLabel: _('babel.copy_tv_values'),
