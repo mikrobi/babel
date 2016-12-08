@@ -4,14 +4,12 @@ Babel.grid.ResourceMatrix = function (config) {
     var columns = [];
     var fields = [];
     var contexts = [];
-    var _this = this;
 
     columns.push({
         header: _('id'),
         dataIndex: 'id',
         sortable: true,
-        width: 80,
-        fixed: true,
+        width: 70,
         locked: true,
         id: 'res_id'
     });
@@ -20,7 +18,6 @@ Babel.grid.ResourceMatrix = function (config) {
         dataIndex: 'context_key',
         sortable: true,
         width: 80,
-        fixed: true,
         locked: true,
         id: 'context_key'
     });
@@ -122,6 +119,9 @@ Babel.grid.ResourceMatrix = function (config) {
     var cm = new Ext.ux.grid.LockingColumnModel({
         columns: columns
     });
+    var view = new Ext.ux.grid.LockingGridView({
+        syncHeights: true
+    });
 
     Ext.applyIf(config, {
         id: 'babel-grid-resourcematrix',
@@ -133,11 +133,9 @@ Babel.grid.ResourceMatrix = function (config) {
         fields: fields,
         paging: true,
         remoteSort: true,
-        anchor: '97%',
-        autoExpandColumn: 'pagetitle',
+        anchor: '100%',
         colModel: cm,
-        view: new Ext.ux.grid.LockingGridView(),
-        height: 595,
+        view: view,
         autoHeight: false,
         tbar: [
             {
@@ -175,6 +173,15 @@ Babel.grid.ResourceMatrix = function (config) {
     });
 
     Babel.grid.ResourceMatrix.superclass.constructor.call(this, config);
+    
+    var originalHeight = this.getHeight();
+    this.store.on('load', function(store, records, options){
+        // fixing height
+        var scrollerHeight = this.getView().scroller.dom.children[0].offsetHeight;
+        var tbarHeight = this.getTopToolbar().getHeight();
+        this.setHeight(tbarHeight + originalHeight + scrollerHeight + 4);
+        
+    }, this);
 
 };
 Ext.extend(Babel.grid.ResourceMatrix, MODx.grid.Grid, {

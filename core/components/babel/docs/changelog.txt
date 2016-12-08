@@ -1,5 +1,12 @@
 Changelog for Babel.
 
+Babel 3.0.0-dev
+=====================================
+- fixed resource title's width
+- added config to set table's height
+- added styling to align table in CMP
+- initialized PSR-2 coding standard https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
+
 Babel 3.0.0-rc1 (April 15, 2016)
 =====================================
 - added Custom Manager Page for resources matrix, supported by Steven Morgan of Waterlogic

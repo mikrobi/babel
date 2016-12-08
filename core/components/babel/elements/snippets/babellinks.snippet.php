@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Babel
  *
@@ -37,13 +38,14 @@
  * @param showUnpublished   optional: flag whether to show unpublished translations. Default: 0
  * @param showCurrent       optional: flag whether to show a link to a translation of the current language. Default: 1
  */
-$babel = $modx->getService('babel','Babel',$modx->getOption('babel.core_path',null,$modx->getOption('core_path').'components/babel/').'model/babel/',$scriptProperties);
+$babel = $modx->getService('babel', 'Babel', $modx->getOption('babel.core_path', null, $modx->getOption('core_path').'components/babel/').'model/babel/', $scriptProperties);
 
 /* be sure babel and babel TV is loaded */
-if (!($babel instanceof Babel) || !$babel->babelTv) return;
+if (!($babel instanceof Babel) || !$babel->babelTv)
+    return;
 
 /* get snippet properties */
-$resourceId = intval($modx->getOption('resourceId',$scriptProperties));
+$resourceId = intval($modx->getOption('resourceId', $scriptProperties));
 if (empty($resourceId)) {
     if (!empty($modx->resource) && is_object($modx->resource)) {
         $resourceId = $modx->resource->get('id');
@@ -51,21 +53,21 @@ if (empty($resourceId)) {
         return;
     }
 }
-$tpl = $modx->getOption('tpl',$scriptProperties,'babelLink');
-$wrapperTpl = $modx->getOption('wrapperTpl',$scriptProperties);
-$activeCls = $modx->getOption('activeCls',$scriptProperties,'active');
-$showUnpublished = $modx->getOption('showUnpublished',$scriptProperties,0);
-$showCurrent = $modx->getOption('showCurrent',$scriptProperties,0);
-$outputSeparator = $modx->getOption('outputSeparator',$scriptProperties,"\n");
-$includeUnlinked = $modx->getOption('includeUnlinked',$scriptProperties,0);
-$ignoreSiteStatus = $modx->getOption('ignoreSiteStatus',$scriptProperties,0);
+$tpl              = $modx->getOption('tpl', $scriptProperties, 'babelLink');
+$wrapperTpl       = $modx->getOption('wrapperTpl', $scriptProperties);
+$activeCls        = $modx->getOption('activeCls', $scriptProperties, 'active');
+$showUnpublished  = $modx->getOption('showUnpublished', $scriptProperties, 0);
+$showCurrent      = $modx->getOption('showCurrent', $scriptProperties, 0);
+$outputSeparator  = $modx->getOption('outputSeparator', $scriptProperties, "\n");
+$includeUnlinked  = $modx->getOption('includeUnlinked', $scriptProperties, 0);
+$ignoreSiteStatus = $modx->getOption('ignoreSiteStatus', $scriptProperties, 0);
 
-if(!empty($modx->resource) && is_object($modx->resource) && $resourceId === $modx->resource->get('id')) {
+if (!empty($modx->resource) && is_object($modx->resource) && $resourceId === $modx->resource->get('id')) {
     $contextKeys = $babel->getGroupContextKeys($modx->resource->get('context_key'));
-    $resource = $modx->resource;
+    $resource    = $modx->resource;
 } else {
     $resource = $modx->getObject('modResource', $resourceId);
-    if(!$resource) {
+    if (!$resource) {
         return;
     }
     $contextKeys = $babel->getGroupContextKeys($resource->get('context_key'));
@@ -74,15 +76,15 @@ if(!empty($modx->resource) && is_object($modx->resource) && $resourceId === $mod
 $linkedResources = $babel->getLinkedResources($resourceId);
 
 $outputArray = array();
-foreach($contextKeys as $contextKey) {
-    if(!$showCurrent && $contextKey === $resource->get('context_key')) {
+foreach ($contextKeys as $contextKey) {
+    if (!$showCurrent && $contextKey === $resource->get('context_key')) {
         continue;
     }
     if (!$includeUnlinked && !isset($linkedResources[$contextKey])) {
         continue;
     }
     $context = $modx->getObject('modContext', array('key' => $contextKey));
-    if(!$context) {
+    if (!$context) {
         $modx->log(modX::LOG_LEVEL_ERROR, 'Could not load context: '.$contextKey);
         continue;
     }
@@ -90,13 +92,13 @@ foreach($contextKeys as $contextKey) {
     if (!$context->getOption('site_status', null, true) && !$ignoreSiteStatus) {
         continue;
     }
-    $cultureKey = $context->getOption('cultureKey',$modx->getOption('cultureKey'));
+    $cultureKey           = $context->getOption('cultureKey', $modx->getOption('cultureKey'));
     $translationAvailable = false;
-    if(isset($linkedResources[$contextKey])) {
+    if (isset($linkedResources[$contextKey])) {
         $c = $modx->newQuery('modResource');
         $c->where(array(
-            'id' => $linkedResources[$contextKey],
-            'deleted:!=' => 1,
+            'id'          => $linkedResources[$contextKey],
+            'deleted:!='  => 1,
             'published:=' => 1,
         ));
         if ($showUnpublished) {
@@ -104,8 +106,8 @@ foreach($contextKeys as $contextKey) {
                 'OR:published:=' => 0,
             ));
         }
-        $count = $modx->getCount('modResource',$c);
-        if($count) {
+        $count = $modx->getCount('modResource', $c);
+        if ($count) {
             $translationAvailable = true;
         }
     }
@@ -113,39 +115,39 @@ foreach($contextKeys as $contextKey) {
     unset($getRequest['id']);
     unset($getRequest[$modx->getOption('request_param_alias', null, 'q')]);
     unset($getRequest['cultureKey']);
-    if($translationAvailable) {
-        $url = $context->makeUrl($linkedResources[$contextKey],$getRequest,'full');
-        $active = ($resource->get('context_key') == $contextKey) ? $activeCls : '';
+    if ($translationAvailable) {
+        $url          = $context->makeUrl($linkedResources[$contextKey], $getRequest, 'full');
+        $active       = ($resource->get('context_key') == $contextKey) ? $activeCls : '';
         $placeholders = array(
             'cultureKey' => $cultureKey,
-            'url' => $url,
-            'active' => $active,
-            'id' => $linkedResources[$contextKey]
+            'url'        => $url,
+            'active'     => $active,
+            'id'         => $linkedResources[$contextKey]
         );
 
         if (!empty($toArray)) {
             $outputArray[] = $placeholders;
         } else {
-            $chunk = $babel->getChunk($tpl,$placeholders);
-            if(!empty($chunk)) {
+            $chunk = $babel->getChunk($tpl, $placeholders);
+            if (!empty($chunk)) {
                 $outputArray[] = $chunk;
             }
         }
     } elseif ($includeUnlinked) {
-        $url = $context->makeUrl($context->getOption('site_start'),$getRequest,'full');
-        $active = ($resource->get('context_key') == $contextKey) ? $activeCls : '';
+        $url          = $context->makeUrl($context->getOption('site_start'), $getRequest, 'full');
+        $active       = ($resource->get('context_key') == $contextKey) ? $activeCls : '';
         $placeholders = array(
             'cultureKey' => $cultureKey,
-            'url' => $url,
-            'active' => $active,
-            'id' => $context->getOption('site_start')
+            'url'        => $url,
+            'active'     => $active,
+            'id'         => $context->getOption('site_start')
         );
 
         if (!empty($toArray)) {
             $outputArray[] = $placeholders;
         } else {
-            $chunk = $babel->getChunk($tpl,$placeholders);
-            if(!empty($chunk)) {
+            $chunk = $babel->getChunk($tpl, $placeholders);
+            if (!empty($chunk)) {
                 $outputArray[] = $chunk;
             }
         }
@@ -153,12 +155,12 @@ foreach($contextKeys as $contextKey) {
 }
 
 if (!empty($toArray)) {
-    return '<pre>'.  print_r($outputArray, 1).'</pre>';
+    return '<pre>'.print_r($outputArray, 1).'</pre>';
 }
 
 $output = implode($outputSeparator, $outputArray);
 if (!empty($wrapperTpl)) {
-    $output = $babel->getChunk($wrapperTpl,array(
+    $output = $babel->getChunk($wrapperTpl, array(
         'babelLinks' => $output
     ));
 }
