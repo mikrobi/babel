@@ -37,7 +37,7 @@ $_lang['babel.desc'] = 'Managing multilingual system';
 $_lang['babel.search...'] = 'Search...';
 $_lang['babel.filter'] = 'Filter';
 $_lang['babel.reset'] = 'Reset';
-$_lang['babel.icon_descriptions'] = '<img src="../assets/components/babel/icons/link.png" alt=""> Link to this resource and its linked resources<br>'
-        . '<img src="../assets/components/babel/icons/link_break.png" alt=""> Break all links<br>'
-        . '<img src="../assets/components/babel/icons/page_go.png" alt=""> Edit this linked resource<br>'
-        . '<img src="../assets/components/babel/icons/pencil_go.png" alt=""> Create a new resource to be linked<br>';
+$_lang['babel.icon_descriptions'] = '<img src="/manager/assets/ext3/resources/images/default/s.gif" alt="" class="x-action-col-icon x-action-col-0 icon-babel-description-img icon-link"> Link to this resource and its linked resources<br>'
+        . '<img src="/manager/assets/ext3/resources/images/default/s.gif" alt="" class="x-action-col-icon x-action-col-0 icon-babel-description-img icon-unlink"> Break all links<br>'
+        . '<img src="/manager/assets/ext3/resources/images/default/s.gif" alt="" class="x-action-col-icon x-action-col-0 icon-babel-description-img icon-page-go"> Edit this linked resource<br>'
+        . '<img src="/manager/assets/ext3/resources/images/default/s.gif" alt="" class="x-action-col-icon x-action-col-0 icon-babel-description-img icon-pencil-go"> Create a new resource to be linked<br>';
