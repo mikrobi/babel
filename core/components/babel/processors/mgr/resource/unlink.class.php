@@ -109,7 +109,23 @@ class BabelUnlinkResourceProcessor extends modObjectGetProcessor
         unset($linkedResources[$props['context']]);
         $this->modx->babel->updateBabelTv($this->object->get('id'), $linkedResources);
 
+        $this->fireUnlinkEvent();
         return $this->cleanup();
+    }
+
+    /**
+     * Fire the OnBabelUnlink event
+     * @return void
+     */
+    public function fireUnlinkEvent()
+    {
+        $this->modx->invokeEvent('OnBabelUnlink', array(
+            'context_key' => $this->getProperty('context'),
+            'original_id' => $this->object->get('id'),
+            'original_resource' => &$this->object,
+            'target_id' => $$this->targetResource->get('id'),
+            'target_resource' => &$this->targetResource
+        ));
     }
 
     /**

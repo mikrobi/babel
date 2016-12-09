@@ -11,9 +11,9 @@ Babel is an Extra for MODx Revolution that helps you managing your multilingual
 websites using different contexts. Babel even supports managing several different
 multilingual websites within one MODx instance by using so called context groups.
 
-Babel maintains links between translated resources. In the manager you can use 
+Babel maintains links between translated resources. In the manager you can use
 the Babel Box to easily switch between the different language versions
-of your resources. Translations can be created automatically by Babel or defined 
+of your resources. Translations can be created automatically by Babel or defined
 manually.
 
 Additionally Babel can be used to synchronize certain template variables (TVs)
@@ -27,8 +27,8 @@ IMPORTANT: Upgrading from version < 2.0.0:
 ====================
 
 Babel is based on ideas of Sylvain Aerni <enzyms@gmail.com> and has been completely
-reengineered in version 2.0.0 and is NOT BACKWARD COMPATIBLE to older versions. 
-If you're using an older version of Babel you have to uninstall and remove that 
+reengineered in version 2.0.0 and is NOT BACKWARD COMPATIBLE to older versions.
+If you're using an older version of Babel you have to uninstall and remove that
 version first.
 
 
@@ -39,27 +39,27 @@ Installation
 	according to your needs. You may refer to our tutorial to setup your
 	multilingual site(s):
 	http://www.multilingual-modx.com/blog/2011/multilingual-websites-with-modx-and-babel.html
-	
+
 	Be sure that your context switches work well.
 
-1.	Install Babel via the package manager and set the system settings for Babel via 
+1.	Install Babel via the package manager and set the system settings for Babel via
 	the form displayed during setup:
 	- Context Keys (babel.contextKeys):
-		Comma separated list of context keys which should be used to link 
+		Comma separated list of context keys which should be used to link
 		multilingual resources.
-		For advanced configuration you may define several groups of context keys 
-		by using a semicolon (;) as delimiter. This is usefull if your're 
+		For advanced configuration you may define several groups of context keys
+		by using a semicolon (;) as delimiter. This is usefull if your're
 		administrating multiple multilingual sites within one MODx instance.
 		Example scenario:
 			site1: en, de, fr. Using contexts: web, site1de, site1fr
 			site2: en, de. Using contexts: site2en, site2de
 			You would set babel.contextKeys to "web,site1de,site1fr;site2en,site2de".
-			
+
 	- Name of Babel TV (babel.babelTvName):
 		Name of template variable (TV) in which Babel will store the links between
 		multilingual resources this TV will be maintained by Babel. Please don't
 		change this TV manually otherwhise your translation links may be broken.
-		
+
 	- IDs of TVs to be synchronized (babel.syncTvs):
 		Comma separated list of ids of template variables (TVs) which should be
 		synchronized by Babel.
@@ -79,12 +79,12 @@ The buttons may have three different colors according to their state:
 	Language for which a translated resource is defined.
 - Light Gray:
 	Language for which no translation has been created or defined yet.
-	
+
 By clicking on the (green) language buttons you can easily switch between the
 different language versions of your resources.
 
 If there are no translations defined for certain language (gray button),
-mousover the language's button: a layer appears where you can tell Babel to 
+mousover the language's button: a layer appears where you can tell Babel to
 create a translation of the current resource or you can set the translation link
 to an existing resource manually by entering the ID of the translated resource.
 
@@ -98,7 +98,7 @@ button: a layer appears where you can click on "Unlink translation" button to
 remove the translation link to this language.
 
 
-Snippet usage 
+Snippet usage
 ====================
 
 Currently there are two snippets available for Babel:
@@ -157,7 +157,7 @@ In this Chunk you have access to the following placeholders:
 
 BabelTranslation
 --------------------
-The BabelTranslation snippets returns the ID of a translated resource in a 
+The BabelTranslation snippets returns the ID of a translated resource in a
 given context.
 
 The following parameters are supported by BabelLinks:
@@ -169,13 +169,29 @@ The following parameters are supported by BabelLinks:
 - showUnpublished (optional):
 	Flag whether to show unpublished translations.
 	Default: 0
-	
+
 Example usage:
 
 [[BabelTranslation? &contextKey=`de`]]
 
 This will return the ID of the translated resource located in the "de" context
 of the current resource.
+
+Plugin Events
+====================
+
+Babel triggers some system events you could use in plugins. The following
+events are available:
+
+OnBabelDuplicate: invoked on duplicating the resource in a new language context
+OnBabelLink: invoked on link the resource with a target resource
+OnBabelUnlink: invoked on unlink the resource from a target resource
+
+A generic plugin for the events could be found on GitHub:
+https://github.com/Jako/BabelEvents
+
+You could use the plugins for i.e. an automatic translation of the resource
+via a webservice.
 
 
 Support

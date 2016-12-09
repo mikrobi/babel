@@ -2,6 +2,7 @@ Changelog for Babel.
 
 Babel 3.0.0-dev
 =====================================
+- [#134] Added Babel System Events - thanks to Jako <https://github.com/Jako>
 - [#147] Initiated language code standard using IANA's Language Subtag Registry
 - [#145] bugfixed unlinking unsync TVs
 - added options to link to specific resource or all resources

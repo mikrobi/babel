@@ -40,6 +40,11 @@ class BabelDuplicateResourceProcessor extends modObjectProcessor
     /** @var xPDOObject $newObject The newly duplicated object */
     public $newObject;
 
+    public function checkPermissions()
+    {
+        return $this->modx->hasPermission('resource_duplicate');
+    }
+
     public function initialize()
     {
         $primaryKey = $this->getProperty($this->primaryKeyField, false);
@@ -82,8 +87,24 @@ class BabelDuplicateResourceProcessor extends modObjectProcessor
         $linkedResources[$contextKey] = $this->newObject->get('id');
         $this->modx->babel->updateBabelTv($linkedResources, $linkedResources);
 
+        $this->fireDuplicateEvent();
         $this->logManagerAction();
         return $this->cleanup();
+    }
+
+    /**
+     * Fire the OnBabelDuplicate event
+     * @return void
+     */
+    public function fireDuplicateEvent()
+    {
+        $this->modx->invokeEvent('OnBabelDuplicate', array(
+            'context_key' => $this->getProperty('context_key'),
+            'original_id' => $this->object->get('id'),
+            'original_resource' => &$this->object,
+            'duplicate_id' => $this->newObject->get('id'),
+            'duplicate_resource' => &$this->newObject,
+        ));
     }
 
     /**

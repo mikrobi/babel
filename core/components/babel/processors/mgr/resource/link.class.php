@@ -134,7 +134,23 @@ class BabelLinkResourceProcessor extends modObjectGetProcessor
             $this->modx->babel->synchronizeTvs($this->object->get('id'));
         }
 
+        $this->fireLinkEvent();
         return $this->cleanup();
+    }
+
+    /**
+     * Fire the OnBabelLink event
+     * @return void
+     */
+    public function fireLinkEvent()
+    {
+        $this->modx->invokeEvent('OnBabelLink', array(
+            'context_key' => $this->getProperty('context'),
+            'original_id' => $this->object->get('id'),
+            'original_resource' => &$this->object,
+            'target_id' => $$this->targetResource->get('id'),
+            'target_resource' => &$this->targetResource
+        ));
     }
 
     /**
