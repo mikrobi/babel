@@ -73,4 +73,11 @@ $events['OnResourceSort']->fromArray(array(
     'propertyset' => 0,
 ),'',true,true);
 
+$events['OnSiteRefresh'] = $modx->newObject('modPluginEvent');
+$events['OnSiteRefresh']->fromArray(array(
+    'event' => 'OnSiteRefresh',
+    'priority' => 0,
+    'propertyset' => 0,
+),'',true,true);
+
 return $events;

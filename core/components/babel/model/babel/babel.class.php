@@ -565,6 +565,21 @@ class Babel
             /* always be sure that the Babel TV is set */
             $this->initBabelTv($resource);
         }
+
+        $cacheOptions = array(
+            xPDO::OPT_CACHE_KEY => 'babel',
+            xPDO::OPT_CACHE_HANDLER => $this->modx->getOption('cache_resource_handler', null, $this->modx->getOption(xPDO::OPT_CACHE_HANDLER)),
+            xPDO::OPT_CACHE_FORMAT => (integer) $this->modx->getOption('cache_resource_format', null, $this->modx->getOption(xPDO::OPT_CACHE_FORMAT, null, xPDOCacheManager::CACHE_PHP)),
+        );
+        $languages = $this->modx->cacheManager->get('languages', $cacheOptions);
+        if (!$languages) {
+            include_once $this->config['corePath'].'vendor/iana-language-subtag-registry/language-subtag-registry.php';
+            $ianaLstr = new LanguageSubtagRegistry();
+            $ianaLstr->readSource($this->config['corePath'].'vendor/iana-language-subtag-registry/language-subtag-registry');
+            $languages = $ianaLstr->languagesAssocArray('Subtag');
+            $this->modx->cacheManager->set('languages', $languages, 0, $cacheOptions);
+        }
+
         foreach ($contextKeys as $contextKey) {
             /* for each (valid/existing) context of the context group a button will be displayed */
             $context = $this->modx->getObject('modContext', array('key' => $contextKey));
@@ -588,7 +603,7 @@ class Babel
                 'resourceId'    => $resourceId,
                 'resourceUrl'   => $resourceUrl,
                 'resourceTitle' => $resourceTitle,
-                'displayText'   => $this->modx->lexicon('babel.language_'.$cultureKey).' ('.(!empty($cultureKey) ? $cultureKey : $contextKey).')',
+                'displayText'   => $languages[$cultureKey]['Description'][0].' ('.(!empty($cultureKey) ? $cultureKey : $contextKey).')',
             );
             $menu[$contextKey] = $placeholders;
         }

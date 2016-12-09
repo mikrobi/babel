@@ -154,5 +154,15 @@ switch ($modx->event->name) {
         }
 
         break;
+
+    case 'OnSiteRefresh':
+        $cacheManager = $modx->getCacheManager();
+        $cacheManager->refresh(array(
+            'babel' => array(),
+        ));
+        break;
+
+    default:
+        break;
 }
 return;
