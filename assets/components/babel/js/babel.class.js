@@ -180,11 +180,8 @@ Babel.prototype.linkTranslation = function (ctx) {
                 disabled: true,
                 emptyText: ctx
             }, {
-                xtype: 'hidden',
-                name: 'target'
-            }, {
                 xtype: 'modx-field-parent-change',
-                fieldLabel: _('babel.id_of_target'),
+                fieldLabel: _('babel.select_tree_node'),
                 id: '',
                 anchor: '100%',
                 name: 'target-combo',
@@ -246,12 +243,41 @@ Babel.prototype.linkTranslation = function (ctx) {
                 forceSelection: true,
                 listeners: {
                     select: {
-                        fn: function(cmp, record) {
-                            win.fp.getForm().findField('target').setValue(record.get('id'));
-                        }
-                        ,scope: this
+                        fn: function(combo, record) {
+                            var val = combo.getValue();
+                            if (val === "" || val === 0 || val === "&nbsp;") {
+                                combo.setValue(null);
+                            } else {
+                                win.fp.getForm().findField('target').setValue(record.get('id'));
+                            }
+                            win.fp.getForm().findField('target-combo').reset();
+                        },
+                        scope: this
+                    },
+                    blur: {
+                        fn: function (combo) {
+                            var val = combo.getValue();
+                            if (val === "" || val === 0 || val === "&nbsp;") {
+                                combo.setValue(null);
+                            }
+                        },
+                        scope: this
                     }
                 },
+            }, {
+                fieldLabel: _('babel.id_of_target'),
+                xtype: 'numberfield',
+                name: 'target',
+                enableKeyEvents: true,
+                listeners: {
+                    keyup: {
+                        fn: function(field, e) {
+                            win.fp.getForm().findField('target-combo').reset();
+                            win.fp.getForm().findField('page_id').reset();
+                        },
+                        scope: this
+                    }
+                }
             }, {
                 xtype: 'xcheckbox',
                 boxLabel: _('babel.copy_tv_values'),

@@ -55,6 +55,7 @@ $_lang['babel.translation_pending'] = '[translations pending]';
 $_lang['babel.open'] = 'Open';
 $_lang['babel.please_wait'] = 'Please wait...';
 $_lang['babel.sync_linked_tranlations'] = 'Synchronize all translations from the target';
+$_lang['babel.select_tree_node'] = 'Select a node of the resource tree';
 
 /* error messages */
 $_lang['error.invalid_context_key'] = '[[+context]] is no valid context key.';

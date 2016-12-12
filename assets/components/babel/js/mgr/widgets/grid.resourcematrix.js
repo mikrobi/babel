@@ -173,14 +173,14 @@ Babel.grid.ResourceMatrix = function (config) {
     });
 
     Babel.grid.ResourceMatrix.superclass.constructor.call(this, config);
-    
+
     var originalHeight = this.getHeight();
     this.store.on('load', function(store, records, options){
         // fixing height
         var scrollerHeight = this.getView().scroller.dom.children[0].offsetHeight;
         var tbarHeight = this.getTopToolbar().getHeight();
         this.setHeight(tbarHeight + originalHeight + scrollerHeight + 4);
-        
+
     }, this);
 
 };
@@ -227,11 +227,8 @@ Ext.extend(Babel.grid.ResourceMatrix, MODx.grid.Grid, {
                     disabled: true,
                     emptyText: ctx
                 }, {
-                    xtype: 'hidden',
-                    name: 'target'
-                }, {
                     xtype: 'modx-field-parent-change',
-                    fieldLabel: _('babel.id_of_target'),
+                    fieldLabel: _('babel.select_tree_node'),
                     id: '',
                     anchor: '100%',
                     name: 'target-combo',
@@ -330,6 +327,20 @@ Ext.extend(Babel.grid.ResourceMatrix, MODx.grid.Grid, {
                                 if (val === "" || val === 0 || val === "&nbsp;") {
                                     combo.setValue(null);
                                 }
+                            },
+                            scope: this
+                        }
+                    }
+                }, {
+                    fieldLabel: _('babel.id_of_target'),
+                    xtype: 'numberfield',
+                    name: 'target',
+                    enableKeyEvents: true,
+                    listeners: {
+                        keyup: {
+                            fn: function(field, e) {
+                                win.fp.getForm().findField('target-combo').reset();
+                                win.fp.getForm().findField('page_id').reset();
                             },
                             scope: this
                         }
