@@ -1,1 +1,5 @@
-<li><a href="[[+url]]" class="[[+cultureKey]][[+active:notempty=` [[+active]]`]]">[[%babel.language_[[+cultureKey]]? &topic=`default` &namespace=`babel` &language=`[[+cultureKey]]`]]</a></li>
+<li>
+    <a href="[[+url]]" class="[[+cultureKey]][[+active:notempty=` [[+active]]`]]">
+        [[+language]]
+    </a>
+</li>

@@ -74,8 +74,8 @@ if (!empty($modx->resource) && is_object($modx->resource) && $resourceId === $mo
 }
 
 $linkedResources = $babel->getLinkedResources($resourceId);
-
-$outputArray = array();
+$languages       = $babel->getLanguages();
+$outputArray     = array();
 foreach ($contextKeys as $contextKey) {
     if (!$showCurrent && $contextKey === $resource->get('context_key')) {
         continue;
@@ -122,7 +122,8 @@ foreach ($contextKeys as $contextKey) {
             'cultureKey' => $cultureKey,
             'url'        => $url,
             'active'     => $active,
-            'id'         => $linkedResources[$contextKey]
+            'id'         => $linkedResources[$contextKey],
+            'language'   => $languages[$cultureKey]['Description'],
         );
 
         if (!empty($toArray)) {
@@ -140,7 +141,8 @@ foreach ($contextKeys as $contextKey) {
             'cultureKey' => $cultureKey,
             'url'        => $url,
             'active'     => $active,
-            'id'         => $context->getOption('site_start')
+            'id'         => $context->getOption('site_start'),
+            'language'   => $languages[$cultureKey]['Description'],
         );
 
         if (!empty($toArray)) {
