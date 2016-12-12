@@ -145,11 +145,11 @@ class BabelLinkResourceProcessor extends modObjectGetProcessor
     public function fireLinkEvent()
     {
         $this->modx->invokeEvent('OnBabelLink', array(
-            'context_key' => $this->getProperty('context'),
-            'original_id' => $this->object->get('id'),
+            'context_key'       => $this->getProperty('context'),
+            'original_id'       => $this->object->get('id'),
             'original_resource' => &$this->object,
-            'target_id' => $$this->targetResource->get('id'),
-            'target_resource' => &$this->targetResource
+            'target_id'         => $this->targetResource->get('id'),
+            'target_resource'   => &$this->targetResource
         ));
     }
 

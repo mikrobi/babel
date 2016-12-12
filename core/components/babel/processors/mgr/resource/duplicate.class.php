@@ -99,10 +99,10 @@ class BabelDuplicateResourceProcessor extends modObjectProcessor
     public function fireDuplicateEvent()
     {
         $this->modx->invokeEvent('OnBabelDuplicate', array(
-            'context_key' => $this->getProperty('context_key'),
-            'original_id' => $this->object->get('id'),
-            'original_resource' => &$this->object,
-            'duplicate_id' => $this->newObject->get('id'),
+            'context_key'        => $this->getProperty('context_key'),
+            'original_id'        => $this->object->get('id'),
+            'original_resource'  => &$this->object,
+            'duplicate_id'       => $this->newObject->get('id'),
             'duplicate_resource' => &$this->newObject,
         ));
     }
