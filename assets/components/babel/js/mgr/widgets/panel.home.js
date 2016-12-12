@@ -10,7 +10,7 @@ Babel.panel.Home = function (config) {
                 border: false,
                 cls: 'modx-page-header'
             }, {
-                html: _('babel.icon_descriptions'),
+                html: _('babel.icon_descriptions', {'base_url': MODx.config.base_url}),
                 cls: 'panel-desc'
             }, {
                 id: 'babel-grid-resourcematrix-holder',
