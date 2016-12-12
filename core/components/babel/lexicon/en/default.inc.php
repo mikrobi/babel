@@ -56,6 +56,7 @@ $_lang['babel.open'] = 'Open';
 $_lang['babel.please_wait'] = 'Please wait...';
 $_lang['babel.sync_linked_tranlations'] = 'Synchronize all translations from the target';
 $_lang['babel.select_tree_node'] = 'Select a node of the resource tree';
+$_lang['babel.all'] = 'All';
 
 /**
  * DEPRECATED

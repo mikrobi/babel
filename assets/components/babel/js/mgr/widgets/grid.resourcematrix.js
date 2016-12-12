@@ -29,6 +29,30 @@ Babel.grid.ResourceMatrix = function (config) {
         locked: true,
         id: 'pagetitle'
     });
+
+    columns.push({
+        header: _('babel.all'),
+        xtype: 'actioncolumn',
+        dataIndex: 'id',
+        sortable: false,
+        editable: false,
+        fixed: true,
+        width: 50,
+        locked: true,
+        items: [
+            {
+                iconCls: 'icon-unlink icon-babel-actioncolumn-img',
+                tooltip: _('babel.unlink'),
+                altText: _('babel.unlink'),
+                handler: function (grid, row, col) {
+                    var rec = this.store.getAt(row);
+                    grid.unlinkTranslation('', rec.get('id'), 0)
+                },
+                scope: this
+            }
+        ]
+    });
+
     fields.push('id');
     fields.push('context_key');
     fields.push('pagetitle');
@@ -349,6 +373,11 @@ Ext.extend(Babel.grid.ResourceMatrix, MODx.grid.Grid, {
                     xtype: 'xcheckbox',
                     boxLabel: _('babel.copy_tv_values'),
                     name: 'copy-tv-values'
+                }, {
+                    xtype: 'xcheckbox',
+                    boxLabel: _('babel.sync_linked_tranlations'),
+                    name: 'sync-linked-tranlations',
+                    checked: true
                 }
             ]
         });
@@ -358,9 +387,17 @@ Ext.extend(Babel.grid.ResourceMatrix, MODx.grid.Grid, {
     unlinkTranslation: function (ctx, id, target) {
         var _this = Ext.getCmp('babel-grid-resourcematrix');
         _this.loadGridMask();
+        ctx = ctx || '';
+        target = parseInt(target) || 0;
+        var text = '';
+        if (target === 0) {
+            text = _('babel.unlink_all_translations_confirm');
+        } else {
+            text = _('babel.unlink_translation_confirm', {context: ctx, id: id});
+        }
         return MODx.msg.confirm({
             title: _('confirm'),
-            text: _('babel.unlink_translation_confirm', {context: ctx, id: id}),
+            text: text,
             url: Babel.config.connectorUrl,
             params: {
                 action: 'mgr/resource/unlink',
