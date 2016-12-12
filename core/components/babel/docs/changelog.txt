@@ -1,6 +1,6 @@
 Changelog for Babel.
 
-Babel 3.0.0-dev
+Babel 3.0.0-pl (December 12, 2016)
 =====================================
 - [#135] Fixed not found icons
 - [#143] Link to a translation by entering the ID
