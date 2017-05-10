@@ -576,10 +576,13 @@ class Babel
             }
             $context->prepare();
             $cultureKey = $context->getOption('cultureKey', $this->modx->getOption('cultureKey'));
+            $linkResource = null;
             if (isset($linkedResources[$contextKey])) {
                 $resourceId    = $linkedResources[$contextKey];
+                $linkResource  = $this->modx->getObject('modResource', $resourceId);
+            }
+            if ($linkResource) {
                 $resourceUrl   = '?a='.$actions['resource/update'].'&id='.$resourceId;
-                $linkResource  = $this->modx->getObject('modResource', $linkedResources[$contextKey]);
                 $resourceTitle = $linkResource->get('pagetitle');
             } else {
                 $resourceId    = '';
