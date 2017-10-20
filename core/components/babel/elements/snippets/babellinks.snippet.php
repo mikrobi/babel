@@ -157,7 +157,7 @@ foreach ($contextKeys as $contextKey) {
 }
 
 if (!empty($toArray)) {
-    return '<pre>'.print_r($outputArray, 1).'</pre>';
+    return $outputArray;
 }
 
 $output = implode($outputSeparator, $outputArray);
