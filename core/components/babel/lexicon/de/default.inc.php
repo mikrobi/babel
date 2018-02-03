@@ -23,25 +23,44 @@
  */
 /**
  * Babel German language file
- * 
+ *
  * @author Jakob Class <jakob.class@class-zec.de>
  *
  * @package babel
  * @subpackage lexicon
- * 
+ * @language de
+ *
  * @todo complete babel.language_xx entries for every language
  */
 
+$_lang['babel'] = 'Babel';
+$_lang['babel.desc'] = 'Verwaltungssystem für mehrsprachige Sites';
 $_lang['babel.tv_caption'] = 'Babel-Übersetzungslinks';
-$_lang['babel.tv_description'] = 'Wird über das Babel-Plugin verwaltet. Bitte nicht ändern';
+$_lang['babel.tv_description'] = 'Wird vom Babel-Plugin verwaltet. Bitte nicht ändern';
 $_lang['babel.create_translation'] = 'Übersetzung anlegen';
-$_lang['babel.unlink_translation'] = 'Verknüpfung aufheben';
+$_lang['babel.create_translation_confirm'] = 'Sind Sie sicher, dass Sie eine neue Übersetzung für diese Ressource im Kontext <b>"[[+context]]"</b> anlegen möchten?';
+$_lang['babel.unlink'] = 'Verknüpfung lösen';
+$_lang['babel.unlink_translation'] = 'Verknüpfung der Übersetzung lösen';
+$_lang['babel.unlink_translation_confirm'] = 'Sind Sie sicher, dass Sie die Verknüpfung der Übersetzung im Kontext <b>"[[+context]]"</b> von dieser Ressource lösen möchten?';
+$_lang['babel.unlink_all_translations'] = 'Verknüpfungen aller Übersetzungen lösen';
+$_lang['babel.unlink_all_translations_confirm'] = 'Sind Sie sicher, dass Sie die Verknüpfungen aller Übersetzungen von dieser Ressource lösen möchten?';
 $_lang['babel.link_translation_manually'] = 'oder <strong>Übersetzung manuell verknüpfen</strong>:';
+$_lang['babel.link_translation'] = 'Mit einer existierenden Ressource verknüpfen';
 $_lang['babel.id_of_target'] = 'Ziel-ID:';
+$_lang['babel....or'] = '... oder';
+$_lang['babel.pagetitle_of_target'] = 'Seitentitel des Ziels:';
 $_lang['babel.copy_tv_values'] = 'Synchronisierte TVs zum Ziel kopieren';
 $_lang['babel.save'] = 'Speichern';
 $_lang['babel.translation_pending'] = '[Übersetzung ausstehend]';
+$_lang['babel.open'] = 'Öffnen';
+$_lang['babel.please_wait'] = 'Bitte warten...';
+$_lang['babel.sync_linked_tranlations'] = 'Alle Übersetzungen synchronisieren';  // from the target???
+$_lang['babel.select_tree_node'] = 'Wählen Sie einen Knoten des Ressourcen-Baumes';
+$_lang['babel.all'] = 'Alle';
 
+/**
+ * DEPRECATED
+ */
 /* language names */
 $_lang['babel.language_ar'] = 'Arabisch';
 $_lang['babel.language_bg'] = 'Bulgarisch';
@@ -80,10 +99,20 @@ $_lang['babel.language_zh'] = 'Chinesisch';
 /* error messages */
 $_lang['error.invalid_context_key'] = '[[+context]] ist kein gültiger Kontext-Schlüssel.';
 $_lang['error.invalid_resource_id'] = '[[+resource]] ist keine gültige Ressourcen-ID.';
-$_lang['error.resource_from_other_context'] = 'Ressource [[+resource]] befindet sich nicht im Kontext [[+context]].';
-$_lang['error.resource_already_linked'] = 'Ressource [[+resource]] ist bereits mit anderen Ressourcen verknüpft.';
+$_lang['error.resource_from_other_context'] = 'Die Ressource [[+resource]] befindet sich nicht im Kontext [[+context]].';
+$_lang['error.resource_already_linked'] = 'Die Ressource [[+resource]] ist bereits mit anderen Ressourcen verknüpft.';
 $_lang['error.no_link_to_context'] = 'Für den Kontext [[+context]] existiert noch keine Verknüpfung.';
-$_lang['error.unlink_of_selflink_not_possible'] = 'Die Verknüpfung einer Ressource auf sich selbst kann nciht entfernt werden.';
+$_lang['error.link_of_selflink_not_possible'] = 'Eine Verknüpfung mit einer Ressource kann selbst nicht verknüpft werden.';
+$_lang['error.unlink_of_selflink_not_possible'] = 'Die Verknüpfung einer Ressource auf sich selbst kann nicht entfernt werden.';
 $_lang['error.translation_in_same_context'] = 'Eine Übersetzung kann nicht im gleichen Kontext angelegt werden.';
 $_lang['error.translation_already_exists'] = 'Es existiert bereits eine Übersetzung im Kontext [[+context]].';
 $_lang['error.could_not_create_translation'] = 'Beim Erstellen der Übersetzung im Kontext [[+context]] ist ein Fehler aufgetreten.';
+
+$_lang['babel.context_err_ns'] = 'Der Kontext wurde nicht angegeben.';
+
+$_lang['setting_babel.contextKeys'] = 'Kontext-Schlüssel';
+$_lang['setting_babel.contextKeys_desc'] = 'Kommaseparierte Liste von Kontext-Schlüsseln, die verwendet werden sollen, um die Ressourcen der verschiedenen Sprachen zu verbinden.';
+$_lang['setting_babel.babelTvName'] = 'Babel-TV-Name';
+$_lang['setting_babel.babelTvName_desc'] = 'Name der Template-Variablen (TV), in der Babel die Links zwischen den Ressourcen der verschiedenen Sprachen speichern wird. Diese TV wird von Babel verwaltet.';
+$_lang['setting_babel.syncTvs'] = 'Zu synchronisierende TVs';
+$_lang['setting_babel.syncTvs_desc'] = 'Kommaseparierte Liste von IDs von Template-Variablen (TVs), die von Babel synchronisiert werden sollen.';
