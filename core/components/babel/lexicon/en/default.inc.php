@@ -113,6 +113,6 @@ $_lang['babel.context_err_ns'] = 'Context was not specified.';
 $_lang['setting_babel.contextKeys'] = 'Context Keys';
 $_lang['setting_babel.contextKeys_desc'] = 'Comma separated list of context keys which should be used to link multilingual resources.';
 $_lang['setting_babel.babelTvName'] = 'Babel TV Name';
-$_lang['setting_babel.babelTvName_desc'] = 'Name of template variable (TV) in which Babel will store the links between multilingual resources this TV will be maintained by Babel.';
+$_lang['setting_babel.babelTvName_desc'] = 'Name of template variable (TV) in which Babel will store the links between multilingual resources. This TV will be maintained by Babel.';
 $_lang['setting_babel.syncTvs'] = 'TVs to be synchronized';
 $_lang['setting_babel.syncTvs_desc'] = 'Comma separated list of ids of template variables (TVs) which should be synchronized by Babel.';
