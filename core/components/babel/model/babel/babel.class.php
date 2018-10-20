@@ -242,6 +242,13 @@ class Babel
                     $newParent->save();
                 }
             }
+            
+            /* invoke OnDocFormSave event */
+            $this->modx->invokeEvent('OnDocFormSave', array(
+                'mode' => modSystemEvent::MODE_NEW,
+                'id' => $newResource->get('id'),
+                'resource' => &$newResource
+            ));
         } else {
             $this->modx->log(modX::LOG_LEVEL_ERROR, 'Could not duplicate resource: '.$resource->get('id').' in context: '.$contextKey);
             $newResource = null;
