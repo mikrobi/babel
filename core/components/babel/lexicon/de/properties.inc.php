@@ -23,22 +23,25 @@
  */
 /**
  * Babel properties German language file
- * 
+ *
  * @author Jakob Class <jakob.class@class-zec.de>
  *
  * @package babel
  * @subpackage lexicon
+ * @language de
  */
 
 /* BabelLinks snippet */
-$_lang['babellinks.tpl'] = 'Chunk zur Darstellung eines Sprach-Links';
-$_lang['babellinks.activeCls'] = 'CSS-Klasse für den Sprach-Link der aktiven Sprache';
-$_lang['babellinks.resourceId'] = 'Id der Ressource, von der die Links zu Übersetzungen dargestellt werden sollen';
-$_lang['babellinks.showUnpublished'] = 'Flag das bestimmt, ob unveröffentliche Übersetzungen angezeigt werden sollen';
-$_lang['babellinks.showCurrent'] = 'Flag das bestimmt, ob ein Link zu einer Übersetzung der aktuellen Sprache angezeigt werden soll';
+/* BabelLinks snippet */
+$_lang['babellinks.tpl'] = 'Chunk zur Darstellung eines Sprachen-Links';
+$_lang['babellinks.activeCls'] = 'CSS-Klasse für den Sprachen-Link der aktiven Sprache';
+$_lang['babellinks.resourceId'] = 'ID der Ressource, von der die Links zu Übersetzungen dargestellt werden sollen';
+$_lang['babellinks.showUnpublished'] = 'Gibt an, ob unveröffentlichte Übersetzungen angezeigt werden sollen';
+$_lang['babellinks.showCurrent'] = 'Gibt an, ob ein Link zu einer Übersetzung der aktuellen Sprache angezeigt werden soll';
+$_lang['babellinks.includeUnlinked'] = 'Gibt an, ob ein Kontext, dessen Verknüpfung gelöst wurde, angezeigt werden soll';  // ???
 
 /* BabelTranslation snippet */
-$_lang['babeltranslation.resourceId'] = 'ID der Ressource, von der eine Übersetzung ermittelt werden soll';
-$_lang['babeltranslation.contextKey'] = 'Schlüssel des Kontexts, in dem eine Übersetzung ermittelt werden soll';
-$_lang['babeltranslation.cultureKey'] = 'Key of culture in which translated resource should be determined. Used only in case contextKey was not specified.  If both omitted: uses currently set cultureKey.';
-$_lang['babeltranslation.showUnpublished'] = 'Flag das betsimmt, ob unveröffentliche Übersetzungen angezeigt werden sollen';
+$_lang['babeltranslation.resourceId'] = 'ID der Ressource, von der eine Übersetzung erstellt werden soll';
+$_lang['babeltranslation.contextKey'] = 'Schlüssel des Kontexts, in dem eine Übersetzung erstellt werden soll';
+$_lang['babeltranslation.cultureKey'] = 'Kürzel der Sprache, in der eine Übersetzung der Ressource angelegt werden soll. Wird nur verwendet, wenn der contextKey nicht angegeben wird. Werden beide Werte nicht angegeben, wird der aktuelle cultureKey verwendet.';
+$_lang['babeltranslation.showUnpublished'] = 'Gibt an, ob unveröffentlichte Übersetzungen angezeigt werden sollen';
