@@ -23,7 +23,7 @@
  */
 /**
  * Babel properties Russian language file
- * 
+ *
  * @author Jakob Class <jakob.class@class-zec.de>
  *
  * @package babel
@@ -31,14 +31,14 @@
  */
 
 /* BabelLinks snippet */
-$_lang['babellinks.tpl'] = 'Chunk to display a language link';
-$_lang['babellinks.activeCls'] = 'CSS class for the active language link';
-$_lang['babellinks.resourceId'] = 'Id of resource of which links to translations should be displayed';
-$_lang['babellinks.showUnpublished'] = 'Flag whether to show unpublished translations';
-$_lang['babellinks.showCurrent'] = 'Flag whether to show a link to a translation of the current language';
-$_lang['babellinks.includeUnlinked'] = 'Flag whether to show unlinked context';
+$_lang['babellinks.tpl'] = 'Чанк-шаблон ссылки на перевод';
+$_lang['babellinks.activeCls'] = 'CSS-класс активной ссылки на перевод';
+$_lang['babellinks.resourceId'] = 'ID ресурсов, ссылки на перевод которых должны отображаться';
+$_lang['babellinks.showUnpublished'] = 'Показывать неопубликованные ресурсы';
+$_lang['babellinks.showCurrent'] = 'Показывать ссылку на перевод текущего языка';
+$_lang['babellinks.includeUnlinked'] = 'Показывать несвязанный контекст';
 
 /* BabelTranslation snippet */
-$_lang['babeltranslation.resourceId'] = 'ID of resource of which a translated resource should be determined';
-$_lang['babeltranslation.contextKey'] = 'Key of context in which translated resource should be determined';
-$_lang['babeltranslation.showUnpublished'] = 'Flag whether to show unpublished translations';
+$_lang['babeltranslation.resourceId'] = 'ID ресурса, для которого нужно получить ресурс с переводом';
+$_lang['babeltranslation.contextKey'] = 'Ключ контекста, для которого нужно получить ресурс с переводом';
+$_lang['babeltranslation.showUnpublished'] = 'Показывать неопубликованные ресурсы с переводом';
