@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Babel
  *
@@ -41,14 +40,11 @@ if (!($babel instanceof Babel) || !$babel->babelTv)
     return;
 
 /* get snippet properties */
-$resourceId = intval($modx->getOption('resourceId', $scriptProperties));
-if (empty($resourceId)) {
-    if (!empty($modx->resource) && is_object($modx->resource)) {
-        $resourceId = $modx->resource->get('id');
-    } else {
-        return;
-    }
+$resourceIds = $modx->getOption('resourceId', $scriptProperties);
+if (empty($resourceIds)) {
+    return;
 }
+$resourceIds = array_map('trim', explode(',', $resourceIds));;
 $contextKey = $modx->getOption('contextKey', $scriptProperties, '', true);
 if (empty($contextKey)) {
     $cultureKey = $modx->getOption('cultureKey', $scriptProperties, '', true);
@@ -56,13 +52,15 @@ if (empty($contextKey)) {
 }
 $showUnpublished = $modx->getOption('showUnpublished', $scriptProperties, 0, true);
 
-/* determine id of tranlated resource */
-$linkedResources = $babel->getLinkedResources($resourceId);
-$output          = null;
-if (isset($linkedResources[$contextKey])) {
-    $resource = $modx->getObject('modResource', $linkedResources[$contextKey]);
-    if ($resource && ($showUnpublished || $resource->get('published') == 1)) {
-        $output = $resource->get('id');
+/* determine ids of translated resource */
+$output = array();
+foreach($resourceIds as $resourceId) {
+    $linkedResource = $babel->getLinkedResources($resourceId);
+    if (isset($linkedResources[$contextKey])) {
+        $resource = $modx->getObject('modResource', $linkedResources[$contextKey]);
+        if ($resource && ($showUnpublished || $resource->get('published') == 1)) {
+            $output[] = $resource->get('id');
+        }
     }
 }
-return $output;
+return implode(',', $output);
