@@ -56,8 +56,8 @@ $showUnpublished = $modx->getOption('showUnpublished', $scriptProperties, 0, tru
 $output = array();
 foreach($resourceIds as $resourceId) {
     $linkedResource = $babel->getLinkedResources($resourceId);
-    if (isset($linkedResources[$contextKey])) {
-        $resource = $modx->getObject('modResource', $linkedResources[$contextKey]);
+    if (isset($linkedResource[$contextKey])) {
+        $resource = $modx->getObject('modResource', $linkedResource[$contextKey]);
         if ($resource && ($showUnpublished || $resource->get('published') == 1)) {
             $output[] = $resource->get('id');
         }
