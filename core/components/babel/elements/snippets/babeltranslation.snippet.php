@@ -42,7 +42,11 @@ if (!($babel instanceof Babel) || !$babel->babelTv)
 /* get snippet properties */
 $resourceIds = $modx->getOption('resourceId', $scriptProperties);
 if (empty($resourceIds)) {
-    return;
+    if (!empty($modx->resource) && is_object($modx->resource)) {
+        $resourceIds = $modx->resource->get('id');
+    } else {	
+        return;	
+    }
 }
 $resourceIds = array_map('trim', explode(',', $resourceIds));;
 $contextKey = $modx->getOption('contextKey', $scriptProperties, '', true);
