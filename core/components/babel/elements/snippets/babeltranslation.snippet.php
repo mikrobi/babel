@@ -44,8 +44,8 @@ $resourceIds = $modx->getOption('resourceId', $scriptProperties);
 if (empty($resourceIds)) {
     if (!empty($modx->resource) && is_object($modx->resource)) {
         $resourceIds = $modx->resource->get('id');
-    } else {	
-        return;	
+    } else {
+        return;
     }
 }
 $resourceIds = array_map('trim', explode(',', $resourceIds));;
