@@ -23,16 +23,18 @@
  */
 /**
  * Babel Russian language file
- * 
+ *
  * @author Jakob Class <jakob.class@class-zec.de>
  *         goldsky <goldsky@virtudraft.com>
  *
  * @package babel
  * @subpackage lexicon
- * 
+ *
  * @todo complete babel.language_xx entries for every language
  */
 
+$_lang['babel'] = 'Babel';
+$_lang['babel.desc'] = 'Управление мультиязычной системой';
 $_lang['babel.tv_caption'] = 'Babel Translation Links';
 $_lang['babel.tv_description'] = 'Используется плагином Babel. Не изменяйте!';
 $_lang['babel.create_translation'] = 'Создать перевод';
@@ -40,14 +42,21 @@ $_lang['babel.create_translation_confirm'] = 'Вы уверены, что хот
 $_lang['babel.unlink'] = 'Отвязать';
 $_lang['babel.unlink_translation'] = 'Отвязать перевод';
 $_lang['babel.unlink_translation_confirm'] = 'Вы уверены, что хотите отвязать перевод в контексте <b>«[[+context]]»</b> для данного ресурса?';
-$_lang['babel.link_translation_manually'] = 'or <strong>link translation manually</strong>:';
+$_lang['babel.unlink_all_translations'] = 'Отвязать все переводы';
+$_lang['babel.unlink_all_translations_confirm'] = 'Вы уверены, что хотите отвязать все переводы для данного ресурса?';
+$_lang['babel.link_translation_manually'] = 'или <strong>связать перевод вручную</strong>:';
 $_lang['babel.link_translation'] = 'Связать с существующим ресурсом';
-$_lang['babel.id_of_target'] = 'Целевой ресурс:';
-$_lang['babel.copy_tv_values'] = 'Копировать значения синхронизируемых доп. полей';
+$_lang['babel.id_of_target'] = 'ID целевого ресурса:';
+$_lang['babel....or'] = '... или';
+$_lang['babel.pagetitle_of_target'] = 'Заголовок целевого ресурса:';
+$_lang['babel.copy_tv_values'] = 'Копировать значения синхронизируемых TV';
 $_lang['babel.save'] = 'Сохранить';
 $_lang['babel.translation_pending'] = '[ожидает перевода]';
 $_lang['babel.open'] = 'Открыть';
 $_lang['babel.please_wait'] = 'Пожалуйста, подождите...';
+$_lang['babel.sync_linked_tranlations'] = 'Синхронизировать все переводы с целевого ресурса';
+$_lang['babel.select_tree_node'] = 'Выберите узел (контекст) в дереве ресурсов';
+$_lang['babel.all'] = 'Все';
 
 /* language names */
 $_lang ['babel.language_ar'] = 'Арабский';
@@ -85,15 +94,22 @@ $_lang ['babel.language_vi'] = 'Вьетнамский';
 $_lang ['babel.language_zh'] = 'Китайский';
 
 /* error messages */
-$_lang['error.invalid_context_key'] = 'Контекст «[[+context]]» не найден.';
-$_lang['error.invalid_resource_id'] = 'Ресурс с идентификатором «[[+resource]]» не найден.';
-$_lang['error.resource_from_other_context'] = 'Ресурс [[+resource]] не сущестует в контексте .';
+$_lang['error.invalid_context_key'] = 'Контекст <b>«[[+context]]»</b> не найден.';
+$_lang['error.invalid_resource_id'] = 'Ресурс с ID [[+resource]] не найден.';
+$_lang['error.resource_from_other_context'] = 'Ресурс [[+resource]] не существует в контексте <b>«[[+context]]»</b>.';
 $_lang['error.resource_already_linked'] = 'Ресурс [[+resource]] уже связан с другими ресурсами.';
 $_lang['error.no_link_to_context'] = 'В контексте <b>«[[+context]]»</b> нет связанных ресурсов.';
 $_lang['error.link_of_selflink_not_possible'] = 'Ресурс не может быть связан с самим собой.';
 $_lang['error.unlink_of_selflink_not_possible'] = 'Ресурс не может быть отвязан от самого себя.';
 $_lang['error.translation_in_same_context'] = 'Перевод не может быть создан в том же контексте.';
-$_lang['error.translation_already_exists'] = 'Перевод в контексте <b>«[[+context]]»</b> уже есть: <b>«[[+pagetitle]] ([[+resource]])»</b>';
-$_lang['error.could_not_create_translation'] = 'Произошла ошибка при попытке создать перевод в контексте [[+context]].';
+$_lang['error.translation_already_exists'] = 'Перевод в контексте <b>«[[+context]]»</b> уже есть: «[[+pagetitle]] ([[+resource]])»';
+$_lang['error.could_not_create_translation'] = 'Произошла ошибка при попытке создать перевод в контексте <b>«[[+context]]»</b>.';
 
 $_lang['babel.context_err_ns'] = 'Не указан контекст.';
+
+$_lang['setting_babel.contextKeys'] = 'Ключи контекста';
+$_lang['setting_babel.contextKeys_desc'] = 'Список ключей, разделенных запятыми, которые должны использоваться для связи мультиязычных ресурсов.';
+$_lang['setting_babel.babelTvName'] = 'Название Babel TV';
+$_lang['setting_babel.babelTvName_desc'] = 'Название TV, в которой Babel будет хранить ссылки между мультиязычными ресурсами, TV будет использоваться Babel.';
+$_lang['setting_babel.syncTvs'] = 'TV для синхронизации';
+$_lang['setting_babel.syncTvs_desc'] = 'Список TV, разделенных запятыми, которые необходимо синхронизировать Babel.';
