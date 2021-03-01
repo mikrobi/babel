@@ -587,7 +587,7 @@ class Babel
                 $resourceId    = $linkedResources[$contextKey];
                 $resourceUrl   = '?a='.$actions['resource/update'].'&id='.$resourceId;
                 $linkResource  = $this->modx->getObject('modResource', $linkedResources[$contextKey]);
-                $resourceTitle = $linkResource->get('pagetitle');
+                $resourceTitle = $linkResource ? $linkResource->get('pagetitle') : '';
             } else {
                 $resourceId    = '';
                 $resourceUrl   = '#';
