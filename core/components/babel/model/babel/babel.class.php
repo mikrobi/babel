@@ -564,8 +564,6 @@ class Babel
     public function getMenu($resource)
     {
         $menu            = array();
-        /* grab manager actions IDs */
-        $actions         = $this->modx->request->getAllActionIDs();
         $contextKeys     = $this->getGroupContextKeys($resource->get('context_key'));
         $linkedResources = $this->getLinkedResources($resource->get('id'));
         if (empty($linkedResources)) {
@@ -589,7 +587,7 @@ class Babel
                 $linkResource  = $this->modx->getObject('modResource', $resourceId);
             }
             if ($linkResource) {
-                $resourceUrl   = '?a='.$actions['resource/update'].'&id='.$resourceId;
+                $resourceUrl   = '?a=resource/update&id='.$resourceId;
                 $resourceTitle = $linkResource->get('pagetitle');
             } else {
                 $resourceId    = '';
