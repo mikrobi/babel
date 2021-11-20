@@ -29,55 +29,55 @@
  * @package babel
  * @subpackage build
  */
-$properties = array(
-    array(
+$properties = [
+    [
         'name' => 'resourceId',
         'desc' => 'babellinks.resourceId',
         'type' => 'textfield',
         'options' => '',
         'value' => '',
         'lexicon' => 'babel:properties',
-    ),
-	array(
+    ],
+	[
         'name' => 'tpl',
         'desc' => 'babellinks.tpl',
         'type' => 'textfield',
         'options' => '',
         'value' => 'babelLink',
         'lexicon' => 'babel:properties',
-    ),
-    array(
+    ],
+    [
         'name' => 'activeCls',
         'desc' => 'babellinks.activeCls',
         'type' => 'textfield',
         'options' => '',
         'value' => 'active',
         'lexicon' => 'babel:properties',
-    ),
-    array(
+    ],
+    [
         'name' => 'showUnpublished',
         'desc' => 'babellinks.showUnpublished',
         'type' => 'textfield',
         'options' => '',
         'value' => '0',
         'lexicon' => 'babel:properties',
-    ),
-    array(
+    ],
+    [
         'name' => 'showCurrent',
         'desc' => 'babellinks.showCurrent',
         'type' => 'textfield',
         'options' => '',
         'value' => '0',
         'lexicon' => 'babel:properties',
-    ),
-    array(
+    ],
+    [
         'name' => 'includeUnlinked',
         'desc' => 'babellinks.includeUnlinked',
         'type' => 'textfield',
         'options' => '',
         'value' => '0',
         'lexicon' => 'babel:properties',
-    ),
-);
+    ],
+];
 
 return $properties;

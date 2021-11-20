@@ -35,7 +35,7 @@ class BabelResourceGetMatrixListProcessor extends modResourceGetListProcessor
 {
 
     public $defaultSortField = 'id';
-    private $_contexts       = array();
+    private $_contexts       = [];
 
     public function initialize()
     {
@@ -48,15 +48,15 @@ class BabelResourceGetMatrixListProcessor extends modResourceGetListProcessor
     {
         $query = $this->getProperty('query');
         if (!empty($query)) {
-            $c->where(array(
+            $c->where([
                 'pagetitle:LIKE' => "$query%"
-            ));
+                      ]);
         }
         $ctx = $this->getProperty('context');
         if (!empty($ctx)) {
-            $c->where(array(
+            $c->where([
                 'context_key:=' => $ctx
-            ));
+                      ]);
         }
         return $c;
     }

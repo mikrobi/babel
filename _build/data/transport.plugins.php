@@ -29,7 +29,7 @@
  * @package babel
  * @subpackage build
  */
-$plugins = array();
+$plugins = [];
 
 $plugins[0] = $modx->newObject('modPlugin');
 $plugins[0]->set('id',1);

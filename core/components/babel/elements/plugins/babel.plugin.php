@@ -63,18 +63,18 @@ switch ($modx->event->name) {
         if (!$modx->lexicon) {
             $modx->getService('lexicon', 'modLexicon');
         }
-        $languagesStore = array();
+        $languagesStore = [];
         $contextKeys    = $babel->getGroupContextKeys($resource->get('context_key'));
         foreach ($contextKeys as $contextKey) {
             /* for each (valid/existing) context of the context group a button will be displayed */
-            $context = $modx->getObject('modContext', array('key' => $contextKey));
+            $context = $modx->getObject('modContext', ['key' => $contextKey]);
             if (!$context) {
                 $modx->log(modX::LOG_LEVEL_ERROR, 'Could not load context: '.$contextKey);
                 continue;
             }
             $context->prepare();
             $cultureKey       = $context->getOption('cultureKey', $modx->getOption('cultureKey'));
-            $languagesStore[] = array($modx->lexicon('babel.language_'.$cultureKey)." ($contextKey)", $contextKey);
+            $languagesStore[] = [$modx->lexicon('babel.language_'.$cultureKey)." ($contextKey)", $contextKey];
         }
 
         $babel->config['context_key']    = $resource->get('context_key');
@@ -157,9 +157,9 @@ switch ($modx->event->name) {
 
     case 'OnSiteRefresh':
         $cacheManager = $modx->getCacheManager();
-        $cacheManager->refresh(array(
-            'babel' => array(),
-        ));
+        $cacheManager->refresh([
+            'babel' => [],
+                               ]);
         break;
 
     default:

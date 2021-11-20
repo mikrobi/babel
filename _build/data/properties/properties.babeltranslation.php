@@ -29,39 +29,39 @@
  * @package babel
  * @subpackage build
  */
-$properties = array(
-    array(
+$properties = [
+    [
         'name' => 'resourceId',
         'desc' => 'babeltranslation.resourceId',
         'type' => 'textfield',
         'options' => '',
         'value' => '',
         'lexicon' => 'babel:properties',
-    ),
-	array(
+    ],
+	[
         'name' => 'contextKey',
         'desc' => 'babeltranslation.contextKey',
         'type' => 'textfield',
         'options' => '',
         'value' => '',
         'lexicon' => 'babel:properties',
-    ),
-    array(
+    ],
+    [
         'name' => 'cultureKey',
         'desc' => 'babeltranslation.cultureKey',
         'type' => 'textfield',
         'options' => '',
         'value' => '',
         'lexicon' => 'babel:properties',
-    ),
-    array(
+    ],
+    [
         'name' => 'showUnpublished',
         'desc' => 'babeltranslation.showUnpublished',
         'type' => 'textfield',
         'options' => '',
         'value' => '0',
         'lexicon' => 'babel:properties',
-    ),
-);
+    ],
+];
 
 return $properties;

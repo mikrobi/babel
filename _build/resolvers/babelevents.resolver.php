@@ -39,17 +39,17 @@
 function createEvent(modX &$modx, $name, $service = 0)
 {
     $success = true;
-    $ct = $modx->getCount('modEvent', array(
+    $ct = $modx->getCount('modEvent', [
         'name' => $name
-    ));
+    ]);
     if (empty($ct)) {
         /** @var modEvent $event */
         $event = $modx->newObject('modEvent');
-        $event->fromArray(array(
+        $event->fromArray([
             'name' => $name,
             'service' => $service,
             'groupname' => 'Babel'
-        ), '', true, true);
+                          ], '', true, true);
         if ($event->save()) {
             $modx->log(xPDO::LOG_LEVEL_INFO, 'System event ' . $name . ' was created.');
         } else {
@@ -71,9 +71,9 @@ function removeEvent(modX &$modx, $name)
 {
     $success = true;
     /** @var modEvent $event */
-    $event = $modx->getObject('modEvent', array(
+    $event = $modx->getObject('modEvent', [
         'name' => $name
-    ));
+    ]);
     if ($event) {
         $success = $event->remove();
         if ($success) {
@@ -85,11 +85,11 @@ function removeEvent(modX &$modx, $name)
     return $success;
 }
 
-$babelEvents = array(
+$babelEvents = [
     'OnBabelDuplicate', // invoked on duplicating the resource in a new language context
     'OnBabelLink', // invoked on link the resource with a target resource
     'OnBabelUnlink' // invoked on unlink the resource from a target resource
-);
+];
 
 $success = true;
 switch ($options[xPDOTransport::PACKAGE_ACTION]) {

@@ -29,31 +29,31 @@
  * @package babel
  * @subpackage build
  */
-$settings = array();
+$settings = [];
 
 $settings['babel.contextKeys']= $modx->newObject('modSystemSetting');
-$settings['babel.contextKeys']->fromArray(array(
+$settings['babel.contextKeys']->fromArray([
     'key' => 'babel.contextKeys',
     'value' => '',
     'xtype' => 'textfield',
     'namespace' => 'babel',
     'area' => 'common',
-),'',true,true);
+], '', true, true);
 $settings['babel.babelTvName']= $modx->newObject('modSystemSetting');
-$settings['babel.babelTvName']->fromArray(array(
+$settings['babel.babelTvName']->fromArray([
     'key' => 'babel.babelTvName',
     'value' => 'babelLanguageLinks',
     'xtype' => 'textfield',
     'namespace' => 'babel',
     'area' => 'common',
-),'',true,true);
+], '', true, true);
 $settings['babel.syncTvs']= $modx->newObject('modSystemSetting');
-$settings['babel.syncTvs']->fromArray(array(
+$settings['babel.syncTvs']->fromArray([
     'key' => 'babel.syncTvs',
     'value' => '',
     'xtype' => 'textfield',
     'namespace' => 'babel',
     'area' => 'common',
-),'',true,true);
+], '', true, true);
 
 return $settings;

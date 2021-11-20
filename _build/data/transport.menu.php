@@ -31,7 +31,7 @@
  */
 
 $menu = $modx->newObject('modMenu');
-$menu->fromArray(array(
+$menu->fromArray([
     'text' => 'babel',
     'parent' => 'components',
     'action' => 'index',
@@ -42,6 +42,6 @@ $menu->fromArray(array(
     'handler' => '',
     'pemission' => '',
     'namespace' => 'babel',
-        ), '', true, true);
+], '', true, true);
 
 return $menu;

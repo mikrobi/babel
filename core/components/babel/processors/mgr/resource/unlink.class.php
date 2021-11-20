@@ -34,7 +34,7 @@ class BabelUnlinkResourceProcessor extends modObjectGetProcessor
 {
 
     public $classKey       = 'modResource';
-    public $languageTopics = array('resource', 'babel:default');
+    public $languageTopics = ['resource', 'babel:default'];
     public $objectType     = 'resource';
     public $targetResource;
 
@@ -72,13 +72,13 @@ class BabelUnlinkResourceProcessor extends modObjectGetProcessor
         if (empty($props['target'])) {
             foreach ($linkedResources as $k => $v) {
                 $targetResources = $this->modx->babel->getLinkedResources($v);
-                $diff = array_diff($targetResources, array(
+                $diff = array_diff($targetResources, [
                     $this->object->get('context_key') => $this->object->get('id')
-                ));
+                ]);
                 $this->modx->babel->updateBabelTv($v, $diff);
             }
 
-            $this->modx->babel->updateBabelTv($this->object->get('id'), array());
+            $this->modx->babel->updateBabelTv($this->object->get('id'), []);
 
             return $this->cleanup();
         }
@@ -86,7 +86,7 @@ class BabelUnlinkResourceProcessor extends modObjectGetProcessor
         $target = $this->getProperty('target', false);
         $this->targetResource = $this->modx->getObject('modResource', intval($target));
         if (!$this->targetResource) {
-            return $this->failure($this->modx->lexicon('error.invalid_resource_id', array('resource' => $target)));
+            return $this->failure($this->modx->lexicon('error.invalid_resource_id', ['resource' => $target]));
         }
 
         $contextKey = $this->getProperty('context', false);
@@ -94,9 +94,9 @@ class BabelUnlinkResourceProcessor extends modObjectGetProcessor
             return $this->failure($this->modx->lexicon('babel.context_err_ns'));
         }
 
-        $context = $this->modx->getObject('modContext', array('key' => $contextKey));
+        $context = $this->modx->getObject('modContext', ['key' => $contextKey]);
         if (!$context) {
-            return $this->failure($this->modx->lexicon('error.invalid_context_key', array('context' => $contextKey)));
+            return $this->failure($this->modx->lexicon('error.invalid_context_key', ['context' => $contextKey]));
         }
 
         $targetResources = $this->modx->babel->getLinkedResources($props['target']);
@@ -119,13 +119,13 @@ class BabelUnlinkResourceProcessor extends modObjectGetProcessor
      */
     public function fireUnlinkEvent()
     {
-        $this->modx->invokeEvent('OnBabelUnlink', array(
+        $this->modx->invokeEvent('OnBabelUnlink', [
             'context_key'       => $this->getProperty('context'),
             'original_id'       => $this->object->get('id'),
             'original_resource' => &$this->object,
             'target_id'         => $this->targetResource->get('id'),
             'target_resource'   => &$this->targetResource
-        ));
+        ]);
     }
 
     /**

@@ -43,7 +43,7 @@ class Babel
      * @access protected
      * @var array A collection of preprocessed chunk values.
      */
-    protected $chunks = array();
+    protected $chunks = [];
 
     /**
      * @access public
@@ -55,7 +55,7 @@ class Babel
      * @access public
      * @var array A collection of properties to adjust Babel behaviour.
      */
-    public $config    = array();
+    public $config    = [];
 
     /**
      * @access public
@@ -76,7 +76,7 @@ class Babel
      * behaviour.
      * @return Babel A unique Babel instance.
      */
-    function __construct(modX &$modx, array $config = array())
+    function __construct(modX &$modx, array $config = [])
     {
         $this->modx = & $modx;
 
@@ -86,14 +86,14 @@ class Babel
         $contextKeysOption       = $this->modx->getOption('babel.contextKeys', $config, '');
         $this->contextKeyToGroup = $this->decodeContextKeySetting($contextKeysOption);
         $syncTvsOption           = $this->modx->getOption('babel.syncTvs', $config, '');
-        $syncTvs                 = array();
+        $syncTvs                 = [];
         if (!empty($syncTvsOption)) {
             $syncTvs = explode(',', $syncTvsOption);
             $syncTvs = array_map('intval', $syncTvs);
         }
         $babelTvName = $this->modx->getOption('babel.babelTvName', $config, 'babelLanguageLinks');
 
-        $this->config = array_merge(array(
+        $this->config = array_merge([
             'version'        => self::VERSION.'-'.self::RELEASE,
             'basePath'       => $corePath,
             'corePath'       => $corePath,
@@ -107,7 +107,7 @@ class Babel
             'syncTvs'        => $syncTvs,
             'babelTvName'    => $babelTvName,
             'connectorUrl'   => $assetsUrl.'conn/mgr.php',
-                ), $config);
+                                    ], $config);
 
         /* load babel lexicon */
         if (!$this->modx->lexicon) {
@@ -116,15 +116,16 @@ class Babel
         $this->modx->lexicon->load('babel:default');
 
         /* load babel TV */
-        $this->babelTv = $modx->getObject('modTemplateVar', array('name' => $babelTvName));
+        $this->babelTv = $modx->getObject('modTemplateVar', ['name' => $babelTvName]);
         if (!$this->babelTv) {
             $this->modx->log(modX::LOG_LEVEL_WARN, 'Could not load babel TV: '.$babelTvName.' will try to create it...');
-            $fields        = array(
+            $fields        = [
                 'name'         => $babelTvName,
                 'type'         => 'hidden',
                 'default_text' => '',
                 'caption'      => $this->modx->lexicon('babel.tv_caption'),
-                'description'  => $this->modx->lexicon('babel.tv_description'));
+                'description'  => $this->modx->lexicon('babel.tv_description')
+            ];
             $this->babelTv = $modx->newObject('modTemplateVar', $fields);
             if ($this->babelTv->save()) {
                 $this->modx->log(modX::LOG_LEVEL_INFO, 'Created babel TV: '.$babelTvName);
@@ -182,7 +183,7 @@ class Babel
      */
     public function getGroupContextKeys($contextKey)
     {
-        $contextKeys = array();
+        $contextKeys = [];
         if (isset($this->contextKeyToGroup[$contextKey]) && is_array($this->contextKeyToGroup[$contextKey])) {
             $contextKeys = $this->contextKeyToGroup[$contextKey];
         }
@@ -244,11 +245,11 @@ class Babel
             }
             
             /* invoke OnDocFormSave event */
-            $this->modx->invokeEvent('OnDocFormSave', array(
+            $this->modx->invokeEvent('OnDocFormSave', [
                 'mode' => modSystemEvent::MODE_NEW,
                 'id' => $newResource->get('id'),
                 'resource' => &$newResource
-            ));
+            ]);
         } else {
             $this->modx->log(modX::LOG_LEVEL_ERROR, 'Could not duplicate resource: '.$resource->get('id').' in context: '.$contextKey);
             $newResource = null;
@@ -267,7 +268,7 @@ class Babel
      */
     public function decodeContextKeySetting($contextKeyString)
     {
-        $contextKeyToGroup = array();
+        $contextKeyToGroup = [];
         if (!empty($contextKeyString)) {
             $contextGroups = explode(';', $contextKeyString);
             $contextGroups = array_map('trim', $contextGroups);
@@ -293,7 +294,7 @@ class Babel
      */
     public function initBabelTv($resource)
     {
-        $linkedResources = array($resource->get('context_key') => $resource->get('id'));
+        $linkedResources = [$resource->get('context_key') => $resource->get('id')];
         $this->updateBabelTv($resource->get('id'), $linkedResources, false);
         return $linkedResources;
     }
@@ -314,8 +315,8 @@ class Babel
     {
         if ($id && $depth > 0) {
             $q        = $modx->newQuery('modResource');
-            $q->select(array('id'));
-            $q->where(array('parent' => $id));
+            $q->select(['id']);
+            $q->where(['parent' => $id]);
             $children = $modx->getCollection('modResource', $q);
             foreach ($children as $child) {
                 $processDepth = $depth - 1;
@@ -346,7 +347,7 @@ class Babel
     public function updateBabelTv($resourceIds, $linkedResources, $clearCache = true)
     {
         if (!is_array($resourceIds)) {
-            $resourceIds = array(intval($resourceIds));
+            $resourceIds = [intval($resourceIds)];
         }
         $newValue = $this->encodeTranslationLinks($linkedResources);
         foreach ($resourceIds as $resourceId) {
@@ -380,7 +381,7 @@ class Babel
      */
     public function decodeTranslationLinks($linkedResourcesString)
     {
-        $linkedResources = array();
+        $linkedResources = [];
         if (!empty($linkedResourcesString)) {
             $contextResourcePairs = explode(';', $linkedResourcesString);
             foreach ($contextResourcePairs as $contextResourcePair) {
@@ -405,7 +406,7 @@ class Babel
         if (!is_array($linkedResources)) {
             return;
         }
-        $contextResourcePairs = array();
+        $contextResourcePairs = [];
         foreach ($linkedResources as $contextKey => $resourceId) {
             $contextResourcePairs[] = $contextKey.':'.intval($resourceId);
         }
@@ -420,8 +421,9 @@ class Babel
     public function removeLanguageLinksToResource($resourceId)
     {
         /* search for resource which contain a ':$resourceId' in their Babel TV */
-        $templateVarResources = $this->modx->getCollection('modTemplateVarResource', array(
-            'value:LIKE' => '%:'.$resourceId.'%'));
+        $templateVarResources = $this->modx->getCollection('modTemplateVarResource', [
+            'value:LIKE' => '%:'.$resourceId.'%'
+        ]);
         if (!is_array($templateVarResources)) {
             return;
         }
@@ -450,8 +452,9 @@ class Babel
     public function removeLanguageLinksToContext($contextKey)
     {
         /* search for resource which contain a '$contextKey:' in their Babel TV */
-        $templateVarResources = $this->modx->getCollection('modTemplateVarResource', array(
-            'value:LIKE' => '%'.$contextKey.':%'));
+        $templateVarResources = $this->modx->getCollection('modTemplateVarResource', [
+            'value:LIKE' => '%'.$contextKey.':%'
+        ]);
         if (!is_array($templateVarResources)) {
             return;
         }
@@ -466,8 +469,9 @@ class Babel
             $templateVarResource->save();
         }
         /* finaly clean the babel.contextKeys setting */
-        $setting = $this->modx->getObject('modSystemSetting', array(
-            'key' => 'babel.contextKeys'));
+        $setting = $this->modx->getObject('modSystemSetting', [
+            'key' => 'babel.contextKeys'
+        ]);
         if ($setting) {
             /* remove all spaces */
             $newValue = str_replace(' ', '', $setting->get('value'));
@@ -478,11 +482,11 @@ class Babel
             $setting->set('value', $newValue);
             if ($setting->save()) {
                 $this->modx->reloadConfig();
-                $this->modx->cacheManager->deleteTree($this->modx->getOption('core_path', null, MODX_CORE_PATH).'cache/mgr/smarty/', array(
+                $this->modx->cacheManager->deleteTree($this->modx->getOption('core_path', null, MODX_CORE_PATH).'cache/mgr/smarty/', [
                     'deleteTop'  => false,
                     'skipDirs'   => false,
-                    'extensions' => array('.cache.php', '.php'),
-                ));
+                    'extensions' => ['.cache.php', '.php'],
+                ]);
             }
         }
     }
@@ -496,10 +500,10 @@ class Babel
     public function getContextKey($cultureKey)
     {
         /* Search for Context Setting */
-        $ctxSetting = $this->modx->getObject("modContextSetting", array(
+        $ctxSetting = $this->modx->getObject("modContextSetting", [
             "key"   => "cultureKey",
             "value" => $cultureKey
-        ));
+        ]);
         return (($ctxSetting) ? $ctxSetting->get("context_key") : false);
     }
 
@@ -512,11 +516,11 @@ class Babel
      * @param array $properties The properties for the Chunk
      * @return string The processed content of the Chunk
      */
-    public function getChunk($name, array $properties = array())
+    public function getChunk($name, array $properties = [])
     {
         $chunk = null;
         if (!isset($this->chunks[$name])) {
-            $chunk = $this->modx->getObject('modChunk', array('name' => $name), true);
+            $chunk = $this->modx->getObject('modChunk', ['name' => $name], true);
             if (empty($chunk)) {
                 $chunk = $this->_getTplChunk($name, $this->config['chunkSuffix']);
                 if ($chunk == false)
@@ -563,7 +567,7 @@ class Babel
      */
     public function getMenu($resource)
     {
-        $menu            = array();
+        $menu            = [];
         $contextKeys     = $this->getGroupContextKeys($resource->get('context_key'));
         $linkedResources = $this->getLinkedResources($resource->get('id'));
         if (empty($linkedResources)) {
@@ -574,7 +578,7 @@ class Babel
         $languages = $this->getLanguages();
         foreach ($contextKeys as $contextKey) {
             /* for each (valid/existing) context of the context group a button will be displayed */
-            $context = $this->modx->getObject('modContext', array('key' => $contextKey));
+            $context = $this->modx->getObject('modContext', ['key' => $contextKey]);
             if (!$context) {
                 $this->modx->log(modX::LOG_LEVEL_ERROR, 'Could not load context: '.$contextKey);
                 continue;
@@ -594,12 +598,12 @@ class Babel
                 $resourceUrl   = '#';
                 $resourceTitle = '';
             }
-            $placeholders      = array(
+            $placeholders      = [
                 'resourceId'    => $resourceId,
                 'resourceUrl'   => $resourceUrl,
                 'resourceTitle' => $resourceTitle,
                 'displayText'   => $languages[$cultureKey]['Description'].' ('.(!empty($cultureKey) ? $cultureKey : $contextKey).')',
-            );
+            ];
             $menu[$contextKey] = $placeholders;
         }
 
@@ -612,11 +616,11 @@ class Babel
      * @return array Languages' info
      */
     public function getLanguages() {
-        $cacheOptions = array(
+        $cacheOptions = [
             xPDO::OPT_CACHE_KEY => 'babel',
             xPDO::OPT_CACHE_HANDLER => $this->modx->getOption('cache_resource_handler', null, $this->modx->getOption(xPDO::OPT_CACHE_HANDLER)),
             xPDO::OPT_CACHE_FORMAT => (integer) $this->modx->getOption('cache_resource_format', null, $this->modx->getOption(xPDO::OPT_CACHE_FORMAT, null, xPDOCacheManager::CACHE_PHP)),
-        );
+        ];
         $languages = $this->modx->cacheManager->get('languages', $cacheOptions);
         if (!$languages) {
             include_once $this->config['corePath'].'vendor/iana-language-subtag-registry/language-subtag-registry.php';

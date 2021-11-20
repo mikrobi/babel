@@ -57,7 +57,7 @@ if (empty($contextKey)) {
 $showUnpublished = $modx->getOption('showUnpublished', $scriptProperties, 0, true);
 
 /* determine ids of translated resource */
-$output = array();
+$output = [];
 foreach($resourceIds as $resourceId) {
     $linkedResource = $babel->getLinkedResources($resourceId);
     if (isset($linkedResource[$contextKey])) {

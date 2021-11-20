@@ -31,30 +31,30 @@
  */
 /* set some default values */
 $contexts = $modx->getCollection('modContext');
-$contextKeys = array();
+$contextKeys = [];
 foreach($contexts as $context) {
 	$contextKey = $context->get('key');
 	if($contextKey != 'mgr') {
 		$contextKeys[] = $contextKey;
 	}
 }
-$values = array(
+$values = [
     'contextKeys' => implode(',',$contextKeys),
     'babelTvName' => 'babelLanguageLinks',
 	'syncTvs' => '',
-);
+];
 switch ($options[xPDOTransport::PACKAGE_ACTION]) {
     case xPDOTransport::ACTION_INSTALL:
     case xPDOTransport::ACTION_UPGRADE:
-        $setting = $modx->getObject('modSystemSetting',array('key' => 'babel.contextKeys'));
+        $setting = $modx->getObject('modSystemSetting', ['key' => 'babel.contextKeys']);
         if ($setting != null) { $values['contextKeys'] = $setting->get('value'); }
         unset($setting);
 
-        $setting = $modx->getObject('modSystemSetting',array('key' => 'babel.babelTvName'));
+        $setting = $modx->getObject('modSystemSetting', ['key' => 'babel.babelTvName']);
         if ($setting != null) { $values['babelTvName'] = $setting->get('value'); }
         unset($setting);
 
-        $setting = $modx->getObject('modSystemSetting',array('key' => 'babel.syncTvs'));
+        $setting = $modx->getObject('modSystemSetting', ['key' => 'babel.syncTvs']);
         if ($setting != null) { $values['syncTvs'] = $setting->get('value'); }
         unset($setting);
     break;

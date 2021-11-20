@@ -37,10 +37,10 @@ class BabelContextGetListProcessor extends modContextGetListProcessor
     public function initialize()
     {
         $initialized     = parent::initialize();
-        $this->setDefaultProperties(array(
+        $this->setDefaultProperties([
             'search'  => '',
             'exclude' => 'mgr',
-        ));
+                                    ]);
         $this->canEdit   = false;
         $this->canRemove = false;
         return $initialized;
@@ -49,10 +49,10 @@ class BabelContextGetListProcessor extends modContextGetListProcessor
     public function beforeIteration(array $list)
     {
         if ($this->getProperty('combo', false)) {
-            $empty  = array(
+            $empty  = [
                 'key'  => '',
                 'name' => '&nbsp;',
-            );
+            ];
             $list[] = $empty;
         }
 
@@ -63,10 +63,10 @@ class BabelContextGetListProcessor extends modContextGetListProcessor
     {
         $objectArray = parent::prepareRow($object);
         if ($this->getProperty('combo', false)) {
-            $objectArray = array(
+            $objectArray = [
                 'key'  => $objectArray['key'],
                 'name' => $objectArray['name'],
-            );
+            ];
         }
 
         return $objectArray;

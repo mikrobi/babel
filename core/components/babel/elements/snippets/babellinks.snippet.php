@@ -75,7 +75,7 @@ if (!empty($modx->resource) && is_object($modx->resource) && $resourceId === $mo
 
 $linkedResources = $babel->getLinkedResources($resourceId);
 $languages       = $babel->getLanguages();
-$outputArray     = array();
+$outputArray     = [];
 foreach ($contextKeys as $contextKey) {
     if (!$showCurrent && $contextKey === $resource->get('context_key')) {
         continue;
@@ -83,7 +83,7 @@ foreach ($contextKeys as $contextKey) {
     if (!$includeUnlinked && !isset($linkedResources[$contextKey])) {
         continue;
     }
-    $context = $modx->getObject('modContext', array('key' => $contextKey));
+    $context = $modx->getObject('modContext', ['key' => $contextKey]);
     if (!$context) {
         $modx->log(modX::LOG_LEVEL_ERROR, 'Could not load context: '.$contextKey);
         continue;
@@ -96,15 +96,15 @@ foreach ($contextKeys as $contextKey) {
     $translationAvailable = false;
     if (isset($linkedResources[$contextKey])) {
         $c = $modx->newQuery('modResource');
-        $c->where(array(
+        $c->where([
             'id'          => $linkedResources[$contextKey],
             'deleted:!='  => 1,
             'published:=' => 1,
-        ));
+                  ]);
         if ($showUnpublished) {
-            $c->where(array(
+            $c->where([
                 'OR:published:=' => 0,
-            ));
+                      ]);
         }
         $count = $modx->getCount('modResource', $c);
         if ($count) {
@@ -118,13 +118,13 @@ foreach ($contextKeys as $contextKey) {
     if ($translationAvailable) {
         $url          = $context->makeUrl($linkedResources[$contextKey], $getRequest, 'full');
         $active       = ($resource->get('context_key') == $contextKey) ? $activeCls : '';
-        $placeholders = array(
+        $placeholders = [
             'cultureKey' => $cultureKey,
             'url'        => $url,
             'active'     => $active,
             'id'         => $linkedResources[$contextKey],
             'language'   => $languages[$cultureKey]['Description'],
-        );
+        ];
 
         if (!empty($toArray)) {
             $outputArray[] = $placeholders;
@@ -137,13 +137,13 @@ foreach ($contextKeys as $contextKey) {
     } elseif ($includeUnlinked) {
         $url          = $context->makeUrl($context->getOption('site_start'), $getRequest, 'full');
         $active       = ($resource->get('context_key') == $contextKey) ? $activeCls : '';
-        $placeholders = array(
+        $placeholders = [
             'cultureKey' => $cultureKey,
             'url'        => $url,
             'active'     => $active,
             'id'         => $context->getOption('site_start'),
             'language'   => $languages[$cultureKey]['Description'],
-        );
+        ];
 
         if (!empty($toArray)) {
             $outputArray[] = $placeholders;
@@ -162,9 +162,9 @@ if (!empty($toArray)) {
 
 $output = implode($outputSeparator, $outputArray);
 if (!empty($wrapperTpl)) {
-    $output = $babel->getChunk($wrapperTpl, array(
+    $output = $babel->getChunk($wrapperTpl, [
         'babelLinks' => $output
-    ));
+    ]);
 }
 
 if (!empty($toPlaceholder)) {

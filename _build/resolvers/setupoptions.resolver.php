@@ -33,14 +33,14 @@ $success= false;
 switch ($options[xPDOTransport::PACKAGE_ACTION]) {
     case xPDOTransport::ACTION_INSTALL:
     case xPDOTransport::ACTION_UPGRADE:
-        $settings = array(
+        $settings = [
             'contextKeys',
             'babelTvName',
             'syncTvs',
-        );
+        ];
         foreach ($settings as $key) {
             if (isset($options[$key])) {
-                $setting = $object->xpdo->getObject('modSystemSetting',array('key' => 'babel.'.$key));
+                $setting = $object->xpdo->getObject('modSystemSetting', ['key' => 'babel.'.$key]);
                 if ($setting != null) {
                     $setting->set('value',$options[$key]);
                     $setting->save();

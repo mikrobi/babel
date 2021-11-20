@@ -38,15 +38,15 @@ class BabelResourceGetListProcessor extends modResourceGetListProcessor
     {
         $query = $this->getProperty('query');
         if (!empty($query)) {
-            $c->where(array(
+            $c->where([
                 'pagetitle:LIKE' => "$query%"
-            ));
+                      ]);
         }
         $ctx = $this->getProperty('context');
         if (!empty($ctx)) {
-            $c->where(array(
+            $c->where([
                 'context_key:=' => $ctx
-            ));
+                      ]);
         }
         return $c;
     }
@@ -54,10 +54,10 @@ class BabelResourceGetListProcessor extends modResourceGetListProcessor
     public function beforeIteration(array $list)
     {
         if ($this->getProperty('combo', false)) {
-            $empty  = array(
+            $empty  = [
                 'id'        => 0,
                 'pagetitle' => '',
-            );
+            ];
             $list[] = $empty;
         }
 
@@ -68,10 +68,10 @@ class BabelResourceGetListProcessor extends modResourceGetListProcessor
     {
         $objectArray = parent::prepareRow($object);
         if ($this->getProperty('combo', false)) {
-            $objectArray = array(
+            $objectArray = [
                 'id'        => $objectArray['id'],
                 'pagetitle' => $objectArray['pagetitle'],
-            );
+            ];
         }
 
         return $objectArray;

@@ -24,7 +24,7 @@ class BabelIndexManagerController extends modExtraManagerController
 
     public function getLanguageTopics()
     {
-        return array('babel:default', 'babel:cmp');
+        return ['babel:default', 'babel:cmp'];
     }
 
     public function loadCustomCssJs()
@@ -37,7 +37,7 @@ class BabelIndexManagerController extends modExtraManagerController
         $this->addLastJavascript($this->babel->config['jsUrl'].'mgr/sections/index.js');
     }
 
-    public function process(array $scriptProperties = array())
+    public function process(array $scriptProperties = [])
     {
 
     }

@@ -33,7 +33,7 @@ class BabelLinkResourceProcessor extends modObjectGetProcessor
 {
 
     public $classKey       = 'modResource';
-    public $languageTopics = array('resource', 'babel:default');
+    public $languageTopics = ['resource', 'babel:default'];
     public $objectType     = 'resource';
     public $targetResource;
 
@@ -55,7 +55,7 @@ class BabelLinkResourceProcessor extends modObjectGetProcessor
 
         $this->targetResource = $this->modx->getObject('modResource', intval($target));
         if (!$this->targetResource) {
-            return $this->modx->lexicon('error.invalid_resource_id', array('resource' => $target));
+            return $this->modx->lexicon('error.invalid_resource_id', ['resource' => $target]);
         }
 
         $contextKey = $this->getProperty('context', false);
@@ -63,16 +63,16 @@ class BabelLinkResourceProcessor extends modObjectGetProcessor
             return $this->modx->lexicon('babel.context_err_ns');
         }
 
-        $context = $this->modx->getObject('modContext', array('key' => $contextKey));
+        $context = $this->modx->getObject('modContext', ['key' => $contextKey]);
         if (!$context) {
-            return $this->modx->lexicon('error.invalid_context_key', array('context' => $contextKey));
+            return $this->modx->lexicon('error.invalid_context_key', ['context' => $contextKey]);
         }
 
         if ($this->targetResource->get('context_key') !== $contextKey) {
-            return $this->modx->lexicon('error.resource_from_other_context', array(
+            return $this->modx->lexicon('error.resource_from_other_context', [
                     'resource' => $this->targetResource->get('id'),
                     'context' => $contextKey
-            ));
+            ]);
         }
 
         return parent::initialize();
@@ -119,13 +119,13 @@ class BabelLinkResourceProcessor extends modObjectGetProcessor
             /**
              * Only join between 2 resources
              */
-            $merge1 = array_merge($linkedResources, array(
+            $merge1 = array_merge($linkedResources, [
                 $props['context'] => $this->targetResource->get('id')
-            ));
+            ]);
             $this->modx->babel->updateBabelTv($this->object->get('id'), $merge1);
-            $merge2 = array_merge($targetResources, array(
+            $merge2 = array_merge($targetResources, [
                 $this->object->get('context_key') => $this->object->get('id')
-            ));
+            ]);
             $this->modx->babel->updateBabelTv($this->targetResource->get('id'), $merge2);
         }
 
@@ -144,13 +144,13 @@ class BabelLinkResourceProcessor extends modObjectGetProcessor
      */
     public function fireLinkEvent()
     {
-        $this->modx->invokeEvent('OnBabelLink', array(
+        $this->modx->invokeEvent('OnBabelLink', [
             'context_key'       => $this->getProperty('context'),
             'original_id'       => $this->object->get('id'),
             'original_resource' => &$this->object,
             'target_id'         => $this->targetResource->get('id'),
             'target_resource'   => &$this->targetResource
-        ));
+        ]);
     }
 
     /**
