@@ -76,7 +76,7 @@ Babel.grid.ResourceMatrix = function (config) {
                     if (cellvalue.length === 0) {
                         grid.createTranslation(ctx, rec.get('id'));
                     } else {
-                        MODx.loadPage(MODx.action['resource/update'], 'id=' + cellvalue);
+                        MODx.loadPage('resource/update', 'id=' + cellvalue);
                     }
                 },
                 getClass: function (v, meta, rec) {
@@ -445,7 +445,7 @@ Ext.extend(Babel.grid.ResourceMatrix, MODx.grid.Grid, {
                 success: {
                     fn: function (r) {
                         _this.hideGridMask();
-                        MODx.loadPage(MODx.action['resource/update'], 'id=' + r.object.id);
+                        MODx.loadPage('resource/update', 'id=' + r.object.id);
                     }
                 },
                 failure: {

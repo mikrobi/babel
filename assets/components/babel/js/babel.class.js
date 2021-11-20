@@ -55,7 +55,7 @@ Babel.prototype.getMenu = function (menus) {
                                 resourceUrl: menus[ctx]["resourceUrl"],
                                 resourceId: menus[ctx]["resourceId"],
                                 handler: function() {
-                                    MODx.loadPage(MODx.action['resource/update'], 'id=' + this.resourceId);
+                                    MODx.loadPage('resource/update', 'id=' + this.resourceId);
                                 }
                             }, '-', {
                                 text: _('babel.unlink') + " <b>" + menus[ctx]["resourceTitle"] + " (" + menus[ctx]["resourceId"] + ")</b>",
@@ -358,7 +358,7 @@ Babel.prototype.createTranslation = function (ctx) {
             success: {
                 fn: function (r) {
                     this.hideMask();
-                    MODx.loadPage(MODx.action['resource/update'], 'id=' + r.object.id);
+                    MODx.loadPage('resource/update', 'id=' + r.object.id);
                 },
                 scope: this
             },
