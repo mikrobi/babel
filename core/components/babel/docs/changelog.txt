@@ -1,5 +1,12 @@
 Changelog for Babel.
 
+Babel 3.1.0-pl (TBD)
+=====================================
+- Fix minor bugs
+- Add various new translations
+- [#176] Accept a comma separated list of IDs in resourceId property (BabelTranslation snippet)
+- [#168] Invoke OnDocFormSave event when duplicating a resource
+
 Babel 3.0.0-pl (December 12, 2016)
 =====================================
 - [#135] Fixed not found icons
