@@ -29,7 +29,11 @@
  *
  * @package babel
  */
-include_once MODX_CORE_PATH.'model/modx/processors/context/getlist.class.php';
+if (!class_exists('\MODX\Revolution\modX')) {
+    include_once MODX_CORE_PATH.'model/modx/processors/context/getlist.class.php';
+} else {
+    class_alias(\MODX\Revolution\Processors\Context\GetList::class, \modContextGetListProcessor::class);
+}
 
 class BabelContextGetListProcessor extends modContextGetListProcessor
 {

@@ -29,7 +29,11 @@
  *
  * @package babel
  */
-include_once MODX_CORE_PATH.'model/modx/processors/resource/getlist.class.php';
+if (!class_exists('\MODX\Revolution\modX')) {
+    include_once MODX_CORE_PATH.'model/modx/processors/resource/getlist.class.php';
+} else {
+    class_alias(\MODX\Revolution\Processors\Resource\GetList::class, \modResourceGetListProcessor::class);
+}
 
 class BabelResourceGetMatrixListProcessor extends modResourceGetListProcessor
 {
@@ -46,17 +50,13 @@ class BabelResourceGetMatrixListProcessor extends modResourceGetListProcessor
 
     public function prepareQueryBeforeCount(xPDOQuery $c)
     {
-        $query = $this->getProperty('query');
-        if (!empty($query)) {
-            $c->where([
-                'pagetitle:LIKE' => "$query%"
-                      ]);
-        }
+        $c = parent::prepareQueryBeforeCount($c);
+
         $ctx = $this->getProperty('context');
         if (!empty($ctx)) {
             $c->where([
-                'context_key:=' => $ctx
-                      ]);
+              'context_key:=' => $ctx
+            ]);
         }
         return $c;
     }
