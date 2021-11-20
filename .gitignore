@@ -8,3 +8,4 @@ core.config.php
 .idea/
 *.ipr
 *.iws
+/config.core.php
