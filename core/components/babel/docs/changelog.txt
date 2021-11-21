@@ -1,7 +1,8 @@
 Changelog for Babel.
 
-Babel 3.1.0-pl (TBD)
+Babel 3.1.0-pl (November 21, 2021)
 =====================================
+- Add MODX 3.x compatability
 - Fix minor bugs
 - Add various new translations
 - [#176] Accept a comma separated list of IDs in resourceId property (BabelTranslation snippet)
