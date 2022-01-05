@@ -33,7 +33,7 @@
 /**
  * @param modX $modx
  * @param string $name
- * @param integer $service see https://github.com/modxcms/revolution/blob/2.x/core/model/modx/modx.class.php#L2005-L2010
+ * @param integer $service see https://github.com/modxcms/revolution/blob/v2.3.2-pl/core/model/modx/modx.class.php#L2005-L2010
  * @return bool
  */
 function createEvent(modX &$modx, $name, $service = 0)
