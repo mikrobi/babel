@@ -57,7 +57,7 @@ class BabelDuplicateResourceProcessor extends modObjectProcessor
             return $this->modx->lexicon($this->objectType.'_err_nfs', [$this->primaryKeyField => $primaryKey]);
         }
 
-        if ($this->checkSavePermission && $this->object instanceof modAccessibleObject && !$this->object->checkPolicy('save')) {
+        if ($this->object instanceof modAccessibleObject && !$this->object->checkPolicy('save')) {
             return $this->modx->lexicon('access_denied');
         }
 
