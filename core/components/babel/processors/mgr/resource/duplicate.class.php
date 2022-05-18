@@ -39,6 +39,8 @@ class BabelDuplicateResourceProcessor extends modObjectProcessor
     public $languageTopics = ['resource', 'babel:default'];
     public $objectType     = 'resource';
 
+    /** @var modAccessibleObject|xPDOObject|modResource $object The object */
+    public $object;
     /** @var xPDOObject $newObject The newly duplicated object */
     public $newObject;
 

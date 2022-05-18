@@ -40,6 +40,9 @@ class BabelUnlinkResourceProcessor extends modObjectGetProcessor
     public $objectType     = 'resource';
     public $targetResource;
 
+    /** @var modAccessibleObject|xPDOObject|modResource $object The object */
+    public $object;
+
     function __construct(modX & $modx,array $properties = array())
     {
         parent::__construct($modx, $properties);
