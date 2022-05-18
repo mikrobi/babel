@@ -32,6 +32,8 @@
  */
 class BabelDuplicateResourceProcessor extends modObjectProcessor
 {
+    /** @var Babel $babel */
+    public $babel;
 
     public $classKey       = 'modResource';
     public $languageTopics = ['resource', 'babel:default'];
@@ -39,6 +41,14 @@ class BabelDuplicateResourceProcessor extends modObjectProcessor
 
     /** @var xPDOObject $newObject The newly duplicated object */
     public $newObject;
+
+    function __construct(modX & $modx,array $properties = array())
+    {
+        parent::__construct($modx, $properties);
+
+        $corePath = $this->modx->getOption('babel.core_path', null, $this->modx->getOption('core_path') . 'components/babel/');
+        $this->babel = $this->modx->getService('babel', 'Babel', $corePath . 'model/babel/');
+    }
 
     public function checkPermissions()
     {
@@ -77,15 +87,15 @@ class BabelDuplicateResourceProcessor extends modObjectProcessor
     public function process()
     {
         $contextKey      = $this->getProperty('context_key');
-        $this->newObject = $this->modx->babel->duplicateResource($this->object, $contextKey);
+        $this->newObject = $this->babel->duplicateResource($this->object, $contextKey);
         if (!$this->newObject) {
             /* error: translation could not be created */
             return $this->failure($this->modx->lexicon('error.could_not_create_translation', ['context' => $contextKey]));
         }
 
-        $linkedResources              = $this->modx->babel->getLinkedResources($this->object->get('id'));
+        $linkedResources              = $this->babel->getLinkedResources($this->object->get('id'));
         $linkedResources[$contextKey] = $this->newObject->get('id');
-        $this->modx->babel->updateBabelTv($linkedResources, $linkedResources);
+        $this->babel->updateBabelTv($linkedResources, $linkedResources);
 
         $this->fireDuplicateEvent();
         $this->logManagerAction();

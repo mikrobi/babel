@@ -31,11 +31,24 @@
  */
 class BabelLinkResourceProcessor extends modObjectGetProcessor
 {
+    /** @var Babel $babel */
+    public $babel;
 
     public $classKey       = 'modResource';
     public $languageTopics = ['resource', 'babel:default'];
     public $objectType     = 'resource';
     public $targetResource;
+
+    /** @var modAccessibleObject|xPDOObject|modResource $object The object */
+    public $object;
+
+    function __construct(modX & $modx,array $properties = array())
+    {
+        parent::__construct($modx, $properties);
+
+        $corePath = $this->modx->getOption('babel.core_path', null, $this->modx->getOption('core_path') . 'components/babel/');
+        $this->babel = $this->modx->getService('babel', 'Babel', $corePath . 'model/babel/');
+    }
 
     public function initialize()
     {
@@ -86,7 +99,7 @@ class BabelLinkResourceProcessor extends modObjectGetProcessor
     {
         $props = $this->getProperties();
 
-        $targetResources = $this->modx->babel->getLinkedResources($props['target']);
+        $targetResources = $this->babel->getLinkedResources($props['target']);
 //        if (count($targetResources) > 1 && isset($targetResources[$this->object->get('context_key')])) {
 //            return $this->failure($this->modx->lexicon('error.translation_already_exists', array(
 //                                'context' => $props['context'],
@@ -95,17 +108,17 @@ class BabelLinkResourceProcessor extends modObjectGetProcessor
 //            )));
 //        }
 
-        $linkedResources = $this->modx->babel->getLinkedResources($this->object->get('id'));
+        $linkedResources = $this->babel->getLinkedResources($this->object->get('id'));
         if (empty($linkedResources)) {
             /* always be sure that the Babel TV is set */
-            $this->modx->babel->initBabelTv($this->object);
+            $this->babel->initBabelTv($this->object);
         }
 
         /* add or change a translation link */
         if (isset($linkedResources[$props['context']])) {
             /* existing link has been changed:
              * -> reset Babel TV of old resource */
-            $this->modx->babel->initBabelTvById($linkedResources[$props['context']]);
+            $this->babel->initBabelTvById($linkedResources[$props['context']]);
         }
         $linkedResources[$props['context']] = $this->targetResource->get('id');
 
@@ -114,7 +127,7 @@ class BabelLinkResourceProcessor extends modObjectGetProcessor
              * Join all existing linked resources from both resources
              */
             $mergedResources = array_merge($targetResources, $linkedResources);
-            $this->modx->babel->updateBabelTv($mergedResources, $mergedResources);
+            $this->babel->updateBabelTv($mergedResources, $mergedResources);
         } else {
             /**
              * Only join between 2 resources
@@ -122,16 +135,16 @@ class BabelLinkResourceProcessor extends modObjectGetProcessor
             $merge1 = array_merge($linkedResources, [
                 $props['context'] => $this->targetResource->get('id')
             ]);
-            $this->modx->babel->updateBabelTv($this->object->get('id'), $merge1);
+            $this->babel->updateBabelTv($this->object->get('id'), $merge1);
             $merge2 = array_merge($targetResources, [
                 $this->object->get('context_key') => $this->object->get('id')
             ]);
-            $this->modx->babel->updateBabelTv($this->targetResource->get('id'), $merge2);
+            $this->babel->updateBabelTv($this->targetResource->get('id'), $merge2);
         }
 
         /* copy values of synchronized TVs to target resource */
         if (isset($props['copy-tv-values']) && intval($props['copy-tv-values']) == 1) {
-            $this->modx->babel->synchronizeTvs($this->object->get('id'));
+            $this->babel->synchronizeTvs($this->object->get('id'));
         }
 
         $this->fireLinkEvent();
@@ -160,7 +173,7 @@ class BabelLinkResourceProcessor extends modObjectGetProcessor
     public function cleanup()
     {
         $output = $this->object->toArray();
-        $output['menu'] = $this->modx->babel->getMenu($this->object);
+        $output['menu'] = $this->babel->getMenu($this->object);
         return $this->success('', $output);
     }
 }

@@ -37,9 +37,19 @@ if (!class_exists('\MODX\Revolution\modX')) {
 
 class BabelResourceGetMatrixListProcessor extends modResourceGetListProcessor
 {
+    /** @var Babel $babel */
+    public $babel;
 
     public $defaultSortField = 'id';
     private $_contexts       = [];
+
+    function __construct(modX & $modx,array $properties = array())
+    {
+        parent::__construct($modx, $properties);
+
+        $corePath = $this->modx->getOption('babel.core_path', null, $this->modx->getOption('core_path') . 'components/babel/');
+        $this->babel = $this->modx->getService('babel', 'Babel', $corePath . 'model/babel/');
+    }
 
     public function initialize()
     {
@@ -72,7 +82,7 @@ class BabelResourceGetMatrixListProcessor extends modResourceGetListProcessor
         $objectArray = $object->toArray();
         // 'id' conflicts with Indonesian's ISO code 'id'
 
-        $linkedResources = $this->modx->babel->getLinkedResources($objectArray['id']);
+        $linkedResources = $this->babel->getLinkedResources($objectArray['id']);
         foreach ($this->_contexts as $ctx) {
             // 'id' conflicts with Indonesian's ISO code 'id'
             // prepend with a suffix
