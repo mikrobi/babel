@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Babel
  *
@@ -29,6 +30,7 @@
  *
  * @package babel
  */
+
 class BabelLinkResourceProcessor extends modObjectGetProcessor
 {
     /** @var Babel $babel */

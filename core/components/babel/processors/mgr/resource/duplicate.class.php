@@ -30,6 +30,7 @@
  *
  * @package babel
  */
+
 class BabelDuplicateResourceProcessor extends modObjectProcessor
 {
     /** @var Babel $babel */

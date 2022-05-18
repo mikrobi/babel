@@ -22,6 +22,7 @@
  *
  * @package babel
  */
+
 /**
  * Processor file for Babel.
  *
@@ -29,6 +30,7 @@
  *
  * @package babel
  */
+
 if (!class_exists('\MODX\Revolution\modX')) {
     include_once MODX_CORE_PATH.'model/modx/processors/resource/getlist.class.php';
 } else {
@@ -71,7 +73,7 @@ class BabelResourceGetMatrixListProcessor extends modResourceGetListProcessor
         $ctx = $this->getProperty('context');
         if (!empty($ctx)) {
             $c->where([
-              'context_key:=' => $ctx
+                'context_key:=' => $ctx
             ]);
         }
         return $c;

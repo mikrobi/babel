@@ -30,6 +30,7 @@
  *
  * @package babel
  */
+
 class BabelUnlinkResourceProcessor extends modObjectGetProcessor
 {
     /** @var Babel $babel */
@@ -147,11 +148,10 @@ class BabelUnlinkResourceProcessor extends modObjectGetProcessor
      */
     public function cleanup()
     {
-        $output         = $this->object->toArray();
+        $output = $this->object->toArray();
         $output['menu'] = $this->babel->getMenu($this->object);
         return $this->success('', $output);
     }
-
 }
 
 return 'BabelUnlinkResourceProcessor';
