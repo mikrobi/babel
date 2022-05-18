@@ -43,8 +43,8 @@ class BabelResourceGetListProcessor extends modResourceGetListProcessor
         $query = $this->getProperty('query');
         if (!empty($query)) {
             $c->where([
-                'pagetitle:LIKE' => "$query%"
-                      ]);
+                'pagetitle:LIKE' => '%' . $query . '%'
+            ]);
         }
         $ctx = $this->getProperty('context');
         if (!empty($ctx)) {
