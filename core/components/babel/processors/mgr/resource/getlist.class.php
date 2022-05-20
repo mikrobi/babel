@@ -22,6 +22,7 @@
  *
  * @package babel
  */
+
 /**
  * Processor file for Babel.
  *
@@ -29,6 +30,7 @@
  *
  * @package babel
  */
+
 if (!class_exists('\MODX\Revolution\modX')) {
     include_once MODX_CORE_PATH.'model/modx/processors/resource/getlist.class.php';
 } else {
@@ -37,20 +39,21 @@ if (!class_exists('\MODX\Revolution\modX')) {
 
 class BabelResourceGetListProcessor extends modResourceGetListProcessor
 {
-
     public function prepareQueryBeforeCount(xPDOQuery $c)
     {
+        $c = parent::prepareQueryBeforeCount($c);
+
         $query = $this->getProperty('query');
         if (!empty($query)) {
             $c->where([
-                'pagetitle:LIKE' => "$query%"
-                      ]);
+                'pagetitle:LIKE' => '%' . $query . '%'
+            ]);
         }
         $ctx = $this->getProperty('context');
         if (!empty($ctx)) {
             $c->where([
                 'context_key:=' => $ctx
-                      ]);
+            ]);
         }
         return $c;
     }

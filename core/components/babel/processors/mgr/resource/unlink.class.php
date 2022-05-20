@@ -30,13 +30,27 @@
  *
  * @package babel
  */
+
 class BabelUnlinkResourceProcessor extends modObjectGetProcessor
 {
+    /** @var Babel $babel */
+    public $babel;
 
     public $classKey       = 'modResource';
     public $languageTopics = ['resource', 'babel:default'];
     public $objectType     = 'resource';
     public $targetResource;
+
+    /** @var modAccessibleObject|xPDOObject|modResource $object The object */
+    public $object;
+
+    function __construct(modX & $modx,array $properties = array())
+    {
+        parent::__construct($modx, $properties);
+
+        $corePath = $this->modx->getOption('babel.core_path', null, $this->modx->getOption('core_path') . 'components/babel/');
+        $this->babel = $this->modx->getService('babel', 'Babel', $corePath . 'model/babel/');
+    }
 
     public function initialize()
     {
@@ -61,9 +75,9 @@ class BabelUnlinkResourceProcessor extends modObjectGetProcessor
     {
         $props = $this->getProperties();
 
-        $linkedResources = $this->modx->babel->getLinkedResources($this->object->get('id'));
+        $linkedResources = $this->babel->getLinkedResources($this->object->get('id'));
         if (empty($linkedResources)) {
-            $this->modx->babel->initBabelTv($this->object);
+            $this->babel->initBabelTv($this->object);
         }
 
         /**
@@ -71,14 +85,14 @@ class BabelUnlinkResourceProcessor extends modObjectGetProcessor
          */
         if (empty($props['target'])) {
             foreach ($linkedResources as $k => $v) {
-                $targetResources = $this->modx->babel->getLinkedResources($v);
+                $targetResources = $this->babel->getLinkedResources($v);
                 $diff = array_diff($targetResources, [
                     $this->object->get('context_key') => $this->object->get('id')
                 ]);
-                $this->modx->babel->updateBabelTv($v, $diff);
+                $this->babel->updateBabelTv($v, $diff);
             }
 
-            $this->modx->babel->updateBabelTv($this->object->get('id'), []);
+            $this->babel->updateBabelTv($this->object->get('id'), []);
 
             return $this->cleanup();
         }
@@ -99,15 +113,15 @@ class BabelUnlinkResourceProcessor extends modObjectGetProcessor
             return $this->failure($this->modx->lexicon('error.invalid_context_key', ['context' => $contextKey]));
         }
 
-        $targetResources = $this->modx->babel->getLinkedResources($props['target']);
+        $targetResources = $this->babel->getLinkedResources($props['target']);
         if (empty($targetResources)) {
-            $this->modx->babel->initBabelTv($this->targetResource);
+            $this->babel->initBabelTv($this->targetResource);
         }
         unset($targetResources[$this->object->get('context_key')]);
-        $this->modx->babel->updateBabelTv($targetResources, $targetResources);
+        $this->babel->updateBabelTv($targetResources, $targetResources);
 
         unset($linkedResources[$props['context']]);
-        $this->modx->babel->updateBabelTv($this->object->get('id'), $linkedResources);
+        $this->babel->updateBabelTv($this->object->get('id'), $linkedResources);
 
         $this->fireUnlinkEvent();
         return $this->cleanup();
@@ -134,11 +148,10 @@ class BabelUnlinkResourceProcessor extends modObjectGetProcessor
      */
     public function cleanup()
     {
-        $output         = $this->object->toArray();
-        $output['menu'] = $this->modx->babel->getMenu($this->object);
+        $output = $this->object->toArray();
+        $output['menu'] = $this->babel->getMenu($this->object);
         return $this->success('', $output);
     }
-
 }
 
 return 'BabelUnlinkResourceProcessor';
