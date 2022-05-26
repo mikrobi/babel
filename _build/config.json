@@ -3,7 +3,7 @@
   "lowCaseName": "babel",
   "description": "The easy way for your multilingual site!",
   "author": "Jakob Class, goldsky",
-  "version": "3.1.0-pl",
+  "version": "3.1.1-pl",
   "package": {
     "menus": [
       {

@@ -1,5 +1,8 @@
 Changelog for Babel.
 
+Babel 3.1.1-pl (May 26, 2021)
+- [#189] Fix various bugs - thanks to Thomas Jakobi https://treehillstudio.com
+
 Babel 3.1.0-pl (November 21, 2021)
 =====================================
 - Add MODX 3.x compatability
