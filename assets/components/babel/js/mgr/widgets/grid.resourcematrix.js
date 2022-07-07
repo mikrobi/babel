@@ -151,7 +151,7 @@ Babel.grid.ResourceMatrix = function (config) {
         id: 'babel-grid-resourcematrix',
         url: Babel.config.connectorUrl,
         baseParams: {
-            action: 'mgr/resource/getMatrixList',
+            action: 'mgr/resource/getmatrixlist',
             contexts: contexts.toString()
         },
         fields: fields,
