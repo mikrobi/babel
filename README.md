@@ -27,6 +27,6 @@ Screenshots of the Babel Box
 Installation via the MODx Package Management
 -------------
 
-Babel is available in the MODx Package Manager at <http://modxcms.com/extras/package/?package=781>
+Babel is available in the MODx Package Manager at <https://modx.com/extras/package/babel>
 
 For the latest version please refer to this GitHub repository
