@@ -1,0 +1,41 @@
+{
+  "name": "mikrobi/babel",
+  "description": "The easy way for your multilingual site!",
+  "authors": [
+    {
+      "name": "Jakob Class",
+      "email": "jakob.class@gmail.com",
+      "homepage": "https://github.com/mikrobi"
+    },
+    {
+      "name": "Rico Goldsky",
+      "email": "goldsky@virtudraft.com",
+      "homepage": "https://github.com/goldsky"
+    },
+    {
+      "name": "Joshua Luckers",
+      "email": "joshualuckers@me.com",
+      "homepage": "https://github.com/JoshuaLuckers"
+    },
+    {
+      "name": "Thomas Jakobi",
+      "email": "office@treehillstudio.com",
+      "homepage": "https://treehillstudio.com"
+    }
+  ],
+  "license": "GPL-2.0-or-later",
+  "config": {
+    "platform": {
+      "php": "7.4"
+    }
+  },
+  "require": {
+    "php": ">=7.4",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "mikrobi\\Babel\\": "src/"
+    }
+  }
+}

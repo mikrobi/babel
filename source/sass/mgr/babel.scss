@@ -1,0 +1,81 @@
+$red: #be0000;
+
+@import '../../js/ux/LockingGridView/LockingGridView';
+
+.icon-babel-description-img {
+  width: 16px;
+  height: 16px;
+  margin: 0 6px 0 12px;
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
+.x-combo-list-item {
+  min-height: 20px;
+}
+
+.home-panel {
+  &.debug {
+    background: linear-gradient(to top right, transparent, transparent, transparent, #fff);
+  }
+}
+
+.ribbon {
+  height: 180px;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  width: 180px;
+  z-index: 10;
+
+  &:before,
+  &:after {
+    border: 5px solid mix(#000, $red, 15%);
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: -1;
+  }
+
+  &.top-right {
+    right: -10px;
+    top: -10px;
+
+    &:before,
+    &:after {
+      border-right-color: transparent;
+      border-top-color: transparent;
+    }
+
+    &:before {
+      left: 0;
+      top: 0;
+    }
+
+    &:after {
+      bottom: 0;
+      right: 0;
+    }
+
+    span {
+      left: -46px;
+      top: 46px;
+      transform: rotate(45deg);
+    }
+  }
+
+  span {
+    background-color: $red;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+    color: #fff;
+    display: block;
+    font: 700 18px/1 'Lato', sans-serif;
+    padding: 15px 0;
+    position: absolute;
+    text-align: center;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+    text-transform: uppercase;
+    width: 300px;
+  }
+}

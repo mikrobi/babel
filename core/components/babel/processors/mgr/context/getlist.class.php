@@ -1,61 +1,69 @@
 <?php
-
 /**
- * Babel
- *
- * Copyright 2010 by Jakob Class <jakob.class@class-zec.de>
- *
- * This file is part of Babel.
- *
- * Babel is free software; you can redistribute it and/or modify it under the
- * terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- *
- * Babel is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * Babel; if not, write to the Free Software Foundation, Inc., 59 Temple Place,
- * Suite 330, Boston, MA 02111-1307 USA
+ * Get list contexts
  *
  * @package babel
+ * @subpackage processors
  */
-/**
- * Processor file for Babel.
- *
- * @author goldsky <goldsky@virtudraft.com>
- *
- * @package babel
- */
-if (!class_exists('\MODX\Revolution\modX')) {
-    include_once MODX_CORE_PATH.'model/modx/processors/context/getlist.class.php';
-} else {
-    class_alias(\MODX\Revolution\Processors\Context\GetList::class, \modContextGetListProcessor::class);
-}
 
-class BabelContextGetListProcessor extends modContextGetListProcessor
+use mikrobi\Babel\Processors\ObjectGetListProcessor;
+
+class BabelContextGetListProcessor extends ObjectGetListProcessor
 {
+    public $classKey = 'modContext';
+    public $defaultSortField = 'key';
+    public $objectType = 'babel.context';
+    public $languageTopics = ['context', 'babel:default'];
+    public $permission = 'view_context';
 
+    protected $search = ['key', 'name'];
+
+    /**
+     * {@inheritDoc}
+     * @return boolean
+     */
     public function initialize()
     {
-        $initialized     = parent::initialize();
+        $success = parent::initialize();
+
         $this->setDefaultProperties([
-            'search'  => '',
+            'search' => '',
             'exclude' => 'mgr',
-                                    ]);
-        $this->canEdit   = false;
-        $this->canRemove = false;
-        return $initialized;
+        ]);
+
+        return $success;
     }
 
+    /**
+     * {@inheritDoc}
+     * @param xPDOQuery $c
+     * @return xPDOQuery
+     */
+    public function prepareQueryBeforeCount(xPDOQuery $c)
+    {
+        $c = parent::prepareQueryBeforeCount($c);
+
+        $exclude = $this->getProperty('exclude') ? array_map('trim', explode(',', $this->getProperty('exclude'))) : [];
+        if ($exclude) {
+            $c->where([
+                'key:NOT IN' => $exclude
+            ]);
+        }
+
+        return $c;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param array $list
+     * @return array
+     */
     public function beforeIteration(array $list)
     {
-        if ($this->getProperty('combo', false)) {
-            $empty  = [
-                'key'  => '',
-                'name' => '&nbsp;',
+        if (!$this->getProperty('id') && $this->getBooleanProperty('combo', false)) {
+            $empty = [
+                'key' => '',
+                'name' => $this->modx->lexicon('babel.all'),
             ];
             $list[] = $empty;
         }
@@ -63,19 +71,23 @@ class BabelContextGetListProcessor extends modContextGetListProcessor
         return $list;
     }
 
+    /**
+     * {@inheritDoc}
+     * @param xPDOObject $object
+     * @return array
+     */
     public function prepareRow(xPDOObject $object)
     {
         $objectArray = parent::prepareRow($object);
-        if ($this->getProperty('combo', false)) {
+        if ($this->getBooleanProperty('combo', false)) {
             $objectArray = [
-                'key'  => $objectArray['key'],
+                'key' => $objectArray['key'],
                 'name' => $objectArray['name'],
             ];
         }
 
         return $objectArray;
     }
-
 }
 
 return 'BabelContextGetListProcessor';

@@ -1,68 +1,52 @@
 <?php
-
 /**
- * Babel
- *
- * Copyright 2010 by Jakob Class <jakob.class@class-zec.de>
- *
- * This file is part of Babel.
- *
- * Babel is free software; you can redistribute it and/or modify it under the
- * terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- *
- * Babel is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * Babel; if not, write to the Free Software Foundation, Inc., 59 Temple Place,
- * Suite 330, Boston, MA 02111-1307 USA
+ * Get list resources
  *
  * @package babel
+ * @subpackage processors
  */
 
-/**
- * Processor file for Babel.
- *
- * @author goldsky <goldsky@virtudraft.com>
- *
- * @package babel
- */
+use mikrobi\Babel\Processors\ObjectGetListProcessor;
 
-if (!class_exists('\MODX\Revolution\modX')) {
-    include_once MODX_CORE_PATH.'model/modx/processors/resource/getlist.class.php';
-} else {
-    class_alias(\MODX\Revolution\Processors\Resource\GetList::class, \modResourceGetListProcessor::class);
-}
-
-class BabelResourceGetListProcessor extends modResourceGetListProcessor
+class BabelResourceGetListProcessor extends ObjectGetListProcessor
 {
+    public $classKey = 'modResource';
+    public $defaultSortField = 'pagetitle';
+    public $objectType = 'babel.resource';
+    public $languageTopics = ['resource', 'babel:default'];
+    public $permission = 'view';
+
+    protected $search = ['pagetitle'];
+
+    /**
+     * {@inheritDoc}
+     * @param xPDOQuery $c
+     * @return xPDOQuery
+     */
     public function prepareQueryBeforeCount(xPDOQuery $c)
     {
         $c = parent::prepareQueryBeforeCount($c);
 
-        $query = $this->getProperty('query');
-        if (!empty($query)) {
-            $c->where([
-                'pagetitle:LIKE' => '%' . $query . '%'
-            ]);
-        }
         $ctx = $this->getProperty('context');
-        if (!empty($ctx)) {
+        if ($ctx) {
             $c->where([
                 'context_key:=' => $ctx
             ]);
         }
+
         return $c;
     }
 
+    /**
+     * {@inheritDoc}
+     * @param array $list
+     * @return array
+     */
     public function beforeIteration(array $list)
     {
-        if ($this->getProperty('combo', false)) {
-            $empty  = [
-                'id'        => 0,
+        if (!$this->getProperty('id') && $this->getBooleanProperty('combo', false)) {
+            $empty = [
+                'id' => 0,
                 'pagetitle' => '',
             ];
             $list[] = $empty;
@@ -71,19 +55,23 @@ class BabelResourceGetListProcessor extends modResourceGetListProcessor
         return $list;
     }
 
+    /**
+     * {@inheritDoc}
+     * @param xPDOObject $object
+     * @return array
+     */
     public function prepareRow(xPDOObject $object)
     {
         $objectArray = parent::prepareRow($object);
-        if ($this->getProperty('combo', false)) {
+        if ($this->getBooleanProperty('combo', false)) {
             $objectArray = [
-                'id'        => $objectArray['id'],
+                'id' => $objectArray['id'],
                 'pagetitle' => $objectArray['pagetitle'],
             ];
         }
 
         return $objectArray;
     }
-
 }
 
 return 'BabelResourceGetListProcessor';

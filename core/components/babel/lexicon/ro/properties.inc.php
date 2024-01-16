@@ -1,44 +1,23 @@
 <?php
 /**
- * Babel
+ * Properties Lexicon Entries for Babel
  *
- * Copyright 2010 by Jakob Class <jakob.class@class-zec.de>
- *
- * This file is part of Babel.
- *
- * Babel is free software; you can redistribute it and/or modify it under the
- * terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- *
- * Babel is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * Babel; if not, write to the Free Software Foundation, Inc., 59 Temple Place,
- * Suite 330, Boston, MA 02111-1307 USA
- *
- * @package babel
- */
-/**
- * Babel properties Romanian language file
- * 
  * @author Stefan Moldoveanu <stefan@moldoveanu.net>
  *
  * @package babel
  * @subpackage lexicon
  */
-
-/* BabelLinks snippet */
-$_lang['babellinks.tpl'] = 'Elementul chunk ce afișează legăturile către resursele traduse';
-$_lang['babellinks.activeCls'] = 'Clasa CSS pentru legătura activă către resursele traduse';
-$_lang['babellinks.resourceId'] = 'Id-ul resursei de afișat';
-$_lang['babellinks.showUnpublished'] = 'Afișează traducerile nepublicate';
-$_lang['babellinks.showCurrent'] = 'Afișează o legătură către limba curentă';
-
-/* BabelTranslation snippet */
-$_lang['babeltranslation.resourceId'] = 'IDul resursei de tradus';
-$_lang['babeltranslation.contextKey'] = 'Cheia de context a resursei de tradus';
-$_lang['babeltranslation.cultureKey'] = 'Key of culture in which translated resource should be determined. Used only in case contextKey was not specified.  If both omitted: uses currently set cultureKey.';
-$_lang['babeltranslation.showUnpublished'] = 'Afișează traducerile nepublicate';
+$_lang['babel.babellinks.activeCls'] = 'Clasa CSS pentru legătura activă către resursele traduse.';
+$_lang['babel.babellinks.ignoreSiteStatus'] = 'Semnalizează dacă se ignoră statusul site-ului (atunci când site-ul este offline)';
+$_lang['babel.babellinks.includeUnlinked'] = 'Semnalizează dacă se afișează sau nu contextul fără legătură.';
+$_lang['babel.babellinks.resourceId'] = 'Id-ul resursei de afișat.';
+$_lang['babel.babellinks.showCurrent'] = 'Afișează o legătură către limba curentă.';
+$_lang['babel.babellinks.showUnpublished'] = 'Afișează traducerile nepublicate.';
+$_lang['babel.babellinks.toArray'] = 'Semnalizează dacă se dorește să se arunce ieșirea sub formă de matrice.';
+$_lang['babel.babellinks.toPlaceholder'] = 'Semnalizează dacă trebuie să se arunce ieșirea în numele de placeholder dat.';
+$_lang['babel.babellinks.tpl'] = 'Elementul chunk ce afișează legăturile către resursele traduse.';
+$_lang['babel.babellinks.wrapperTpl'] = 'Bucată pentru a înfășura toate legăturile de limbă. Locul pentru toate legăturile este [[+babelLinks]].';
+$_lang['babel.babeltranslation.contextKey'] = 'Cheia de context a resursei de tradus.';
+$_lang['babel.babeltranslation.cultureKey'] = 'Cheia de cultură în care ar trebui să fie determinată resursa tradusă. Se utilizează numai în cazul în care nu s-a specificat contextKey. În cazul în care ambele sunt omise, se utilizează cultureKey setată în prezent.';
+$_lang['babel.babeltranslation.resourceId'] = 'IDul resursei de tradus.';
+$_lang['babel.babeltranslation.showUnpublished'] = 'Afișează traducerile nepublicate.';
