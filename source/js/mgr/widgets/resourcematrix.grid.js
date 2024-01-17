@@ -71,7 +71,7 @@ Babel.grid.ResourceMatrix = function (config) {
     Ext.apply(config, {
         url: Babel.config.connectorUrl,
         baseParams: {
-            action: 'mgr/resource/getMatrixList',
+            action: 'mgr/resource/getmatrixlist',
             contexts: contexts.toString()
         },
         colModel: cm,

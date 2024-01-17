@@ -32,13 +32,13 @@
 
 namespace mikrobi\Babel;
 
-use LanguageSubtagRegistry;
+use mikrobi\Babel\Helper\Parse;
+use mikrobi\Babel\LanguageSubtagRegistry\LanguageSubtagRegistry;
 use modChunk;
 use modResource;
 use modSystemEvent;
 use modTemplateVar;
 use modX;
-use mikrobi\Babel\Helper\Parse;
 use MODX\Revolution\modContext;
 use xPDO;
 use xPDOCacheManager;
@@ -67,7 +67,7 @@ class Babel
      * The version
      * @var string $version
      */
-    public string $version = '3.2.0-rc2';
+    public string $version = '3.2.0-rc4';
 
     /**
      * The class config

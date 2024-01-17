@@ -70,12 +70,15 @@ frontend. It uses the following snippet properties:
 
 You can use the following placeholders in the tpl chunk:
 
-| Placeholder     | Description                                                                                                                                                                                          |
-|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| url             | Url to linked translation (or site_url of specific language if there is no translated resource available).                                                                                           |
-| cultureKey      | Culture key of translation (e.g en, de, fr oder es). You may use the babel lexicon to display the language's name: ```[[%babel.language_[[+cultureKey]]? &topic=`default` &namespace=`babel`]]```    |
-| active          | If link points to a resource of the current active language (context) this placeholder is set to the active CSS class name specified by the activeCls property. Otherwise this placeholder is empty. |
-| id              | ID of tranlated resource. If no translation is available this placeholder is empty ('')                                                                                                              |
+| Placeholder | Description                                                                                                                                                                                                     |
+|-------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| active      | If link points to a resource of the current active language (context) this placeholder is set to the active CSS class name specified by the activeCls property. Otherwise this placeholder is empty.            |
+| contextKey  | Context key of the translated resource.                                                                                                                                                                         |
+| contextName | Context name of the translated resource                                                                                                                                                                         |
+| cultureKey  | Culture key of the translated resource (e.g en, de, fr oder es). You may use the babel lexicon to display the language's name: ```[[%babel.language_[[+cultureKey]]? &topic=`languages` &namespace=`babel`]]``` |
+| id          | ID of tranlated resource. If no translation is available this placeholder is empty ('')                                                                                                                         |
+| language    | Language description in the IANA language subtag registry                                                                                                                                                       |
+| url         | Url to linked translation (or site_url of specific language if there is no translated resource available).                                                                                                      |
 
 ### BabelTranslation
 

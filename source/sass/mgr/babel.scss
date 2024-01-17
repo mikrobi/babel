@@ -2,17 +2,35 @@ $red: #be0000;
 
 @import '../../js/ux/LockingGridView/LockingGridView';
 
-.icon-babel-description-img {
-  width: 16px;
-  height: 16px;
-  margin: 0 6px 0 12px;
-  &:first-child {
-    margin-left: 0;
-  }
-}
+.babel-panel {
+  .action-buttons {
+    text-align: center;
 
-.x-combo-list-item {
-  min-height: 20px;
+    li {
+      display: inline-block;
+      font-size: 1.1em;
+      line-height: .7;
+      margin-right: 5px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .x-combo-list-item {
+    min-height: 20px;
+  }
+
+  .icon-babel-description-img {
+    width: 16px;
+    height: 16px;
+    margin: 0 6px 0 12px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
 }
 
 .home-panel {

@@ -107,11 +107,13 @@ class BabelLinks extends Snippet
                 $url = $context->makeUrl($linkedResources[$contextKey], $getRequest, 'full');
                 $active = ($resource->get('context_key') == $contextKey) ? $this->getProperty('activeCls') : '';
                 $placeholders = [
-                    'cultureKey' => $cultureKey,
-                    'url' => $url,
                     'active' => $active,
+                    'contextKey' => $contextKey,
+                    'contextName' => $context->get('name'),
+                    'cultureKey' => $cultureKey,
                     'id' => $linkedResources[$contextKey],
                     'language' => $languages[$cultureKey]['Description'],
+                    'url' => $url,
                 ];
 
                 if ($this->getProperty('toArray')) {
