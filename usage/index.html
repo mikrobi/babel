@@ -651,20 +651,32 @@ frontend. It uses the following snippet properties:</p>
 </thead>
 <tbody>
 <tr>
-<td>url</td>
-<td>Url to linked translation (or site_url of specific language if there is no translated resource available).</td>
-</tr>
-<tr>
-<td>cultureKey</td>
-<td>Culture key of translation (e.g en, de, fr oder es). You may use the babel lexicon to display the language's name: <code>[[%babel.language_[[+cultureKey]]? &amp;topic=`default` &amp;namespace=`babel`]]</code></td>
-</tr>
-<tr>
 <td>active</td>
 <td>If link points to a resource of the current active language (context) this placeholder is set to the active CSS class name specified by the activeCls property. Otherwise this placeholder is empty.</td>
 </tr>
 <tr>
+<td>contextKey</td>
+<td>Context key of translation (e.g en, de, fr oder es). You may use the babel lexicon to display the language's name: <code>[[%babel.language_[[+cultureKey]]? &amp;topic=`languages` &amp;namespace=`babel`]]</code></td>
+</tr>
+<tr>
+<td>contextName</td>
+<td>Culture key of translation (e.g en, de, fr oder es). You may use the babel lexicon to display the language's name: <code>[[%babel.language_[[+cultureKey]]? &amp;topic=`languages` &amp;namespace=`babel`]]</code></td>
+</tr>
+<tr>
+<td>cultureKey</td>
+<td>Culture key of translation (e.g en, de, fr oder es). You may use the babel lexicon to display the language's name: <code>[[%babel.language_[[+cultureKey]]? &amp;topic=`languages` &amp;namespace=`babel`]]</code></td>
+</tr>
+<tr>
 <td>id</td>
 <td>ID of tranlated resource. If no translation is available this placeholder is empty ('')</td>
+</tr>
+<tr>
+<td>language</td>
+<td>Language description in the IANA language subtag registry</td>
+</tr>
+<tr>
+<td>url</td>
+<td>Url to linked translation (or site_url of specific language if there is no translated resource available).</td>
 </tr>
 </tbody>
 </table>
