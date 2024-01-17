@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Show the Babel button only on resources in contexts referenced in `babel.contextKeys` system setting
 - Show the context column in the custom manager page only for contexts referenced in `babel.contextKeys` system setting
 - System settings tab in custom manager page
+- Change the Babel button text by the `babel.displayText` system setting (language, context or combination)
+- Show all contexts in the Babel button by disabling the `babel.restrictToGroup` system setting
 
 ### Fixed
 
