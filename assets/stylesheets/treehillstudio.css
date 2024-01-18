@@ -3,39 +3,27 @@
   font-family: 'Sora';
   font-style: normal;
   font-weight: 300;
-  src: url('../fonts/sora-v11-latin-300.eot'); /* IE9 Compat Modes */
   src: local(''),
-       url('../fonts/sora-v11-latin-300.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
        url('../fonts/sora-v11-latin-300.woff2') format('woff2'), /* Super Modern Browsers */
-       url('../fonts/sora-v11-latin-300.woff') format('woff'), /* Modern Browsers */
-       url('../fonts/sora-v11-latin-300.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('../fonts/sora-v11-latin-300.svg#Sora') format('svg'); /* Legacy iOS */
+       url('../fonts/sora-v11-latin-300.woff') format('woff'); /* Modern Browsers */
 }
 /* sora-regular - latin */
 @font-face {
   font-family: 'Sora';
   font-style: normal;
   font-weight: 400;
-  src: url('../fonts/sora-v11-latin-regular.eot'); /* IE9 Compat Modes */
   src: local(''),
-       url('../fonts/sora-v11-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
        url('../fonts/sora-v11-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
-       url('../fonts/sora-v11-latin-regular.woff') format('woff'), /* Modern Browsers */
-       url('../fonts/sora-v11-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('../fonts/sora-v11-latin-regular.svg#Sora') format('svg'); /* Legacy iOS */
+       url('../fonts/sora-v11-latin-regular.woff') format('woff'); /* Modern Browsers */
 }
 /* sora-700 - latin */
 @font-face {
   font-family: 'Sora';
   font-style: normal;
   font-weight: 700;
-  src: url('../fonts/sora-v11-latin-700.eot'); /* IE9 Compat Modes */
   src: local(''),
-       url('../fonts/sora-v11-latin-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
        url('../fonts/sora-v11-latin-700.woff2') format('woff2'), /* Super Modern Browsers */
-       url('../fonts/sora-v11-latin-700.woff') format('woff'), /* Modern Browsers */
-       url('../fonts/sora-v11-latin-700.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('../fonts/sora-v11-latin-700.svg#Sora') format('svg'); /* Legacy iOS */
+       url('../fonts/sora-v11-latin-700.woff') format('woff'); /* Modern Browsers */
 }
 /* jetbrains-mono-regular - latin */
 @font-face {
@@ -188,7 +176,7 @@ html .md-footer-meta .md-footer-logo img {
   --md-primary-fg-color--dark: rgb(99, 106, 22);
   --md-primary-fg-color--light: rgb(203, 216, 65);
   --md-typeset-color: rgb(73, 89, 104);
-  --md-typeset-a-color: rgb(203, 216, 65);
+  --md-typeset-a-color: rgb(138, 148, 30);
   --md-text-font: 'Sora';
   --md-code-font: 'JetBrains Mono';
 }
