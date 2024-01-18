@@ -64,6 +64,7 @@ class BabelLinks extends Snippet
         $linkedResources = $this->babel->getLinkedResources($resourceId);
         $languages = $this->babel->getLanguages();
         $outputArray = [];
+        $this->modx->lexicon->load('babel:languages');
         foreach ($contextKeys as $contextKey) {
             if (!$this->getProperty('showCurrent') && $contextKey === $resource->get('context_key')) {
                 continue;
@@ -128,11 +129,13 @@ class BabelLinks extends Snippet
                 $url = $context->makeUrl($context->getOption('site_start'), $getRequest, 'full');
                 $active = ($resource->get('context_key') == $contextKey) ? $this->getProperty('activeCls') : '';
                 $placeholders = [
-                    'cultureKey' => $cultureKey,
-                    'url' => $url,
                     'active' => $active,
+                    'contextKey' => $contextKey,
+                    'contextName' => $context->get('name'),
+                    'cultureKey' => $cultureKey,
                     'id' => $context->getOption('site_start'),
                     'language' => $languages[$cultureKey]['Description'],
+                    'url' => $url,
                 ];
 
                 if ($this->getProperty('toArray')) {

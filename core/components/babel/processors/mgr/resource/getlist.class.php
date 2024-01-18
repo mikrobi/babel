@@ -32,6 +32,10 @@ class BabelResourceGetListProcessor extends ObjectGetListProcessor
             $c->where([
                 'context_key:=' => $ctx
             ]);
+        } else {
+            $c->where([
+                'context_key:IN' => $this->babel->getOption('contexts')
+            ]);
         }
 
         return $c;

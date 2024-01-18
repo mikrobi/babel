@@ -49,6 +49,9 @@ class BabelContextGetListProcessor extends ObjectGetListProcessor
                 'key:NOT IN' => $exclude
             ]);
         }
+        $c->where([
+            'key:IN' => $this->babel->getOption('contexts')
+        ]);
 
         return $c;
     }

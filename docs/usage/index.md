@@ -34,8 +34,8 @@ on the link state:
 
 - :fontawesome-solid-circle-plus: to create a new resource to be linked, 
 - :fontawesome-solid-link: to link to this resource and its linked resources
-- :fontawesome-regular-pen-to-square: to break the link
-- :fontawesome-solid-link-slash: to update the linked resource
+- :fontawesome-regular-pen-to-square: to update the linked resource
+- :fontawesome-solid-link-slash: to break the link
 
 ![Contexts Tab](img/babel-cmp-contexts.png)
 
