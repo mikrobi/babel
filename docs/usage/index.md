@@ -1,4 +1,4 @@
-Babel contains a Babel Button, a custom manager page and two Snippets.
+Babel contains a Babel Button, a custom manager page and two snippets.
 
 ## Babel Button
 
