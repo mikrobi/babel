@@ -177,13 +177,13 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/mikrobi/Babel" title="Zum Repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/Jako/Babel" title="Zum Repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
-    mikrobi/Babel
+    Jako/Babel
   </div>
 </a>
       </div>
@@ -224,13 +224,13 @@
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/mikrobi/Babel" title="Zum Repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/Jako/Babel" title="Zum Repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
-    mikrobi/Babel
+    Jako/Babel
   </div>
 </a>
     </div>
@@ -436,7 +436,7 @@
           <li class="md-nav__item">
   <a href="#step-by-step-instructions" class="md-nav__link">
     <span class="md-ellipsis">
-      Step by Step Instructions
+      Step-by-Step Instructions
     </span>
   </a>
   
@@ -565,7 +565,7 @@
           <li class="md-nav__item">
   <a href="#step-by-step-instructions" class="md-nav__link">
     <span class="md-ellipsis">
-      Step by Step Instructions
+      Step-by-Step Instructions
     </span>
   </a>
   
@@ -637,11 +637,11 @@ with MODx and Babel I described a solution which is based on different
 (sub)domains for each language. This domain based approach is implemented easily
 but has some drawbacks in a SEO point of view: By using different domains for
 each language you automatically split up your site into several single sites.
-Each site will be handled separately by search engines. For example they won't
+Each site will be handled separately by search engines. For example, they won't
 share the same page rank and backlinks. Using one domain and subfolders for each
 language may improve your site's overall ranking: All backlinks are connected to
 your top level domain. In this article I'll describe a possible solution of how
-to setup a multilingual website with MODx and Babel by using one domain and
+to set up a multilingual website with MODx and Babel by using one domain and
 subfolders for each language.</p>
 <p>This article doesn't focus on the SEO point of view. It's rather a technical
 tutorial of how to set up a multilingual website by using subfolders. If you'd
@@ -655,7 +655,7 @@ following posts of other blogs:</p>
 <li><a href="https://moz.com/blog/subdomains-subfolders-and-toplevel-domains">Subdomains and subdirectories</a></li>
 </ul>
 <h3 id="technical-background">Technical Background</h3>
-<p>I'll describe the procedure of setting up the a multilingual site by providing a
+<p>I'll describe the procedure of setting up the multilingual site by providing a
 fictional example site <em>https://​www.​example.com</em>. The main website is reachable via
 <em>https://​www.​example.com</em> and is available in two languages:</p>
 <ul>
@@ -689,17 +689,37 @@ RewriteBase /
 </code></pre></div>
 </li>
 </ul>
-<h3 id="step-by-step-instructions">Step by Step Instructions</h3>
+<h3 id="step-by-step-instructions">Step-by-Step Instructions</h3>
 <p>You have to follow the five steps described in my previous article about setting
 up multilingual websites and one additional step:</p>
 <ol>
 <li>Create your contexts for each language: no differences to domain based approach.</li>
 <li>
 <p>Configure language specific settings of all your contexts: <code>site_url</code>, <code>cultureKey</code> <strong>and</strong> <code>base_url</code>.<br></p>
-<ul>
-<li>web context: <code>site_url</code>: http://​www.​example.com/de/ <code>base_url</code>: /de/</li>
-<li>en context: <code>site_url</code>: http://​www.​example.com/en/ <code>base_url</code>: /en/</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>context</th>
+<th>site_url</th>
+<th>cultureKey</th>
+<th>base_url</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>web</td>
+<td>https://​www.​example.com/de/</td>
+<td>de</td>
+<td>/de/</td>
+</tr>
+<tr>
+<td>en</td>
+<td>https://​www.​example.com/en/</td>
+<td>en</td>
+<td>/en/</td>
+</tr>
+</tbody>
+</table>
 <div class="admonition caution">
 <p class="admonition-title">Differences to the non SEO version</p>
 <p>Instead of using different domains in the <code>site_url</code> context setting you have to
@@ -710,7 +730,7 @@ use subfolders and additionally specifiy the <code>base_url</code> according to 
 <p class="admonition-title">Hint</p>
 <p>You should also define settings like <code>site_start</code> <code>error_page</code> etc. for each of
 your contexts. To maintain this entries a lot easier you can use the MODX Extra
-CrossContextsSettings.</p>
+<a href="https://extras.modx.com/package/crosscontextssettings">CrossContextsSettings</a>.</p>
 </div>
 </li>
 <li>
@@ -736,18 +756,10 @@ RewriteRule ^(en|de)/assets(.*)$ assets$2 [L,QSA]
 </li>
 </ol>
 <h3 id="rewrite-rules">Rewrite Rules</h3>
-<p>To make your multilingual site work properly you have to add some rewrite rules
-to your .htaccess file which handle requests to your (physically non-existing)
-language subfolders.</p>
-<p>If you're using other languages than German and English you have to change the
-<em>(en|de)</em> part of the rewrite rule according to your needs. For example for a
-website available in English, Spanish and French you can use the following favicon
-rewrite rule:</p>
-<div class="highlight"><pre><span></span><code>RewriteRule ^(en|de|es)/favicon.ico$ favicon.ico [L,QSA]
-</code></pre></div>
-<p>Ok, now your pages should be accessible via the language subfolders and linking
-your pages with relative links should work, too.</p>
-<p>But there is still a problem regarding relative links: linking assets like CSS,
+<p>If you don't add the rewrite rules above to your .htaccess file the pages are
+still accessible via the language subfolders and linking your pages with relative
+links should work.</p>
+<p>But there would be  a problem regarding relative links: linking assets like CSS,
 JavaScripts, images etc. won't work properly. Normally all these files are
 located somewhere in the assets subfolder of your MODx root directory. When
 including an asset via a relative URL like <em>assets/css/style.css</em> the asset won't
@@ -779,7 +791,16 @@ directory:</p>
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(en|de)/favicon.ico$ favicon.ico [L,QSA]
 </code></pre></div>
-<p>Additionally the server can automatically determine the language when the domain
+<div class="admonition hint">
+<p class="admonition-title">Other languages</p>
+<p>If you're using other languages than German and English you have to change the
+<em>(en|de)</em> part of the rewrite rule according to your needs. For example for a
+website available in English, Spanish and French you can use the following favicon
+rewrite rule:</p>
+<div class="highlight"><pre><span></span><code>RewriteRule ^(en|es|fr)/favicon.ico$ favicon.ico [L,QSA]
+</code></pre></div>
+</div>
+<p>Additionally, the server can automatically determine the language when the domain
 root <em>https://​www​.example.com/</em> is requested and perform a redirect to the
 suitable language version in the following way:</p>
 <ul>
@@ -843,7 +864,7 @@ about the <a href="https://httpd.apache.org/docs/2.2/mod/mod_rewrite.html">Apach
   because your documents are distributed over several contexts and GoogleSiteMap
   is only capable of creating a sitemap for one context. XML sitemaps are very
   helpful to tell a search engine bot where to find all your pages. So you
-  should use them and they should list all pages of your site!</li>
+  should use them, and they should list all pages of your site!</li>
 </ul>
 <div class="admonition caution">
 <p class="admonition-title">Caution</p>
@@ -855,12 +876,12 @@ one single context for the whole site and placing your documents into resource
 containers for each language. At the moment Babel doesn't support this approach.
 But I have already developed a concept of how to change and extend Babel to be
 able to use the Extra for both approaches: domain based and subfolder based.</p>
-<p>Therefore I'll introduce an additional level of abstraction into the Babel's
+<p>Therefore, I'll introduce an additional level of abstraction into the Babel's
 architecture which will make it possible to run Babel in domain-based or
 subfolder-based mode. The look and feel will remain the same and the new version
 should be compatible with older ones.</p>
-<p>I'll need to change a lot of code and currently I'm working on some other
-(payed) projects, too.</p>
+<p>I'll need to change a lot of code, and currently I'm working on some other
+(paid) projects, too.</p>
 <p>I hope you like my plans and I appreciate your feedback!</p>
 
 

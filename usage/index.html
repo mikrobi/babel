@@ -177,13 +177,13 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/mikrobi/Babel" title="Zum Repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/Jako/Babel" title="Zum Repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
-    mikrobi/Babel
+    Jako/Babel
   </div>
 </a>
       </div>
@@ -224,13 +224,13 @@
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/mikrobi/Babel" title="Zum Repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/Jako/Babel" title="Zum Repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
-    mikrobi/Babel
+    Jako/Babel
   </div>
 </a>
     </div>
@@ -542,7 +542,7 @@
 
   <h1>Index</h1>
 
-<p>Babel contains a Babel Button, a custom manager page and two Snippets.</p>
+<p>Babel contains a Babel Button, a custom manager page and two snippets.</p>
 <h2 id="babel-button">Babel Button</h2>
 <p>The Babel Button is located on the top of a resource form. With this button
 you can create, link and update translated versions of the current resource in
@@ -607,7 +607,12 @@ frontend. It uses the following snippet properties:</p>
 <tr>
 <td>resourceId</td>
 <td>Id of resource of which links to translations should be displayed.</td>
-<td>-</td>
+<td>Current resource ID</td>
+</tr>
+<tr>
+<td>restrictToGroup</td>
+<td>Restrict the contexts in the snippet output to the group of the current context.</td>
+<td>System setting <code>babel.restrictToGroup</code></td>
 </tr>
 <tr>
 <td>showCurrent</td>
@@ -705,7 +710,7 @@ given context. It uses the following snippet properties:</p>
 <tr>
 <td>resourceId</td>
 <td>ID of resource of which a translated resource should be determined.</td>
-<td>-</td>
+<td>Current resource ID</td>
 </tr>
 <tr>
 <td>showUnpublished</td>
@@ -747,7 +752,7 @@ given context. It uses the following snippet properties:</p>
 <tr>
 <td>babel.displayText</td>
 <td>Button Text</td>
-<td>Text shown in the Babel button for each context. It can use the following values: language, context, combination</td>
+<td>Text shown in the Babel button for each context. You can use the following values: language, context, combination</td>
 <td>language</td>
 </tr>
 <tr>
