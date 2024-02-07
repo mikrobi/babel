@@ -1,46 +1,24 @@
 <?php
 /**
- * Babel
+ * Properties Lexicon Entries for Babel
  *
- * Copyright 2010 by Jakob Class <jakob.class@class-zec.de>
- *
- * This file is part of Babel.
- *
- * Babel is free software; you can redistribute it and/or modify it under the
- * terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- *
- * Babel is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * Babel; if not, write to the Free Software Foundation, Inc., 59 Temple Place,
- * Suite 330, Boston, MA 02111-1307 USA
- *
- * @package babel
- */
-/**
- * Babel properties English language file
- * 
- * @author Jakob Class <jakob.class@class-zec.de>
+ * @author João Nogueira
  *
  * @package babel
  * @subpackage lexicon
- * @language pt (Translated by João Nogueira - JANogueira)
- * 
  */
-
-/* BabelLinks snippet */
-$_lang['babellinks.tpl'] = 'Chunk para apresentar a hiperligação da língua';
-$_lang['babellinks.activeCls'] = 'Classe de CSS para a hiperligação da língua ativa';
-$_lang['babellinks.resourceId'] = 'Id da página (recurso) para a qual as hiperligações das traduções devam ser apresentadas';
-$_lang['babellinks.showUnpublished'] = 'Indicar se deseja apresentar traduções não publicadas';
-$_lang['babellinks.showCurrent'] = 'Indicar se deseja apresentar uma hiperligação para uma tradução do idioma atual';
-$_lang['babellinks.includeUnlinked'] = 'Indicar se deseja apresentar contextos sem associação';
-
-/* BabelTranslation snippet */
-$_lang['babeltranslation.resourceId'] = 'ID da página (recurso) para a qual uma pãgina (recurso) traduzida deva ser determinado';
-$_lang['babeltranslation.contextKey'] = 'Chave do contexto em que a página (recurso) traduzida deva ser determinado';
-$_lang['babeltranslation.showUnpublished'] = 'Indicar se deseja apresentar traduções não publicadas';
+$_lang['babel.babellinks.activeCls'] = 'Classe de CSS para a hiperligação da língua ativa.';
+$_lang['babel.babellinks.ignoreSiteStatus'] = 'Sinalizar se o site_status deve ser ignorado (quando o site está offline)';
+$_lang['babel.babellinks.includeUnlinked'] = 'Indicar se deseja apresentar contextos sem associação.';
+$_lang['babel.babellinks.resourceId'] = 'Id da página (recurso) para a qual as hiperligações das traduções devam ser apresentadas.';
+$_lang['babel.babellinks.restrictToGroup'] = 'Restringir os contextos na saída do snippet ao grupo do contexto atual.';
+$_lang['babel.babellinks.showCurrent'] = 'Indicar se deseja apresentar uma hiperligação para uma tradução do idioma atual.';
+$_lang['babel.babellinks.showUnpublished'] = 'Indicar se deseja apresentar traduções não publicadas.';
+$_lang['babel.babellinks.toArray'] = 'Sinaliza se a saída deve ser descarregada como uma matriz.';
+$_lang['babel.babellinks.toPlaceholder'] = 'Sinaliza se a saída deve ser despejada no nome do espaço reservado fornecido.';
+$_lang['babel.babellinks.tpl'] = 'Chunk para apresentar a hiperligação da língua.';
+$_lang['babel.babellinks.wrapperTpl'] = 'Fragmento para envolver todos os links de idiomas. O marcador de posição para todos os links é [[+babelLinks]].';
+$_lang['babel.babeltranslation.contextKey'] = 'Chave do contexto em que a página (recurso) traduzida deva ser determinado.';
+$_lang['babel.babeltranslation.cultureKey'] = 'Chave da cultura na qual o recurso traduzido deve ser determinado. Utilizada apenas no caso de contextKey não ter sido especificada. Se ambos forem omitidos, o snippet usa a cultureKey atualmente definida.';
+$_lang['babel.babeltranslation.resourceId'] = 'ID da página (recurso) para a qual uma pãgina (recurso) traduzida deva ser determinado.';
+$_lang['babel.babeltranslation.showUnpublished'] = 'Indicar se deseja apresentar traduções não publicadas.';

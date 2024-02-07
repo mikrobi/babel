@@ -1,0 +1,34 @@
+{
+  "name": "babel",
+  "description": "The easy way for your multilingual site!",
+  "author": "Jakob Class <jakob.class@gmail.com>",
+  "contributors": [
+    "Rico Goldsky <goldsky@virtudraft.com>",
+    "Joshua Luckers <joshualuckers@me.com",
+    "Thomas Jakobi <office@treehillstudio.com>"
+  ],
+  "private": true,
+  "devDependencies": {
+    "autoprefixer": "^10.4.16",
+    "cssnano": "^6.0.3",
+    "date-format": "^4.0.14",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-footer": "^2.1.0",
+    "gulp-header": "^2.0.9",
+    "gulp-postcss": "^9.0.1",
+    "gulp-rename": "^2.0.0",
+    "gulp-replace": "^1.1.4",
+    "gulp-sass": "^5.1.0",
+    "gulp-uglify": "^3.0.2",
+    "postcss": "^8.4.33",
+    "sass": "^1.69.7",
+    "uglify-js": "^3.17.4"
+  },
+  "browserslist": [
+    "last 2 version",
+    "> 1%",
+    "maintained node versions",
+    "not dead"
+  ]
+}
