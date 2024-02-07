@@ -1,0 +1,59 @@
+site_name: Babel
+docs_dir: docs
+site_dir: _build/site
+edit_uri: tree/master/docs
+
+repo_name: 'Jako/Babel'
+repo_url: https://github.com/Jako/Babel
+
+copyright: '&copy; 2010-2024 <a href="https://github.com/mikrobi">Jakob Class</a>'
+
+nav:
+- Description: 'index.md'
+- Installation: 'installation.md'
+- Usage:
+  - 'usage/index.md'
+  - Multilingual Websites with MODX and Babel: 'usage/tutorial.md'
+  - SEO Friendly Multilingual Websites with MODX and Babel: 'usage/tutorial-seo.md'
+- Contributors: 'contributors.md'
+
+extra:
+  analytics:
+    provider: matomo
+    url: matomo.treehillstudio.com
+    site: 40
+  social:
+    - icon: fontawesome/brands/modx
+      link: https://modx.com/extras/package/babel
+
+theme:
+  name: material
+  custom_dir: ../../mkdocs-material-jako/material
+
+  # 404 page
+  static_templates:
+    - 404.html
+
+  language: de
+  font: false
+  features:
+    - navigation.indexes
+    - navigation.instant
+    - navigation.top
+
+markdown_extensions:
+  - footnotes
+  - tables
+  - admonition
+  - meta
+  - toc
+  - pymdownx.details
+  - pymdownx.superfences
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+plugins:
+  - glightbox
+  - search

@@ -1,0 +1,112 @@
+/*!
+ * Ext JS Library 3.4.0
+ * Copyright(c) 2006-2011 Sencha Inc.
+ * licensing@sencha.com
+ * http://www.sencha.com/license
+ */
+.x-grid3-locked, .x-grid3-unlocked {
+  overflow: hidden;
+  position: absolute;
+}
+
+.x-grid3-locked {
+  border-right: 1px solid #99BBE8;
+}
+
+.x-grid3-locked .x-grid3-scroller {
+  overflow: hidden;
+}
+
+.x-grid3-locked .x-grid3-row {
+  border-right: 0;
+}
+
+.x-grid3-scroll-spacer {
+  height: 19px;
+}
+
+.x-grid3-unlocked .x-grid3-header-offset {
+  padding-left: 0;
+}
+
+.x-grid3-unlocked .x-grid3-row {
+  border-left: 0;
+}
+
+.babel-panel .action-buttons {
+  text-align: center;
+}
+.babel-panel .action-buttons li {
+  display: inline-block;
+  font-size: 1.1em;
+  line-height: 0.7;
+  margin-right: 5px;
+}
+.babel-panel .action-buttons li:last-child {
+  margin-right: 0;
+}
+.babel-panel .x-combo-list-item {
+  min-height: 20px;
+}
+.babel-panel .icon-babel-description-img {
+  width: 16px;
+  height: 16px;
+  margin: 0 6px 0 12px;
+}
+.babel-panel .icon-babel-description-img:first-child {
+  margin-left: 0;
+}
+
+.home-panel.debug {
+  background: linear-gradient(to top right, transparent, transparent, transparent, #fff);
+}
+
+.ribbon {
+  height: 180px;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  width: 180px;
+  z-index: 10;
+}
+.ribbon:before, .ribbon:after {
+  border: 5px solid #a20000;
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: -1;
+}
+.ribbon.top-right {
+  right: -10px;
+  top: -10px;
+}
+.ribbon.top-right:before, .ribbon.top-right:after {
+  border-right-color: transparent;
+  border-top-color: transparent;
+}
+.ribbon.top-right:before {
+  left: 0;
+  top: 0;
+}
+.ribbon.top-right:after {
+  bottom: 0;
+  right: 0;
+}
+.ribbon.top-right span {
+  left: -46px;
+  top: 46px;
+  transform: rotate(45deg);
+}
+.ribbon span {
+  background-color: #be0000;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  display: block;
+  font: 700 18px/1 "Lato", sans-serif;
+  padding: 15px 0;
+  position: absolute;
+  text-align: center;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+  width: 300px;
+}

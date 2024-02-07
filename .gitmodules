@@ -1,3 +1,0 @@
-[submodule "core/components/babel/vendor/iana-language-subtag-registry"]
-	path = core/components/babel/vendor/iana-language-subtag-registry
-	url = git@github.com:goldsky/IANA-s-Language-Subtag-Registry.git

@@ -1,96 +1,62 @@
 <?php
-
 /**
- * Babel
- *
- * Copyright 2010 by Jakob Class <jakob.class@class-zec.de>
- *
- * This file is part of Babel.
- *
- * Babel is free software; you can redistribute it and/or modify it under the
- * terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- *
- * Babel is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along with
- * Babel; if not, write to the Free Software Foundation, Inc., 59 Temple Place,
- * Suite 330, Boston, MA 02111-1307 USA
+ * Link resource
  *
  * @package babel
+ * @subpackage processors
  */
 
-/**
- * Processor file for Babel.
- *
- * @author goldsky <goldsky@virtudraft.com>
- *
- * @package babel
- */
+use mikrobi\Babel\Processors\ObjectUpdateProcessor;
 
-class BabelLinkResourceProcessor extends modObjectGetProcessor
+class BabelLinkResourceProcessor extends ObjectUpdateProcessor
 {
-    /** @var Babel $babel */
-    public $babel;
-
-    public $classKey       = 'modResource';
+    public $classKey = 'modResource';
+    public $objectType = 'resource';
     public $languageTopics = ['resource', 'babel:default'];
-    public $objectType     = 'resource';
-    public $targetResource;
 
-    /** @var modAccessibleObject|xPDOObject|modResource $object The object */
-    public $object;
+    /** @var modResource $targetResource The link target */
+    protected $targetResource;
 
-    function __construct(modX & $modx,array $properties = array())
-    {
-        parent::__construct($modx, $properties);
-
-        $corePath = $this->modx->getOption('babel.core_path', null, $this->modx->getOption('core_path') . 'components/babel/');
-        $this->babel = $this->modx->getService('babel', 'Babel', $corePath . 'model/babel/');
-    }
-
+    /**
+     * {@inheritDoc}
+     * @return boolean
+     */
     public function initialize()
     {
+        $success = parent::initialize();
+
         $target = $this->getProperty('target', false);
         if (empty($target)) {
             return $this->modx->lexicon($this->objectType . '_err_ns');
         }
-
         $primaryKey = $this->getProperty($this->primaryKeyField, false);
-        if (empty($primaryKey)) {
-            return $this->modx->lexicon($this->objectType . '_err_ns');
-        }
-
         if ($target === $primaryKey) {
-            return $this->modx->lexicon('error.link_of_selflink_not_possible');
+            return $this->modx->lexicon('babel.resource_err_link_of_selflink_not_possible');
         }
-
-        $this->targetResource = $this->modx->getObject('modResource', intval($target));
+        $this->targetResource = $this->modx->getObject('modResource', $target);
         if (!$this->targetResource) {
-            return $this->modx->lexicon('error.invalid_resource_id', ['resource' => $target]);
+            return $this->modx->lexicon('babel.resource_err_invalid_id', [
+                'resource' => $target
+            ]);
         }
-
         $contextKey = $this->getProperty('context', false);
         if (empty($contextKey)) {
             return $this->modx->lexicon('babel.context_err_ns');
         }
-
         $context = $this->modx->getObject('modContext', ['key' => $contextKey]);
         if (!$context) {
-            return $this->modx->lexicon('error.invalid_context_key', ['context' => $contextKey]);
+            return $this->modx->lexicon('babel.context_err_invalid_key', [
+                'context' => $contextKey
+            ]);
         }
-
         if ($this->targetResource->get('context_key') !== $contextKey) {
-            return $this->modx->lexicon('error.resource_from_other_context', [
-                    'resource' => $this->targetResource->get('id'),
-                    'context' => $contextKey
+            return $this->modx->lexicon('babel.resource_err_from_other_context', [
+                'resource' => $this->targetResource->get('id'),
+                'context' => $contextKey
             ]);
         }
 
-        return parent::initialize();
+        return $success;
     }
 
     /**
@@ -99,53 +65,41 @@ class BabelLinkResourceProcessor extends modObjectGetProcessor
      */
     public function process()
     {
-        $props = $this->getProperties();
-
-        $targetResources = $this->babel->getLinkedResources($props['target']);
-//        if (count($targetResources) > 1 && isset($targetResources[$this->object->get('context_key')])) {
-//            return $this->failure($this->modx->lexicon('error.translation_already_exists', array(
-//                                'context' => $props['context'],
-//                                'resource' => $targetResources[$props['context']],
-//                                'pagetitle' => $this->modx->getObject('modResource', $targetResources[$props['context']])->get('pagetitle'),
-//            )));
-//        }
-
+        $targetResources = $this->babel->getLinkedResources($this->getProperty('target'));
         $linkedResources = $this->babel->getLinkedResources($this->object->get('id'));
         if (empty($linkedResources)) {
             /* always be sure that the Babel TV is set */
             $this->babel->initBabelTv($this->object);
         }
 
+        $context = $this->getProperty('context');
         /* add or change a translation link */
-        if (isset($linkedResources[$props['context']])) {
-            /* existing link has been changed:
-             * -> reset Babel TV of old resource */
-            $this->babel->initBabelTvById($linkedResources[$props['context']]);
+        if (isset($linkedResources[$context])) {
+            /* If the existing link has been changed, reset the Babel TV of the old resource */
+            $this->babel->initBabelTvById($linkedResources[$context]);
         }
-        $linkedResources[$props['context']] = $this->targetResource->get('id');
+        $linkedResources[$context] = $this->targetResource->get('id');
 
-        if (isset($props['sync-linked-tranlations']) && intval($props['sync-linked-tranlations']) == 1) {
-            /**
-             * Join all existing linked resources from both resources
-             */
+        $syncLinkedTranslations = $this->getProperty('sync-linked-tranlations');
+        if ($syncLinkedTranslations == 1) {
+            /* Join all existing linked resources from both resources */
             $mergedResources = array_merge($targetResources, $linkedResources);
             $this->babel->updateBabelTv($mergedResources, $mergedResources);
         } else {
-            /**
-             * Only join between 2 resources
-             */
-            $merge1 = array_merge($linkedResources, [
-                $props['context'] => $this->targetResource->get('id')
+            /* Only join between 2 resources */
+            $mergeLinked = array_merge($linkedResources, [
+                $this->getProperty('context') => $this->targetResource->get('id')
             ]);
-            $this->babel->updateBabelTv($this->object->get('id'), $merge1);
-            $merge2 = array_merge($targetResources, [
+            $this->babel->updateBabelTv($this->object->get('id'), $mergeLinked);
+            $mergeTarget = array_merge($targetResources, [
                 $this->object->get('context_key') => $this->object->get('id')
             ]);
-            $this->babel->updateBabelTv($this->targetResource->get('id'), $merge2);
+            $this->babel->updateBabelTv($this->targetResource->get('id'), $mergeTarget);
         }
 
-        /* copy values of synchronized TVs to target resource */
-        if (isset($props['copy-tv-values']) && intval($props['copy-tv-values']) == 1) {
+        $copyTvValues = $this->getProperty('copy-tv-values');
+        if ($copyTvValues == 1) {
+            /* copy values of synchronized TVs to target resource */
             $this->babel->synchronizeTvs($this->object->get('id'));
         }
 
@@ -155,21 +109,20 @@ class BabelLinkResourceProcessor extends modObjectGetProcessor
 
     /**
      * Fire the OnBabelLink event
-     * @return void
      */
     public function fireLinkEvent()
     {
         $this->modx->invokeEvent('OnBabelLink', [
-            'context_key'       => $this->getProperty('context'),
-            'original_id'       => $this->object->get('id'),
+            'context_key' => $this->getProperty('context'),
+            'original_id' => $this->object->get('id'),
             'original_resource' => &$this->object,
-            'target_id'         => $this->targetResource->get('id'),
-            'target_resource'   => &$this->targetResource
+            'target_id' => $this->targetResource->get('id'),
+            'target_resource' => &$this->targetResource
         ]);
     }
 
     /**
-     * Return the response
+     * {@inheritDoc}
      * @return array
      */
     public function cleanup()

@@ -2,8 +2,8 @@
   "name": "Babel",
   "lowCaseName": "babel",
   "description": "The easy way for your multilingual site!",
-  "author": "Jakob Class, goldsky",
-  "version": "3.1.1-pl",
+  "author": "Jakob Class, Rico Goldsky, Joshua Luckers, Thomas Jakobi",
+  "version": "3.2.0",
   "package": {
     "menus": [
       {
@@ -21,36 +21,53 @@
           "properties": [
             {
               "name": "resourceId",
-              "description": "babellinks.resourceId",
               "value": ""
             },
             {
               "name": "tpl",
-              "description": "babeltranslation.tpl",
-              "value": "babelLink"
+              "value": "tplBabellink"
+            },
+            {
+              "name": "wrapperTpl",
+              "value": ""
             },
             {
               "name": "activeCls",
-              "description": "babeltranslation.activeCls",
               "value": "active"
             },
             {
               "name": "showUnpublished",
-              "description": "babeltranslation.showUnpublished",
               "type": "combo-boolean",
               "value": "0"
             },
             {
               "name": "showCurrent",
-              "description": "babeltranslation.showCurrent",
               "type": "combo-boolean",
               "value": "0"
             },
             {
               "name": "includeUnlinked",
-              "description": "babeltranslation.includeUnlinked",
               "type": "combo-boolean",
               "value": "0"
+            },
+            {
+              "name": "ignoreSiteStatus",
+              "type": "combo-boolean",
+              "value": "0"
+            },
+            {
+              "name": "restrictToGroup",
+              "type": "combo-boolean",
+              "value": "0"
+            },
+            {
+              "name": "toArray",
+              "type": "combo-boolean",
+              "value": "0"
+            },
+            {
+              "name": "toPlaceholder",
+              "value": ""
             }
           ]
         },
@@ -61,22 +78,18 @@
           "properties": [
             {
               "name": "resourceId",
-              "description": "babeltranslation.resourceId",
               "value": ""
             },
             {
               "name": "contextKey",
-              "description": "babeltranslation.contextKey",
               "value": ""
             },
             {
               "name": "cultureKey",
-              "description": "babeltranslation.cultureKey",
               "value": ""
             },
             {
               "name": "showUnpublished",
-              "description": "babeltranslation.showUnpublished",
               "type": "combo-boolean",
               "value": "0"
             }
@@ -97,37 +110,72 @@
             "OnResourceSort"
           ]
         }
+      ],
+      "chunks": [
+        {
+          "name": "tplBabellink",
+          "file": "babellink.chunk.html"
+        },
+        {
+          "name": "tplBabellinkWrapper",
+          "file": "babellinkwrapper.chunk.html"
+        }
       ]
     },
     "systemSettings": [
       {
+        "key": "debug",
+        "type": "combo-boolean",
+        "area": "system",
+        "value": "0"
+      },
+      {
         "key": "contextKeys",
-        "type": "textfield",
-        "area": "common",
+        "area": "system",
         "value": ""
       },
       {
+        "key": "restrictToGroup",
+        "type": "combo-boolean",
+        "area": "system",
+        "value": "1"
+      },
+      {
+        "key": "displayText",
+        "area": "system",
+        "value": "language"
+      },
+      {
         "key": "babelTvName",
-        "type": "textfield",
-        "area": "common",
+        "area": "system",
         "value": "babelLanguageLinks"
       },
       {
         "key": "syncTvs",
-        "type": "textfield",
-        "area": "common",
+        "area": "system",
         "value": ""
       }
     ]
   },
+  "dependencies": [
+    {
+      "name": "php",
+      "version": ">=7.2"
+    },
+    {
+      "name": "modx",
+      "version": ">=2.4"
+    }
+  ],
   "build": {
-    "readme": "docs/readme.txt",
-    "license": "docs/license.txt",
-    "changelog": "docs/changelog.txt",
+    "readme": "docs/readme.md",
+    "license": "docs/license.md",
+    "changelog": "docs/changelog.md",
     "resolver": {
       "after": [
-        "setupoptions.resolver.php",
-        "babelevents.resolver.php"
+        "resolve.setupoptions.php",
+        "resolve.permissions.php",
+        "resolve.babelevents.php"
       ]
     },
     "setupOptions": {
