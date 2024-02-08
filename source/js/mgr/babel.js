@@ -342,7 +342,7 @@ Ext.extend(babel, Ext.Component, {
     aboutWindow: function () {
         const msg = '&copy; 2010-2024 by Jakob Class<br><br>' +
             'Authors: <a href="https://github.com/mikrobi">Jakob Class</a>, <a href="https://github.com/goldsky">Rico Goldsky</a>, <a href="https://github.com/JoshuaLuckers">Joshua Luckers</a>, <a href="https://github.com/Jako">Thomas Jakobi</a><br><br>' +
-            'Repository: <a href="https://github.com/Jako/Babel">github.com/Jako/Babel</a>';
+            'Repository: <a href="https://github.com/mikrobi/babel">github.com/mikrobi/babel</a>';
         Ext.Msg.show({
             title: _('babel') + ' ' + Babel.config.version,
             msg: msg,
