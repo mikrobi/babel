@@ -11,7 +11,7 @@
 In the [official documentation](https://mikrobi.github.io/babel/) of the Babel
 Extra I’ve only provided a short summary of how to set up your MODx contexts for
 a multilingual website and referred to an outdated tutorial. Many Babel users
-contacted me or posted an issue on [GitHub](https://github.com/Jako/Babel)
+contacted me or posted an issue on [GitHub](https://github.com/mikrobi/babel)
 because they had some troubles with Babel. Most of these troubles were not
 related to Babel itself but have been caused by setting up the contexts
 incorrectly. With this small tutorial I want to support you in configuring your
