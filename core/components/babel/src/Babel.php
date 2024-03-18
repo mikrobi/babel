@@ -151,7 +151,7 @@ class Babel
             'contextKeys' => $this->modx->getOption($this->namespace . '.contextKeys', null, ''),
             'restrictToGroup' => $this->getBooleanOption('restrictToGroup', [], true),
             'displayText' => $this->modx->getOption($this->namespace . '.displayText', null, 'language'),
-            'syncTvs' => $this->modx->getOption($this->namespace . '.syncTvs', null, ''),
+            'syncTvs' => $this->getExplodeSeparatedOption($this->namespace . '.syncTvs', [], ''),
             'babelTvName' => $this->modx->getOption($this->namespace . '.babelTvName', null, 'babelLanguageLinks'),
         ]);
 
@@ -206,7 +206,7 @@ class Babel
     }
 
     /**
-     * Get Boolean Option
+     * Get a boolean option.
      *
      * @param string $key
      * @param array $config
@@ -217,6 +217,19 @@ class Babel
     {
         $option = $this->getOption($key, $config, $default);
         return ($option === 'true' || $option === true || $option === '1' || $option === 1);
+    }
+
+    /**
+     * Get an exploded and trimmed value.
+     *
+     * @param string $value
+     * @param string $separator
+     * @return array
+     */
+    public function getExplodeSeparatedOption(string $key, array $config = [], $default = null): array
+    {
+        $option = $this->getOption($key, $config, $default);
+        return ($option !== '') ? array_map('trim', explode(',', rtrim($option, " ,\t\n\r\0\x0B" ))) : [];
     }
 
     /**
