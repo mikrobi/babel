@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Babel
  *
@@ -151,7 +152,7 @@ class Babel
             'contextKeys' => $this->modx->getOption($this->namespace . '.contextKeys', null, ''),
             'restrictToGroup' => $this->getBooleanOption('restrictToGroup', [], true),
             'displayText' => $this->modx->getOption($this->namespace . '.displayText', null, 'language'),
-            'syncTvs' => $this->modx->getOption($this->namespace . '.syncTvs', null, ''),
+            'syncTvs' => explode(',', $this->modx->getOption($this->namespace . '.syncTvs', null, '')),
             'babelTvName' => $this->modx->getOption($this->namespace . '.babelTvName', null, 'babelLanguageLinks'),
         ]);
 
@@ -741,7 +742,7 @@ class Babel
         $cacheOptions = [
             xPDO::OPT_CACHE_KEY => 'babel',
             xPDO::OPT_CACHE_HANDLER => $this->modx->getOption('cache_resource_handler', null, $this->modx->getOption(xPDO::OPT_CACHE_HANDLER)),
-            xPDO::OPT_CACHE_FORMAT => (integer)$this->modx->getOption('cache_resource_format', null, $this->modx->getOption(xPDO::OPT_CACHE_FORMAT, null, xPDOCacheManager::CACHE_PHP)),
+            xPDO::OPT_CACHE_FORMAT => (int)$this->modx->getOption('cache_resource_format', null, $this->modx->getOption(xPDO::OPT_CACHE_FORMAT, null, xPDOCacheManager::CACHE_PHP)),
         ];
         $languages = $this->modx->cacheManager->get('languages', $cacheOptions);
         if (!$languages) {
