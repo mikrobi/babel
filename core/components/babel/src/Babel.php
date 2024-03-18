@@ -292,6 +292,9 @@ class Babel
             return;
         }
 
+        /* Declare an array for TV changes during syncing. */
+        $tvChanges = [];
+
         foreach ($syncTvs as $tvId) {
             /* go through each TV which should be synchronized */
             $tv = $this->modx->getObject('modTemplateVar', $tvId);
@@ -305,9 +308,28 @@ class Babel
                     /* don't synchronize resource with itself */
                     continue;
                 }
-                $tv->setValue($linkedResourceId, $tvValue);
+
+                $tvValueLinkedResource = $tv->getValue($linkedResourceId);
+
+                if ($tvValueLinkedResource !== $tvValue) {
+                    $tv->setValue($linkedResourceId, $tvValue);
+
+                    $tvChanges[] = [
+                        'tvId' => $tvId,
+                        'tvValue' => $tvValue,
+                        'resourceId' => $linkedResourceId
+                    ];
+                }
             }
             $tv->save();
+        }
+
+        //When there are TV changes, trigger the OnBabelTvsSynchronized event
+        if (count($tvChanges) > 0) {
+            $this->modx->invokeEvent('OnBabelTvsSynchronized', [
+                'tvChanges' => $tvChanges,
+                'resourceId' => $resourceId
+            ]);
         }
 
         $this->modx->cacheManager->refresh();
