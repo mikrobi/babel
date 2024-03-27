@@ -32,6 +32,18 @@ $output = '<style type="text/css">
 switch ($options[xPDOTransport::PACKAGE_ACTION]) {
     case xPDOTransport::ACTION_INSTALL:
         $output .= '<h2>Install Babel</h2>
+        <p>Thanks for installing Babel. This open source extra is currently
+        maintained by Treehill Studio - MODX development in Münsterland.</p>
+
+        <p>During the installation, we will collect some statistical data (the
+        hostname, the MODX UUID, the PHP version and the MODX version of your
+        MODX installation). Your data will be kept confidential and under no
+        circumstances be used for promotional purposes or disclosed to third
+        parties. We only like to know the usage count of this package.</p>
+        
+        <p>If you install this package, you are giving us your permission to
+        collect, process and use that data for statistical purposes.</p>
+        
         <p>Babel will be installed. Please review the installation options carefully.</p><br>';
 
         $output .= '<div style="position: relative">
@@ -63,7 +75,19 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         unset($setting);
 
         $output .= '<h2>Upgrade Babel</h2>
-        <p>Babel will be upgraded. Please review the installation options carefully.</p><br>';
+        <p>Babel will be upgraded. This open source extra is currently
+        maintained by Treehill Studio - MODX development in Münsterland.</p>
+
+        <p>During the installation, we will collect some statistical data (the
+        hostname, the MODX UUID, the PHP version and the MODX version of your
+        MODX installation). Your data will be kept confidential and under no
+        circumstances be used for promotional purposes or disclosed to third
+        parties. We only like to know the usage count of this package.</p>
+
+        <p>If you upgrade this package, you are giving us your permission to
+        collect, process and use that data for statistical purposes.</p>
+
+        <p>Please review the installation options carefully.</p><br>';
 
         $output .= '<div style="position: relative">
                 <label for="babel-contextKeys">Context Keys (comma-separated):</label>

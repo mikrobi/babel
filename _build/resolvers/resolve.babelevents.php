@@ -67,7 +67,8 @@ function removeEvent(modX $modx, $name)
 $babelEvents = [
     'OnBabelDuplicate', // invoked on duplicating the resource in a new language context
     'OnBabelLink', // invoked on link the resource with a target resource
-    'OnBabelUnlink' // invoked on unlink the resource from a target resource
+    'OnBabelUnlink', // invoked on unlink the resource from a target resource
+    'OnBabelTVSynced' // invoked when TVs are synchronized and changed
 ];
 
 $success = true;

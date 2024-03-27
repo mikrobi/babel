@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.3.0] - 2024-03-27
+
+### Added
+
+- Add a menu entry/button to create multiple translations in selectable contexts
+- Include a possible scrollbar height in the context grid height
+- [#204] New event when TV values have been synchronized - thanks to Arjen <https://github.com/arjen-t>
+- Add an option to link a new created translation with all existing translations
+
+### Fixed
+
+- [#202] Fix synchronized TVs never triggered - thanks to Arjen <https://github.com/arjen-t>
+- Don't change the parent of a new linked resource to a folder
+
 ## [3.2.0] - 2024-02-07
 
 ### Changed
@@ -19,7 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - System settings tab in custom manager page
 - Change the Babel button text by the `babel.displayText` system setting (language, context or combination)
 - Show all contexts in the Babel button by disabling the `babel.restrictToGroup` system setting
-- New snippet property `restrictToGroup` for the BabelLinks snippet.
+- New snippet property `restrictToGroup` for the BabelLinks snippet
 
 ### Fixed
 

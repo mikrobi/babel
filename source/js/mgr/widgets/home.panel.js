@@ -18,6 +18,10 @@ Babel.panel.Home = function (config) {
             cls: 'babel-panel',
             items: [{
                 xtype: 'babel-panel-overview'
+            }, {
+                xtype: 'hidden',
+                value: 0,
+                id: 'modx-resource-parent-hidden' // needed for the modx-field-parent-change combo
             }]
         }]
     });
@@ -53,7 +57,14 @@ Babel.panel.HomeTab = function (config) {
                             var tbarHeight = this.getTopToolbar().getHeight();
                             var lockedHdHeight = this.getView().lockedHd.getHeight();
                             var lockedBodyHeight = this.getView().lockedBody.getHeight();
+                            var lockedScrollerHeight = this.getView().lockedScroller.getHeight();
                             var bbarHeight = this.getBottomToolbar().getHeight();
+                            var lockedWidth = this.getView().lockedBody.getWidth();
+                            var mainWidth = this.getView().mainBody.getWidth();
+                            var elWidth = this.getEl().getWidth();
+                            if (lockedWidth + mainWidth > elWidth) {
+                                lockedBodyHeight = lockedScrollerHeight;
+                            }
                             this.setHeight(tbarHeight + lockedHdHeight + lockedBodyHeight + bbarHeight + 14);
                         }, this);
                     }
@@ -75,7 +86,8 @@ Babel.panel.Overview = function (config) {
         description: '<div>' + _('babel.contexts_desc') + '</div><div><i class="icon-babel-description-img icon icon-link"></i>' + _('babel.contexts_desc_link') +
             '<i class="icon-babel-description-img icon icon-chain-broken"></i>' + _('babel.contexts_desc_unlink') +
             '<i class="icon-babel-description-img icon icon-pencil-square-o"></i>' + _('babel.contexts_desc_update') +
-            '<i class="icon-babel-description-img icon icon-plus-circle"></i>' + _('babel.contexts_desc_create') + '</div>',
+            '<i class="icon-babel-description-img icon icon-plus-circle"></i>' + _('babel.contexts_desc_create') +
+            '<i class="icon-babel-description-img icon icon-plus-square"></i>' + _('babel.contexts_desc_create_multiple') + '</div>',
         tabtype: 'resourcematrix',
         contenttype: 'grid'
     }];

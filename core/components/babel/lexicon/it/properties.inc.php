@@ -8,8 +8,8 @@
 $_lang['babel.babellinks.activeCls'] = 'Classe CSS per il link della lingua attiva.';
 $_lang['babel.babellinks.ignoreSiteStatus'] = 'Contrassegno se ignorare il site_status (quando il sito è offline)';
 $_lang['babel.babellinks.includeUnlinked'] = 'Contrassegnare se mostrare il contesto non collegato.';
-$_lang['babel.babellinks.resourceId'] = 'Id della risorsa i cui links alla traduzione dovrebbero essere mostrati.';
-$_lang['babel.babellinks.restrictToGroup'] = 'Limita i contesti nell\'output dello snippet al gruppo del contesto corrente';
+$_lang['babel.babellinks.resourceId'] = 'ID della risorsa i cui links alla traduzione dovrebbero essere mostrati.';
+$_lang['babel.babellinks.restrictToGroup'] = 'Limita i contesti nell\'output dello snippet al gruppo del contesto corrente.';
 $_lang['babel.babellinks.showCurrent'] = 'Flag se mostrare un link alla traduzione per la lingua corrente.';
 $_lang['babel.babellinks.showUnpublished'] = 'Flag se mostrare le traduzioni non pubblicate.';
 $_lang['babel.babellinks.toArray'] = 'Flag per decidere se scaricare l\'output come array.';

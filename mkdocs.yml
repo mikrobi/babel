@@ -34,7 +34,7 @@ theme:
   static_templates:
     - 404.html
 
-  language: de
+  language: en
   font: false
   features:
     - navigation.indexes
