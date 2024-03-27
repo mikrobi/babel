@@ -167,6 +167,10 @@ html .md-footer-meta .md-footer-logo img {
   width: auto;
 }
 
+.md-footer-logo {
+  margin: 0 0.4rem;
+}
+
 :root > * {
   --md-accent-fg-color: rgba(99, 106, 22, 1);
   --md-accent-fg-color--transparent: rgba(99, 106, 22, 0.1);
