@@ -8,7 +8,7 @@
 $_lang['babel.babellinks.activeCls'] = 'Classe CSS pour les liens de la langue active.';
 $_lang['babel.babellinks.ignoreSiteStatus'] = 'Drapeau indiquant s\'il faut ignorer le site_status (lorsque le site est hors ligne)';
 $_lang['babel.babellinks.includeUnlinked'] = 'Indique s\'il faut afficher le contexte non lié.';
-$_lang['babel.babellinks.resourceId'] = 'Id de la ressource dont les liens vers les traductions doivent être affichés.';
+$_lang['babel.babellinks.resourceId'] = 'ID de la ressource dont les liens vers les traductions doivent être affichés.';
 $_lang['babel.babellinks.restrictToGroup'] = 'Restreindre les contextes dans la sortie du snippet au groupe du contexte actuel.';
 $_lang['babel.babellinks.showCurrent'] = 'Indicateur permettant d\'afficher ou non un lien vers une traduction de la langue actuelle.';
 $_lang['babel.babellinks.showUnpublished'] = 'Indique s\'il faut afficher les traductions non publiées.';

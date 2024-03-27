@@ -7,7 +7,8 @@ you can create, link and update translated versions of the current resource in
 different contexts.
 
 Hover the button and create, link, update and unlink the translated versions of
-the current resource.
+the current resource. You can also unlink all translations from this resource
+and create multiple translations in selectable contexts with a menu entry.
 
 ![Linked Menu](img/babel-linked-menu.png)
 
@@ -17,7 +18,39 @@ If you create a link to an existing resource, the following window is displayed.
 You must select the linked resource via the page tree on the left, by searching
 for the page title or by entering the target ID directly.
 
+If you enable 'Copy synchronized TVs to target', the synced template variables
+(TVs) referenced in the system setting `babel.syncTvs` of all linked resources
+are filled with the TV values of the current resource.
+
+If you enable 'Synchronise all translations from the target', the language links
+of the target resource are synced between the linked resources. The current
+resource is also linked to the target resource and all linked resources.
+Otherwise, only the current resource is linked to all linked resources of the
+target resource and the link to the current resource is added to the links to
+the target resource.
+
 ![Linking Window](img/babel-linking-window.png)
+
+If you create a translations of the current resource in a selected context, the following
+window is displayed.
+
+If you enable 'Synchronise all translations', the language links of the current
+resource are synced between the linked resources. The created translation is
+linked to all linked resources. Otherwise, there is just a link created between
+the current resource and the new created translation.
+
+![Create Single Window](img/babel-create-single.png)
+
+If you create multiple translations of the current resource, the following
+window is displayed. You must select the contexts into which the current
+resource is not translated and for which you would like to create a translation.
+
+If you enable 'Synchronise all translations', the language links of the current
+resource are synced between the linked resources. All created translations are
+linked to all linked resources. Otherwise, there is just a link created between
+the current resource and the new created translations.
+
+![Create Multiple Window](img/babel-create-multiple.png)
 
 ## Custom Manager Page
 
@@ -27,12 +60,13 @@ The custom manager page contains two tabs.
 
 In this tab you can manage the translated versions of a resource. The first
 columns contain information of the source resource (ID, context and pagetitle)
-and an `All` column to remove all links to the source resource with a click on
-the :fontawesome-solid-link-slash: icon. For each translatable context a grid
-column is available with two icons. The following icons are available depending
-on the link state:
+and an `All` column to create multiple translations with a click on the
+:fontawesome-solid-square-plus: icon or remove all links to the source resource
+with a click on the :fontawesome-solid-link-slash: icon. For each translatable
+context a grid column is available with two icons. The following icons are
+available depending on the link state:
 
-- :fontawesome-solid-circle-plus: to create a new resource to be linked, 
+- :fontawesome-solid-circle-plus: to create a new resource to be linked,
 - :fontawesome-solid-link: to link to this resource and its linked resources
 - :fontawesome-regular-pen-to-square: to update the linked resource
 - :fontawesome-solid-link-slash: to break the link
@@ -60,7 +94,7 @@ frontend. It uses the following snippet properties:
 | activeCls        | CSS class for the active language link.                                             | active                                 |
 | ignoreSiteStatus | Flag whether to ignore the site_status (when the site is offline)                   | 0 (No)                                 |
 | includeUnlinked  | Flag whether to show unlinked context.                                              | 0 (No)                                 |
-| resourceId       | Id of resource of which links to translations should be displayed.                  | Current resource ID                    |
+| resourceId       | ID of resource of which links to translations should be displayed.                  | Current resource ID                    |
 | restrictToGroup  | Restrict the contexts in the snippet output to the group of the current context.    | System setting `babel.restrictToGroup` |
 | showCurrent      | Flag whether to show a link to a translation of the current language.               | 0 (No)                                 |
 | showUnpublished  | Flag whether to show unpublished translations.                                      | 0 (No)                                 |
@@ -106,11 +140,12 @@ Babel uses the following system settings in the namespace `babel`:
 | babel.restrictToGroup | Restrict To Group | Restrict the contexts in the Babel button to the group of the current context.                                                          | Yes                |
 | babel.syncTvs         | Synchronized TVs  | Comma separated list of template variables (TVs) IDs to be synchronised by Babel.                                                       | -                  |
 
-The button text in the Babel button can use the following values: 
+The button text in the Babel button can use the following values:
 
 - language: the contexts are listed with the context language set in the cultureKey context setting.
 - context: the contexts are listed with the context name.
-- combination: the contexts are listed with the context name and the context language set in the cultureKey context setting.
+- combination: the contexts are listed with the context name and the context language set in the cultureKey context
+  setting.
 
 ## Permissions
 
@@ -121,3 +156,56 @@ Babel has the following permissions for manager users:
 | babel_settings | Allow a user to manage the Babel system settings the Babel custom manager page. |
 
 The permission check is not executed for sudo users.
+
+## Events
+
+Babel invokes the following events which can be used in plugins:
+
+### OnBabelDuplicate
+
+This event is invoked on duplicating the resource in a new language context. It
+uses the following parameters:
+
+| Parameter          | Description                                 |                                                                                                                   
+|--------------------|---------------------------------------------|
+| context_key        | The context key of the duplicated resource. | 
+| original_id        | The ID of the original resource.            | 
+| original_resource  | The object of the original resource.        | 
+| duplicate_id       | The ID of the duplicated resource.          | 
+| duplicate_resource | The object of the duplicated resource.      | 
+
+### OnBabelLink
+
+This event is invoked on link the resource with a target resource. It
+uses the following parameters:
+
+| Parameter         | Description                             |                                                                                                                   
+|-------------------|-----------------------------------------|
+| context_key       | The context key of the linked resource. | 
+| original_id       | The ID of the original resource.        | 
+| original_resource | The object of the original resource.    | 
+| target_id         | The ID of the linked resource.          |
+| target_resource   | The object of the linked resource.      |
+
+### OnBabelUnlink
+
+This event is invoked on unlink the resource from a target resource. It
+uses the following parameters:
+
+| Parameter         | Description                               |                                                                                                                   
+|-------------------|-------------------------------------------|
+| context_key       | The context key of the unlinked resource. | 
+| original_id       | The ID of the original resource.          | 
+| original_resource | The object of the original resource.      | 
+| target_id         | The ID of the unlinked resource.          |
+| target_resource   | The object of the unlinked resource.      |
+
+### OnBabelTVSynced
+
+This event is invoked when TVs are synced and changed. It uses the following
+parameters:
+
+| Parameter   | Description                                                                                                      |                                                                                                                   
+|-------------|------------------------------------------------------------------------------------------------------------------|
+| tv_changes  | An array of the changes in the synced TVs. Each array element contains the values tv_id, tv_value and target_id. |
+| resource_id | The ID of the resource the changes are synced from.                                                              |

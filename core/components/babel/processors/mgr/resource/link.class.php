@@ -8,11 +8,14 @@
 
 use mikrobi\Babel\Processors\ObjectUpdateProcessor;
 
-class BabelLinkResourceProcessor extends ObjectUpdateProcessor
+class BabelResourceLinkProcessor extends ObjectUpdateProcessor
 {
     public $classKey = 'modResource';
     public $objectType = 'resource';
     public $languageTopics = ['resource', 'babel:default'];
+
+    /** @var modResource $object The link source */
+    public $object;
 
     /** @var modResource $targetResource The link target */
     protected $targetResource;
@@ -43,7 +46,9 @@ class BabelLinkResourceProcessor extends ObjectUpdateProcessor
         if (empty($contextKey)) {
             return $this->modx->lexicon('babel.context_err_ns');
         }
-        $context = $this->modx->getObject('modContext', ['key' => $contextKey]);
+        $context = $this->modx->getObject('modContext', [
+            'key' => $contextKey
+        ]);
         if (!$context) {
             return $this->modx->lexicon('babel.context_err_invalid_key', [
                 'context' => $contextKey
@@ -80,7 +85,7 @@ class BabelLinkResourceProcessor extends ObjectUpdateProcessor
         }
         $linkedResources[$context] = $this->targetResource->get('id');
 
-        $syncLinkedTranslations = $this->getProperty('sync-linked-tranlations');
+        $syncLinkedTranslations = $this->getProperty('sync');
         if ($syncLinkedTranslations == 1) {
             /* Join all existing linked resources from both resources */
             $mergedResources = array_merge($targetResources, $linkedResources);
@@ -97,7 +102,7 @@ class BabelLinkResourceProcessor extends ObjectUpdateProcessor
             $this->babel->updateBabelTv($this->targetResource->get('id'), $mergeTarget);
         }
 
-        $copyTvValues = $this->getProperty('copy-tv-values');
+        $copyTvValues = $this->getProperty('copy');
         if ($copyTvValues == 1) {
             /* copy values of synchronized TVs to target resource */
             $this->babel->synchronizeTvs($this->object->get('id'));
@@ -133,4 +138,4 @@ class BabelLinkResourceProcessor extends ObjectUpdateProcessor
     }
 }
 
-return 'BabelLinkResourceProcessor';
+return 'BabelResourceLinkProcessor';

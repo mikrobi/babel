@@ -10,7 +10,7 @@
 $_lang['babel.babellinks.activeCls'] = 'Classe de CSS para a hiperligação da língua ativa.';
 $_lang['babel.babellinks.ignoreSiteStatus'] = 'Sinalizador para ignorar ou não o site_status (quando o site estiver off-line)';
 $_lang['babel.babellinks.includeUnlinked'] = 'Indicar se deseja apresentar contextos sem associação.';
-$_lang['babel.babellinks.resourceId'] = 'Id da página (recurso) para a qual as hiperligações das traduções devam ser apresentadas.';
+$_lang['babel.babellinks.resourceId'] = 'ID da página (recurso) para a qual as hiperligações das traduções devam ser apresentadas.';
 $_lang['babel.babellinks.restrictToGroup'] = 'Restringir os contextos na saída do snippet ao grupo do contexto atual.';
 $_lang['babel.babellinks.showCurrent'] = 'Indicar se deseja apresentar uma hiperligação para uma tradução do idioma atual.';
 $_lang['babel.babellinks.showUnpublished'] = 'Indicar se deseja apresentar traduções não publicadas.';

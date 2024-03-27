@@ -10,7 +10,7 @@
 $_lang['babel.babellinks.activeCls'] = 'Clasa CSS pentru legătura activă către resursele traduse.';
 $_lang['babel.babellinks.ignoreSiteStatus'] = 'Semnalizează dacă se ignoră statusul site-ului (atunci când site-ul este offline)';
 $_lang['babel.babellinks.includeUnlinked'] = 'Semnalizează dacă se afișează sau nu contextul fără legătură.';
-$_lang['babel.babellinks.resourceId'] = 'Id-ul resursei de afișat.';
+$_lang['babel.babellinks.resourceId'] = 'ID-ul resursei de afișat.';
 $_lang['babel.babellinks.restrictToGroup'] = 'Restrânge contextele din extrasul de fragment la grupul contextului curent.';
 $_lang['babel.babellinks.showCurrent'] = 'Afișează o legătură către limba curentă.';
 $_lang['babel.babellinks.showUnpublished'] = 'Afișează traducerile nepublicate.';

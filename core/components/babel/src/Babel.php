@@ -67,7 +67,7 @@ class Babel
      * The version
      * @var string $version
      */
-    public $version = '3.2.0';
+    public $version = '3.3.0';
 
     /**
      * The class config
@@ -305,8 +305,10 @@ class Babel
             return;
         }
 
+        $tvChanges = [];
         foreach ($syncTvs as $tvId) {
             /* go through each TV which should be synchronized */
+            /** @var modTemplateVar $tv */
             $tv = $this->modx->getObject('modTemplateVar', $tvId);
             if (!$tv) {
                 continue;
@@ -318,9 +320,27 @@ class Babel
                     /* don't synchronize resource with itself */
                     continue;
                 }
-                $tv->setValue($linkedResourceId, $tvValue);
+                $tvValueLinkedResource = $tv->getValue($linkedResourceId);
+                if ($tvValueLinkedResource !== $tvValue) {
+                    /* update only changed TVs */
+                    $tv->setValue($linkedResourceId, $tvValue);
+                    /* collect the changes */
+                    $tvChanges[] = [
+                        'tvId' => $tvId,
+                        'tvValue' => $tvValue,
+                        'linkedId' => $linkedResourceId
+                    ];
+                }
             }
             $tv->save();
+        }
+
+        /* if tv changes are collected trigger the OnBabelTVSynced event */
+        if (!empty($tvChanges)) {
+            $this->modx->invokeEvent('OnBabelTVSynced', [
+                'tvChanges' => $tvChanges,
+                'resourceId' => $resourceId
+            ]);
         }
 
         $this->modx->cacheManager->refresh();
@@ -388,15 +408,6 @@ class Babel
                 $newTemplateVarResource->set('tmplvarid', $oldTemplateVarResource->get('tmplvarid'));
                 $newTemplateVarResource->set('value', $oldTemplateVarResource->get('value'));
                 $newTemplateVarResource->save();
-            }
-
-            /* set parent of duplicate as a folder */
-            if ($newParentId) {
-                $newParent = $this->modx->getObject('modResource', $newParentId);
-                if ($newParent) {
-                    $newParent->set('isfolder', 1);
-                    $newParent->save();
-                }
             }
 
             /* invoke OnDocFormSave event */
@@ -557,8 +568,19 @@ class Babel
              * -> search for the context key of the specified resource id */
             $contextKey = array_search($resourceId, $linkedResources);
             /* sanity check, is the contextKey really a context in babel's settings? */
-            if (array_key_exists($contextKey, $this->contextKeyToGroup)) {
-                unset($linkedResources[$contextKey]);
+            $changed = false;
+            if ($this->getOption('restrictToGroup')) {
+                if (array_key_exists($contextKey, $this->contextKeyToGroup)) {
+                    unset($linkedResources[$contextKey]);
+                    $changed = true;
+                }
+            } else {
+                if (array_key_exists($contextKey, $this->getOption('contexts'))) {
+                    unset($linkedResources[$contextKey]);
+                    $changed = true;
+                }
+            }
+            if ($changed) {
                 $newValue = $this->encodeTranslationLinks($linkedResources);
                 $templateVarResource->set('value', $newValue);
                 $templateVarResource->save();
@@ -627,58 +649,6 @@ class Babel
             "value" => $cultureKey
         ]);
         return (($ctxSetting) ? $ctxSetting->get("context_key") : false);
-    }
-
-    /**
-     * Gets a Chunk and caches it; also falls back to file-based templates
-     * for easier debugging.
-     *
-     * @access public
-     * @param string $name The name of the Chunk
-     * @param array $properties The properties for the Chunk
-     * @return string The processed content of the Chunk
-     */
-    public function getChunk($name, array $properties = [])
-    {
-        if (!isset($this->chunks[$name])) {
-            $chunk = $this->modx->getObject('modChunk', ['name' => $name]);
-            if (empty($chunk)) {
-                $chunk = $this->_getTplChunk($name, $this->getOption('chunkSuffix'));
-                if (!$chunk) {
-                    return false;
-                }
-            }
-            $this->chunks[$name] = $chunk->getContent();
-        } else {
-            $o = $this->chunks[$name];
-            $chunk = $this->modx->newObject('modChunk');
-            $chunk->setContent($o);
-        }
-        $chunk->setCacheable(false);
-        return $chunk->process($properties);
-    }
-
-    /**
-     * Returns a modChunk object from a template file.
-     *
-     * @access private
-     * @param string $name The name of the Chunk. Will parse to name.chunk.tpl by default.
-     * @param string $suffix The suffix to add to the chunk filename.
-     * @return modChunk/boolean Returns the modChunk object if found, otherwise
-     * false.
-     */
-    private function _getTplChunk($name, $suffix = '.chunk.tpl')
-    {
-        $chunk = false;
-        $f = $this->getOption('chunksPath') . strtolower($name) . $suffix;
-        if (file_exists($f)) {
-            $o = file_get_contents($f);
-            /** @var modChunk $chunk */
-            $chunk = $this->modx->newObject('modChunk');
-            $chunk->set('name', $name);
-            $chunk->setContent($o);
-        }
-        return $chunk;
     }
 
     /**

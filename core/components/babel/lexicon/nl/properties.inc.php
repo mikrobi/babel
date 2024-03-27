@@ -10,7 +10,7 @@
 $_lang['babel.babellinks.activeCls'] = 'CSS class voor de actieve taal link.';
 $_lang['babel.babellinks.ignoreSiteStatus'] = 'Vlag of de site_status moet worden genegeerd (als de site offline is)';
 $_lang['babel.babellinks.includeUnlinked'] = 'Vlag of niet-gelinkte context moet worden weergegeven.';
-$_lang['babel.babellinks.resourceId'] = 'Id van resource waarvan link naar vertaling moeten worden weergegeven.';
+$_lang['babel.babellinks.resourceId'] = 'ID van resource waarvan link naar vertaling moeten worden weergegeven.';
 $_lang['babel.babellinks.restrictToGroup'] = "Beperk de contexten in de knipseluitvoer tot de groep van de huidige context.";
 $_lang['babel.babellinks.showCurrent'] = 'Wel of niet tonen van link naar vertaling van de huidige taal.';
 $_lang['babel.babellinks.showUnpublished'] = 'Wel of niet tonen van ongepubliceerde vertalingen.';

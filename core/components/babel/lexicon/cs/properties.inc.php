@@ -10,7 +10,7 @@
 $_lang['babel.babellinks.activeCls'] = 'CSS třída pro aktivní jazykový odkaz.';
 $_lang['babel.babellinks.ignoreSiteStatus'] = 'Příznak, zda ignorovat site_status (když je web offline)';
 $_lang['babel.babellinks.includeUnlinked'] = 'Příznak, zda se má zobrazit nepropojený kontext.';
-$_lang['babel.babellinks.resourceId'] = 'Id dokumentu jehož překladové odkazy mají být zobrazeny.';
+$_lang['babel.babellinks.resourceId'] = 'ID dokumentu jehož překladové odkazy mají být zobrazeny.';
 $_lang['babel.babellinks.restrictToGroup'] = 'Omezit kontexty v tlačítku Babel na skupinu aktuálního kontextu.';
 $_lang['babel.babellinks.showCurrent'] = 'Má se zobrazovat odkaz na aktuální jazykovou mutaci.';
 $_lang['babel.babellinks.showUnpublished'] = 'Příznak, zda-li se má zobrazovat i nepublikovaný překlad.';

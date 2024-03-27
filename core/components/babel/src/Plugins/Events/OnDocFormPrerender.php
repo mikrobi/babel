@@ -34,6 +34,8 @@ class OnDocFormPrerender extends Plugin
         $assetsUrl = $this->babel->getOption('assetsUrl');
         $jsUrl = $this->babel->getOption('jsUrl') . 'mgr/';
         $jsSourceUrl = $assetsUrl . '../../../source/js/mgr/';
+        $cssUrl = $this->babel->getOption('cssUrl') . 'mgr/';
+        $cssSourceUrl = $assetsUrl . '../../../source/css/mgr/';
 
         $resource = &$this->scriptProperties['resource'];
         $linkedResources = $this->babel->getLinkedResources($resource->get('id'));
@@ -51,8 +53,10 @@ class OnDocFormPrerender extends Plugin
 
         $this->modx->controller->addLexiconTopic('babel:default');
         if ($this->babel->getOption('debug') && ($this->babel->getOption('assetsUrl') != MODX_ASSETS_URL . 'components/babel/')) {
+            $this->modx->controller->addCss($cssSourceUrl . 'babel.css?v=v' . $this->babel->version);
             $this->modx->controller->addJavascript($jsSourceUrl . 'babel.js?v=v' . $this->babel->version);
         } else {
+            $this->modx->controller->addCss($cssUrl . 'resourcebutton.min.css?v=v' . $this->babel->version);
             $this->modx->controller->addJavascript($jsUrl . 'resourcebutton.min.js?v=v' . $this->babel->version);
         }
         $this->modx->controller->addHtml('<script type="text/javascript">

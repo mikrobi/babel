@@ -8,7 +8,7 @@ Ext.extend(babel, Ext.Component, {
         var _this = this;
         var actionButtons = Ext.getCmp('modx-action-buttons');
         if (actionButtons) {
-            var menu = [], i = 0;
+            var menu = [], i = 0, j = 0;
             for (var ctx in menus) {
                 if (ctx === this.config.context_key) {
                     continue;
@@ -17,21 +17,21 @@ Ext.extend(babel, Ext.Component, {
                     menus[ctx]['resourceUrl'] !== '' &&
                     menus[ctx]['resourceUrl'] !== '#') {
                     menu.push({
-                        text: '<i class="x-menu-item-icon x-buttonmenu-item-icon icon icon-globe"></i>' + menus[ctx]['displayText'],
+                        text: '<i class="x-menu-item-icon x-buttonmenu-babel-item-icon icon icon-globe"></i>' + menus[ctx]['displayText'],
                         menu: {
                             items: [{
-                                text: '<i class="x-menu-item-icon x-buttonmenu-item-icon icon icon-pencil-square-o"></i>' + _('babel.open') + ' <b>' + menus[ctx]['resourceTitle'] + ' (' + menus[ctx]['resourceId'] + ')</b>',
+                                text: '<i class="x-menu-item-icon x-buttonmenu-babel-item-icon icon icon-pencil-square-o"></i>' + _('babel.open') + ' <b>' + menus[ctx]['resourceTitle'] + ' (' + menus[ctx]['resourceId'] + ')</b>',
                                 resourceUrl: menus[ctx]['resourceUrl'],
                                 resourceId: menus[ctx]['resourceId'],
                                 handler: function () {
                                     MODx.loadPage('resource/update', 'id=' + this.resourceId);
                                 }
                             }, '-', {
-                                text: '<i class="x-menu-item-icon x-buttonmenu-item-icon icon icon-chain-broken"></i>' + _('babel.unlink') + ' <b>' + menus[ctx]['resourceTitle'] + ' (' + menus[ctx]['resourceId'] + ')</b>',
+                                text: '<i class="x-menu-item-icon x-buttonmenu-babel-item-icon icon icon-chain-broken"></i>' + _('babel.unlink') + ' <b>' + menus[ctx]['resourceTitle'] + ' (' + menus[ctx]['resourceId'] + ')</b>',
                                 contextKey: ctx,
                                 target: menus[ctx]['resourceId'],
                                 handler: function () {
-                                    _this.unlinkTranslation(this.contextKey, this.target);
+                                    _this.unlinkTranslation(this.contextKey, 0, this.target);
                                 }
                             }]
                         }
@@ -39,17 +39,17 @@ Ext.extend(babel, Ext.Component, {
                     i++;
                 } else {
                     menu.push({
-                        text: '<i class="x-menu-item-icon x-buttonmenu-item-icon icon icon-globe"></i>' + menus[ctx]['displayText'],
+                        text: '<i class="x-menu-item-icon x-buttonmenu-babel-item-icon icon icon-globe"></i>' + menus[ctx]['displayText'],
                         handler: Ext.emptyFn,
                         menu: {
                             items: [{
-                                text: '<i class="x-menu-item-icon x-buttonmenu-item-icon icon icon-plus-circle"></i>' + _('babel.create_translation'),
+                                text: '<i class="x-menu-item-icon x-buttonmenu-babel-item-icon icon icon-plus-circle"></i>' + _('babel.create_translation'),
                                 contextKey: ctx,
                                 handler: function () {
                                     _this.createTranslation(this.contextKey);
                                 }
                             }, '-', {
-                                text: '<i class="x-menu-item-icon x-buttonmenu-item-icon icon icon-link"></i>' + _('babel.link_translation'),
+                                text: '<i class="x-menu-item-icon x-buttonmenu-babel-item-icon icon icon-link"></i>' + _('babel.link_translation'),
                                 contextKey: ctx,
                                 handler: function () {
                                     _this.linkTranslation(this.contextKey);
@@ -57,20 +57,32 @@ Ext.extend(babel, Ext.Component, {
                             }]
                         }
                     });
+                    j++;
                 }
             }
             if (i > 0) {
                 menu.push('-');
                 menu.push({
-                    text: '<i class="x-menu-item-icon x-buttonmenu-item-icon icon icon-chain-broken"></i>' + _('babel.unlink_all_translations'),
+                    text: '<i class="x-menu-item-icon x-buttonmenu-babel-item-icon icon icon-chain-broken"></i>' + _('babel.unlink_all_translations'),
                     handler: function () {
                         _this.unlinkTranslation();
                     }
                 });
             }
+            if (j > 0) {
+                menu.push('-');
+                menu.push({
+                    text: '<i class="x-menu-item-icon x-buttonmenu-babel-item-icon icon icon-plus-square"></i>' + _('babel.create_multiple_translations'),
+                    contextKey: ctx,
+                    target: menus[ctx]['resourceId'],
+                    handler: function () {
+                        _this.createTranslation();
+                    }
+                });
+            }
             menu.push('-');
             menu.push({
-                text: '<i class="x-menu-item-icon x-buttonmenu-item-icon icon icon-lightbulb-o"></i>' + _('babel.about'),
+                text: '<i class="x-menu-item-icon x-buttonmenu-babel-item-icon icon icon-lightbulb-o"></i>' + _('babel.about'),
                 handler: function () {
                     _this.aboutWindow();
                 },
@@ -100,12 +112,14 @@ Ext.extend(babel, Ext.Component, {
             actionButtons.doLayout();
         }
     },
-    linkTranslation: function (ctx) {
-        var id = MODx.request.id;
+    linkTranslation: function (ctx, id, grid) {
+        var _this = this;
+        id = id || MODx.request.id;
         var window = MODx.load({
             xtype: 'modx-window',
             title: _('babel.link_translation'),
-            url: this.config.connectorUrl,
+            closeAction: 'close',
+            url: _this.config.connectorUrl,
             baseParams: {
                 action: 'mgr/resource/link',
                 context: ctx,
@@ -118,17 +132,21 @@ Ext.extend(babel, Ext.Component, {
                             title: _('success'),
                             message: r.message || _('save_successful')
                         });
-                        this.getMenu(r.a.result.object.menu);
-                        this.hideMask();
+                        if (grid) {
+                            grid.refresh();
+                        } else {
+                            _this.getMenu(r.a.result.object.menu);
+                        }
+                        _this.hideMask();
                     },
                     scope: this
                 },
                 failure: {
-                    fn: this.hideMask,
+                    fn: _this.hideMask,
                     scope: this
                 },
                 beforeSubmit: {
-                    fn: this.loadMask,
+                    fn: _this.loadMask,
                     scope: this
                 }
             },
@@ -187,7 +205,7 @@ Ext.extend(babel, Ext.Component, {
                 fieldLabel: _('babel.target_pagetitle'),
                 name: 'page_id',
                 anchor: '100%',
-                url: this.config.connectorUrl,
+                url: _this.config.connectorUrl,
                 baseParams: {
                     action: 'mgr/resource/getlist',
                     context: ctx,
@@ -239,28 +257,31 @@ Ext.extend(babel, Ext.Component, {
                 }
             }, {
                 xtype: 'xcheckbox',
+                hideLabel: true,
                 boxLabel: _('babel.copy_tv_values'),
-                name: 'copy-tv-values'
+                name: 'copy'
             }, {
                 xtype: 'xcheckbox',
-                boxLabel: _('babel.sync_linked_tranlations'),
-                name: 'sync-linked-tranlations',
+                hideLabel: true,
+                boxLabel: _('babel.sync_linked_tranlations_target'),
+                name: 'sync',
                 checked: true
             }]
         });
         window.show();
     },
-    unlinkTranslation: function (ctx, target) {
-        this.loadMask();
+    unlinkTranslation: function (ctx, id, target, grid) {
         ctx = ctx || '';
         target = parseInt(target) || 0;
-        var id = MODx.request.id;
+        id = id || MODx.request.id;
+        var _this = this;
         var text = (target === 0) ?
             _('babel.unlink_all_translations_confirm') :
             _('babel.unlink_translation_confirm', {
                 context: ctx,
                 id: id
             });
+        _this.loadMask();
         return MODx.msg.confirm({
             title: _('confirm'),
             text: text,
@@ -278,48 +299,317 @@ Ext.extend(babel, Ext.Component, {
                             title: _('success'),
                             message: r.message || _('save_successful')
                         });
-                        this.getMenu(r.object.menu);
-                        this.hideMask();
+                        if (grid) {
+                            grid.refresh();
+                        } else {
+                            _this.getMenu(r.object.menu);
+                        }
+                        _this.hideMask();
                     },
                     scope: this
                 },
                 failure: {
-                    fn: this.hideMask,
+                    fn: _this.hideMask,
                     scope: this
                 },
                 cancel: {
-                    fn: this.hideMask,
+                    fn: _this.hideMask,
                     scope: this
                 }
             }
         });
     },
-    createTranslation: function (ctx) {
+    createTranslation: function (ctx, id = 0) {
+        var _this = this;
+        id = id || MODx.request.id;
         this.loadMask();
-        var id = MODx.request.id;
-        return MODx.msg.confirm({
-            title: _('confirm'),
-            text: _('babel.create_translation_confirm', {context: ctx, id: id}),
+        if (ctx) {
+            var window = MODx.load({
+                xtype: 'modx-window',
+                title: _('babel.create_translation'),
+                closeAction: 'close',
+                buttons: [{
+                    text: _('close'),
+                    handler: function () {
+                        window.close();
+                    },
+                    scope: this,
+                }, {
+                    text: _('create'),
+                    cls: 'primary-button',
+                    handler: function () {
+                        var form = window.fp.getForm();
+                        var values = form.getValues();
+                        MODx.Ajax.request({
+                            url: this.config.connectorUrl,
+                            params: {
+                                action: 'mgr/resource/duplicate',
+                                context_key: ctx,
+                                id: id,
+                                copy: values.copy,
+                                sync: values.sync,
+                            },
+                            listeners: {
+                                success: {
+                                    fn: function (r) {
+                                        _this.hideMask();
+                                        MODx.loadPage('resource/update', 'id=' + r.object.id);
+                                    },
+                                    scope: this
+                                }
+                            }
+                        });
+                    },
+                    scope: this,
+                }],
+                listeners: {
+                    beforeSubmit: {
+                        fn: _this.loadMask,
+                        scope: this
+                    },
+                    close: {
+                        fn: _this.hideMask,
+                        scope: this
+                    },
+                },
+                fields: [{
+                    style: 'padding-top: 15px',
+                    html: '<p>' + _('babel.create_translation_confirm', {context: ctx, id: id}) + '</p>'
+                }, {
+                    xtype: 'xcheckbox',
+                    hideLabel: true,
+                    boxLabel: _('babel.sync_linked_tranlations'),
+                    name: 'sync',
+                    checked: true
+                }]
+            });
+            window.show();
+        } else {
+            if (Babel.config.hasOwnProperty('menu') && Babel.config.hasOwnProperty('context_key')) {
+                _this.babelMenu = Babel.config.menu;
+                _this.babelContext = Babel.config.context_key;
+                _this.createTranslations(ctx, id);
+            } else {
+                MODx.Ajax.request({
+                    url: _this.config.connectorUrl,
+                    params: {
+                        action: 'mgr/resource/getmenu',
+                        id: id,
+                    },
+                    listeners: {
+                        success: {
+                            fn: function (r) {
+                                if (r.object.menu && r.object.context_key) {
+                                    _this.babelMenu = r.object.menu;
+                                    _this.babelContext = r.object.context_key;
+                                    _this.createTranslations(ctx, id);
+                                }
+                            },
+                            scope: this
+                        }
+                    }
+                });
+            }
+        }
+    },
+    createTranslations: function (ctx, id) {
+        var _this = this;
+        var checkboxes = [];
+        Ext.each(Babel.config.contexts, function (ctx) {
+            if (ctx !== _this.babelContext &&
+                _this.babelMenu.hasOwnProperty(ctx) &&
+                (_this.babelMenu[ctx]['resourceUrl'] === 'undefined' ||
+                    _this.babelMenu[ctx]['resourceUrl'] === '' ||
+                    _this.babelMenu[ctx]['resourceUrl'] === '#')) {
+                checkboxes.push({
+                    boxLabel: _this.babelMenu[ctx]['displayText'],
+                    name: 'contexts',
+                    inputValue: ctx
+                });
+            }
+        });
+        if (checkboxes.length) {
+            var window = MODx.load({
+                xtype: 'modx-window',
+                title: _('babel.create_multiple_translations'),
+                closeAction: 'close',
+                buttons: [{
+                    text: _('close'),
+                    handler: function () {
+                        window.close();
+                    },
+                    scope: this,
+                }, {
+                    text: _('create'),
+                    cls: 'primary-button',
+                    handler: function () {
+                        var form = window.fp.getForm();
+                        var values = form.getValues();
+                        window.close();
+                        _this.addTranslation(id, values);
+                    },
+                    scope: this,
+                }],
+                listeners: {
+                    beforeSubmit: {
+                        fn: _this.loadMask,
+                        scope: this
+                    },
+                    close: {
+                        fn: _this.hideMask,
+                        scope: this
+                    },
+                    afterrender: function () {
+                        var checkAll = Ext.getCmp('babel-all-contexts');
+                        if (checkAll) {
+                            checkAll.setValue(1);
+                        }
+                    }
+                },
+                fields: [{
+                    xtype: 'fieldset',
+                    cls: 'x-fieldset-check-all',
+                    title: _('babel.contexts'),
+                    defaults: {
+                        hideLabel: true,
+                    },
+                    items: [{
+                        xtype: 'xcheckbox',
+                        id: 'babel-all-contexts',
+                        boxLabel: _('babel.all'),
+                        itemCls: 'x-form-item-check-all',
+                        submitValue: false,
+                        listeners: {
+                            check: {
+                                fn: function (el) {
+                                    var value = [];
+                                    var babelContexts = Ext.getCmp('babel-contexts');
+                                    Ext.each(Babel.config.contexts, function (ctx) {
+                                        if (ctx !== _this.babelContext &&
+                                            _this.babelMenu.hasOwnProperty(ctx)
+                                        ) {
+                                            value.push(el.getValue());
+                                        }
+                                    });
+                                    babelContexts.setValue(value);
+                                },
+                                scope: this
+                            }
+                        }
+                    }, {
+                        xtype: 'checkboxgroup',
+                        id: 'babel-contexts',
+                        columns: 3,
+                        anchor: '100%',
+                        style: 'margin-top: -10px',
+                        items: checkboxes
+                    }]
+                }, {
+                    xtype: 'xcheckbox',
+                    hideLabel: true,
+                    boxLabel: _('babel.copy_tv_values'),
+                    name: 'copy'
+                }, {
+                    xtype: 'xcheckbox',
+                    hideLabel: true,
+                    boxLabel: _('babel.sync_linked_tranlations'),
+                    name: 'sync',
+                    checked: true
+                }]
+            });
+            window.show();
+        } else {
+            MODx.msg.alert('', _('babel.create_multiple_translations_err_no_contexts'));
+            _this.hideMask();
+        }
+    },
+    addTranslation: function (id, values) {
+        var _this = this;
+
+        this.contexts = (values.hasOwnProperty('contexts')) ? (Array.isArray(values.contexts) ? values.contexts : [values.contexts]) : [];
+        delete values.contexts;
+
+        var topic = '/babelduplicate/';
+        this.console = MODx.load({
+            xtype: 'modx-console',
+            register: 'mgr',
+            topic: topic,
+            show_filename: false,
+            clear: true,
+            listeners: {
+                complete: {
+                    fn: function () {
+                        var id = MODx.request.id;
+                        MODx.msg.status({
+                            title: _('success'),
+                            message: _('babel.create_multiple_translations_finished')
+                        });
+                        MODx.Ajax.request({
+                            url: _this.config.connectorUrl,
+                            params: {
+                                action: 'mgr/resource/getmenu',
+                                id: id,
+                            },
+                            listeners: {
+                                success: {
+                                    fn: function (r) {
+                                        _this.hideMask();
+                                        if (r.object.menu) {
+                                            _this.getMenu(r.object.menu)
+                                        }
+                                        if (MODx.request.a === 'resource/update') {
+                                            MODx.loadPage('resource/update', 'id=' + MODx.request.id);
+                                        }
+                                    },
+                                    scope: this
+                                }
+                            }
+                        });
+                        var resourceTree = Ext.getCmp('modx-resource-tree');
+                        if (resourceTree && resourceTree.rendered) {
+                            resourceTree.refresh();
+                        }
+                        _this.hideMask();
+                    },
+                    scope: this
+                }
+            }
+        });
+        this.console.show(Ext.getBody());
+
+        _this.requestTranslation(0, topic, id, values);
+    },
+    requestTranslation: function (idx, topic, id, values) {
+        var _this = this;
+        MODx.Ajax.request({
             url: this.config.connectorUrl,
             params: {
                 action: 'mgr/resource/duplicate',
-                context_key: ctx,
-                id: id
+                register: 'mgr',
+                topic: topic,
+                id: id,
+                context_key: _this.contexts[idx],
+                last: idx === _this.contexts.length - 1,
+                copy: values.copy,
+                sync: values.sync,
             },
             listeners: {
                 success: {
-                    fn: function (r) {
-                        this.hideMask();
-                        MODx.loadPage('resource/update', 'id=' + r.object.id);
+                    fn: function () {
+                        idx = idx + 1;
+                        if (idx < _this.contexts.length) {
+                            _this.requestTranslation(idx, topic, id, values);
+                        }
                     },
                     scope: this
                 },
                 failure: {
-                    fn: this.hideMask,
-                    scope: this
-                },
-                cancel: {
-                    fn: this.hideMask,
+                    fn: function () {
+                        idx = idx + 1;
+                        if (idx < _this.contexts.length) {
+                            _this.requestTranslation(idx, topic, id, values);
+                        }
+                    },
                     scope: this
                 }
             }

@@ -8,11 +8,14 @@
 
 use mikrobi\Babel\Processors\ObjectUpdateProcessor;
 
-class BabelUnlinkResourceProcessor extends ObjectUpdateProcessor
+class BabelResourceUnlinkProcessor extends ObjectUpdateProcessor
 {
     public $classKey = 'modResource';
     public $objectType = 'resource';
     public $languageTopics = ['resource', 'babel:default'];
+
+    /** @var modResource $object */
+    public $object;
 
     /** @var modResource $targetResource The link target */
     protected $targetResource;
@@ -123,4 +126,4 @@ class BabelUnlinkResourceProcessor extends ObjectUpdateProcessor
     }
 }
 
-return 'BabelUnlinkResourceProcessor';
+return 'BabelResourceUnlinkProcessor';

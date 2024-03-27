@@ -76,7 +76,32 @@ const sassMgr = function () {
         .pipe(footer('\n' + banner, {pkg: pkg}))
         .pipe(gulp.dest('assets/components/babel/css/mgr/'))
 };
-gulp.task('sass', gulp.series(sassMgr));
+const sassResourcebutton = function () {
+    return gulp.src([
+        'source/sass/mgr/resourcebutton.scss',
+    ])
+        .pipe(sass().on('error', sass.logError))
+        .pipe(postcss([
+            autoprefixer()
+        ]))
+        .pipe(gulp.dest('source/css/mgr/'))
+        .pipe(concat('resourcebutton.css'))
+        .pipe(postcss([
+            cssnano({
+                preset: ['default', {
+                    discardComments: {
+                        removeAll: true
+                    }
+                }]
+            })
+        ]))
+        .pipe(rename({
+            suffix: '.min'
+        }))
+        .pipe(footer('\n' + banner, {pkg: pkg}))
+        .pipe(gulp.dest('assets/components/babel/css/mgr/'))
+};
+gulp.task('sass', gulp.series(sassMgr, sassResourcebutton));
 
 const bumpCopyright = function () {
     return gulp.src([
