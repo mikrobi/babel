@@ -3,6 +3,8 @@ docs_dir: docs
 site_dir: _build/site
 edit_uri: tree/master/docs
 
+remote_name: upstream
+
 repo_name: 'mikrobi/babel'
 repo_url: https://github.com/mikrobi/babel
 
