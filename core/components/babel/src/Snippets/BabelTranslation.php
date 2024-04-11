@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BabelTranslation Snippet
  *
@@ -26,7 +27,8 @@ class BabelTranslation extends Snippet
             'resourceId::int' => (!empty($this->modx->resource) && is_object($this->modx->resource)) ? $this->modx->resource->get('id') : 0,
             'contextKey' => '',
             'cultureKey' => $this->modx->getOption('cultureKey'),
-            'showUnpublished::bool' => false
+            'showUnpublished::bool' => false,
+            'toPlaceholder' => ''
         ];
     }
 
@@ -53,7 +55,7 @@ class BabelTranslation extends Snippet
 
         /* determine ids of translated resource */
         $output = [];
-        foreach($resourceIds as $resourceId) {
+        foreach ($resourceIds as $resourceId) {
             $linkedResource = $this->babel->getLinkedResources($resourceId);
             if (isset($linkedResource[$contextKey])) {
                 /** @var modResource $resource */
@@ -63,6 +65,14 @@ class BabelTranslation extends Snippet
                 }
             }
         }
-        return implode(',', $output);
+
+        $result = implode(',', $output);
+
+        if (!empty($this->getProperty('toPlaceholder'))) {
+            $this->modx->setPlaceholder($this->getProperty('toPlaceholder'), $result);
+            return '';
+        }
+
+        return $result;
     }
 }

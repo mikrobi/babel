@@ -92,6 +92,10 @@
               "name": "showUnpublished",
               "type": "combo-boolean",
               "value": "0"
+            },
+            {
+              "name": "toPlaceholder",
+              "value": ""
             }
           ]
         }
