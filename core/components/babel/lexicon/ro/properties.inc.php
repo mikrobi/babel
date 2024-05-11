@@ -22,3 +22,4 @@ $_lang['babel.babeltranslation.contextKey'] = 'Cheia de context a resursei de tr
 $_lang['babel.babeltranslation.cultureKey'] = 'Cheia de cultură în care ar trebui să fie determinată resursa tradusă. Se utilizează numai în cazul în care nu s-a specificat contextKey. În cazul în care ambele sunt omise, se utilizează cultureKey setată în prezent.';
 $_lang['babel.babeltranslation.resourceId'] = 'IDul resursei de tradus.';
 $_lang['babel.babeltranslation.showUnpublished'] = 'Afișează traducerile nepublicate.';
+$_lang['babel.babeltranslation.toPlaceholder'] = 'Semnalizează dacă trebuie să se arunce ieșirea în numele de placeholder dat.';

@@ -20,3 +20,4 @@ $_lang['babel.babeltranslation.contextKey'] = 'Schlüssel des Kontexts, in der d
 $_lang['babel.babeltranslation.cultureKey'] = 'Sprach-Schlüssel, mit dem die übersetzte Ressource ermittelt werden soll. Wird nur verwendet, wenn Kontext Schlüssel nicht angegeben wurde. Wenn beide Schlüssel weggelassen werden, wird der systemweit eingestellte cultureKey verwendet.';
 $_lang['babel.babeltranslation.resourceId'] = 'ID der Ressource, von der eine Übersetzung erstellt werden soll.';
 $_lang['babel.babeltranslation.showUnpublished'] = 'Gibt an, ob unveröffentlichte Übersetzungen angezeigt werden sollen.';
+$_lang['babel.babeltranslation.toPlaceholder'] = 'Gibt an, ob das Ergebnis im Platzhalter mit dem angegebenen Namen ausgegeben werden soll.';

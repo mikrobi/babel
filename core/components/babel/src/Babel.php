@@ -67,7 +67,7 @@ class Babel
      * The version
      * @var string $version
      */
-    public $version = '3.3.0';
+    public $version = '3.3.1';
 
     /**
      * The class config

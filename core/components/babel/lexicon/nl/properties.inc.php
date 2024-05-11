@@ -22,3 +22,4 @@ $_lang['babel.babeltranslation.contextKey'] = 'Context key waarin vertaalde bron
 $_lang['babel.babeltranslation.cultureKey'] = 'Sleutel van cultuur waarin vertaalde bron moet worden bepaald. Wordt alleen gebruikt als contextKey niet is opgegeven. Als beide weggelaten het knipsel de huidige ingestelde cultureKey.';
 $_lang['babel.babeltranslation.resourceId'] = 'ID van resource waarvan een vertaalde resource dient te worden bepaald.';
 $_lang['babel.babeltranslation.showUnpublished'] = 'Wel of niet tonen van ongepubliceerde vertalingen.';
+$_lang['babel.babeltranslation.toPlaceholder'] = 'Vlag of de uitvoer in de naam van de opgegeven plaatshouder moet worden gedumpt.';
