@@ -22,3 +22,4 @@ $_lang['babel.babeltranslation.contextKey'] = 'Klucz kontekstu, dla którego zwr
 $_lang['babel.babeltranslation.cultureKey'] = 'Klucz kultury, w której powinien zostać określony przetłumaczony zasób. Używany tylko w przypadku, gdy contextKey nie został określony. Jeśli oba pominięto, snippet aktualnie ustawiony cultureKey.';
 $_lang['babel.babeltranslation.resourceId'] = 'ID zasobu, dla którego zwrócić ID przetłumaczonego zasobu.';
 $_lang['babel.babeltranslation.showUnpublished'] = 'Pokazuj nieopublikowane tłumaczenia.';
+$_lang['babel.babeltranslation.toPlaceholder'] = 'Flaga określająca, czy dane wyjściowe mają być zrzucane do nazwy podanego symbolu zastępczego.';

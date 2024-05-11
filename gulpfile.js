@@ -21,10 +21,6 @@ const banner = '/*!\n' +
     ' */';
 const year = new Date().getFullYear();
 
-const mgrScripts = [
-    'source/js/mgr/babel.js',
-];
-
 const scriptsMgr = function () {
     return gulp.src([
         'source/js/mgr/babel.js',
@@ -53,7 +49,7 @@ gulp.task('scripts', gulp.series(scriptsMgr, scriptsResourcebutton));
 
 const sassMgr = function () {
     return gulp.src([
-        'source/sass/mgr/babel.scss',
+        'source/sass/mgr/babel.scss'
     ])
         .pipe(sass().on('error', sass.logError))
         .pipe(postcss([

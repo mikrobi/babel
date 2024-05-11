@@ -20,3 +20,4 @@ $_lang['babel.babeltranslation.contextKey'] = 'Key of context in which translate
 $_lang['babel.babeltranslation.cultureKey'] = 'Key of culture in which translated resource should be determined. Used only in case contextKey was not specified. If both omitted the snippet the currently set cultureKey.';
 $_lang['babel.babeltranslation.resourceId'] = 'ID of resource of which a translated resource should be determined.';
 $_lang['babel.babeltranslation.showUnpublished'] = 'Flag whether to show unpublished translations.';
+$_lang['babel.babeltranslation.toPlaceholder'] = 'Flag whether to dump the output into the given placeholder\'s name.';

@@ -20,3 +20,4 @@ $_lang['babel.babeltranslation.contextKey'] = 'Chiave del contesto in cui la ris
 $_lang['babel.babeltranslation.cultureKey'] = 'Chiave della cultura in cui deve essere determinata la risorsa tradotta. Utilizzato solo nel caso in cui contextKey non sia stato specificato. Se entrambi sono stati omessi, lo snippet è il cultureKey attualmente impostato.';
 $_lang['babel.babeltranslation.resourceId'] = 'ID di una risorsa di cui una risorsa tradotta dovrebbe essere determinata.';
 $_lang['babel.babeltranslation.showUnpublished'] = 'Flag se mostrare le traduzioni non pubblicate.';
+$_lang['babel.babeltranslation.toPlaceholder'] = 'Flag che indica se scaricare l\'output nel nome del segnaposto dato.';

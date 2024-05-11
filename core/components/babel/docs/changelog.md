@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.3.2] - 2024-05-11
+
+### Fixed
+
+- Fix for a real integer value in the resourceId snippet property
+
+## [3.3.1] - 2024-04-11
+
+### Added
+
+- [#209] Add support toPlaceholder for BabelTranslation snippet - thanks to Arjen <https://github.com/arjen-t>
+
+### Fixed
+
+- [#207] Fix for multiple IDs in the resourceId property of the BabelTranslation snippet
+
 ## [3.3.0] - 2024-03-27
 
 ### Added

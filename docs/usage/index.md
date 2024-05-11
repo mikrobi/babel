@@ -126,6 +126,7 @@ given context. It uses the following snippet properties:
 | cultureKey      | Key of culture in which translated resource should be determined. Used only in case contextKey was not specified. If both omitted the snippet the currently set cultureKey. | -                   |
 | resourceId      | ID of resource of which a translated resource should be determined.                                                                                                         | Current resource ID |
 | showUnpublished | Flag whether to show unpublished translations.                                                                                                                              | 0 (No)              |
+| toPlaceholder   | Flag whether to dump the output into the given placeholder's name.                                                                                                          | -                   |
 
 ## System Settings
 
@@ -136,7 +137,7 @@ Babel uses the following system settings in the namespace `babel`:
 | babel.babelTvName     | Babel TV Name     | Name of template variable (TV) in which Babel will store the links between multilingual resources. This TV will be maintained by Babel. | babelLanguageLinks |
 | babel.contextKeys     | Context Keys      | Comma separated list of context keys which should be used to link multilingual resources.                                               | -                  |
 | babel.debug           | Debug             | Log debug information in the MODX error log.                                                                                            | No                 |
-| babel.displayText     | Button Text       | Text shown in the Babel button for each context. You can use the following values: language, context, combination                       | language           |
+| babel.displayText     | Button Text       | Text shown in the Babel button for each context. You can use the following values: 'language', 'context' or 'combination'               | language           |
 | babel.restrictToGroup | Restrict To Group | Restrict the contexts in the Babel button to the group of the current context.                                                          | Yes                |
 | babel.syncTvs         | Synchronized TVs  | Comma separated list of template variables (TVs) IDs to be synchronised by Babel.                                                       | -                  |
 

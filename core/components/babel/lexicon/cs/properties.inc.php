@@ -22,3 +22,4 @@ $_lang['babel.babeltranslation.contextKey'] = 'Jméno kontextu který stanovuje 
 $_lang['babel.babeltranslation.cultureKey'] = 'Klíč kultury, ve které by měl být překladový zdroj určen. Používá se pouze v případě, že nebyl zadán contextKey. Pokud oba vynechá, použije se aktuálně nastavený cultureKey.';
 $_lang['babel.babeltranslation.resourceId'] = 'ID dokumentu který stanovuje překlad.';
 $_lang['babel.babeltranslation.showUnpublished'] = 'Příznak, zda-li se má zobrazovat i nepublikovaný překlad.';
+$_lang['babel.babeltranslation.toPlaceholder'] = 'Příznak, zda se má výstup vypsat do názvu daného zástupného symbolu.';
