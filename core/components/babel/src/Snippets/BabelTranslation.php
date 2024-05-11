@@ -24,7 +24,7 @@ class BabelTranslation extends Snippet
     public function getDefaultProperties()
     {
         return [
-            'resourceId::int' => (!empty($this->modx->resource) && is_object($this->modx->resource)) ? $this->modx->resource->get('id') : 0,
+            'resourceId::explodeSeparatedInt' => (!empty($this->modx->resource) && is_object($this->modx->resource)) ? (string)$this->modx->resource->get('id') : '',
             'contextKey' => '',
             'cultureKey' => $this->modx->getOption('cultureKey'),
             'showUnpublished::bool' => false,
@@ -45,7 +45,6 @@ class BabelTranslation extends Snippet
             return '';
         }
 
-        $resourceIds = array_map('trim', explode(',', $resourceIds));
         $contextKey = $this->getProperty('contextKey');
         if (empty($contextKey)) {
             $cultureKey = $this->getProperty('cultureKey');
@@ -74,5 +73,17 @@ class BabelTranslation extends Snippet
         }
 
         return $result;
+    }
+
+    /**
+     * Explode a separated value to an array of integers.
+     *
+     * @param mixed $value
+     * @param string $separator
+     * @return array
+     */
+    protected function getExplodeSeparatedInt($value, $separator = ',')
+    {
+        return (is_string($value) && $value !== '') ? array_map('intval', explode($separator, $value)) : [];
     }
 }
