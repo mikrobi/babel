@@ -84,6 +84,10 @@ class BabelTranslation extends Snippet
      */
     protected function getExplodeSeparatedInt($value, $separator = ',')
     {
-        return (is_string($value) && $value !== '') ? array_map('intval', explode($separator, $value)) : [];
+        if (is_int($value)) {
+            return [$value];
+        } else {
+            return (is_string($value) && $value !== '') ? array_map('intval', explode($separator, $value)) : [];
+        }
     }
 }
