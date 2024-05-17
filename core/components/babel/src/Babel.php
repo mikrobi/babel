@@ -67,7 +67,7 @@ class Babel
      * The version
      * @var string $version
      */
-    public $version = '3.3.2';
+    public $version = '3.3.3';
 
     /**
      * The class config
@@ -151,7 +151,7 @@ class Babel
             'contextKeys' => $this->modx->getOption($this->namespace . '.contextKeys', null, ''),
             'restrictToGroup' => $this->getBooleanOption('restrictToGroup', [], true),
             'displayText' => $this->modx->getOption($this->namespace . '.displayText', null, 'language'),
-            'syncTvs' => $this->getExplodeSeparatedOption($this->namespace . '.syncTvs', [], ''),
+            'syncTvs' => $this->getExplodeSeparatedOption('syncTvs', [], ''),
             'babelTvName' => $this->modx->getOption($this->namespace . '.babelTvName', null, 'babelLanguageLinks'),
         ]);
 
@@ -229,7 +229,7 @@ class Babel
     public function getExplodeSeparatedOption(string $key, array $config = [], $default = null): array
     {
         $option = $this->getOption($key, $config, $default);
-        return ($option !== '') ? array_map('trim', explode(',', rtrim($option, " ,\t\n\r\0\x0B" ))) : [];
+        return ($option !== '') ? array_map('trim', explode(',', rtrim($option, " ,\t\n\r\0\x0B"))) : [];
     }
 
     /**
