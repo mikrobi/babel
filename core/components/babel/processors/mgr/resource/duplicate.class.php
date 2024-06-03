@@ -94,7 +94,7 @@ class BabelResourceDuplicateProcessor extends ObjectUpdateProcessor
             'context' => $context,
         ]));
         if ($this->getBooleanProperty('last')) {
-            $this->modx->log(modX::LOG_LEVEL_INFO, 'COMPLETED');
+            $this->modx->log(xPDO::LOG_LEVEL_INFO, 'COMPLETED');
         }
 
         return $this->cleanup();
