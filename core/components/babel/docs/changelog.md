@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.3.4] - 2024-06-23
+
+### Added
+
+- Refresh the Babel cache during saving or removing a context
+- Use only valid contexts in the context matrix
+
+### Fixed
+
+- [#213] Don't limit the context matrix to 20 contexts
+
 ## [3.3.3] - 2024-05-17
 
 ### Fixed
