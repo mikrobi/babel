@@ -67,7 +67,7 @@ class Babel
      * The version
      * @var string $version
      */
-    public $version = '3.3.3';
+    public $version = '3.3.4';
 
     /**
      * The class config
@@ -94,6 +94,12 @@ class Babel
      * @var array $contextKeyToGroup
      */
     protected $contextKeyToGroup = [];
+
+    /**
+     * The class cache options
+     * @var array $cacheOptions
+     */
+    public $cacheOptions;
 
     /**
      * @var Parse $parse
@@ -137,6 +143,12 @@ class Babel
             'imagesUrl' => $assetsUrl . 'images/',
             'connectorUrl' => $assetsUrl . 'connector.php'
         ], $config);
+
+        $this->cacheOptions = [
+            xPDO::OPT_CACHE_KEY => $this->namespace,
+            xPDO::OPT_CACHE_HANDLER => $this->modx->getOption('cache_resource_handler', null, $this->modx->getOption(xPDO::OPT_CACHE_HANDLER)),
+            xPDO::OPT_CACHE_FORMAT => (integer)$this->modx->getOption('cache_resource_format', null, $this->modx->getOption(xPDO::OPT_CACHE_FORMAT, null, xPDOCacheManager::CACHE_PHP)),
+        ];
 
         $lexicon = $this->modx->getService('lexicon', 'modLexicon');
         $lexicon->load($this->namespace . ':default');
@@ -268,19 +280,26 @@ class Babel
      */
     public function decodeContextKeySetting($contextKeyString)
     {
-        $contextKeyToGroup = [];
-        if (!empty($contextKeyString)) {
+        $contextKeyToGroup = $this->modx->cacheManager->get('contextkeygroups', $this->cacheOptions);
+        if (empty($contextKeyToGroup) && !empty($contextKeyString)) {
+            $contextKeyToGroup = [];
             $contextGroups = explode(';', $contextKeyString);
             $contextGroups = array_map('trim', $contextGroups);
             foreach ($contextGroups as $contextGroup) {
                 $groupContextKeys = explode(',', $contextGroup);
                 $groupContextKeys = array_map('trim', $groupContextKeys);
+                foreach ($groupContextKeys as $i => $contextKey) {
+                    if (!$this->modx->getCount('modContext', $contextKey)) {
+                        unset($groupContextKeys[$i]);
+                    }
+                }
                 foreach ($groupContextKeys as $contextKey) {
                     if (!empty($contextKey)) {
                         $contextKeyToGroup[$contextKey] = $groupContextKeys;
                     }
                 }
             }
+            $this->modx->cacheManager->set('contextkeygroups', $contextKeyToGroup, 0, $this->cacheOptions);
         }
         return $contextKeyToGroup;
     }
@@ -721,17 +740,12 @@ class Babel
      */
     public function getLanguages()
     {
-        $cacheOptions = [
-            xPDO::OPT_CACHE_KEY => 'babel',
-            xPDO::OPT_CACHE_HANDLER => $this->modx->getOption('cache_resource_handler', null, $this->modx->getOption(xPDO::OPT_CACHE_HANDLER)),
-            xPDO::OPT_CACHE_FORMAT => (integer)$this->modx->getOption('cache_resource_format', null, $this->modx->getOption(xPDO::OPT_CACHE_FORMAT, null, xPDOCacheManager::CACHE_PHP)),
-        ];
-        $languages = $this->modx->cacheManager->get('languages', $cacheOptions);
+        $languages = $this->modx->cacheManager->get('languages', $this->cacheOptions);
         if (!$languages) {
             $ianaLstr = new LanguageSubtagRegistry();
             $ianaLstr->readSource($this->getOption('corePath') . 'src/LanguageSubtagRegistry/language-subtag-registry');
             $languages = $ianaLstr->languagesAssocArray('Subtag');
-            $this->modx->cacheManager->set('languages', $languages, 0, $cacheOptions);
+            $this->modx->cacheManager->set('languages', $languages, 0, $this->cacheOptions);
         }
         foreach ($languages as $k => $v) {
             $languages[$k]['Description'] = $v['Description'][0];

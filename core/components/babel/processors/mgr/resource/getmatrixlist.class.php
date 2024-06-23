@@ -61,6 +61,7 @@ class BabelResourceGetMatrixListProcessor extends ObjectGetListProcessor
     public function prepareRow(xPDOObject $object)
     {
         $objectArray = parent::prepareRow($object);
+        $objectArray['pagetitle'] = htmlspecialchars($objectArray['pagetitle']);
 
         $linkedResources = $this->babel->getLinkedResources($objectArray['id']);
         foreach ($this->contexts as $ctx) {
@@ -74,7 +75,7 @@ class BabelResourceGetMatrixListProcessor extends ObjectGetListProcessor
                     $objectArray['linkedres_id_' . $ctx] = $linkedResources[$ctx];
                     $resource = $this->modx->getObject('modResource', $linkedResources[$ctx]);
                     if ($resource) {
-                        $objectArray['linkedres_pagetitle_' . $ctx] = $resource->get('pagetitle');
+                        $objectArray['linkedres_pagetitle_' . $ctx] = htmlspecialchars($resource->get('pagetitle'));
                     }
                 }
             }
