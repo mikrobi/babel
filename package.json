@@ -9,21 +9,21 @@
   ],
   "private": true,
   "devDependencies": {
-    "autoprefixer": "^10.4.19",
-    "cssnano": "^7.0.2",
+    "autoprefixer": "^10.4.20",
+    "cssnano": "^7.0.6",
     "date-format": "^4.0.14",
     "gulp": "^5.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-footer": "^2.1.0",
-    "gulp-header": "^2.0.9",
+    "@fomantic/gulp-header": "^2.1.1",
     "gulp-postcss": "^10.0.0",
     "gulp-rename": "^2.0.0",
     "gulp-replace": "^1.1.4",
     "gulp-sass": "^5.1.0",
     "gulp-uglify": "^3.0.2",
-    "postcss": "^8.4.38",
-    "sass": "^1.77.5",
-    "uglify-js": "^3.18.0"
+    "postcss": "^8.4.45",
+    "sass": "^1.78.0",
+    "uglify-js": "^3.19.3"
   },
   "browserslist": [
     "last 2 version",
