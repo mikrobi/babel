@@ -62,20 +62,32 @@ class BabelLinks extends Snippet
             $contextKeys = $this->babel->getGroupContextKeys($resource->get('context_key'), $this->getProperty('restrictToGroup'));
         }
 
+        $contexts = [];
+        $c = $this->modx->newQuery('modContext', ['key:IN' => $contextKeys]);
+        if (!empty($this->properties['sort'])) {
+            $dir = !empty($this->properties['dir']) && strtolower($this->properties['dir']) === 'desc' ? 'desc' : 'asc';
+            $c->sortby($this->modx->escape($this->properties['sort']), $dir);
+        }
+        /** @var \modContext $context */
+        foreach ($this->modx->getIterator('modContext', $c) as $context) {
+            $contexts[$context->key] = $context;
+        }
+        if ($diff = array_diff($contextKeys, array_keys($contexts))) {
+            foreach ($diff as $contextKey) {
+                $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Could not load context: ' . $contextKey);
+            }
+        }
+
         $linkedResources = $this->babel->getLinkedResources($resourceId);
         $languages = $this->babel->getLanguages();
         $outputArray = [];
         $this->modx->lexicon->load('babel:languages');
-        foreach ($contextKeys as $contextKey) {
+        foreach ($contexts as $context) {
+            $contextKey = $context->get('key');
             if (!$this->getProperty('showCurrent') && $contextKey === $resource->get('context_key')) {
                 continue;
             }
             if (!$this->getProperty('includeUnlinked') && !isset($linkedResources[$contextKey])) {
-                continue;
-            }
-            $context = $this->modx->getObject('modContext', ['key' => $contextKey]);
-            if (!$context) {
-                $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Could not load context: ' . $contextKey);
                 continue;
             }
             $context->prepare();
