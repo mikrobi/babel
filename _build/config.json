@@ -68,6 +68,14 @@
             {
               "name": "toPlaceholder",
               "value": ""
+            },
+            {
+              "name": "sort",
+              "value": "rank"
+            },
+            {
+              "name": "dir",
+              "value": "asc"
             }
           ]
         },
