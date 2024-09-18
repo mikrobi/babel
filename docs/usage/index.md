@@ -132,14 +132,15 @@ given context. It uses the following snippet properties:
 
 Babel uses the following system settings in the namespace `babel`:
 
-| Key                   | Name              | Description                                                                                                                             | Default            |
-|-----------------------|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------|--------------------|
-| babel.babelTvName     | Babel TV Name     | Name of template variable (TV) in which Babel will store the links between multilingual resources. This TV will be maintained by Babel. | babelLanguageLinks |
-| babel.contextKeys     | Context Keys      | Comma separated list of context keys which should be used to link multilingual resources.                                               | -                  |
-| babel.debug           | Debug             | Log debug information in the MODX error log.                                                                                            | No                 |
-| babel.displayText     | Button Text       | Text shown in the Babel button for each context. You can use the following values: 'language', 'context' or 'combination'               | language           |
-| babel.restrictToGroup | Restrict To Group | Restrict the contexts in the Babel button to the group of the current context.                                                          | Yes                |
-| babel.syncTvs         | Synchronized TVs  | Comma separated list of template variables (TVs) IDs to be synchronised by Babel.                                                       | -                  |
+| Key                   | Name                | Description                                                                                                                             | Default            |
+|-----------------------|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------|--------------------|
+| babel.babelTvName     | Babel TV Name       | Name of template variable (TV) in which Babel will store the links between multilingual resources. This TV will be maintained by Babel. | babelLanguageLinks |
+| babel.contextKeys     | Context Keys        | Comma separated list of context keys which should be used to link multilingual resources.                                               | -                  |
+| babel.debug           | Debug               | Log debug information in the MODX error log.                                                                                            | No                 |
+| babel.displayText     | Button Text         | Text shown in the Babel button for each context. You can use the following values: 'language', 'context' or 'combination'               | language           |
+| babel.restrictToGroup | Restrict To Group   | Restrict the contexts in the Babel button to the group of the current context.                                                          | Yes                |
+| babel.syncTvs         | Synchronized TVs    | Comma separated list of template variables (TVs) IDs to be synchronised by Babel.                                                       | -                  |
+| babel.syncFields      | Synchronized Fields | Comma separated list of resource fields to be synchronised by Babel.                                                                    | -                  |
 
 The button text in the Babel button can use the following values:
 
@@ -206,7 +207,18 @@ uses the following parameters:
 This event is invoked when TVs are synced and changed. It uses the following
 parameters:
 
-| Parameter   | Description                                                                                                      |                                                                                                                   
-|-------------|------------------------------------------------------------------------------------------------------------------|
-| tv_changes  | An array of the changes in the synced TVs. Each array element contains the values tv_id, tv_value and target_id. |
-| resource_id | The ID of the resource the changes are synced from.                                                              |
+| Parameter   | Description                                                                                                   |
+|-------------|---------------------------------------------------------------------------------------------------------------|
+| tv_changes  | An array of the changes in the synced TVs. Each array element contains the values tvId, tvValue and targetId. |
+| resource_id | The ID of the resource the changes are synced from.                                                           |
+
+### OnBabelFieldSynced
+
+This event is invoked when resource fields are synced and changed. It uses the following
+parameters:
+
+| Parameter    | Description                                                                                                                            |
+|--------------|---------------------------------------------------------------------------------------------------------------------------------------|
+| fieldChanges | An array of the changes in the synced resource fields. Each array element contains the values resourceId, resourceValue and linkedId. |
+| resource_id  | The ID of the resource the changes are synced from.                                                                                   |
+

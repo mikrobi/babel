@@ -164,6 +164,7 @@ class Babel
             'restrictToGroup' => $this->getBooleanOption('restrictToGroup', [], true),
             'displayText' => $this->modx->getOption($this->namespace . '.displayText', null, 'language'),
             'syncTvs' => $this->getExplodeSeparatedOption('syncTvs', [], ''),
+            'syncFields' => $this->getExplodeSeparatedOption('syncFields', [], ''),
             'babelTvName' => $this->modx->getOption($this->namespace . '.babelTvName', null, 'babelLanguageLinks'),
         ]);
 
@@ -302,6 +303,59 @@ class Babel
             $this->modx->cacheManager->set('contextkeygroups', $contextKeyToGroup, 0, $this->cacheOptions);
         }
         return $contextKeyToGroup;
+    }
+    
+    /**
+     * Synchronizes the resource fields of the specified resource with its translated resources.
+     *
+     * @param int $resourceId id of resource.
+     */
+    public function synchronizeFields($resourceId)
+    {
+        $linkedResources = $this->getLinkedResources($resourceId);
+    
+        /* synchronize the resource fields of linked resources */
+        $syncFields = $this->getOption('syncFields');
+        if (empty($syncFields) || !is_array($syncFields)) {
+            /* there are no resource fields to synchronize */
+            return;
+        }
+    
+        $fieldChanges = [];        
+        $resource = $this->modx->getObject('modResource', $resourceId);
+        foreach ($linkedResources as $linkedResourceId) {
+            /* go through each linked resource */
+            if ($resourceId == $linkedResourceId) {
+                /* don't synchronize resource with itself */
+                continue;
+            }            
+            $linkedResource = $this->modx->getObject('modResource', $linkedResourceId);
+            foreach ($syncFields as $fieldname) {
+                $resourceValue = $resource->get($fieldname);
+                $fieldValueLinkedResource = $linkedResource->get($fieldname);
+                if ($fieldValueLinkedResource !== $resourceValue) {
+                    /* update only changed resource fields */
+                    $linkedResource->set($fieldname, $resourceValue);
+                    /* collect the changes */
+                    $fieldChanges[] = [
+                        'resourceId' => $resourceId,
+                        'resourceValue' => $resourceValue,
+                        'linkedId' => $linkedResourceId
+                    ];
+                }
+            }
+            $linkedResource->save();
+        } 
+        
+        /* if resource fields changes are collected trigger the OnBabelFieldSynced event */
+        if (!empty($fieldChanges)) {
+            $this->modx->invokeEvent('OnBabelFieldSynced', [
+                'fieldChanges' => $fieldChanges,
+                'resourceId' => $resourceId
+            ]);
+        }
+    
+        $this->modx->cacheManager->refresh();
     }
 
     /**
