@@ -22,6 +22,7 @@ if ($object->xpdo) {
                 'contextKeys',
                 'babelTvName',
                 'syncTvs',
+                'syncFields',
             ];
             foreach ($settings as $key) {
                 if (isset($options[$key])) {

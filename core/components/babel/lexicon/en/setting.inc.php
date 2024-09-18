@@ -17,3 +17,6 @@ $_lang['setting_babel.restrictToGroup'] = 'Restrict To Group';
 $_lang['setting_babel.restrictToGroup_desc'] = 'Restrict the contexts in the Babel button to the group of the current context.';
 $_lang['setting_babel.syncTvs'] = 'Synchronized TVs';
 $_lang['setting_babel.syncTvs_desc'] = 'Comma separated list of template variables (TVs) IDs to be synchronised by Babel.';
+$_lang['setting_babel.syncFields'] = 'Synchronized resource fields';
+$_lang['setting_babel.syncFields_desc'] = 'Comma separated list of resource field names to be synchronised by Babel.';
+

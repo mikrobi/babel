@@ -38,5 +38,6 @@ class OnDocFormSave extends Plugin
             return;
         }
         $this->babel->synchronizeTvs($resource->get('id'));
+        $this->babel->synchronizeFields($resource->get('id'));
     }
 }

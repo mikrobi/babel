@@ -21,6 +21,7 @@ $defaults = [
     'contextKeys' => implode(',', $contextKeys),
     'babelTvName' => 'babelLanguageLinks',
     'syncTvs' => '',
+    'syncFields' => '',
 ];
 
 $output = '<style type="text/css">
@@ -59,7 +60,12 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
                 <label for="babel-syncTvs">IDs of TVs to be synchronized (comma-separated):</label>
                 <input type="text" name="syncTvs" id="babel-syncTvs" width="450" value="' . $defaults['syncTvs'] . '" style="font-size: 13px; padding: 5px; width: calc(100% - 10px); height: 32px; margin-bottom: 10px" />
                 <p>Hint: Leave blank if no TVs should be synchronized.</p>
-          </div>';
+            </div>';
+        $output .= '<div style="position: relative">
+                <label for="babel-syncFields">IDs of resource fields to be synchronized (comma-separated):</label>
+                <input type="text" name="syncFields" id="babel-syncFields" width="450" value="' . $defaults['syncFields'] . '" style="font-size: 13px; padding: 5px; width: calc(100% - 10px); height: 32px; margin-bottom: 10px" />
+                <p>Hint: Leave blank if no resource fields should be synchronized.</p>
+            </div>';
         break;
     case xPDOTransport::ACTION_UPGRADE:
         $setting = $modx->getObject('modSystemSetting', ['key' => 'babel.contextKeys']);
@@ -72,6 +78,10 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
 
         $setting = $modx->getObject('modSystemSetting', ['key' => 'babel.syncTvs']);
         $values['syncTvs'] = ($setting) ? (bool)$setting->get('value') : $defaults['syncTvs'];
+        unset($setting);
+        
+        $setting = $modx->getObject('modSystemSetting', ['key' => 'babel.syncFields']);
+        $values['syncFields'] = ($setting) ? (bool)$setting->get('value') : $defaults['syncFields'];
         unset($setting);
 
         $output .= '<h2>Upgrade Babel</h2>
@@ -102,7 +112,12 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
                 <label for="babel-syncTvs">IDs of TVs to be synchronized (comma-separated):</label>
                 <input type="text" name="syncTvs" id="babel-syncTvs" width="450" value="' . $values['syncTvs'] . '" style="font-size: 13px; padding: 5px; width: calc(100% - 10px); height: 32px; margin-bottom: 10px" />
                 <p>Hint: Leave blank if no TVs should be synchronized.</p>
-          </div>';
+            </div>';
+        $output .= '<div style="position: relative">
+                <label for="babel-syncFields">IDs of resource fields to be synchronized (comma-separated):</label>
+                <input type="text" name="syncFields" id="babel-syncFields" width="450" value="' . $defaults['syncFields'] . '" style="font-size: 13px; padding: 5px; width: calc(100% - 10px); height: 32px; margin-bottom: 10px" />
+                <p>Hint: Leave blank if no resource fields should be synchronized.</p>
+            </div>';
         break;
     case xPDOTransport::ACTION_UNINSTALL:
         break;
