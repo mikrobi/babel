@@ -566,6 +566,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#onbabelfieldsynced" class="md-nav__link">
+    <span class="md-ellipsis">
+      OnBabelFieldSynced
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -605,8 +614,9 @@ and create multiple translations in selectable contexts with a menu entry.</p>
 You must select the linked resource via the page tree on the left, by searching
 for the page title or by entering the target ID directly.</p>
 <p>If you enable 'Copy synchronized TVs to target', the synced template variables
-(TVs) referenced in the system setting <code>babel.syncTvs</code> of all linked resources
-are filled with the TV values of the current resource.</p>
+(TVs) referenced in the system setting <code>babel.syncTvs</code> and the synced resource
+fields referenced in the system setting <code>babel.syncFields</code> of all linked
+resources are filled with the TV/field values of the current resource.</p>
 <p>If you enable 'Synchronise all translations from the target', the language links
 of the target resource are synced between the linked resources. The current
 resource is also linked to the target resource and all linked resources.
@@ -698,6 +708,16 @@ frontend. It uses the following snippet properties:</p>
 <td>showUnpublished</td>
 <td>Flag whether to show unpublished translations.</td>
 <td>0 (No)</td>
+</tr>
+<tr>
+<td>sortby</td>
+<td>Context field to sort the results by. The default 'babel' means to sort by the order of the context keys in the babel.contextKeys system setting.</td>
+<td>babel</td>
+</tr>
+<tr>
+<td>sortdir</td>
+<td>The direction to sort in.</td>
+<td>asc</td>
 </tr>
 <tr>
 <td>toArray</td>
@@ -842,6 +862,12 @@ given context. It uses the following snippet properties:</p>
 <td>Yes</td>
 </tr>
 <tr>
+<td>babel.syncFields</td>
+<td>Synchronized Resource Fields</td>
+<td>Comma separated list of resource field names to be synchronised by Babel.</td>
+<td>-</td>
+</tr>
+<tr>
 <td>babel.syncTvs</td>
 <td>Synchronized TVs</td>
 <td>Comma separated list of template variables (TVs) IDs to be synchronised by Babel.</td>
@@ -851,10 +877,11 @@ given context. It uses the following snippet properties:</p>
 </table>
 <p>The button text in the Babel button can use the following values:</p>
 <ul>
-<li>language: the contexts are listed with the context language set in the cultureKey context setting.</li>
+<li>language: the contexts are listed with the context language set in the
+  cultureKey context setting.</li>
 <li>context: the contexts are listed with the context name.</li>
-<li>combination: the contexts are listed with the context name and the context language set in the cultureKey context
-  setting.</li>
+<li>combination: the contexts are listed with the context name and the context
+  language set in the cultureKey context setting.</li>
 </ul>
 <h2 id="permissions">Permissions</h2>
 <p>Babel has the following permissions for manager users:</p>
@@ -987,7 +1014,28 @@ parameters:</p>
 <tbody>
 <tr>
 <td>tv_changes</td>
-<td>An array of the changes in the synced TVs. Each array element contains the values tv_id, tv_value and target_id.</td>
+<td>An array of the changes in the synced TVs. Each array element contains the values tvId, tvValue and targetId.</td>
+</tr>
+<tr>
+<td>resource_id</td>
+<td>The ID of the resource the changes are synced from.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="onbabelfieldsynced">OnBabelFieldSynced</h3>
+<p>This event is invoked when resource fields are synced and changed. It uses the following
+parameters:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fieldChanges</td>
+<td>An array of the changes in the synced resource fields. Each array element contains the values resourceId, resourceValue and linkedId.</td>
 </tr>
 <tr>
 <td>resource_id</td>
