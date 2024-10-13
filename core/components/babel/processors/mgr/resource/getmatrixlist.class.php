@@ -71,7 +71,7 @@ class BabelResourceGetMatrixListProcessor extends ObjectGetListProcessor
                 $objectArray['linkedres_id_' . $ctx] = 'x';
                 $objectArray['linkedres_pagetitle_' . $ctx] = 'x';
             } else {
-                if (isset($linkedResources[$ctx]) && !empty($linkedResources[$ctx])) {
+                if (!empty($linkedResources[$ctx])) {
                     $objectArray['linkedres_id_' . $ctx] = $linkedResources[$ctx];
                     $resource = $this->modx->getObject('modResource', $linkedResources[$ctx]);
                     if ($resource) {

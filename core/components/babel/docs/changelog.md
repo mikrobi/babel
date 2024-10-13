@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.4.0] - TBA
+
+### Added
+
+- Add system setting "babel.syncFields" to sync resource fields on save - thanks to Jens Wittmann <https://github.com/ jenswittmann>
+
 ## [3.3.4] - 2024-06-23
 
 ### Added
@@ -113,7 +119,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [#135] Fix not found icons
 - [#145] Fix unlinking unsync TVs
-- [#139][#140] Fix Unable to link translations by searching by pagetitle
+- [#139], [#140] Fix Unable to link translations by searching by pagetitle
 
 ## [3.0.0-rc1] - 2016-04-15
 
@@ -185,7 +191,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [#51] Append URL parameters of current page if any
 - Add includeUnlinked property to BabelLinks snippet, option to skip/include unlinked context
 - [#88] Skip unpublished contexts
-- [#78][#62] Add outputSeparator property to BabelLinks snippet
+- [#78], [#62] Add outputSeparator property to BabelLinks snippet
 - [#67] Add italian lexicon
 - [#60] Add dutch lexicon
 
@@ -195,15 +201,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [#82] Check for resourceId property before defaulting
 - [#75] Replaced deprecated method clearCache() with refresh()
 - [#84] Optimize OnResourceDuplicate plugin event
-- [#44][#29] Use cultureKey instead of contextKey in the output of the BabelTranslation snippet
-- [#27][#90][#92] Refactor language selection, runs using AJAX
-- [#83][#59] Extend OnResourceDuplicate plugin event for nested resources
+- [#44], [#29] Use cultureKey instead of contextKey in the output of the BabelTranslation snippet
+- [#27], [#90], [#92] Refactor language selection, runs using AJAX
+- [#83], [#59] Extend OnResourceDuplicate plugin event for nested resources
 
 ### Fixed
 
 - [#56] Emptying the MODX trash can corrupt values in modx_site_tmplvar_contentvalues
 - [#70] fix is_folder to isfolder
-- [#58][#64] Fix the error with updating a resource, at least in the quick update window
+- [#58], [#64] Fix the error with updating a resource, at least in the quick update window
 
 ## [2.2.5] - 2011-12-11
 

@@ -15,5 +15,7 @@ $_lang['setting_babel.displayText'] = 'Schaltflächen-Text';
 $_lang['setting_babel.displayText_desc'] = 'Text, der auf der Babel-Schaltfläche für jeden Kontext angezeigt wird. Sie können die folgenden Werte verwenden: \'language\', \'context\' or \'combination\'';
 $_lang['setting_babel.restrictToGroup'] = 'Auf Gruppe beschränken';
 $_lang['setting_babel.restrictToGroup_desc'] = 'Beschränkt die Kontexte in der Babel-Schaltfläche auf die Gruppe des aktuellen Kontexts.';
+$_lang['setting_babel.syncFields'] = 'Synchronisierte Ressourcen Felder';
+$_lang['setting_babel.syncFields_desc'] = 'Kommagetrennte Liste von Ressourcen Feldnamen, die von Babel synchronisiert werden sollen.';
 $_lang['setting_babel.syncTvs'] = 'Synchronisierte TVs';
 $_lang['setting_babel.syncTvs_desc'] = 'Kommagetrennte Liste von Template Variable (TVs) IDs, die von Babel synchronisiert werden sollen.';

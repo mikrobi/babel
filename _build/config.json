@@ -159,6 +159,11 @@
         "key": "syncTvs",
         "area": "system",
         "value": ""
+      },
+      {
+        "key": "syncFields",
+        "area": "system",
+        "value": ""
       }
     ]
   },
