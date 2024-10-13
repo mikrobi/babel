@@ -5,11 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.4.0] - TBA
+## [3.4.0] - 2024-10-13
 
 ### Added
 
-- Add system setting "babel.syncFields" to sync resource fields on save - thanks to Jens Wittmann <https://github.com/ jenswittmann>
+- Add system setting "babel.syncFields" to sync resource fields on save - thanks to Jens Wittmann <https://github.com/jenswittmann>
+- Add sortby and sortdir properties to the BabelLinks snippet - thanks to Vasily Naumkin <https://github.com/bezumkin>
 
 ## [3.3.4] - 2024-06-23
 

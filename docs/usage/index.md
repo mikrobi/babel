@@ -19,8 +19,9 @@ You must select the linked resource via the page tree on the left, by searching
 for the page title or by entering the target ID directly.
 
 If you enable 'Copy synchronized TVs to target', the synced template variables
-(TVs) referenced in the system setting `babel.syncTvs` of all linked resources
-are filled with the TV values of the current resource.
+(TVs) referenced in the system setting `babel.syncTvs` and the synced resource
+fields referenced in the system setting `babel.syncFields` of all linked
+resources are filled with the TV/field values of the current resource.
 
 If you enable 'Synchronise all translations from the target', the language links
 of the target resource are synced between the linked resources. The current
@@ -89,19 +90,21 @@ Currently, there are two snippets available for Babel:
 BabelLinks is a snippet that displays links to other languages (contexts) in the
 frontend. It uses the following snippet properties:
 
-| Property         | Description                                                                         | Default                                |
-|------------------|-------------------------------------------------------------------------------------|----------------------------------------|
-| activeCls        | CSS class for the active language link.                                             | active                                 |
-| ignoreSiteStatus | Flag whether to ignore the site_status (when the site is offline)                   | 0 (No)                                 |
-| includeUnlinked  | Flag whether to show unlinked context.                                              | 0 (No)                                 |
-| resourceId       | ID of resource of which links to translations should be displayed.                  | Current resource ID                    |
-| restrictToGroup  | Restrict the contexts in the snippet output to the group of the current context.    | System setting `babel.restrictToGroup` |
-| showCurrent      | Flag whether to show a link to a translation of the current language.               | 0 (No)                                 |
-| showUnpublished  | Flag whether to show unpublished translations.                                      | 0 (No)                                 |
-| toArray          | Flag whether to dump the output as an array instead.                                | 0 (No)                                 |
-| toPlaceholder    | Flag whether to dump the output into the given placeholder's name.                  | -                                      |
-| tpl              | Chunk to display a language link.                                                   | tplBabellink                           |
-| wrapperTpl       | Chunk to wrap all language links. The placeholder for all links is [[+babelLinks]]. | -                                      |
+| Property         | Description                                                                                                                                       | Default                                |
+|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------|
+| activeCls        | CSS class for the active language link.                                                                                                           | active                                 |
+| ignoreSiteStatus | Flag whether to ignore the site_status (when the site is offline)                                                                                 | 0 (No)                                 |
+| includeUnlinked  | Flag whether to show unlinked context.                                                                                                            | 0 (No)                                 |
+| resourceId       | ID of resource of which links to translations should be displayed.                                                                                | Current resource ID                    |
+| restrictToGroup  | Restrict the contexts in the snippet output to the group of the current context.                                                                  | System setting `babel.restrictToGroup` |
+| showCurrent      | Flag whether to show a link to a translation of the current language.                                                                             | 0 (No)                                 |
+| showUnpublished  | Flag whether to show unpublished translations.                                                                                                    | 0 (No)                                 |
+| sortby           | Context field to sort the results by. The default 'babel' means to sort by the order of the context keys in the babel.contextKeys system setting. | babel                                  |
+| sortdir          | The direction to sort in.                                                                                                                         | asc                                    |
+| toArray          | Flag whether to dump the output as an array instead.                                                                                              | 0 (No)                                 |
+| toPlaceholder    | Flag whether to dump the output into the given placeholder's name.                                                                                | -                                      |
+| tpl              | Chunk to display a language link.                                                                                                                 | tplBabellink                           |
+| wrapperTpl       | Chunk to wrap all language links. The placeholder for all links is [[+babelLinks]].                                                               | -                                      |
 
 You can use the following placeholders in the tpl chunk:
 
@@ -132,22 +135,23 @@ given context. It uses the following snippet properties:
 
 Babel uses the following system settings in the namespace `babel`:
 
-| Key                   | Name                | Description                                                                                                                             | Default            |
-|-----------------------|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------|--------------------|
-| babel.babelTvName     | Babel TV Name       | Name of template variable (TV) in which Babel will store the links between multilingual resources. This TV will be maintained by Babel. | babelLanguageLinks |
-| babel.contextKeys     | Context Keys        | Comma separated list of context keys which should be used to link multilingual resources.                                               | -                  |
-| babel.debug           | Debug               | Log debug information in the MODX error log.                                                                                            | No                 |
-| babel.displayText     | Button Text         | Text shown in the Babel button for each context. You can use the following values: 'language', 'context' or 'combination'               | language           |
-| babel.restrictToGroup | Restrict To Group   | Restrict the contexts in the Babel button to the group of the current context.                                                          | Yes                |
-| babel.syncTvs         | Synchronized TVs    | Comma separated list of template variables (TVs) IDs to be synchronised by Babel.                                                       | -                  |
-| babel.syncFields      | Synchronized Fields | Comma separated list of resource fields to be synchronised by Babel.                                                                    | -                  |
+| Key                   | Name                         | Description                                                                                                                             | Default            |
+|-----------------------|------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|--------------------|
+| babel.babelTvName     | Babel TV Name                | Name of template variable (TV) in which Babel will store the links between multilingual resources. This TV will be maintained by Babel. | babelLanguageLinks |
+| babel.contextKeys     | Context Keys                 | Comma separated list of context keys which should be used to link multilingual resources.                                               | -                  |
+| babel.debug           | Debug                        | Log debug information in the MODX error log.                                                                                            | No                 |
+| babel.displayText     | Button Text                  | Text shown in the Babel button for each context. You can use the following values: 'language', 'context' or 'combination'               | language           |
+| babel.restrictToGroup | Restrict To Group            | Restrict the contexts in the Babel button to the group of the current context.                                                          | Yes                |
+| babel.syncFields      | Synchronized Resource Fields | Comma separated list of resource field names to be synchronised by Babel.                                                               | -                  |
+| babel.syncTvs         | Synchronized TVs             | Comma separated list of template variables (TVs) IDs to be synchronised by Babel.                                                       | -                  |
 
 The button text in the Babel button can use the following values:
 
-- language: the contexts are listed with the context language set in the cultureKey context setting.
+- language: the contexts are listed with the context language set in the
+  cultureKey context setting.
 - context: the contexts are listed with the context name.
-- combination: the contexts are listed with the context name and the context language set in the cultureKey context
-  setting.
+- combination: the contexts are listed with the context name and the context
+  language set in the cultureKey context setting.
 
 ## Permissions
 
@@ -217,7 +221,7 @@ parameters:
 This event is invoked when resource fields are synced and changed. It uses the following
 parameters:
 
-| Parameter    | Description                                                                                                                            |
+| Parameter    | Description                                                                                                                           |
 |--------------|---------------------------------------------------------------------------------------------------------------------------------------|
 | fieldChanges | An array of the changes in the synced resource fields. Each array element contains the values resourceId, resourceValue and linkedId. |
 | resource_id  | The ID of the resource the changes are synced from.                                                                                   |
