@@ -31,11 +31,35 @@ class BabelLinks extends Snippet
             'showCurrent::bool' => false,
             'includeUnlinked::bool' => false,
             'ignoreSiteStatus::bool' => false,
+            'sortby::sortby' => 'babel',
+            'sortdir::sortdir' => 'asc',
             'restrictToGroup::bool' => $this->babel->getOption('restrictToGroup'),
             'toArray::bool' => false,
             'toPlaceholder' => '',
             'outputSeparator' => "\n",
         ];
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    protected function getSortby($value): string
+    {
+        if ($value == 'babel' || $value == '') {
+            return '';
+        } else {
+            return $this->modx->escape($value);
+        }
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    protected function getSortdir($value): string
+    {
+        return (in_array(strtolower($value), ['asc', 'desc',])) ? strtolower($value) : 'asc';
     }
 
     /**
@@ -52,30 +76,42 @@ class BabelLinks extends Snippet
         }
 
         if (!empty($this->modx->resource) && is_object($this->modx->resource) && $resourceId === $this->modx->resource->get('id')) {
-            $contextKeys = $this->babel->getGroupContextKeys($this->modx->resource->get('context_key'), $this->getProperty('restrictToGroup'));
             $resource = $this->modx->resource;
         } else {
             $resource = $this->modx->getObject('modResource', $resourceId);
             if (!$resource) {
                 return '';
             }
-            $contextKeys = $this->babel->getGroupContextKeys($resource->get('context_key'), $this->getProperty('restrictToGroup'));
+        }
+        $contextKeys = $this->babel->getGroupContextKeys($resource->get('context_key'), $this->getProperty('restrictToGroup'));
+
+        $contexts = [];
+        $c = $this->modx->newQuery('modContext', ['key:IN' => $contextKeys]);
+        if (!empty($this->getProperty('sortby'))) {
+            $c->sortby($this->getProperty('sortby'), $this->getProperty('sortdir'));
+        } elseif (!empty($contextKeys)) {
+            $c->sortby('FIELD(modContext.key, "' . implode('","', $contextKeys) . '")');
+        }
+        /** @var \modContext $context */
+        foreach ($this->modx->getIterator('modContext', $c) as $context) {
+            $contexts[$context->key] = $context;
+        }
+        if ($diff = array_diff($contextKeys, array_keys($contexts))) {
+            foreach ($diff as $contextKey) {
+                $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Could not load context: ' . $contextKey);
+            }
         }
 
         $linkedResources = $this->babel->getLinkedResources($resourceId);
         $languages = $this->babel->getLanguages();
         $outputArray = [];
         $this->modx->lexicon->load('babel:languages');
-        foreach ($contextKeys as $contextKey) {
+        foreach ($contexts as $context) {
+            $contextKey = $context->get('key');
             if (!$this->getProperty('showCurrent') && $contextKey === $resource->get('context_key')) {
                 continue;
             }
             if (!$this->getProperty('includeUnlinked') && !isset($linkedResources[$contextKey])) {
-                continue;
-            }
-            $context = $this->modx->getObject('modContext', ['key' => $contextKey]);
-            if (!$context) {
-                $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Could not load context: ' . $contextKey);
                 continue;
             }
             $context->prepare();
