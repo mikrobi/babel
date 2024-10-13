@@ -104,8 +104,9 @@ class BabelResourceLinkProcessor extends ObjectUpdateProcessor
 
         $copyTvValues = $this->getProperty('copy');
         if ($copyTvValues == 1) {
-            /* copy values of synchronized TVs to target resource */
+            /* copy values of synchronized TVs and resource fields to the target resource */
             $this->babel->synchronizeTvs($this->object->get('id'));
+            $this->babel->synchronizeFields($this->object->get('id'));
         }
 
         $this->fireLinkEvent();
