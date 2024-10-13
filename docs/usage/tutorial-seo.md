@@ -85,7 +85,7 @@ up multilingual websites and one additional step:
     | en      | https://​www.​example.com/en/ | en         | /en/     |
 
     !!! caution "Differences to the non SEO version"
-   
+
         Instead of using different domains in the `site_url` context setting you have to
         use subfolders and additionally specifiy the `base_url` according to the context's
         `cultureKey`.
@@ -189,7 +189,7 @@ RewriteRule ^$ en/ [R=301,L]
 RewriteRule ^$ de/ [R=301,L]
 ```
 
-!!! hint 
+!!! hint "Only rudimentary rules"
 
     That's very rudimentary. The condition only checks whether the value of
     the _Accept-Language_ HTTP header variable begins with the language (culture) key.
@@ -245,7 +245,7 @@ This solution works fine and editors can work as they did before without caring 
   helpful to tell a search engine bot where to find all your pages. So you
   should use them, and they should list all pages of your site!
 
-!!! Caution
+!!! caution "This is outdated"
 
     The following section is outdated and will not take place in this form.
 
