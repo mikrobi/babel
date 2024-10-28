@@ -1,3 +1,5 @@
+@use "sass:color";
+
 $red: #be0000;
 
 @import '../../js/ux/LockingGridView/LockingGridView';
@@ -87,7 +89,7 @@ $red: #be0000;
 
   &:before,
   &:after {
-    border: 5px solid mix(#000, $red, 15%);
+    border: 5px solid color.adjust($red, $lightness: -15%);
     content: '';
     display: block;
     position: absolute;
