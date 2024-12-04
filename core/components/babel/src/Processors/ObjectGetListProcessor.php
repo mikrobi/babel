@@ -67,6 +67,19 @@ class ObjectGetListProcessor extends modObjectGetListProcessor
 
     /**
      * {@inheritDoc}
+     * @return bool
+     */
+    public function beforeQuery()
+    {
+        if ($this->getProperty('valuesqry')) {
+            $this->setProperty('limit', 0);
+        }
+
+        return parent::beforeQuery();
+    }
+
+    /**
+     * {@inheritDoc}
      * @param xPDOQuery $c
      * @return xPDOQuery
      */
