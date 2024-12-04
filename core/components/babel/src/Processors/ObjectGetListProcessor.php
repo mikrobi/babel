@@ -22,9 +22,8 @@ class ObjectGetListProcessor extends modObjectGetListProcessor
     public $defaultSortField = 'sortindex';
     public $defaultSortDirection = 'ASC';
 
-    /** @var Babel */
+    /** @var Babel $babel */
     public $babel;
-
 
     protected $search = [];
     protected $nameField = 'name';

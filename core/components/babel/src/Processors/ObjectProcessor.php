@@ -1,6 +1,6 @@
 <?php
 /**
- * Abstract processor
+ * Abstract object processor
  *
  * @package babel
  * @subpackage processors
@@ -13,13 +13,13 @@ use modObjectProcessor;
 use modX;
 
 /**
- * Class Processor
+ * Class ObjectProcessor
  */
 abstract class ObjectProcessor extends modObjectProcessor
 {
     public $languageTopics = ['babel:default'];
 
-    /** @var Babel */
+    /** @var Babel $babel */
     public $babel;
 
     /**
@@ -27,7 +27,7 @@ abstract class ObjectProcessor extends modObjectProcessor
      * @param modX $modx A reference to the modX instance
      * @param array $properties An array of properties
      */
-    function __construct(modX &$modx, array $properties = [])
+    public function __construct(modX &$modx, array $properties = [])
     {
         parent::__construct($modx, $properties);
 
