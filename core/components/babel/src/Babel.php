@@ -190,7 +190,7 @@ class Babel
             }
         }
 
-        $this->parse = new Parse($modx);
+        $this->parse = new Parse($this->modx);
     }
 
     /**
