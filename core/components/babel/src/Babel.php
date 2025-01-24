@@ -2,7 +2,7 @@
 /**
  * Babel
  *
- * Copyright 2010-2024 by Jakob Class <jakob.class@gmail.com>
+ * Copyright 2010-2025 by Jakob Class <jakob.class@gmail.com>
  *
  * This file is part of Babel.
  *
@@ -92,7 +92,7 @@ class Babel
      * An associative array which maps context keys to the context groups.
      * @var array $contextKeyToGroup
      */
-    protected $contextKeyToGroup = [];
+    public $contextKeyToGroup = [];
 
     /**
      * The class cache options
@@ -140,7 +140,8 @@ class Babel
             'jsUrl' => $assetsUrl . 'js/',
             'cssUrl' => $assetsUrl . 'css/',
             'imagesUrl' => $assetsUrl . 'images/',
-            'connectorUrl' => $assetsUrl . 'connector.php'
+            'connectorUrl' => $assetsUrl . 'connector.php',
+            'syncOptions' => ['babel.syncFields', 'babel.syncTvs'],
         ], $config);
 
         $this->cacheOptions = [
@@ -312,17 +313,21 @@ class Babel
      */
     public function synchronizeFields($resourceId)
     {
+        $resource = $this->modx->getObject('modResource', $resourceId);
+        if(!$resource) return;
+        
         $linkedResources = $this->getLinkedResources($resourceId);
 
         /* synchronize the resource fields of linked resources */
-        $syncFields = $this->getOption('syncFields');
+        $ctxSyncSettings = $this->getCtxSyncSettings($resource->get('context_key'), 'babel.syncFields');
+        $syncFields = ($ctxSyncSettings !== '') ? array_map('trim', explode(',', rtrim($ctxSyncSettings, " ,\t\n\r\0\x0B"))) : [];
         if (empty($syncFields) || !is_array($syncFields)) {
             /* there are no resource fields to synchronize */
             return;
         }
 
         $fieldChanges = [];
-        $resource = $this->modx->getObject('modResource', $resourceId);
+        
         foreach ($linkedResources as $linkedResourceId) {
             /* go through each linked resource */
             if ($resourceId == $linkedResourceId) {
@@ -365,6 +370,9 @@ class Babel
      */
     public function synchronizeTvs($resourceId)
     {
+        $resourceObject = $this->modx->getObject('modResource', $resourceId);
+        if(!$resourceObject) return;
+        
         $linkedResources = $this->getLinkedResources($resourceId);
         /* check if Babel TV has been initiated for the specified resource */
         if (empty($linkedResources)) {
@@ -372,7 +380,9 @@ class Babel
         }
 
         /* synchronize the TVs of linked resources */
-        $syncTvs = $this->getOption('syncTvs');
+        $ctxSyncSettings = $this->getCtxSyncSettings($resourceObject->get('context_key'), 'babel.syncTvs');
+        $syncTvs = ($ctxSyncSettings !== '') ? array_map('trim', explode(',', rtrim($ctxSyncSettings, " ,\t\n\r\0\x0B"))) : [];
+        
         if (empty($syncTvs) || !is_array($syncTvs)) {
             /* there are no TVs to synchronize */
             return;
@@ -382,11 +392,13 @@ class Babel
         foreach ($syncTvs as $tvId) {
             /* go through each TV which should be synchronized */
             /** @var modTemplateVar $tv */
-            $tv = $this->modx->getObject('modTemplateVar', $tvId);
+            
+            $tv = $this->modx->getObject('modTemplateVar', ['name' => $tvId]);
             if (!$tv) {
                 continue;
             }
             $tvValue = $tv->getValue($resourceId);
+            
             foreach ($linkedResources as $linkedResourceId) {
                 /* go through each linked resource */
                 if ($resourceId == $linkedResourceId) {
@@ -806,5 +818,15 @@ class Babel
         }
 
         return $languages;
+    }
+    
+    private function getCtxSyncSettings($ctx, $key):string {
+        $ctxSetting = $this->modx->getObject('modContextSetting', [
+            'context_key' => $ctx,
+            'key' => $key,
+        ]);
+        
+        if(!$ctxSetting) return '';
+        return $ctxSetting->get('value');
     }
 }

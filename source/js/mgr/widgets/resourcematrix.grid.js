@@ -191,6 +191,7 @@ Ext.extend(Babel.grid.ResourceMatrix, MODx.grid.Grid, {
             } else {
                 var pagetitle = record.get('linkedres_pagetitle_' + ctx);
                 var target = record.get('linkedres_id_' + ctx);
+                if(target == 'x') return;
                 actionButtons.push({
                     className: 'update',
                     icon: 'pencil-square-o',
