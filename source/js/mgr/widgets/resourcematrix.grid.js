@@ -174,6 +174,8 @@ Ext.extend(Babel.grid.ResourceMatrix, MODx.grid.Grid, {
         var actionButtons = [];
         if (metaData.id !== 'linkedres_id_' + record.get('context_key')) {
             var ctx = metaData.id.substr('linkedres_id_'.length);
+            var target = record.get('linkedres_id_' + ctx);
+            if(target == 'x') return;
             if (record.get(metaData.id) === '') {
                 actionButtons.push({
                     className: 'create',
@@ -190,7 +192,6 @@ Ext.extend(Babel.grid.ResourceMatrix, MODx.grid.Grid, {
                 });
             } else {
                 var pagetitle = record.get('linkedres_pagetitle_' + ctx);
-                var target = record.get('linkedres_id_' + ctx);
                 actionButtons.push({
                     className: 'update',
                     icon: 'pencil-square-o',

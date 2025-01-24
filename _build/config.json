@@ -120,7 +120,8 @@
             "OnContextRemove",
             "OnContextSave",
             "OnResourceDuplicate",
-            "OnResourceSort"
+            "OnResourceSort",
+            "OnMODXInit"
           ]
         }
       ],

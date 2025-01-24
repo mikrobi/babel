@@ -2,7 +2,7 @@
 /**
  * Babel
  *
- * Copyright 2010-2024 by Jakob Class <jakob.class@gmail.com>
+ * Copyright 2010-2025 by Jakob Class <jakob.class@gmail.com>
  *
  * This file is part of Babel.
  *
