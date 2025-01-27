@@ -1,9 +1,10 @@
 <?php
+require_once 'factory.class.php';
 
-use mikrobi\Babel\Processors\Context\Setting\Create;
-
-class BabelContextSettingCreateProcessor extends Create
+class BabelContextSettingCreateProcessor extends BabelContextFactoryProcessor
 {
+    
+    public $runFactoryClass = 'Create';
 
 }
 

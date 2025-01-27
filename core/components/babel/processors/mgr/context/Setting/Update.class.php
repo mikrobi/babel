@@ -1,9 +1,10 @@
 <?php
+require_once 'factory.class.php';
 
-use mikrobi\Babel\Processors\Context\Setting\Update;
-
-class BabelContextSettingUpdateProcessor extends Update
+class BabelContextSettingUpdateProcessor extends BabelContextFactoryProcessor
 {
+    
+    public $runFactoryClass = 'Update';
 
 }
 

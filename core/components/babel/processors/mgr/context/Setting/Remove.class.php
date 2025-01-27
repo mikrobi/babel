@@ -1,9 +1,10 @@
 <?php
+require_once 'factory.class.php';
 
-use mikrobi\Babel\Processors\Context\Setting\Remove;
-
-class BabelContextSettingRemoveProcessor extends Remove
+class BabelContextSettingRemoveProcessor extends BabelContextFactoryProcessor
 {
+    
+    public $runFactoryClass = 'Remove';
 
 }
 

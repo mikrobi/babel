@@ -142,8 +142,21 @@ class Babel
             'imagesUrl' => $assetsUrl . 'images/',
             'connectorUrl' => $assetsUrl . 'connector.php',
             'syncOptions' => ['babel.syncFields', 'babel.syncTvs'],
+            'isModx3' =>  $this->modx->version['version'] == '3',
+            'overwriteProcessors' => [
+                "Context/Setting/Create",
+                "Context/Setting/Update",
+                "Context/Setting/UpdateFromGrid",
+                "Context/Setting/Remove"
+            ],
         ], $config);
-
+        
+        if(!$this->config['isModx3']) {
+            $this->config['overwriteProcessors'] = array_map(function($path) {
+                return strtolower($path);
+            }, $this->config['overwriteProcessors']);
+        }
+        
         $this->cacheOptions = [
             xPDO::OPT_CACHE_KEY => $this->namespace,
             xPDO::OPT_CACHE_HANDLER => $this->modx->getOption('cache_resource_handler', null, $this->modx->getOption(xPDO::OPT_CACHE_HANDLER)),
@@ -282,7 +295,7 @@ class Babel
      */
     public function decodeContextKeySetting($contextKeyString)
     {
-        $contextKeyToGroup = $this->modx->cacheManager->get('contextkeygroups', $this->cacheOptions);
+        $contextKeyToGroup = $this->modx->cacheManager->get('contextkeygroupss', $this->cacheOptions);
         if (empty($contextKeyToGroup) && !empty($contextKeyString)) {
             $contextKeyToGroup = [];
             $contextGroups = explode(';', $contextKeyString);
@@ -820,7 +833,8 @@ class Babel
         return $languages;
     }
     
-    private function getCtxSyncSettings($ctx, $key):string {
+    private function getCtxSyncSettings($ctx, $key):string 
+    {
         $ctxSetting = $this->modx->getObject('modContextSetting', [
             'context_key' => $ctx,
             'key' => $key,

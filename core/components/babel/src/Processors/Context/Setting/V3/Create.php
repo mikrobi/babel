@@ -7,13 +7,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace mikrobi\Babel\Processors\Context\Setting;
+namespace mikrobi\Babel\Processors\Context\Setting\V3;
 
 use MODX\Revolution\modSystemEvent;
 
+
 class Create extends \MODX\Revolution\Processors\Context\Setting\Create
 {
-    use \mikrobi\Babel\Processors\Context\Setting\UpdateEventTrait;
+    use \mikrobi\Babel\Processors\Context\Setting\CommonTrait;
     
     public function process() 
     {

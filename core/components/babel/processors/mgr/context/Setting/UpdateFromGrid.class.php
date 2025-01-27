@@ -1,10 +1,11 @@
 <?php
+require_once 'factory.class.php';
 
-use mikrobi\Babel\Processors\Context\Setting\UpdateFromGrid;
-
-class BabelContextSettingUpdateFromGridProcessor extends UpdateFromGrid
+class BabelContextSettingUpdateFromGridProcessor extends BabelContextFactoryProcessor
 {
     
+    public $runFactoryClass = 'UpdateFromGrid';
+
 }
 
 return 'BabelContextSettingUpdateFromGridProcessor';

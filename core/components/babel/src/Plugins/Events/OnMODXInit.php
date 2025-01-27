@@ -13,26 +13,22 @@ use \MODX\Revolution\modConnectorResponse;
 
 class OnMODXInit extends Plugin
 {
-    const OVERWRITE_PROCESSOR_PATH = [
-        "Context/Setting/Create",
-        "Context/Setting/Update",
-        "Context/Setting/UpdateFromGrid",
-        "Context/Setting/Remove"
-    ];
+    
     public function process()
     {
-        if(in_array($_REQUEST['action'], self::OVERWRITE_PROCESSOR_PATH)) {
-            $className = end(explode('/', $_REQUEST['action']));
-            $connectorRequestClass = $this->modx->getOption('modConnectorRequest.class', null, \MODX\Revolution\modConnectorRequest::class);
-            $this->modx->config['modRequest.class'] = $connectorRequestClass;
-            $this->modx->getRequest(\MODX\Revolution\modConnectorRequest::class);
-            $this->modx->request->sanitizeRequest();
-            
-            $_REQUEST['action'] = str_replace('Context', '', $_REQUEST['action']);
-            $this->modx->request->handleRequest([
-                'processors_path' => $this->babel->config['processorsPath'] . 'mgr/Context/',
-                'location' => '',
-            ]);;
+        if(is_array($_REQUEST['action'])) {
+            if (in_array($_REQUEST['action'], $this->babel->config['overwriteProcessors'])) {
+                $connectorRequestClass = $this->modx->getOption('modConnectorRequest.class', null, $this->babel->config['isModx3'] ? \MODX\Revolution\modConnectorRequest::class : 'modConnectorRequest');
+                $this->modx->config['modRequest.class'] = $connectorRequestClass;
+                $this->modx->getRequest();
+                $this->modx->request->sanitizeRequest();
+
+                $_REQUEST['action'] = str_replace('context', '', strtolower($_REQUEST['action']));
+                $this->modx->request->handleRequest([
+                    'processors_path' => $this->babel->config['processorsPath'] . 'mgr/context/',
+                    'location' => '',
+                ]);;
+            }
         }
     }
 }
