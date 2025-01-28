@@ -406,7 +406,7 @@ class Babel
             /* go through each TV which should be synchronized */
             /** @var modTemplateVar $tv */
             
-            $tv = $this->modx->getObject('modTemplateVar', ['name' => $tvId]);
+            $tv = $this->modx->getObject('modTemplateVar', $tvId);
             if (!$tv) {
                 continue;
             }
