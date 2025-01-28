@@ -16,7 +16,7 @@ class OnMODXInit extends Plugin
     
     public function process()
     {
-        if(is_array($_REQUEST['action'])) {
+        if(isset($_REQUEST['action'])) {
             if (in_array($_REQUEST['action'], $this->babel->config['overwriteProcessors'])) {
                 $connectorRequestClass = $this->modx->getOption('modConnectorRequest.class', null, $this->babel->config['isModx3'] ? \MODX\Revolution\modConnectorRequest::class : 'modConnectorRequest');
                 $this->modx->config['modRequest.class'] = $connectorRequestClass;
