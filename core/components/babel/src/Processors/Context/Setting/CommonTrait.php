@@ -4,8 +4,11 @@ namespace mikrobi\Babel\Processors\Context\Setting;
 
 use \mikrobi\Babel\Babel;
 
-trait UpdateEventTrait
+trait CommonTrait
 {
+    public $modeNew = 1;
+    public $modeUpd = 2;
+    
     private $babel = null;
     
     public function runOnSaveEvent($instance, $params)
@@ -29,5 +32,25 @@ trait UpdateEventTrait
         }
         
         return $this->babel;
+    }
+    
+    public function removeGroupContextSetting()
+    {
+        $currentCtx = $this->object->get('context_key');
+        $keysToGroup = $this->babel->contextKeyToGroup[$currentCtx];
+        
+        if(is_array($keysToGroup)) {
+            foreach($keysToGroup as $context) {
+                if($currentCtx == $context) continue;
+                
+                $removeContextSetting = $this->modx->getObject('modContextSetting', [
+                    'context_key' => $context,
+                    'key' => $this->getProperty('key'),
+                ]);
+                if(!$removeContextSetting) continue;
+                
+                $removeContextSetting->remove();
+            }
+        }
     }
 }
