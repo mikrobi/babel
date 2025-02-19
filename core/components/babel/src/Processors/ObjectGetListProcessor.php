@@ -87,11 +87,9 @@ class ObjectGetListProcessor extends modObjectGetListProcessor
         $valuesQuery = $this->getProperty('valuesqry');
         $query = (!$valuesQuery) ? $this->getProperty('query') : '';
         if (!empty($query)) {
-            $conditions = [];
-            $or = '';
+            $conditions = ['id' => intval($query)];
             foreach ($this->search as $search) {
-                $conditions[$or . $search . ':LIKE'] = '%' . $query . '%';
-                $or = 'OR:';
+                $conditions['OR:' . $search . ':LIKE'] = '%' . $query . '%';
             }
             $c->where([$conditions]);
         }
