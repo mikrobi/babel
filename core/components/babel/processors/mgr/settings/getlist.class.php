@@ -24,6 +24,15 @@ class BabelSystemSettingsGetlistProcessor extends modSystemSettingsGetListProces
 
     /**
      * {@inheritDoc}
+     * @return bool
+     */
+    public function checkPermissions()
+    {
+        return !empty($this->permission) ? $this->modx->hasPermission($this->permission) || $this->modx->hasPermission('babel_' . $this->permission) : true;
+    }
+
+    /**
+     * {@inheritDoc}
      * @return array
      */
     public function prepareCriteria()
