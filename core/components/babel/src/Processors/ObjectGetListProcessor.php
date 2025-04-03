@@ -22,9 +22,8 @@ class ObjectGetListProcessor extends modObjectGetListProcessor
     public $defaultSortField = 'sortindex';
     public $defaultSortDirection = 'ASC';
 
-    /** @var Babel */
+    /** @var Babel $babel */
     public $babel;
-
 
     protected $search = [];
     protected $nameField = 'name';
@@ -67,6 +66,19 @@ class ObjectGetListProcessor extends modObjectGetListProcessor
 
     /**
      * {@inheritDoc}
+     * @return bool
+     */
+    public function beforeQuery()
+    {
+        if ($this->getProperty('valuesqry')) {
+            $this->setProperty('limit', 0);
+        }
+
+        return parent::beforeQuery();
+    }
+
+    /**
+     * {@inheritDoc}
      * @param xPDOQuery $c
      * @return xPDOQuery
      */
@@ -75,11 +87,9 @@ class ObjectGetListProcessor extends modObjectGetListProcessor
         $valuesQuery = $this->getProperty('valuesqry');
         $query = (!$valuesQuery) ? $this->getProperty('query') : '';
         if (!empty($query)) {
-            $conditions = [];
-            $or = '';
+            $conditions = ['id' => intval($query)];
             foreach ($this->search as $search) {
-                $conditions[$or . $search . ':LIKE'] = '%' . $query . '%';
-                $or = 'OR:';
+                $conditions['OR:' . $search . ':LIKE'] = '%' . $query . '%';
             }
             $c->where([$conditions]);
         }

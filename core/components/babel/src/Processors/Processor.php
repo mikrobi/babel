@@ -19,7 +19,7 @@ abstract class Processor extends modProcessor
 {
     public $languageTopics = ['babel:default'];
 
-    /** @var Babel */
+    /** @var Babel $babel */
     public $babel;
 
     /**
@@ -27,12 +27,21 @@ abstract class Processor extends modProcessor
      * @param modX $modx A reference to the modX instance
      * @param array $properties An array of properties
      */
-    function __construct(modX &$modx, array $properties = [])
+    public function __construct(modX &$modx, array $properties = [])
     {
         parent::__construct($modx, $properties);
 
         $corePath = $this->modx->getOption('babel.core_path', null, $this->modx->getOption('core_path') . 'components/babel/');
         $this->babel = $this->modx->getService('babel', Babel::class, $corePath . 'model/babel/');
+    }
+
+    /**
+     * {@inheritDoc}
+     * @return bool
+     */
+    public function checkPermissions()
+    {
+        return !empty($this->permission) ? $this->modx->hasPermission($this->permission) : true;
     }
 
     abstract public function process();

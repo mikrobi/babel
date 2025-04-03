@@ -18,8 +18,8 @@ class BabelResourceDuplicateProcessor extends ObjectUpdateProcessor
     /** @var modResource $object The resource to duplicate */
     public $object;
 
-    /** @var modResource $newObject The newly duplicated resource */
-    public $newObject;
+    /** @var modResource $duplicatedObject The newly duplicated resource */
+    public $duplicatedObject;
 
     /**
      * {@inheritDoc}
@@ -52,45 +52,47 @@ class BabelResourceDuplicateProcessor extends ObjectUpdateProcessor
     public function process()
     {
         $context = $this->getProperty('context_key');
-        $this->newObject = $this->babel->duplicateResource($this->object, $context);
-        if (!$this->newObject) {
-            return $this->failure($this->modx->lexicon('babel.translation_err_could_not_create_resource', [
+        $this->duplicatedObject = $this->babel->duplicateResource($this->object, $context);
+        if (!$this->duplicatedObject) {
+            return $this->failure($this->modx->lexicon('babel.translation_err_could_not_duplicate_resource', [
                 'context' => $context
             ]));
         }
 
         $targetResources = $this->babel->getLinkedResources($this->getProperty('target'));
         $linkedResources = $this->babel->getLinkedResources($this->object->get('id'));
-        $linkedResources[$context] = $this->newObject->get('id');
+        $linkedResources[$context] = $this->duplicatedObject->get('id');
 
         $syncLinkedTranslations = $this->getProperty('sync');
         if ($syncLinkedTranslations == 1) {
-            /* Join all existing linked resources from both resources */
+            // Join all existing linked resources from both resources
             $mergedResources = array_merge($targetResources, $linkedResources);
             $this->babel->updateBabelTv($mergedResources, $mergedResources);
         } else {
-            /* Only join between 2 resources */
+            // Only join between 2 resources
             $mergeLinked = array_merge($linkedResources, [
-                $this->getProperty('context_key') => $this->newObject->get('id')
+                $this->getProperty('context_key') => $this->duplicatedObject->get('id')
             ]);
             $this->babel->updateBabelTv($this->object->get('id'), $mergeLinked);
             $mergeTarget = array_merge($targetResources, [
                 $this->object->get('context_key') => $this->object->get('id')
             ]);
-            $this->babel->updateBabelTv($this->newObject->get('id'), $mergeTarget);
+            $this->babel->updateBabelTv($this->duplicatedObject->get('id'), $mergeTarget);
         }
 
         $copyTvValues = $this->getProperty('copy');
         if ($copyTvValues == 1) {
-            /* copy values of synchronized TVs to target resource */
-            $this->babel->synchronizeTvs($this->object->get('id'));
+            // Copy values of synchronized TVs and resource fields to the target resource
+            $this->babel->synchronizeTvs($this->object->get('id'), $this->duplicatedObject->get('id'));
+            $this->babel->synchronizeFields($this->object->get('id'), $this->duplicatedObject->get('id'));
         }
 
         $this->fireDuplicateEvent();
         $this->logManagerAction();
 
-        $this->modx->log(xPDO::LOG_LEVEL_INFO, $this->modx->lexicon('babel.translation_success_create_resource', [
-            'id' => $this->newObject->get('id'),
+        $this->modx->log(xPDO::LOG_LEVEL_INFO, $this->modx->lexicon('babel.success_duplicate_resource', [
+            'id' => $this->object->get('id'),
+            'newid' => $this->duplicatedObject->get('id'),
             'context' => $context,
         ]));
         if ($this->getBooleanProperty('last')) {
@@ -109,8 +111,8 @@ class BabelResourceDuplicateProcessor extends ObjectUpdateProcessor
             'context_key' => $this->getProperty('context_key'),
             'original_id' => $this->object->get('id'),
             'original_resource' => &$this->object,
-            'duplicate_id' => $this->newObject->get('id'),
-            'duplicate_resource' => &$this->newObject,
+            'duplicate_id' => $this->duplicatedObject->get('id'),
+            'duplicate_resource' => &$this->duplicatedObject,
         ]);
     }
 
@@ -119,7 +121,7 @@ class BabelResourceDuplicateProcessor extends ObjectUpdateProcessor
      */
     public function logManagerAction()
     {
-        $this->modx->logManagerAction($this->objectType . '_duplicate', $this->classKey, $this->newObject->get('id'));
+        $this->modx->logManagerAction($this->objectType . '_duplicate', $this->classKey, $this->duplicatedObject->get('id'));
     }
 
     /**
@@ -128,7 +130,7 @@ class BabelResourceDuplicateProcessor extends ObjectUpdateProcessor
      */
     public function cleanup()
     {
-        $output = $this->newObject->toArray();
+        $output = $this->duplicatedObject->toArray();
         return $this->success('', $output);
     }
 }

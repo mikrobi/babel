@@ -7,6 +7,7 @@
 namespace mikrobi\Babel\Plugins\Events;
 
 use mikrobi\Babel\Plugins\Plugin;
+use xPDO;
 
 class OnSiteRefresh extends Plugin
 {
@@ -20,5 +21,8 @@ class OnSiteRefresh extends Plugin
         $cacheManager->refresh([
             'babel' => [],
         ]);
+        $this->modx->log(xPDO::LOG_LEVEL_INFO, $this->modx->lexicon('babel.refresh_cache', [
+            'packagename' => $this->babel->packageName
+        ]));
     }
 }

@@ -1,10 +1,12 @@
+@use "modx3";
+
 $red: #be0000;
 
 .x-buttonmenu-babel-item-icon {
   text-align: center;
   &:before {
-    left: 2px;
-    top: 1px;
+    left: 0;
+    top: 0;
     position: relative;
   }
 }
@@ -35,4 +37,9 @@ $red: #be0000;
       }
     }
   }
+}
+
+.x-menu-babel {
+  max-height: 74vh;
+  overflow-y: auto;
 }

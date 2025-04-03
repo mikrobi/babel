@@ -64,10 +64,14 @@ class BabelResourceGetMatrixListProcessor extends ObjectGetListProcessor
         $objectArray['pagetitle'] = htmlspecialchars($objectArray['pagetitle']);
 
         $linkedResources = $this->babel->getLinkedResources($objectArray['id']);
+        $contextKeyToGroup = $this->babel->contextKeyToGroup;
         foreach ($this->contexts as $ctx) {
             $objectArray['linkedres_id_' . $ctx] = '';
             $objectArray['linkedres_pagetitle_' . $ctx] = '';
             if ($objectArray['context_key'] === $ctx) {
+                $objectArray['linkedres_id_' . $ctx] = 'x';
+                $objectArray['linkedres_pagetitle_' . $ctx] = 'x';
+            } elseif (!in_array($ctx, $contextKeyToGroup[$objectArray['context_key']])) {
                 $objectArray['linkedres_id_' . $ctx] = 'x';
                 $objectArray['linkedres_pagetitle_' . $ctx] = 'x';
             } else {

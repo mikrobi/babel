@@ -21,7 +21,7 @@ class ObjectSortindexProcessor extends modObjectProcessor
     public $languageTopics = ['babel:default'];
     public $indexKey = 'sortindex';
 
-    /** @var Babel */
+    /** @var Babel $babel */
     public $babel;
 
     /**

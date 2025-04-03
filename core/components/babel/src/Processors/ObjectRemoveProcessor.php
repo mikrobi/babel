@@ -20,7 +20,7 @@ class ObjectRemoveProcessor extends modObjectRemoveProcessor
 {
     public $languageTopics = ['babel:default'];
 
-    /** @var Babel */
+    /** @var Babel $babel */
     public $babel;
 
     /**

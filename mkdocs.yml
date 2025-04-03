@@ -8,7 +8,7 @@ remote_name: upstream
 repo_name: 'mikrobi/babel'
 repo_url: https://github.com/mikrobi/babel
 
-copyright: '&copy; 2010-2024 <a href="https://github.com/mikrobi">Jakob Class</a>'
+copyright: '&copy; 2010-2025 <a href="https://github.com/mikrobi">Jakob Class</a>'
 
 nav:
 - Description: 'index.md'

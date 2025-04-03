@@ -6,7 +6,7 @@ Babel.page.Home = function (config) {
         buttons: [{
             text: _('babel.about'),
             handler: Babel.aboutWindow
-        },{
+        }, {
             text: _('help_ex'),
             handler: MODx.loadHelpPane
         }],

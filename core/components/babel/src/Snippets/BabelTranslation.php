@@ -52,7 +52,7 @@ class BabelTranslation extends Snippet
         }
         $showUnpublished = $this->getProperty('showUnpublished');
 
-        /* determine ids of translated resource */
+        // Determine ids of translated resource
         $output = [];
         foreach ($resourceIds as $resourceId) {
             $linkedResource = $this->babel->getLinkedResources($resourceId);
