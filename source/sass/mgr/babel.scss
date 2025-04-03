@@ -2,17 +2,8 @@
 
 $red: #be0000;
 
-@import '../../js/ux/LockingGridView/LockingGridView';
-@import 'resourcebutton';
-
-.x-buttonmenu-babel-item-icon {
-  text-align: center;
-  &:before {
-    left: 2px;
-    top: 1px;
-    position: relative;
-  }
-}
+@use "resourcebutton";
+@use '../../js/ux/LockingGridView/LockingGridView';
 
 .babel-panel {
   .action-buttons {
@@ -41,34 +32,6 @@ $red: #be0000;
 
     &:first-child {
       margin-left: 0;
-    }
-  }
-}
-
-.x-fieldset {
-  &.x-fieldset-check-all {
-    overflow: visible;
-
-    .x-fieldset-bwrap {
-      overflow: visible;
-
-      .x-fieldset-body {
-        overflow: visible !important;
-      }
-    }
-
-    .x-form-item-check-all {
-      position: absolute;
-      right: 5px;
-      top: -17px;
-      background: #fff;
-      padding: 0 5px !important;
-      .x-form-cb-label {
-        font-size: smaller;
-        &:before {
-          font-size: initial;
-        }
-      }
     }
   }
 }

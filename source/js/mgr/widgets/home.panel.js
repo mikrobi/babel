@@ -53,6 +53,7 @@ Babel.panel.HomeTab = function (config) {
                 contexts: Babel.config.contexts,
                 listeners: {
                     afterrender: function () {
+                        // Get/set the sizes of the locking grid
                         this.store.on('load', function () {
                             var tbarHeight = this.getTopToolbar().getHeight();
                             var lockedHdHeight = this.getView().lockedHd.getHeight();
@@ -83,11 +84,16 @@ Babel.panel.Overview = function (config) {
     this.panelOverviewTabs = [{
         xtype: 'babel-panel-hometab',
         title: _('babel.contexts'),
-        description: '<div>' + _('babel.contexts_desc') + '</div><div><i class="icon-babel-description-img icon icon-link"></i>' + _('babel.contexts_desc_link') +
+        description: '<div>' + _('babel.contexts_desc') + '</div><div>'+
+            '<i class="icon-babel-description-img icon icon-link"></i>' + _('babel.contexts_desc_link') +
             '<i class="icon-babel-description-img icon icon-chain-broken"></i>' + _('babel.contexts_desc_unlink') +
             '<i class="icon-babel-description-img icon icon-pencil-square-o"></i>' + _('babel.contexts_desc_update') +
             '<i class="icon-babel-description-img icon icon-plus-circle"></i>' + _('babel.contexts_desc_create') +
-            '<i class="icon-babel-description-img icon icon-plus-square"></i>' + _('babel.contexts_desc_create_multiple') + '</div>',
+            '<i class="icon-babel-description-img icon icon-plus-square"></i>' + _('babel.contexts_desc_create_multiple') +
+            '<i class="icon-babel-description-img icon icon-refresh"></i>' + _('babel.contexts_desc_refresh') +
+            '<i class="icon-babel-description-img icon icon-trash-o"></i>' + _('babel.contexts_desc_delete') +
+            '<i class="icon-babel-description-img icon icon-trash"></i>' + _('babel.contexts_desc_delete_all') +
+            '</div>',
         tabtype: 'resourcematrix',
         contenttype: 'grid'
     }];

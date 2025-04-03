@@ -2,13 +2,14 @@ Babel contains a Babel Button, a custom manager page and two snippets.
 
 ## Babel Button
 
-The Babel Button is located on the top of a resource form. With this button
-you can create, link and update translated versions of the current resource in
-different contexts.
+The Babel Button is located on the top of a resource form. With this button you
+can create, link, update and delete translated versions of the current resource
+in different contexts.
 
-Hover the button and create, link, update and unlink the translated versions of
-the current resource. You can also unlink all translations from this resource
-and create multiple translations in selectable contexts with a menu entry.
+Hover the button and create, link, update, unlink and delete the translated
+versions of the current resource. You can also unlink and delete all
+translations from this resource and create multiple translations in selectable
+contexts with a menu entry.
 
 ![Linked Menu](img/babel-linked-menu.png)
 
@@ -21,7 +22,10 @@ for the page title or by entering the target ID directly.
 If you enable 'Copy synchronized TVs to target', the synced template variables
 (TVs) referenced in the system setting `babel.syncTvs` and the synced resource
 fields referenced in the system setting `babel.syncFields` of all linked
-resources are filled with the TV/field values of the current resource.
+resources are filled with the TV/field values of the current resource. The
+system settings `babel.syncTvs` and `babel.syncFields` can be optionally be set
+with according context settings. These context settings are synced in each
+context group.
 
 If you enable 'Synchronise all translations from the target', the language links
 of the target resource are synced between the linked resources. The current
@@ -32,13 +36,21 @@ the target resource.
 
 ![Linking Window](img/babel-linking-window.png)
 
-If you create a translations of the current resource in a selected context, the following
-window is displayed.
+If you create a translation of the current resource in a selected context, the
+following window is displayed.
+
+If you enable 'Copy synchronized TVs to target', the synced template variables
+(TVs) referenced in the system setting babel.syncTvs and the synced resource
+fields referenced in the system setting babel.syncFields of the created resource
+is filled with the TV/field values of the current resource.
 
 If you enable 'Synchronise all translations', the language links of the current
 resource are synced between the linked resources. The created translation is
 linked to all linked resources. Otherwise, there is just a link created between
 the current resource and the new created translation.
+
+If you enable 'Create translations of child resources', the child resources of
+the current resource are created and linked in the selected context.
 
 ![Create Single Window](img/babel-create-single.png)
 
@@ -46,10 +58,18 @@ If you create multiple translations of the current resource, the following
 window is displayed. You must select the contexts into which the current
 resource is not translated and for which you would like to create a translation.
 
+If you enable 'Copy synchronized TVs to target', the synced template variables
+(TVs) referenced in the system setting babel.syncTvs and the synced resource
+fields referenced in the system setting babel.syncFields of all created resources
+are filled with the TV/field values of the current resource.
+
 If you enable 'Synchronise all translations', the language links of the current
 resource are synced between the linked resources. All created translations are
 linked to all linked resources. Otherwise, there is just a link created between
 the current resource and the new created translations.
+
+If you enable 'Create translations of child resources', the child resources of
+the current resource are created and linked in the selected contexts.
 
 ![Create Multiple Window](img/babel-create-multiple.png)
 
@@ -62,15 +82,24 @@ The custom manager page contains two tabs.
 In this tab you can manage the translated versions of a resource. The first
 columns contain information of the source resource (ID, context and pagetitle)
 and an `All` column to create multiple translations with a click on the
-:fontawesome-solid-square-plus: icon or remove all links to the source resource
-with a click on the :fontawesome-solid-link-slash: icon. For each translatable
-context a grid column is available with two icons. The following icons are
-available depending on the link state:
+:fontawesome-solid-square-plus: icon, refresh all linked resources of the source
+resource with a click on the :fontawesome-solid-rotate: icon, remove all links
+to the source resource with a click on the :fontawesome-solid-link-slash: icon
+or delete all linked resource of the source resource with a click on the
+:fontawesome-solid-trash-can: icon. For each translatable context a grid column
+is available with some icons. The following icons are available. 
+
+For unlinked contexts:
 
 - :fontawesome-solid-circle-plus: to create a new resource to be linked,
 - :fontawesome-solid-link: to link to this resource and its linked resources
+
+For linked contexts:
+
 - :fontawesome-regular-pen-to-square: to update the linked resource
+- :fontawesome-solid-rotate: to refresh the linked resource
 - :fontawesome-solid-link-slash: to break the link
+- :fontawesome-regular-trash-can: to delete the linked resource
 
 ![Contexts Tab](img/babel-cmp-contexts.png)
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Unink resource
+ * Delete resource
  *
  * @package babel
  * @subpackage processors
@@ -8,7 +8,7 @@
 
 use mikrobi\Babel\Processors\ObjectUpdateProcessor;
 
-class BabelResourceUnlinkProcessor extends ObjectUpdateProcessor
+class BabelResourceDeleteProcessor extends ObjectUpdateProcessor
 {
     public $classKey = 'modResource';
     public $objectType = 'resource';
@@ -52,16 +52,23 @@ class BabelResourceUnlinkProcessor extends ObjectUpdateProcessor
 
         $contextKey = $this->getProperty('context_key');
         if (empty($contextKey)) {
-            // Unlink this resource from all resources
+            // Move all linked resources to the trash
             foreach ($linkedResources as $linkedResource) {
-                $diff = array_diff($this->babel->getLinkedResources($linkedResource), [
-                    $this->object->get('context_key') => $this->object->get('id')
-                ]);
-                $this->babel->updateBabelTv($linkedResource, $diff);
+                foreach ($this->babel->getLinkedResources($linkedResource) as $resourceId) {
+                    /** @var modResource $resource */
+                    $resource = $this->modx->getObject('modResource', $resourceId);
+                    if ($resource && $resource->get('id') !== $this->object->get('id')) {
+                        $resource->set('deleted', true);
+                        $resource->set('deletedon', time());
+                        $resource->set('deletedby', $this->modx->user->id);
+                        $resource->save();
+                    }
+                }
             }
             $this->babel->updateBabelTv($this->object->get('id'), []);
             $this->fireUnlinkEvent();
-            $this->modx->log(xPDO::LOG_LEVEL_INFO, $this->modx->lexicon('babel.success_unlink_resources', [
+
+            $this->modx->log(xPDO::LOG_LEVEL_INFO, $this->modx->lexicon('babel.success_delete_resources', [
                 'id' => $this->object->get('id'),
             ]));
         } else {
@@ -82,8 +89,14 @@ class BabelResourceUnlinkProcessor extends ObjectUpdateProcessor
             unset($linkedResources[$this->getProperty('context_key')]);
             $this->babel->updateBabelTv($this->object->get('id'), $linkedResources);
             $this->fireUnlinkEvent($targetResource);
-            $this->modx->log(xPDO::LOG_LEVEL_INFO, $this->modx->lexicon('babel.success_unlink_resource', [
+            $targetResource->set('deleted', true);
+            $targetResource->set('deletedon', time());
+            $targetResource->set('deletedby', $this->modx->user->id);
+            $targetResource->save();
+
+            $this->modx->log(xPDO::LOG_LEVEL_INFO, $this->modx->lexicon('babel.success_delete_resource', [
                 'id' => $this->object->get('id'),
+                'oldid' => $targetResource->get('id'),
                 'context' => $this->getProperty('context_key'),
             ]));
         }
@@ -120,4 +133,4 @@ class BabelResourceUnlinkProcessor extends ObjectUpdateProcessor
     }
 }
 
-return 'BabelResourceUnlinkProcessor';
+return 'BabelResourceDeleteProcessor';

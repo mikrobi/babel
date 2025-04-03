@@ -3,7 +3,7 @@
   "lowCaseName": "babel",
   "description": "The easy way for your multilingual site!",
   "author": "Jakob Class, Rico Goldsky, Joshua Luckers, Thomas Jakobi",
-  "version": "3.4.0",
+  "version": "3.5.0",
   "package": {
     "menus": [
       {
@@ -120,7 +120,8 @@
             "OnContextRemove",
             "OnContextSave",
             "OnResourceDuplicate",
-            "OnResourceSort"
+            "OnResourceSort",
+            "OnSiteRefresh"
           ]
         }
       ],
@@ -132,6 +133,10 @@
         {
           "name": "tplBabellinkWrapper",
           "file": "babellinkwrapper.chunk.html"
+        },
+        {
+          "name": "tplBabelContextMenu",
+          "file": "babelcontextmenu.chunk.html"
         }
       ]
     },
@@ -157,6 +162,11 @@
         "key": "displayText",
         "area": "system",
         "value": "language"
+      },
+      {
+        "key": "displayChunk",
+        "area": "system",
+        "value": "tplBabelContextMenu"
       },
       {
         "key": "babelTvName",

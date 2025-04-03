@@ -40,7 +40,7 @@ class OnDocFormPrerender extends Plugin
         $resource = &$this->scriptProperties['resource'];
         $linkedResources = $this->babel->getLinkedResources($resource->get('id'));
         if (empty($linkedResources)) {
-            /* always be sure that the Babel TV is set */
+            // Always be sure that the Babel TV is set
             $this->babel->initBabelTv($resource);
         }
 

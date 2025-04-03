@@ -17,9 +17,6 @@ class BabelResourceLinkProcessor extends ObjectUpdateProcessor
     /** @var modResource $object The link source */
     public $object;
 
-    /** @var modResource $targetResource The link target */
-    protected $targetResource;
-
     /**
      * {@inheritDoc}
      * @return boolean
@@ -36,8 +33,8 @@ class BabelResourceLinkProcessor extends ObjectUpdateProcessor
         if ($target === $primaryKey) {
             return $this->modx->lexicon('babel.resource_err_link_of_selflink_not_possible');
         }
-        $this->targetResource = $this->modx->getObject('modResource', $target);
-        if (!$this->targetResource) {
+        $targetResource = $this->modx->getObject('modResource', $target);
+        if (!$targetResource) {
             return $this->modx->lexicon('babel.resource_err_invalid_id', [
                 'resource' => $target
             ]);
@@ -54,9 +51,9 @@ class BabelResourceLinkProcessor extends ObjectUpdateProcessor
                 'context' => $contextKey
             ]);
         }
-        if ($this->targetResource->get('context_key') !== $contextKey) {
+        if ($targetResource->get('context_key') !== $contextKey) {
             return $this->modx->lexicon('babel.resource_err_from_other_context', [
-                'resource' => $this->targetResource->get('id'),
+                'resource' => $target,
                 'context' => $contextKey
             ]);
         }
@@ -70,60 +67,62 @@ class BabelResourceLinkProcessor extends ObjectUpdateProcessor
      */
     public function process()
     {
-        $targetResources = $this->babel->getLinkedResources($this->getProperty('target'));
+        $target = $this->getProperty('target', false);
+        $targetResource = $this->modx->getObject('modResource', $target);
+        $targetResources = $this->babel->getLinkedResources($target);
         $linkedResources = $this->babel->getLinkedResources($this->object->get('id'));
         if (empty($linkedResources)) {
-            /* always be sure that the Babel TV is set */
-            $this->babel->initBabelTv($this->object);
+            // Always be sure that the Babel TV is set
+            $linkedResources = $this->babel->initBabelTv($this->object);
         }
 
         $context = $this->getProperty('context');
-        /* add or change a translation link */
+        // Add or change a translation link
         if (isset($linkedResources[$context])) {
-            /* If the existing link has been changed, reset the Babel TV of the old resource */
+            // If the existing link has been changed, reset the Babel TV of the old resource
             $this->babel->initBabelTvById($linkedResources[$context]);
         }
-        $linkedResources[$context] = $this->targetResource->get('id');
+        $linkedResources[$context] = $target;
 
         $syncLinkedTranslations = $this->getProperty('sync');
         if ($syncLinkedTranslations == 1) {
-            /* Join all existing linked resources from both resources */
+            // Join all existing linked resources from both resources
             $mergedResources = array_merge($targetResources, $linkedResources);
             $this->babel->updateBabelTv($mergedResources, $mergedResources);
         } else {
-            /* Only join between 2 resources */
+            // Only join between 2 resources
             $mergeLinked = array_merge($linkedResources, [
-                $this->getProperty('context') => $this->targetResource->get('id')
+                $this->getProperty('context') => $target
             ]);
             $this->babel->updateBabelTv($this->object->get('id'), $mergeLinked);
             $mergeTarget = array_merge($targetResources, [
                 $this->object->get('context_key') => $this->object->get('id')
             ]);
-            $this->babel->updateBabelTv($this->targetResource->get('id'), $mergeTarget);
+            $this->babel->updateBabelTv($target, $mergeTarget);
         }
 
         $copyTvValues = $this->getProperty('copy');
         if ($copyTvValues == 1) {
-            /* copy values of synchronized TVs and resource fields to the target resource */
+            // Copy values of synchronized TVs and resource fields to the target resource
             $this->babel->synchronizeTvs($this->object->get('id'));
             $this->babel->synchronizeFields($this->object->get('id'));
         }
 
-        $this->fireLinkEvent();
+        $this->fireLinkEvent($targetResource);
         return $this->cleanup();
     }
 
     /**
      * Fire the OnBabelLink event
      */
-    public function fireLinkEvent()
+    public function fireLinkEvent($targetResource = null)
     {
         $this->modx->invokeEvent('OnBabelLink', [
             'context_key' => $this->getProperty('context'),
             'original_id' => $this->object->get('id'),
             'original_resource' => &$this->object,
-            'target_id' => $this->targetResource->get('id'),
-            'target_resource' => &$this->targetResource
+            'target_id' => $targetResource->get('id'),
+            'target_resource' => &$targetResource
         ]);
     }
 

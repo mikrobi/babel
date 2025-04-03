@@ -111,7 +111,7 @@ const bumpVersion = function () {
     return gulp.src([
         'core/components/babel/src/Babel.php',
     ], {base: './'})
-        .pipe(replace(/version = '\d+\.\d+\.\d+[-a-z0-9]*'/ig, 'version = \'' + pkg.version + '\''))
+        .pipe(replace(/version = '\d+\.\d+\.\d+-?[0-9a-z]*'/ig, 'version = \'' + pkg.version + '\''))
         .pipe(gulp.dest('.'));
 };
 const bumpAbout = function () {
@@ -121,7 +121,14 @@ const bumpAbout = function () {
         .pipe(replace(/&copy; 2010(-\d{4})?/g, '&copy; ' + (year > 2010 ? '2010-' : '') + year))
         .pipe(gulp.dest('.'));
 };
-gulp.task('bump', gulp.series(bumpCopyright, bumpVersion, bumpAbout));
+const bumpDocs = function () {
+    return gulp.src([
+        'mkdocs.yml',
+    ], {base: './'})
+        .pipe(replace(/&copy; 2010(-\d{4})?/g, '&copy; ' + (year > 2010 ? '2010-' : '') + year))
+        .pipe(gulp.dest('.'));
+};
+gulp.task('bump', gulp.series(bumpCopyright, bumpVersion, bumpAbout, bumpDocs));
 
 gulp.task('watch', function () {
     // Watch .js files

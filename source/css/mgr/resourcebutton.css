@@ -1,9 +1,14 @@
+.modx3.x-buttonmenu-babel-item-icon:before {
+  left: 2px;
+  top: 1px;
+}
+
 .x-buttonmenu-babel-item-icon {
   text-align: center;
 }
 .x-buttonmenu-babel-item-icon:before {
-  left: 2px;
-  top: 1px;
+  left: 0;
+  top: 0;
   position: relative;
 }
 
@@ -28,4 +33,9 @@
 }
 .x-fieldset.x-fieldset-check-all .x-form-item-check-all .x-form-cb-label:before {
   font-size: initial;
+}
+
+.x-menu-babel {
+  max-height: 74vh;
+  overflow-y: auto;
 }

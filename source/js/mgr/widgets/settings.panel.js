@@ -59,7 +59,7 @@ if (MODx.grid.SettingsGrid) {
                 this.menu.showAt(e.xy);
             }
         },
-        updateSetting: function (btn, e) {
+        updateSetting: function () {
             var r = this.menu.record;
             r.fk = Ext.isDefined(this.config.fk) ? this.config.fk : 0;
             var uss = MODx.load({
