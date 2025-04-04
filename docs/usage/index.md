@@ -3,11 +3,11 @@ Babel contains a Babel Button, a custom manager page and two snippets.
 ## Babel Button
 
 The Babel Button is located on the top of a resource form. With this button you
-can create, link, update and delete translated versions of the current resource
-in different contexts.
+can create, link, update refresh and delete translated versions of the current
+resource in different contexts.
 
-Hover the button and create, link, update, unlink and delete the translated
-versions of the current resource. You can also unlink and delete all
+Hover the button and create, link, update, unlink, refresh and delete the
+translated versions of the current resource. You can also unlink and delete all
 translations from this resource and create multiple translations in selectable
 contexts with a menu entry.
 
