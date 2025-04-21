@@ -603,10 +603,10 @@
 <p>Babel contains a Babel Button, a custom manager page and two snippets.</p>
 <h2 id="babel-button">Babel Button</h2>
 <p>The Babel Button is located on the top of a resource form. With this button you
-can create, link, update and delete translated versions of the current resource
-in different contexts.</p>
-<p>Hover the button and create, link, update, unlink and delete the translated
-versions of the current resource. You can also unlink and delete all
+can create, link, update refresh and delete translated versions of the current
+resource in different contexts.</p>
+<p>Hover the button and create, link, update, unlink, refresh and delete the
+translated versions of the current resource. You can also unlink and delete all
 translations from this resource and create multiple translations in selectable
 contexts with a menu entry.</p>
 <p><a class="glightbox" href="img/babel-linked-menu.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Linked Menu" src="img/babel-linked-menu.png" /></a></p>
@@ -874,9 +874,15 @@ given context. It uses the following snippet properties:</p>
 <td>No</td>
 </tr>
 <tr>
+<td>babel.displayChunk</td>
+<td>Button Chunk</td>
+<td>Name of a chunk that is used for the text in the Babel button in each context.</td>
+<td>tplBabelContextMenu</td>
+</tr>
+<tr>
 <td>babel.displayText</td>
 <td>Button Text</td>
-<td>Text shown in the Babel button for each context. You can use the following values: 'language', 'context' or 'combination'</td>
+<td>Text shown in the Babel button for each context. You can use the following values: <code>language</code>, <code>context</code>, <code>combination</code> or <code>chunk</code>.</td>
 <td>language</td>
 </tr>
 <tr>
@@ -906,6 +912,8 @@ given context. It uses the following snippet properties:</p>
 <li>context: the contexts are listed with the context name.</li>
 <li>combination: the contexts are listed with the context name and the context
   language set in the cultureKey context setting.</li>
+<li>chunk: the contexts are listed with the chunk referenced in the system setting
+  <code>babel.displayChunk</code>.</li>
 </ul>
 <h2 id="permissions">Permissions</h2>
 <p>Babel has the following permissions for manager users:</p>
