@@ -9,7 +9,7 @@
 // Compatibility between 2.x/3.x
 if (file_exists(MODX_PROCESSORS_PATH . 'system/settings/update.class.php')) {
     require_once MODX_PROCESSORS_PATH . 'system/settings/update.class.php';
-} elseif (!class_exists('modSystemSettingsGetListProcessor')) {
+} elseif (!class_exists('modSystemSettingsUpdateProcessor')) {
     class_alias(\MODX\Revolution\Processors\System\Settings\Update::class, \modSystemSettingsUpdateProcessor::class);
 }
 
@@ -20,6 +20,15 @@ class BabelSystemSettingsUpdateProcessor extends modSystemSettingsUpdateProcesso
 {
     public $checkSavePermission = false;
     public $languageTopics = ['setting', 'namespace', 'babel:setting'];
+
+    /**
+     * {@inheritDoc}
+     * @return bool
+     */
+    public function checkPermissions()
+    {
+        return !empty($this->permission) ? $this->modx->hasPermission($this->permission) || $this->modx->hasPermission('babel_' . $this->permission) : true;
+    }
 
     /**
      * {@inheritDoc}
@@ -53,7 +62,7 @@ class BabelSystemSettingsUpdateProcessor extends modSystemSettingsUpdateProcesso
         if (strpos($key, 'babel.') !== 0) {
             $this->addFieldError('key', $this->modx->lexicon('babel.systemsetting_key_err_nv'));
         }
-        if (!$this->modx->hasPermission('settings') && !$this->modx->hasPermission('babel_settings')) {
+        if (!$this->modx->hasPermission($this->permission) && !$this->modx->hasPermission('babel_' . $this->permission)) {
             $this->addFieldError('usergroup', $this->modx->lexicon('babel.systemsetting_usergroup_err_nv'));
         }
     }
