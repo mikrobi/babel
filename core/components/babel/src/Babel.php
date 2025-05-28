@@ -299,25 +299,27 @@ class Babel
     public function decodeContextKeySetting($contextKeyString)
     {
         $contextKeyToGroup = $this->modx->cacheManager->get('contextkeygroups', $this->cacheOptions);
-        if (empty($contextKeyToGroup) && !empty($contextKeyString)) {
+        if (empty($contextKeyToGroup)) {
             $contextKeyToGroup = [];
-            $contextGroups = explode(';', $contextKeyString);
-            $contextGroups = array_map('trim', $contextGroups);
-            foreach ($contextGroups as $contextGroup) {
-                $groupContextKeys = explode(',', $contextGroup);
-                $groupContextKeys = array_map('trim', $groupContextKeys);
-                foreach ($groupContextKeys as $i => $contextKey) {
-                    if (!$this->modx->getCount('modContext', $contextKey)) {
-                        unset($groupContextKeys[$i]);
+            if (!empty($contextKeyString)) {
+                $contextGroups = explode(';', $contextKeyString);
+                $contextGroups = array_map('trim', $contextGroups);
+                foreach ($contextGroups as $contextGroup) {
+                    $groupContextKeys = explode(',', $contextGroup);
+                    $groupContextKeys = array_map('trim', $groupContextKeys);
+                    foreach ($groupContextKeys as $i => $contextKey) {
+                        if (!$this->modx->getCount('modContext', $contextKey)) {
+                            unset($groupContextKeys[$i]);
+                        }
+                    }
+                    foreach ($groupContextKeys as $contextKey) {
+                        if (!empty($contextKey)) {
+                            $contextKeyToGroup[$contextKey] = $groupContextKeys;
+                        }
                     }
                 }
-                foreach ($groupContextKeys as $contextKey) {
-                    if (!empty($contextKey)) {
-                        $contextKeyToGroup[$contextKey] = $groupContextKeys;
-                    }
-                }
+                $this->modx->cacheManager->set('contextkeygroups', $contextKeyToGroup, 0, $this->cacheOptions);
             }
-            $this->modx->cacheManager->set('contextkeygroups', $contextKeyToGroup, 0, $this->cacheOptions);
         }
         return $contextKeyToGroup;
     }
