@@ -121,7 +121,6 @@ class Babel
     public function __construct(modX &$modx, array $config = [])
     {
         $this->modx =& $modx;
-        $this->namespace = $this->getOption('namespace', $config, $this->namespace);
 
         $corePath = $this->getOption('core_path', $config, $this->modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/' . $this->namespace . '/');
         $assetsPath = $this->getOption('assets_path', $config, $this->modx->getOption('assets_path', null, MODX_ASSETS_PATH) . 'components/' . $this->namespace . '/');
