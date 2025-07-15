@@ -3,11 +3,11 @@ Babel contains a Babel Button, a custom manager page and two snippets.
 ## Babel Button
 
 The Babel Button is located on the top of a resource form. With this button you
-can create, link, update and delete translated versions of the current resource
-in different contexts.
+can create, link, update refresh and delete translated versions of the current
+resource in different contexts.
 
-Hover the button and create, link, update, unlink and delete the translated
-versions of the current resource. You can also unlink and delete all
+Hover the button and create, link, update, unlink, refresh and delete the
+translated versions of the current resource. You can also unlink and delete all
 translations from this resource and create multiple translations in selectable
 contexts with a menu entry.
 
@@ -164,15 +164,16 @@ given context. It uses the following snippet properties:
 
 Babel uses the following system settings in the namespace `babel`:
 
-| Key                   | Name                         | Description                                                                                                                             | Default            |
-|-----------------------|------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|--------------------|
-| babel.babelTvName     | Babel TV Name                | Name of template variable (TV) in which Babel will store the links between multilingual resources. This TV will be maintained by Babel. | babelLanguageLinks |
-| babel.contextKeys     | Context Keys                 | Comma separated list of context keys which should be used to link multilingual resources.                                               | -                  |
-| babel.debug           | Debug                        | Log debug information in the MODX error log.                                                                                            | No                 |
-| babel.displayText     | Button Text                  | Text shown in the Babel button for each context. You can use the following values: 'language', 'context' or 'combination'               | language           |
-| babel.restrictToGroup | Restrict To Group            | Restrict the contexts in the Babel button to the group of the current context.                                                          | Yes                |
-| babel.syncFields      | Synchronized Resource Fields | Comma separated list of resource field names to be synchronised by Babel.                                                               | -                  |
-| babel.syncTvs         | Synchronized TVs             | Comma separated list of template variables (TVs) IDs to be synchronised by Babel.                                                       | -                  |
+| Key                   | Name                         | Description                                                                                                                             | Default             |
+|-----------------------|------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|---------------------|
+| babel.babelTvName     | Babel TV Name                | Name of template variable (TV) in which Babel will store the links between multilingual resources. This TV will be maintained by Babel. | babelLanguageLinks  |
+| babel.contextKeys     | Context Keys                 | Comma separated list of context keys which should be used to link multilingual resources.                                               | -                   |
+| babel.debug           | Debug                        | Log debug information in the MODX error log.                                                                                            | No                  |
+| babel.displayChunk    | Button Chunk                 | Name of a chunk that is used for the text in the Babel button in each context.                                                          | tplBabelContextMenu |
+| babel.displayText     | Button Text                  | Text shown in the Babel button for each context. You can use the following values: `language`, `context`, `combination` or `chunk`.     | language            |
+| babel.restrictToGroup | Restrict To Group            | Restrict the contexts in the Babel button to the group of the current context.                                                          | Yes                 |
+| babel.syncFields      | Synchronized Resource Fields | Comma separated list of resource field names to be synchronised by Babel.                                                               | -                   |
+| babel.syncTvs         | Synchronized TVs             | Comma separated list of template variables (TVs) IDs to be synchronised by Babel.                                                       | -                   |
 
 The button text in the Babel button can use the following values:
 
@@ -181,6 +182,8 @@ The button text in the Babel button can use the following values:
 - context: the contexts are listed with the context name.
 - combination: the contexts are listed with the context name and the context
   language set in the cultureKey context setting.
+- chunk: the contexts are listed with the chunk referenced in the system setting
+  `babel.displayChunk`.
 
 ## Permissions
 
