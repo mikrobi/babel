@@ -5,13 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.5.1] - 2024-03-03
+## [3.5.2] - 2025-08-08
+
+### Fixed
+
+- Fix searching for a zero in the search fields, when the query does not contain an integer
+- Fix warning in OnContextSave for contexts not included in the Babel configuration [#227]
+
+## [3.5.1] - 2025-03-03
 
 ### Fixed
 
 - Fix fatal error, when decodeContextKeySetting did not return an array [#225]
 
-## [3.5.0] - 2024-03-03
+## [3.5.0] - 2025-03-03
 
 ### Added
 
