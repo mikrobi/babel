@@ -40,7 +40,7 @@ class OnContextSave extends Plugin
         if (!$currentContext) {
             return [];
         }
-        $contextKeysToGroup = $this->babel->contextKeyToGroup[$currentContext->get('key')];
+        $contextKeysToGroup = isset($this->babel->contextKeyToGroup[$currentContext->get('key')]) ? $this->babel->contextKeyToGroup[$currentContext->get('key')] : [];
 
         $syncedContextKeys = [];
         foreach ($contextKeysToGroup as $contextKey) {

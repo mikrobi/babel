@@ -87,7 +87,11 @@ class ObjectGetListProcessor extends modObjectGetListProcessor
         $valuesQuery = $this->getProperty('valuesqry');
         $query = (!$valuesQuery) ? $this->getProperty('query') : '';
         if (!empty($query)) {
-            $conditions = ['id' => intval($query)];
+            if (filter_var($query, FILTER_VALIDATE_INT)) {
+                $conditions = ['CAST(`' . $c->getAlias() . '`.`id` AS CHAR) LIKE "%' . intval($query) . '%"'];
+            } else {
+                $conditions = [];
+            }
             foreach ($this->search as $search) {
                 $conditions['OR:' . $search . ':LIKE'] = '%' . $query . '%';
             }
