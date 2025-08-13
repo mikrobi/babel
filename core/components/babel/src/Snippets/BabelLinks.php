@@ -119,6 +119,7 @@ class BabelLinks extends Snippet
                 continue;
             }
             $cultureKey = $context->getOption('cultureKey', $this->modx->getOption('cultureKey'));
+            $languageName = (!empty($languages[$cultureKey]['Description'])) ? $languages[$cultureKey]['Description'] : $this->modx->lexicon('babel.language_'.$cultureKey);
             $translationAvailable = false;
             if (isset($linkedResources[$contextKey])) {
                 $c = $this->modx->newQuery('modResource');
@@ -150,7 +151,7 @@ class BabelLinks extends Snippet
                     'contextName' => $context->get('name'),
                     'cultureKey' => $cultureKey,
                     'id' => $linkedResources[$contextKey],
-                    'language' => $languages[$cultureKey]['Description'],
+                    'language' => $languageName,
                     'url' => $url,
                 ];
 
@@ -171,7 +172,7 @@ class BabelLinks extends Snippet
                     'contextName' => $context->get('name'),
                     'cultureKey' => $cultureKey,
                     'id' => $context->getOption('site_start'),
-                    'language' => $languages[$cultureKey]['Description'],
+                    'language' => $languageName,
                     'url' => $url,
                 ];
 

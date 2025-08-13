@@ -156,7 +156,7 @@ class Babel
         ];
 
         $lexicon = $this->modx->getService('lexicon', 'modLexicon');
-        $lexicon->load($this->namespace . ':default');
+        $lexicon->load($this->namespace . ':default', $this->namespace . ':languages');
 
         $this->packageName = $this->modx->lexicon('babel');
 
@@ -823,6 +823,7 @@ class Babel
             }
             $context->prepare();
             $cultureKey = $context->getOption('cultureKey', $this->modx->getOption('cultureKey'));
+            $languageName = (!empty($languages[$cultureKey]['Description'])) ? $languages[$cultureKey]['Description'] : $this->modx->lexicon('babel.language_' . $cultureKey);
             $linkResource = null;
             $resourceId = 0;
             if (isset($linkedResources[$contextKey])) {
@@ -841,16 +842,16 @@ class Babel
             if ($this->getOption('displayText') == 'context') {
                 $displayText = $context->get('name') . ' (' . $contextKey . ')';
             } elseif ($this->getOption('displayText') == 'combination') {
-                $displayText = $context->get('name') . ' (' . $contextKey . ') - ' . $languages[$cultureKey]['Description'] . ' (' . (!empty($cultureKey) ? $cultureKey : $contextKey) . ')';
+                $displayText = $context->get('name') . ' (' . $contextKey . ') - ' . $languageName . ' (' . (!empty($cultureKey) ? $cultureKey : $contextKey) . ')';
             } elseif ($this->getOption('displayText') == 'chunk') {
                 $displayText = $this->parse->getChunk($this->getOption('displayChunk'), [
                     'name' => $context->get('name'),
                     'context_key' => $contextKey,
                     'cultureKey' => $cultureKey,
-                    'description' => $languages[$cultureKey]['Description'],
+                    'description' => $languageName,
                 ]);
             } else {
-                $displayText = $languages[$cultureKey]['Description'] . ' (' . (!empty($cultureKey) ? $cultureKey : $contextKey) . ')';
+                $displayText = $languageName . ' (' . (!empty($cultureKey) ? $cultureKey : $contextKey) . ')';
             }
 
             $placeholders = [
