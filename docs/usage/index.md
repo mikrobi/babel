@@ -156,7 +156,7 @@ given context. It uses the following snippet properties:
 |-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------|
 | contextKey      | Key of context in which translated resource should be determined.                                                                                                           | -                   |
 | cultureKey      | Key of culture in which translated resource should be determined. Used only in case contextKey was not specified. If both omitted the snippet the currently set cultureKey. | -                   |
-| resourceId      | ID of resource of which a translated resource should be determined.                                                                                                         | Current resource ID |
+| resourceId      | ID(s) of resource(s) of which a translated resource(s) should be determined. Can be a single ID or multiple IDs string separated by commas. `1,2,3`                         | Current resource ID |
 | showUnpublished | Flag whether to show unpublished translations.                                                                                                                              | 0 (No)              |
 | toPlaceholder   | Flag whether to dump the output into the given placeholder's name.                                                                                                          | -                   |
 
