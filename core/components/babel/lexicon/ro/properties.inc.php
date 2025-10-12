@@ -22,6 +22,6 @@ $_lang['babel.babellinks.tpl'] = 'Elementul chunk ce afișează legăturile căt
 $_lang['babel.babellinks.wrapperTpl'] = 'Bucată pentru a înfășura toate legăturile de limbă. Locul pentru toate legăturile este [[+babelLinks]].';
 $_lang['babel.babeltranslation.contextKey'] = 'Cheia de context a resursei de tradus.';
 $_lang['babel.babeltranslation.cultureKey'] = 'Cheia de cultură în care ar trebui să fie determinată resursa tradusă. Se utilizează numai în cazul în care nu s-a specificat contextKey. În cazul în care ambele sunt omise, se utilizează cultureKey setată în prezent.';
-$_lang['babel.babeltranslation.resourceId'] = 'IDul resursei de tradus.';
+$_lang['babel.babeltranslation.resourceId'] = 'Listă de ID-uri de resurse separate prin virgulă din care ar trebui determinată o listă de resurse traduse separate prin virgulă în contextKey/cultureKey.';
 $_lang['babel.babeltranslation.showUnpublished'] = 'Afișează traducerile nepublicate.';
 $_lang['babel.babeltranslation.toPlaceholder'] = 'Semnalizează dacă trebuie să se arunce ieșirea în numele de placeholder dat.';

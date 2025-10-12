@@ -22,6 +22,6 @@ $_lang['babel.babellinks.tpl'] = 'Chunk para apresentar a hiperligação da lín
 $_lang['babel.babellinks.wrapperTpl'] = 'Fragmento para envolver todos os links de idiomas. O marcador de posição para todos os links é [[+babelLinks]].';
 $_lang['babel.babeltranslation.contextKey'] = 'Chave do contexto em que a página (recurso) traduzida deva ser determinado.';
 $_lang['babel.babeltranslation.cultureKey'] = 'Chave da cultura na qual o recurso traduzido deve ser determinado. Utilizada apenas no caso de contextKey não ter sido especificada. Se ambos forem omitidos, o snippet usa a cultureKey atualmente definida.';
-$_lang['babel.babeltranslation.resourceId'] = 'ID da página (recurso) para a qual uma pãgina (recurso) traduzida deva ser determinado.';
+$_lang['babel.babeltranslation.resourceId'] = 'Lista separada por vírgulas de IDs de recursos dos quais deve ser determinada uma lista separada por vírgulas de recursos traduzidos na contextKey/cultureKey.';
 $_lang['babel.babeltranslation.showUnpublished'] = 'Indicar se deseja apresentar traduções não publicadas.';
 $_lang['babel.babeltranslation.toPlaceholder'] = 'Sinaliza se a saída deve ser despejada no nome do espaço reservado fornecido.';

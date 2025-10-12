@@ -22,6 +22,6 @@ $_lang['babel.babellinks.tpl'] = 'Chunk voor de weergave van een taal link.';
 $_lang['babel.babellinks.wrapperTpl'] = 'Chunk om alle taallinks in te pakken. De plaatshouder voor alle links is [[+babelLinks]].';
 $_lang['babel.babeltranslation.contextKey'] = 'Context key waarin vertaalde bron dient te worden bepaald.';
 $_lang['babel.babeltranslation.cultureKey'] = 'Sleutel van cultuur waarin vertaalde bron moet worden bepaald. Wordt alleen gebruikt als contextKey niet is opgegeven. Als beide weggelaten het knipsel de huidige ingestelde cultureKey.';
-$_lang['babel.babeltranslation.resourceId'] = 'ID van resource waarvan een vertaalde resource dient te worden bepaald.';
+$_lang['babel.babeltranslation.resourceId'] = 'Door komma\'s gescheiden lijst van bron-ID\'s waarvan een door komma\'s gescheiden lijst van vertaalde bronnen in de contextKey/cultureKey moet worden bepaald.';
 $_lang['babel.babeltranslation.showUnpublished'] = 'Wel of niet tonen van ongepubliceerde vertalingen.';
 $_lang['babel.babeltranslation.toPlaceholder'] = 'Vlag of de uitvoer in de naam van de opgegeven plaatshouder moet worden gedumpt.';
