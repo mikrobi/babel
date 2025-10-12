@@ -20,6 +20,6 @@ $_lang['babel.babellinks.tpl'] = 'Chunk to display a language link.';
 $_lang['babel.babellinks.wrapperTpl'] = 'Chunk to wrap all language links. The placeholder for all links is [[+babelLinks]].';
 $_lang['babel.babeltranslation.contextKey'] = 'Key of context in which translated resource should be determined.';
 $_lang['babel.babeltranslation.cultureKey'] = 'Key of culture in which translated resource should be determined. Used only in case contextKey was not specified. If both omitted the snippet the currently set cultureKey.';
-$_lang['babel.babeltranslation.resourceId'] = 'ID of resource of which a translated resource should be determined.';
+$_lang['babel.babeltranslation.resourceId'] = 'Comma separated list of resource IDs of which a comma separated list of translated resources in the contextKey/cultureKey should be determined.';
 $_lang['babel.babeltranslation.showUnpublished'] = 'Flag whether to show unpublished translations.';
 $_lang['babel.babeltranslation.toPlaceholder'] = 'Flag whether to dump the output into the given placeholder\'s name.';

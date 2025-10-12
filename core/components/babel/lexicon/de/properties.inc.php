@@ -20,6 +20,6 @@ $_lang['babel.babellinks.tpl'] = 'Chunk für die Darstellung eines Sprachen-Link
 $_lang['babel.babellinks.wrapperTpl'] = 'Chunk, um alle Sprachlinks zu verpacken. Der Platzhalter für alle Links ist [[+babelLinks]].';
 $_lang['babel.babeltranslation.contextKey'] = 'Schlüssel des Kontexts, in der die übersetzte Ressource ermittelt werden soll.';
 $_lang['babel.babeltranslation.cultureKey'] = 'Sprach-Schlüssel, mit dem die übersetzte Ressource ermittelt werden soll. Wird nur verwendet, wenn Kontext Schlüssel nicht angegeben wurde. Wenn beide Schlüssel weggelassen werden, wird der systemweit eingestellte cultureKey verwendet.';
-$_lang['babel.babeltranslation.resourceId'] = 'ID der Ressource, von der eine Übersetzung erstellt werden soll.';
+$_lang['babel.babeltranslation.resourceId'] = 'Kommagetrennte Liste von Ressourcen-IDs, aus denen eine kommagetrennte Liste von übersetzten Ressourcen im contextKey/cultureKey ermittelt werden soll.';
 $_lang['babel.babeltranslation.showUnpublished'] = 'Gibt an, ob unveröffentlichte Übersetzungen angezeigt werden sollen.';
 $_lang['babel.babeltranslation.toPlaceholder'] = 'Gibt an, ob das Ergebnis im Platzhalter mit dem angegebenen Namen ausgegeben werden soll.';

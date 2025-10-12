@@ -22,6 +22,6 @@ $_lang['babel.babellinks.tpl'] = 'Chunk pro vykreslení jazykových odkazů.';
 $_lang['babel.babellinks.wrapperTpl'] = 'Chunk pro zabalení všech jazykových odkazů. Zástupný symbol pro všechny odkazy je [[+babelLinks]].';
 $_lang['babel.babeltranslation.contextKey'] = 'Jméno kontextu který stanovuje překlad.';
 $_lang['babel.babeltranslation.cultureKey'] = 'Klíč kultury, ve které by měl být překladový zdroj určen. Používá se pouze v případě, že nebyl zadán contextKey. Pokud oba vynechá, použije se aktuálně nastavený cultureKey.';
-$_lang['babel.babeltranslation.resourceId'] = 'ID dokumentu který stanovuje překlad.';
+$_lang['babel.babeltranslation.resourceId'] = 'Seznam ID zdrojů oddělených čárkou, z nichž by měl být určen seznam přeložených zdrojů oddělených čárkou v contextKey/cultureKey.';
 $_lang['babel.babeltranslation.showUnpublished'] = 'Příznak, zda-li se má zobrazovat i nepublikovaný překlad.';
 $_lang['babel.babeltranslation.toPlaceholder'] = 'Příznak, zda se má výstup vypsat do názvu daného zástupného symbolu.';
