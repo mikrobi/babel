@@ -6,7 +6,7 @@
  * @subpackage lexicon
  */
 $_lang['babel.babellinks.activeCls'] = 'CSS class for the active language link.';
-$_lang['babel.babellinks.ignoreSiteStatus'] = 'Specifies whether the site_status is ignored (when the site is offline)';
+$_lang['babel.babellinks.ignoreSiteStatus'] = 'Specifies whether the site_status is ignored (when the site is offline).';
 $_lang['babel.babellinks.includeUnlinked'] = 'Specifies whether the unlinked context are shown.';
 $_lang['babel.babellinks.resourceId'] = 'ID of resource of which links to translations should be displayed.';
 $_lang['babel.babellinks.restrictToGroup'] = 'Restrict the contexts in the snippet output to the group of the current context.';
