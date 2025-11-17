@@ -34,6 +34,7 @@ class BabelLinks extends Snippet
             'sortby::sortby' => 'babel',
             'sortdir::sortdir' => 'asc',
             'restrictToGroup::bool' => $this->babel->getOption('restrictToGroup'),
+            'useRequestProperties::bool' => true,
             'toArray::bool' => false,
             'toPlaceholder' => '',
             'outputSeparator' => "\n",
@@ -119,7 +120,7 @@ class BabelLinks extends Snippet
                 continue;
             }
             $cultureKey = $context->getOption('cultureKey', $this->modx->getOption('cultureKey'));
-            $languageName = (!empty($languages[$cultureKey]['Description'])) ? $languages[$cultureKey]['Description'] : $this->modx->lexicon('babel.language_'.$cultureKey);
+            $languageName = (!empty($languages[$cultureKey]['Description'])) ? $languages[$cultureKey]['Description'] : $this->modx->lexicon('babel.language_' . $cultureKey);
             $translationAvailable = false;
             if (isset($linkedResources[$contextKey])) {
                 $c = $this->modx->newQuery('modResource');
@@ -138,10 +139,14 @@ class BabelLinks extends Snippet
                     $translationAvailable = true;
                 }
             }
-            $getRequest = $this->modx->request->getParameters();
-            unset($getRequest['id']);
-            unset($getRequest[$this->modx->getOption('request_param_alias', null, 'q')]);
-            unset($getRequest['cultureKey']);
+            if ($this->getProperty('useRequestProperties')) {
+                $getRequest = $this->modx->request->getParameters();
+                unset($getRequest['id']);
+                unset($getRequest[$this->modx->getOption('request_param_alias', null, 'q')]);
+                unset($getRequest['cultureKey']);
+            } else {
+                $getRequest = [];
+            }
             if ($translationAvailable) {
                 $url = $context->makeUrl($linkedResources[$contextKey], $getRequest, 'full');
                 $active = ($resource->get('context_key') == $contextKey) ? $this->getProperty('activeCls') : '';

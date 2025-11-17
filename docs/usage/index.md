@@ -119,21 +119,22 @@ Currently, there are two snippets available for Babel:
 BabelLinks is a snippet that displays links to other languages (contexts) in the
 frontend. It uses the following snippet properties:
 
-| Property         | Description                                                                                                                                       | Default                                |
-|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------|
-| activeCls        | CSS class for the active language link.                                                                                                           | active                                 |
-| ignoreSiteStatus | Flag whether to ignore the site_status (when the site is offline)                                                                                 | 0 (No)                                 |
-| includeUnlinked  | Flag whether to show unlinked context.                                                                                                            | 0 (No)                                 |
-| resourceId       | ID of resource of which links to translations should be displayed.                                                                                | Current resource ID                    |
-| restrictToGroup  | Restrict the contexts in the snippet output to the group of the current context.                                                                  | System setting `babel.restrictToGroup` |
-| showCurrent      | Flag whether to show a link to a translation of the current language.                                                                             | 0 (No)                                 |
-| showUnpublished  | Flag whether to show unpublished translations.                                                                                                    | 0 (No)                                 |
-| sortby           | Context field to sort the results by. The default 'babel' means to sort by the order of the context keys in the babel.contextKeys system setting. | babel                                  |
-| sortdir          | The direction to sort in.                                                                                                                         | asc                                    |
-| toArray          | Flag whether to dump the output as an array instead.                                                                                              | 0 (No)                                 |
-| toPlaceholder    | Flag whether to dump the output into the given placeholder's name.                                                                                | -                                      |
-| tpl              | Chunk to display a language link.                                                                                                                 | tplBabellink                           |
-| wrapperTpl       | Chunk to wrap all language links. The placeholder for all links is [[+babelLinks]].                                                               | -                                      |
+| Property             | Description                                                                                                                                       | Default      |
+|----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
+| activeCls            | CSS class for the active language link.                                                                                                           | active       |
+| ignoreSiteStatus     | Specifies whether the site_status is ignored (when the site is offline).                                                                          | 0 (No)       |
+| includeUnlinked      | Specifies whether the unlinked context are shown.                                                                                                 | 0 (No)       |
+| resourceId           | ID of resource of which links to translations should be displayed.                                                                                | -            |
+| restrictToGroup      | Restrict the contexts in the snippet output to the group of the current context.                                                                  | 0 (No)       |
+| showCurrent          | Specifies whether a link to the current language is shown.                                                                                        | 0 (No)       |
+| showUnpublished      | Specifies whether the unpublished translations are shown.                                                                                         | 0 (No)       |
+| sortby               | Context field to sort the results by. The default 'babel' means to sort by the order of the context keys in the babel.contextKeys system setting. | babel        |
+| sortdir              | The direction to sort in.                                                                                                                         | asc          |
+| toArray              | Specifies whether the output is dumped as an array.                                                                                               | 0 (No)       |
+| toPlaceholder        | Specifies whether the output is dumped into the given placeholder's name.                                                                         | -            |
+| tpl                  | Chunk to display a language link.                                                                                                                 | tplBabellink |
+| useRequestProperties | Specifies whether the current request properties are used in the links to the translated resources.                                               | 1 (Yes)      |
+| wrapperTpl           | Chunk to wrap all language links. The placeholder for all links is [[+babelLinks]].                                                               | -            |
 
 You can use the following placeholders in the tpl chunk:
 
@@ -152,13 +153,13 @@ You can use the following placeholders in the tpl chunk:
 The BabelTranslation snippets returns the ID of a translated resource in a
 given context. It uses the following snippet properties:
 
-| Property        | Description                                                                                                                                                                 | Default             |
-|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------|
-| contextKey      | Key of context in which translated resource should be determined.                                                                                                           | -                   |
-| cultureKey      | Key of culture in which translated resource should be determined. Used only in case contextKey was not specified. If both omitted the snippet the currently set cultureKey. | -                   |
-| resourceId      | Comma separated list of resource IDs of which a comma separated list of translated resources in the contextKey/cultureKey should be determined.                             | Current resource ID |
-| showUnpublished | Flag whether to show unpublished translations.                                                                                                                              | 0 (No)              |
-| toPlaceholder   | Flag whether to dump the output into the given placeholder's name.                                                                                                          | -                   |
+| Property        | Description                                                                                                                                                                 | Default |
+|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| contextKey      | Key of context in which translated resource should be determined.                                                                                                           | -       |
+| cultureKey      | Key of culture in which translated resource should be determined. Used only in case contextKey was not specified. If both omitted the snippet the currently set cultureKey. | -       |
+| resourceId      | Comma separated list of resource IDs of which a comma separated list of translated resources in the contextKey/cultureKey should be determined.                             | -       |
+| showUnpublished | Specifies whether the unpublished translations are shown.                                                                                                                   | 0 (No)  |
+| toPlaceholder   | Specifies whether to dump the output into the given placeholder's name.                                                                                                     | -       |
 
 ## System Settings
 

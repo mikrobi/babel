@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.5.3] - 2025-11-17
+
+### Added
+
+- New snippet property `useRequestProperties` for the BabelLinks snippet
+- New spanish languages lexicon 
+
 ## [3.5.2] - 2025-08-08
 
 ### Fixed
@@ -36,7 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add system setting "babel.syncFields" to sync resource fields on save - thanks to Jens Wittmann <https://github.com/jenswittmann>
-- Add sortby and sortdir properties to the BabelLinks snippet - thanks to Vasily Naumkin <https://github.com/bezumkin>
+- Add `sortby` and `sortdir` properties to the BabelLinks snippet - thanks to Vasily Naumkin <https://github.com/bezumkin>
 
 ## [3.3.4] - 2024-06-23
 
@@ -59,7 +66,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Fix for a real integer value in the resourceId snippet property
+- Fix for a real integer value in the `resourceId` snippet property
 
 ## [3.3.1] - 2024-04-11
 
@@ -69,7 +76,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- [#207] Fix for multiple IDs in the resourceId property of the BabelTranslation snippet
+- [#207] Fix for multiple IDs in the `resourceId` property of the BabelTranslation snippet
 
 ## [3.3.0] - 2024-03-27
 

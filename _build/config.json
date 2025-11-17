@@ -3,7 +3,7 @@
   "lowCaseName": "babel",
   "description": "The easy way for your multilingual site!",
   "author": "Jakob Class, Rico Goldsky, Joshua Luckers, Thomas Jakobi",
-  "version": "3.5.2",
+  "version": "3.5.3",
   "package": {
     "menus": [
       {
@@ -59,6 +59,11 @@
               "name": "restrictToGroup",
               "type": "combo-boolean",
               "value": "0"
+            },
+            {
+              "name": "useRequestProperties",
+              "type": "combo-boolean",
+              "value": "1"
             },
             {
               "name": "toArray",
