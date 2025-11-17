@@ -61,6 +61,11 @@
               "value": "0"
             },
             {
+              "name": "useRequestProperties",
+              "type": "combo-boolean",
+              "value": "1"
+            },
+            {
               "name": "toArray",
               "type": "combo-boolean",
               "value": "0"
