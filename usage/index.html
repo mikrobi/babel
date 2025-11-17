@@ -705,32 +705,32 @@ frontend. It uses the following snippet properties:</p>
 </tr>
 <tr>
 <td>ignoreSiteStatus</td>
-<td>Flag whether to ignore the site_status (when the site is offline)</td>
+<td>Specifies whether the site_status is ignored (when the site is offline).</td>
 <td>0 (No)</td>
 </tr>
 <tr>
 <td>includeUnlinked</td>
-<td>Flag whether to show unlinked context.</td>
+<td>Specifies whether the unlinked context are shown.</td>
 <td>0 (No)</td>
 </tr>
 <tr>
 <td>resourceId</td>
 <td>ID of resource of which links to translations should be displayed.</td>
-<td>Current resource ID</td>
+<td>-</td>
 </tr>
 <tr>
 <td>restrictToGroup</td>
 <td>Restrict the contexts in the snippet output to the group of the current context.</td>
-<td>System setting <code>babel.restrictToGroup</code></td>
+<td>0 (No)</td>
 </tr>
 <tr>
 <td>showCurrent</td>
-<td>Flag whether to show a link to a translation of the current language.</td>
+<td>Specifies whether a link to the current language is shown.</td>
 <td>0 (No)</td>
 </tr>
 <tr>
 <td>showUnpublished</td>
-<td>Flag whether to show unpublished translations.</td>
+<td>Specifies whether the unpublished translations are shown.</td>
 <td>0 (No)</td>
 </tr>
 <tr>
@@ -745,18 +745,23 @@ frontend. It uses the following snippet properties:</p>
 </tr>
 <tr>
 <td>toArray</td>
-<td>Flag whether to dump the output as an array instead.</td>
+<td>Specifies whether the output is dumped as an array.</td>
 <td>0 (No)</td>
 </tr>
 <tr>
 <td>toPlaceholder</td>
-<td>Flag whether to dump the output into the given placeholder's name.</td>
+<td>Specifies whether the output is dumped into the given placeholder's name.</td>
 <td>-</td>
 </tr>
 <tr>
 <td>tpl</td>
 <td>Chunk to display a language link.</td>
 <td>tplBabellink</td>
+</tr>
+<tr>
+<td>useRequestProperties</td>
+<td>Specifies whether the current request properties are used in the links to the translated resources.</td>
+<td>1 (Yes)</td>
 </tr>
 <tr>
 <td>wrapperTpl</td>
@@ -829,16 +834,16 @@ given context. It uses the following snippet properties:</p>
 <tr>
 <td>resourceId</td>
 <td>Comma separated list of resource IDs of which a comma separated list of translated resources in the contextKey/cultureKey should be determined.</td>
-<td>Current resource ID</td>
+<td>-</td>
 </tr>
 <tr>
 <td>showUnpublished</td>
-<td>Flag whether to show unpublished translations.</td>
+<td>Specifies whether the unpublished translations are shown.</td>
 <td>0 (No)</td>
 </tr>
 <tr>
 <td>toPlaceholder</td>
-<td>Flag whether to dump the output into the given placeholder's name.</td>
+<td>Specifies whether to dump the output into the given placeholder's name.</td>
 <td>-</td>
 </tr>
 </tbody>
