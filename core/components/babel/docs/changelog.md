@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - New snippet property `useRequestProperties` for the BabelLinks snippet
-- New spanish languages lexicon 
+- New spanish lexicon 
 
 ## [3.5.2] - 2025-08-08
 
