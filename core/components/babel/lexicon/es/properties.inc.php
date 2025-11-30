@@ -6,7 +6,7 @@
  * @subpackage lexicon
  */
 $_lang['babel.babellinks.activeCls'] = 'Clase CSS para el enlace de idioma activo.';
-$_lang['babel.babellinks.ignoreSiteStatus'] = 'Marca si se debe ignorar el site_status (cuando el sitio está desconectado)';
+$_lang['babel.babellinks.ignoreSiteStatus'] = 'Marca si se debe ignorar el site_status (cuando el sitio está desconectado).';
 $_lang['babel.babellinks.includeUnlinked'] = 'Marca si se muestra el contexto no enlazado.';
 $_lang['babel.babellinks.resourceId'] = 'ID del recurso cuyos enlaces a traducciones deben mostrarse.';
 $_lang['babel.babellinks.restrictToGroup'] = 'Restringe los contextos de la salida del fragmento al grupo del contexto actual.';
@@ -23,3 +23,4 @@ $_lang['babel.babeltranslation.cultureKey'] = 'Clave de la cultura en la que deb
 $_lang['babel.babeltranslation.resourceId'] = 'Lista separada por comas de ID de recursos de los que debe determinarse una lista separada por comas de recursos traducidos en el contextKey/cultureKey.';
 $_lang['babel.babeltranslation.showUnpublished'] = 'Marca si se muestran las traducciones no publicadas.';
 $_lang['babel.babeltranslation.toPlaceholder'] = 'Marca si se debe volcar la salida en el nombre del marcador de posición dado.';
+$_lang['babel.babellinks.useRequestProperties'] = 'Especifica si las propiedades de la solicitud actual se utilizan en los enlaces a los recursos traducidos.';
