@@ -157,7 +157,7 @@ given context. It uses the following snippet properties:
 |-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
 | contextKey      | Key of context in which translated resource should be determined.                                                                                                           | -       |
 | cultureKey      | Key of culture in which translated resource should be determined. Used only in case contextKey was not specified. If both omitted the snippet the currently set cultureKey. | -       |
-| resourceId      | Comma separated list of resource IDs of which a comma separated list of translated resources in the contextKey/cultureKey should be determined.                             | -       |
+| resourceId      | Comma-separated list of resource IDs of which a comma-separated list of translated resources in the contextKey/cultureKey should be determined.                             | -       |
 | showUnpublished | Specifies whether the unpublished translations are shown.                                                                                                                   | 0 (No)  |
 | toPlaceholder   | Specifies whether to dump the output into the given placeholder's name.                                                                                                     | -       |
 
@@ -168,13 +168,13 @@ Babel uses the following system settings in the namespace `babel`:
 | Key                   | Name                         | Description                                                                                                                             | Default             |
 |-----------------------|------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|---------------------|
 | babel.babelTvName     | Babel TV Name                | Name of template variable (TV) in which Babel will store the links between multilingual resources. This TV will be maintained by Babel. | babelLanguageLinks  |
-| babel.contextKeys     | Context Keys                 | Comma separated list of context keys which should be used to link multilingual resources.                                               | -                   |
+| babel.contextKeys     | Context Keys                 | Comma-separated list of context keys which should be used to link multilingual resources.                                               | -                   |
 | babel.debug           | Debug                        | Log debug information in the MODX error log.                                                                                            | No                  |
 | babel.displayChunk    | Button Chunk                 | Name of a chunk that is used for the text in the Babel button in each context.                                                          | tplBabelContextMenu |
 | babel.displayText     | Button Text                  | Text shown in the Babel button for each context. You can use the following values: `language`, `context`, `combination` or `chunk`.     | language            |
 | babel.restrictToGroup | Restrict To Group            | Restrict the contexts in the Babel button to the group of the current context.                                                          | Yes                 |
-| babel.syncFields      | Synchronized Resource Fields | Comma separated list of resource field names to be synchronised by Babel.                                                               | -                   |
-| babel.syncTvs         | Synchronized TVs             | Comma separated list of template variables (TVs) IDs to be synchronised by Babel.                                                       | -                   |
+| babel.syncFields      | Synchronized Resource Fields | Comma-separated list of resource field names to be synchronised by Babel.                                                               | -                   |
+| babel.syncTvs         | Synchronized TVs             | Comma-separated list of template variables (TVs) IDs to be synchronised by Babel.                                                       | -                   |
 
 The button text in the Babel button can use the following values:
 

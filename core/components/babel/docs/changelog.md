@@ -124,7 +124,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add MODX 3.x compatability
 - Add various new translations
-- [#176] Accept a comma separated list of IDs in resourceId property of the BabelTranslation snippet
+- [#176] Accept a comma-separated list of IDs in resourceId property of the BabelTranslation snippet
 - [#168] Invoke OnDocFormSave event when duplicating a resource
 
 ### Fixed
