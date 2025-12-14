@@ -720,7 +720,7 @@ frontend. It uses the following snippet properties:</p>
 </tr>
 <tr>
 <td>restrictToGroup</td>
-<td>Restrict the contexts in the snippet output to the group of the current context.</td>
+<td>Restrict the contexts in the snippet output to the group the current context contains to. See <code>babel.contextKeys</code> system setting for defining context key groups.</td>
 <td>0 (No)</td>
 </tr>
 <tr>
@@ -833,7 +833,7 @@ given context. It uses the following snippet properties:</p>
 </tr>
 <tr>
 <td>resourceId</td>
-<td>Comma separated list of resource IDs of which a comma separated list of translated resources in the contextKey/cultureKey should be determined.</td>
+<td>Comma-separated list of resource IDs of which a comma-separated list of translated resources in the contextKey/cultureKey should be determined.</td>
 <td>-</td>
 </tr>
 <tr>
@@ -869,7 +869,7 @@ given context. It uses the following snippet properties:</p>
 <tr>
 <td>babel.contextKeys</td>
 <td>Context Keys</td>
-<td>Comma separated list of context keys which should be used to link multilingual resources.</td>
+<td>Comma-separated list of context keys which should be used to link multilingual resources. The comma-separated list can be divided into several context key groups using semicolons.</td>
 <td>-</td>
 </tr>
 <tr>
@@ -893,19 +893,19 @@ given context. It uses the following snippet properties:</p>
 <tr>
 <td>babel.restrictToGroup</td>
 <td>Restrict To Group</td>
-<td>Restrict the contexts in the Babel button to the group of the current context.</td>
+<td>Restrict the contexts in the Babel button to the group the current context contains to. See <code>babel.contextKeys</code> system setting for defining context key groups.</td>
 <td>Yes</td>
 </tr>
 <tr>
 <td>babel.syncFields</td>
 <td>Synchronized Resource Fields</td>
-<td>Comma separated list of resource field names to be synchronised by Babel.</td>
+<td>Comma-separated list of resource field names to be synchronised by Babel.</td>
 <td>-</td>
 </tr>
 <tr>
 <td>babel.syncTvs</td>
 <td>Synchronized TVs</td>
-<td>Comma separated list of template variables (TVs) IDs to be synchronised by Babel.</td>
+<td>Comma-separated list of template variables (TVs) IDs to be synchronised by Babel.</td>
 <td>-</td>
 </tr>
 </tbody>
