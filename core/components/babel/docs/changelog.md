@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.5.4] - 2025-12-20
+
+### Fixed
+
+- Use the correct babel.syncTvs and babel.syncFields value during an update
+
 ## [3.5.3] - 2025-11-17
 
 ### Added
@@ -124,7 +130,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add MODX 3.x compatability
 - Add various new translations
-- [#176] Accept a comma separated list of IDs in resourceId property of the BabelTranslation snippet
+- [#176] Accept a comma-separated list of IDs in resourceId property of the BabelTranslation snippet
 - [#168] Invoke OnDocFormSave event when duplicating a resource
 
 ### Fixed

@@ -28,7 +28,7 @@ MODX Package Management
 ## Usage
 
 Install via package manager and fill the system setting `babel.contextKeys` with
-a comma separated list of context keys which should be used to link multilingual
+a comma-separated list of context keys which should be used to link multilingual
 resources.
 
 ## Documentation

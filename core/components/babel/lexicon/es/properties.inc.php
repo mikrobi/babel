@@ -6,10 +6,10 @@
  * @subpackage lexicon
  */
 $_lang['babel.babellinks.activeCls'] = 'Clase CSS para el enlace de idioma activo.';
-$_lang['babel.babellinks.ignoreSiteStatus'] = 'Marca si se debe ignorar el site_status (cuando el sitio está desconectado)';
+$_lang['babel.babellinks.ignoreSiteStatus'] = 'Marca si se debe ignorar el site_status (cuando el sitio está desconectado).';
 $_lang['babel.babellinks.includeUnlinked'] = 'Marca si se muestra el contexto no enlazado.';
 $_lang['babel.babellinks.resourceId'] = 'ID del recurso cuyos enlaces a traducciones deben mostrarse.';
-$_lang['babel.babellinks.restrictToGroup'] = 'Restringe los contextos de la salida del fragmento al grupo del contexto actual.';
+$_lang['babel.babellinks.restrictToGroup'] = 'Restringe los contextos en la salida del fragmento al grupo que contiene el contexto actual. Consulte la configuración del sistema `babel.contextKeys` para definir grupos de claves de contexto.';
 $_lang['babel.babellinks.showCurrent'] = 'Marca si se debe mostrar un enlace a una traducción del idioma actual.';
 $_lang['babel.babellinks.showUnpublished'] = 'Marca si se muestran las traducciones no publicadas.';
 $_lang['babel.babellinks.sortby'] = 'Campo de contexto por el que ordenar los resultados. El valor predeterminado \'babel\' significa ordenar por el orden de las claves de contexto en la configuración del sistema babel.contextKeys.';
@@ -23,3 +23,4 @@ $_lang['babel.babeltranslation.cultureKey'] = 'Clave de la cultura en la que deb
 $_lang['babel.babeltranslation.resourceId'] = 'Lista separada por comas de ID de recursos de los que debe determinarse una lista separada por comas de recursos traducidos en el contextKey/cultureKey.';
 $_lang['babel.babeltranslation.showUnpublished'] = 'Marca si se muestran las traducciones no publicadas.';
 $_lang['babel.babeltranslation.toPlaceholder'] = 'Marca si se debe volcar la salida en el nombre del marcador de posición dado.';
+$_lang['babel.babellinks.useRequestProperties'] = 'Especifica si las propiedades de la solicitud actual se utilizan en los enlaces a los recursos traducidos.';
