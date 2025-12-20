@@ -77,11 +77,11 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         unset($setting);
 
         $setting = $modx->getObject('modSystemSetting', ['key' => 'babel.syncTvs']);
-        $values['syncTvs'] = ($setting) ? (bool)$setting->get('value') : $defaults['syncTvs'];
+        $values['syncTvs'] = ($setting) ? $setting->get('value') : $defaults['syncTvs'];
         unset($setting);
         
         $setting = $modx->getObject('modSystemSetting', ['key' => 'babel.syncFields']);
-        $values['syncFields'] = ($setting) ? (bool)$setting->get('value') : $defaults['syncFields'];
+        $values['syncFields'] = ($setting) ? $setting->get('value') : $defaults['syncFields'];
         unset($setting);
 
         $output .= '<h2>Upgrade Babel</h2>
@@ -125,3 +125,4 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
 
 
 return $output;
+
