@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.5.7] - 2026-03-04
+
+### Fixed
+
+- Fix array to string conversion warning
+
+## [3.5.6] - 2026-02-24
+
+### Fixed
+
+- Fix undefined array key 1 warning in the base Snippet class
+
+## [3.5.5] - 2026-02-19
+
+### Changed
+
+- Refresh only the Babel and the resource cache of the affected resources when syncronizing resource fields and template variables
+- Refresh only the Babel and the resource cache of the affected resources when updating linked resources
+
 ## [3.5.4] - 2025-12-20
 
 ### Fixed

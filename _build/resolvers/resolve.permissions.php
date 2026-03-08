@@ -76,7 +76,8 @@ function createAccessPermission($modx, $policy, $template, $permission)
     $accessPolicy->save();
 
     if (!$accessPermission = $modx->getObject('modAccessPermission', [
-        'name' => $permission
+        'name' => $permission,
+        'template' => $accessPolicyTemplate->get('id')
     ])) {
         /** @var modAccessPermission $accessPermission */
         $accessPermission = $modx->newObject('modAccessPermission');

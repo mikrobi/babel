@@ -78,14 +78,19 @@ abstract class Snippet
         foreach ($this->getDefaultProperties() as $key => $value) {
             $parts = explode('::', $key);
             $key = ($this->propertyPrefix && !in_array('noPrefix', $parts)) ? $this->propertyPrefix . ucfirst($parts[0]) : $parts[0];
+            $skipEmpty = true;
+            if (isset($parts[1]) && $parts[1] == 'allowEmpty') {
+                $skipEmpty = false;
+                array_pop($parts);
+            }
             if (isset($parts[1]) && method_exists($this, 'get' . ucfirst($parts[1]))) {
                 if (isset($parts[2])) {
-                    $result[$parts[0]] = $this->{'get' . ucfirst($parts[1])}($this->modx->getOption($key, $properties, $value, true), $parts[2]);
+                    $result[$parts[0]] = $this->{'get' . ucfirst($parts[1])}($this->modx->getOption($key, $properties, $value, $skipEmpty), $parts[2]);
                 } else {
-                    $result[$parts[0]] = $this->{'get' . ucfirst($parts[1])}($this->modx->getOption($key, $properties, $value, true));
+                    $result[$parts[0]] = $this->{'get' . ucfirst($parts[1])}($this->modx->getOption($key, $properties, $value, $skipEmpty));
                 }
             } else {
-                $result[$parts[0]] = $this->modx->getOption($key, $properties, $value, true);
+                $result[$parts[0]] = $this->modx->getOption($key, $properties, $value, $skipEmpty);
             }
             if ($this->propertyPrefix) {
                 unset($properties[$key]);

@@ -2,7 +2,7 @@
 /**
  * Babel
  *
- * Copyright 2010-2025 by Jakob Class <jakob.class@gmail.com>
+ * Copyright 2010-2026 by Jakob Class <jakob.class@gmail.com>
  *
  * This file is part of Babel.
  *
@@ -67,7 +67,7 @@ class Babel
      * The version
      * @var string $version
      */
-    public $version = '3.5.4';
+    public $version = '3.5.7';
 
     /**
      * The class config
@@ -332,11 +332,14 @@ class Babel
      */
     public function synchronizeFields($resourceId, $targetId = 0)
     {
+        $contexts = [];
+
         /** @var modResource $resource */
         $resource = $this->modx->getObject('modResource', $resourceId);
         if (!$resource) {
             return;
         }
+        $contexts[] = $resource->get('context_key');
 
         // Synchronize the resource fields of linked resources
         $contextSyncSetting = $this->getContextSetting($resource->get('context_key'), 'babel.syncFields');
@@ -352,6 +355,7 @@ class Babel
             $linkedResource = $this->modx->getObject('modResource', $targetId);
             if ($linkedResource) {
                 $fieldChanges = [$this->changeFields($syncFields, $resource, $linkedResource)];
+                $contexts[] = $linkedResource->get('context_key');
             }
         } else {
             $linkedResourceIds = $this->getLinkedResources($resourceId);
@@ -368,6 +372,7 @@ class Babel
                 $linkedResource = $this->modx->getObject('modResource', $linkedResourceId);
                 if ($linkedResource) {
                     $fieldChanges = array_merge($fieldChanges, $this->changeFields($syncFields, $resource, $linkedResource));
+                    $contexts[] = $linkedResource->get('context_key');
                 }
             }
         }
@@ -381,7 +386,10 @@ class Babel
             ]);
         }
 
-        $this->modx->cacheManager->refresh();
+        $this->modx->cacheManager->refresh([
+            'babel' => [],
+            'resource' => ['contexts' => $contexts],
+        ]);
     }
 
     /**
@@ -391,11 +399,14 @@ class Babel
      */
     public function synchronizeTvs($resourceId, $targetId = 0)
     {
+        $contexts = [];
+
         /** @var modResource $resource */
         $resource = $this->modx->getObject('modResource', $resourceId);
         if (!$resource) {
             return;
         }
+        $contexts[] = $resource->get('context_key');
 
         // Synchronize the TVs of linked resources
         $contextSyncSetting = $this->getContextSetting($resource->get('context_key'), 'babel.syncTvs');
@@ -411,6 +422,7 @@ class Babel
             $linkedResource = $this->modx->getObject('modResource', $targetId);
             if ($linkedResource) {
                 $tvChanges = [$this->changeTVs($syncTvs, $resource, $linkedResource)];
+                $contexts[] = $linkedResource->get('context_key');
             }
         } else {
             $linkedResourceIds = $this->getLinkedResources($resourceId);
@@ -428,6 +440,7 @@ class Babel
                 $linkedResource = $this->modx->getObject('modResource', $linkedResourceId);
                 if ($linkedResource) {
                     $tvChanges = array_merge($tvChanges, $this->changeTVs($syncTvs, $resource, $linkedResource));
+                    $contexts[] = $linkedResource->get('context_key');
                 }
             }
         }
@@ -440,7 +453,10 @@ class Babel
             ]);
         }
 
-        $this->modx->cacheManager->refresh();
+        $this->modx->cacheManager->refresh([
+            'babel' => [],
+            'resource' => ['contexts' => $contexts],
+        ]);
     }
 
     /**
@@ -636,7 +652,15 @@ class Babel
         }
         $this->babelTv->save();
         if ($clearCache) {
-            $this->modx->cacheManager->refresh();
+            $contexts = array_keys($linkedResources);
+            foreach ($resourceIds as $resourceId) {
+                $resource = $this->modx->getObject('modResource', $resourceId);
+                $contexts[] = $resource->get('context_key');
+            }
+            $this->modx->cacheManager->refresh([
+                'babel' => [],
+                'resource' => ['contexts' => array_unique($contexts)],
+            ]);
         }
     }
 

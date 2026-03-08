@@ -60,12 +60,10 @@ class ObjectRemoveProcessor extends modObjectRemoveProcessor
             $contextKeys = [];
         }
 
-        $this->modx->cacheManager->refresh(
-            [
-                'lexicon_topics' => [],
-                'babel' => [],
-                'resource' => ['contexts' => array_diff($contextKeys, ['mgr'])],
-            ]
-        );
+        $this->modx->cacheManager->refresh([
+            'lexicon_topics' => [],
+            'babel' => [],
+            'resource' => ['contexts' => array_diff($contextKeys, ['mgr'])],
+        ]);
     }
 }
