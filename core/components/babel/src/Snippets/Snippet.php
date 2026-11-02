@@ -115,7 +115,7 @@ abstract class Snippet
      */
     protected function getBool($value)
     {
-        return ($value == 1 || $value == '1' || $value == true || $value == 'true');
+        return filter_var($value, FILTER_VALIDATE_BOOLEAN);
     }
 
     /**
