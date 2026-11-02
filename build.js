@@ -166,6 +166,13 @@ async function taskBump() {
         search: /"php": ">=\d.\d.*?"/g,
         replace: '"php": ">=' + phpversion + '"'
     }], 'requirements in');
+    await replaceInFile('_build/config.json', [{
+        search: /("name": "php",\s*"version": ")>=?[^"]*(")/g,
+        replace: '$1>=' + phpversion + '$2'
+    }, {
+        search: /("name": "modx",\s*"version": ")>=?[^"]*(")/g,
+        replace: '$1>=' + modxversion + '$2'
+    }], 'requirements in');
     const buildFiles = [
         '_build/config.json',
         'core/components/babel/composer.json',
