@@ -1,7 +1,5 @@
-_build/build.config.php
+.idea
 config.core.php
-
-_build/site
 
 icon/*.svg
 
@@ -11,3 +9,4 @@ _packages/*.*
 
 node_modules/
 core/components/*/vendor/
+site/

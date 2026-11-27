@@ -1,14 +1,14 @@
 Babel.grid.ResourceMatrix = function (config) {
     config = config || {};
-    this.buttonColumnTpl = new Ext.XTemplate('<tpl for=".">'
-        + '<tpl if="action_buttons !== null">'
-        + '<ul class="action-buttons">'
-        + '<tpl for="action_buttons">'
-        + '<li><i class="icon {className} icon-{icon}" title="{text}" data-ctx="{ctx}" data-target="{target}"></i></li>'
-        + '</tpl>'
-        + '</ul>'
-        + '</tpl>'
-        + '</tpl>', {
+    this.buttonColumnTpl = new Ext.XTemplate('<tpl for=".">' +
+        '<tpl if="action_buttons !== null">' +
+        '<ul class="action-buttons">' +
+        '<tpl for="action_buttons">' +
+        '<li><i class="icon {className} icon-{icon}" title="{text}" data-ctx="{ctx}" data-target="{target}"></i></li>' +
+        '</tpl>' +
+        '</ul>' +
+        '</tpl>' +
+        '</tpl>', {
         compiled: true
     });
     this.ident = 'babel-resourcematrix-' + Ext.id();

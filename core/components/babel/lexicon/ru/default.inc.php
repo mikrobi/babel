@@ -60,7 +60,7 @@ $_lang['babel.search'] = 'Поиск …';
 $_lang['babel.select_context'] = 'Выберите контекст';
 $_lang['babel.select_tree_node'] = 'Выберите узел в дереве ресурсов';
 $_lang['babel.settings'] = '<i class="icon icon-cog"><span class="sr-only">Настройки</span></i>';
-$_lang['babel.settings_desc'] = 'Редактирование настроек Babel. Вы можете изменить значение системного параметра, дважды щелкнув ячейку таблицы "Значение" или щелкнув правой кнопкой мыши в ячейке таблицы.';
+$_lang['babel.settings_desc'] = 'Редактирование настроек Babel. Вы можете изменить значение системного параметра, дважды щелкнув ячейку таблицы «Значение» или щелкнув правой кнопкой мыши в ячейке таблицы.';
 $_lang['babel.success_delete_resource'] = 'Переведенный ресурс [[+oldid]] ресурса [[+id]] был удален в контексте [[+context]].';
 $_lang['babel.success_delete_resources'] = 'Переведенные ресурсы ресурса [[+id]] были удалены во всех контекстах.';
 $_lang['babel.success_duplicate_resource'] = 'Переведенный ресурс для [[+id]] был создан в контексте [[+context]].';
@@ -70,7 +70,7 @@ $_lang['babel.success_unlink_resources'] = 'Переведенные ресур�
 $_lang['babel.sync_linked_translations'] = 'Синхронизируйте все переводы';
 $_lang['babel.sync_linked_translations_target'] = 'Синхронизировать все переводы с целевого ресурса';
 $_lang['babel.systemsetting_key_err_nv'] = 'Вы можете редактировать настройки только с префиксом babel.';
-$_lang['babel.systemsetting_usergroup_err_nv'] = 'Изменять настройки могут только пользователи с правами settings или settings_babel.';
+$_lang['babel.systemsetting_usergroup_err_nv'] = 'Изменять настройки могут только пользователи с правами settings или babel_settings.';
 $_lang['babel.target_id'] = 'Идентификатор цели';
 $_lang['babel.target_pagetitle'] = '... или поиск по заголовку целевой страницы';
 $_lang['babel.translation_err_could_not_duplicate_resource'] = 'Произошла ошибка при попытке создать перевод в контексте <b>«[[+context]]»</b>.';

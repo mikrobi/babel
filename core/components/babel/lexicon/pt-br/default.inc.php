@@ -60,7 +60,7 @@ $_lang['babel.search'] = 'Pesquisar …';
 $_lang['babel.select_context'] = 'Selecionar contexto';
 $_lang['babel.select_tree_node'] = 'Selecione um nó na árvore de recursos';
 $_lang['babel.settings'] = '<i class="icon icon-cog"><span class="sr-only">Configurações</span></i>';
-$_lang['babel.settings_desc'] = 'Editar as configurações do Babel. Você pode editar o valor de uma configuração do sistema clicando duas vezes na célula da tabela "Valor" ou clicando com o botão direito do mouse na célula da tabela.';
+$_lang['babel.settings_desc'] = 'Editar as configurações do Babel. Você pode editar o valor de uma configuração do sistema clicando duas vezes na célula da tabela “Valor” ou clicando com o botão direito do mouse na célula da tabela.';
 $_lang['babel.success_delete_resource'] = 'O recurso traduzido [[+oldid]] do recurso [[+id]] foi excluído no contexto [[+context]].';
 $_lang['babel.success_delete_resources'] = 'Os recursos traduzidos do recurso [[+id]] foram excluídos em todos os contextos.';
 $_lang['babel.success_duplicate_resource'] = 'Um recurso traduzido para [[+id]] foi criado no contexto [[+context]].';
@@ -70,7 +70,7 @@ $_lang['babel.success_unlink_resources'] = 'Os recursos traduzidos do recurso [[
 $_lang['babel.sync_linked_translations'] = 'Sincronizar todas as traduções';
 $_lang['babel.sync_linked_translations_target'] = 'Sincronizar todas as traduções a partir do destino';
 $_lang['babel.systemsetting_key_err_nv'] = 'Você só pode editar configurações com o prefixo babel.';
-$_lang['babel.systemsetting_usergroup_err_nv'] = 'Somente usuários com a permissão settings ou settings_babel podem alterar as configurações.';
+$_lang['babel.systemsetting_usergroup_err_nv'] = 'Somente usuários com a permissão settings ou babel_settings podem alterar as configurações.';
 $_lang['babel.target_id'] = 'ID do destino';
 $_lang['babel.target_pagetitle'] = '... ou pesquisar o título da página de destino';
 $_lang['babel.translation_err_could_not_duplicate_resource'] = 'Ocorreu um erro ao tentar criar uma tradução no contexto [[+context]].';

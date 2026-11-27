@@ -1,0 +1,90 @@
+[project]
+site_name = "Babel"
+site_description = "Documentation for Babel, the easy way for a multilingual MODX site!"
+site_author = "Jakob Class, Rico Goldsky, Joshua Luckers and Thomas Jakobi"
+site_url = "https://mikrobi.github.io/babel/"
+repo_url = "https://github.com/mikrobi/babel/"
+repo_name = "mikrobi/babel"
+copyright = """
+&copy; 2010-2026 <a href="https://github.com/mikrobi">Jakob Class</a>
+"""
+nav = [
+    "index.md",
+    "installation.md",
+    { "Usage" = [
+        'usage/index.md',
+        'usage/tutorial.md',
+        'usage/tutorial-seo.md'
+    ] },
+    "changelog.md",
+    "contributors.md"
+]
+extra_css = ["assets/stylesheets/treehillstudio.css"]
+
+[project.theme]
+custom_dir = "/Users/jako/Documents/MODX/Zensical/Jako"
+favicon = "assets/favicon.png"
+language = "en"
+features = [
+    "announce.dismiss",
+    "content.code.annotate",
+    "content.code.copy",
+    "content.code.select",
+    "content.footnote.tooltips",
+    "content.tabs.link",
+    "content.tooltips",
+    "navigation.indexes",
+    "navigation.instant",
+    "navigation.instant.prefetch",
+    "navigation.path",
+    "navigation.top",
+    "navigation.tracking",
+    "search.highlight",
+]
+
+[[project.theme.palette]]
+scheme = "default"
+toggle.icon = "lucide/sun"
+toggle.name = "Switch to dark mode"
+
+[[project.theme.palette]]
+scheme = "slate"
+primary = "green"
+toggle.icon = "lucide/moon"
+toggle.name = "Switch to light mode"
+
+[project.extra.analytics]
+provider = "matomo"
+url = "matomo.treehillstudio.com"
+site = 40
+
+[[project.extra.social]]
+name = "Babel on MODX Extras"
+icon = "fontawesome/brands/modx"
+link = "https://modx.com/extras/package/babel"
+
+[project.markdown_extensions.attr_list]
+
+[project.markdown_extensions.admonition]
+
+[project.markdown_extensions.pymdownx.details]
+
+[project.markdown_extensions.pymdownx.emoji]
+emoji_index = "zensical.extensions.emoji.twemoji"
+emoji_generator = "zensical.extensions.emoji.to_svg"
+
+[project.markdown_extensions.footnotes]
+
+[project.markdown_extensions.zensical.extensions.glightbox]
+
+[project.markdown_extensions.pymdownx.highlight]
+anchor_linenums = true
+line_spans = "__span"
+pygments_lang_class = true
+
+[project.markdown_extensions.pymdownx.inlinehilite]
+
+[project.markdown_extensions.pymdownx.snippets]
+base_path = ["docs", "core"]
+
+[project.markdown_extensions.pymdownx.superfences]

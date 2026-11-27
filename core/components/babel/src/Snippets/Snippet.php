@@ -81,7 +81,7 @@ abstract class Snippet
             $skipEmpty = true;
             if (isset($parts[1]) && $parts[1] == 'allowEmpty') {
                 $skipEmpty = false;
-                array_pop($parts);
+                array_splice($parts, 1, 1);
             }
             if (isset($parts[1]) && method_exists($this, 'get' . ucfirst($parts[1]))) {
                 if (isset($parts[2])) {
@@ -115,7 +115,7 @@ abstract class Snippet
      */
     protected function getBool($value)
     {
-        return ($value == 1 || $value == '1' || $value == true || $value == 'true');
+        return filter_var($value, FILTER_VALIDATE_BOOLEAN);
     }
 
     /**

@@ -589,6 +589,10 @@ Ext.extend(babel, Ext.Component, {
                                             MODx.loadPage('resource/update', 'id=' + r.object.id);
                                         },
                                         scope: this
+                                    },
+                                    failure: {
+                                        fn: _this.hideMask,
+                                        scope: this
                                     }
                                 }
                             });
@@ -642,8 +646,7 @@ Ext.extend(babel, Ext.Component, {
         Ext.each(Babel.config.contexts, function (ctx) {
             if (ctx !== _this.babelContext &&
                 _this.babelMenu.hasOwnProperty(ctx) &&
-                (_this.babelMenu[ctx]['resourceUrl'] === 'undefined' ||
-                    _this.babelMenu[ctx]['resourceUrl'] === '' ||
+                (_this.babelMenu[ctx]['resourceUrl'] === '' ||
                     _this.babelMenu[ctx]['resourceUrl'] === '#')) {
                 checkboxes.push({
                     boxLabel: _this.babelMenu[ctx]['displayText'],
@@ -932,6 +935,10 @@ Ext.extend(babel, Ext.Component, {
                                             MODx.loadPage('resource/update', 'id=' + r.object.id);
                                         },
                                         scope: this
+                                    },
+                                    failure: {
+                                        fn: _this.hideMask,
+                                        scope: this
                                     }
                                 }
                             });
@@ -983,11 +990,9 @@ Ext.extend(babel, Ext.Component, {
         var _this = this;
         var checkboxes = [];
         Ext.each(Babel.config.contexts, function (ctx) {
-            var test = _this.babelMenu[ctx];
             if (ctx !== _this.babelContext &&
                 _this.babelMenu.hasOwnProperty(ctx) &&
-                (_this.babelMenu[ctx]['resourceUrl'] !== 'undefined' &&
-                    _this.babelMenu[ctx]['resourceUrl'] !== '' &&
+                (_this.babelMenu[ctx]['resourceUrl'] !== '' &&
                     _this.babelMenu[ctx]['resourceUrl'] !== '#')) {
                 checkboxes.push({
                     boxLabel: _this.babelMenu[ctx]['displayText'],
@@ -1211,26 +1216,6 @@ Ext.extend(babel, Ext.Component, {
                 }
             }
         });
-    },
-    getChildIds: function (id) {
-        MODx.Ajax.request({
-            url: this.config.connectorUrl,
-            params: {
-                action: 'mgr/resource/getchildren',
-                id: id,
-            },
-            listeners: {
-                success: {
-                    fn: function (r) {
-                        if (r.object.child_ids) {
-                            return r.object.child_ids;
-                        }
-                    },
-                    scope: this
-                }
-            }
-        });
-        return [id];
     },
     loadMask: function () {
         if (!this.overlayMask) {

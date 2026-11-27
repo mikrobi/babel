@@ -1,4 +1,5 @@
 {
+  "fullname": "Babel",
   "name": "babel",
   "description": "The easy way for your multilingual site!",
   "author": "Jakob Class <jakob.class@gmail.com>",
@@ -8,27 +9,30 @@
     "Thomas Jakobi <office@treehillstudio.com>"
   ],
   "private": true,
+  "version": "3.5.8",
+  "phpversion": "7.2",
+  "modxversion": "2.8",
+  "startYear": "2010",
+  "scripts": {
+    "build": "node build.js",
+    "build:bump": "node build.js bump",
+    "build:copy": "node build.js copy",
+    "build:scripts": "node build.js scripts",
+    "build:sass": "node build.js sass"
+  },
   "devDependencies": {
-    "@fomantic/gulp-header": "^2.1.1",
-    "autoprefixer": "^10.4.20",
-    "cssnano": "^7.0.6",
-    "date-format": "^4.0.14",
-    "gulp": "^5.0.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-footer": "^2.1.0",
-    "gulp-postcss": "^10.0.0",
-    "gulp-rename": "^2.0.0",
-    "gulp-replace": "^1.1.4",
-    "gulp-sass": "^6.0.1",
-    "gulp-uglify": "^3.0.2",
-    "postcss": "^8.5.3",
-    "sass": "^1.85.1",
-    "uglify-js": "^3.19.3"
+    "autoprefixer": "^10.7.0",
+    "cssnano": "^9.9.0",
+    "postcss": "^8.5.33",
+    "sass": "^1.108.2",
+    "terser": "^5.51.4"
   },
   "browserslist": [
-    "last 2 version",
     "> 1%",
-    "maintained node versions",
-    "not dead"
-  ]
+    "defaults"
+  ],
+  "allowScripts": {
+    "@parcel/watcher@2.6.0": true,
+    "fsevents@2.3.3": true
+  }
 }

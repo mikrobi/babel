@@ -6,7 +6,7 @@
  * @subpackage build
  *
  * @var array $options
- * @var xPDOObject $object
+ * @var xPDOTransport $transport
  */
 
 /**
@@ -72,18 +72,23 @@ $babelEvents = [
     'OnBabelFieldSynced' // invoked when resource fields are synchronized and changed
 ];
 
+
+/** @var modX $modx */
+$modx = $transport->xpdo;
+
 $success = true;
+
 switch ($options[xPDOTransport::PACKAGE_ACTION]) {
     case xPDOTransport::ACTION_INSTALL:
     case xPDOTransport::ACTION_UPGRADE:
         foreach ($babelEvents as $babelEvent) {
-            $created = createEvent($object->xpdo, $babelEvent, 2);
+            $created = createEvent($modx, $babelEvent, 2);
             $success = $success && $created;
         }
         break;
     case xPDOTransport::ACTION_UNINSTALL:
         foreach ($babelEvents as $babelEvent) {
-            $removed = removeEvent($object->xpdo, $babelEvent);
+            $removed = removeEvent($modx, $babelEvent);
             $success = $success && $removed;
         }
         break;

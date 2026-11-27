@@ -1,8 +1,3 @@
-.modx3.x-buttonmenu-babel-item-icon:before {
-  left: 2px;
-  top: 1px;
-}
-
 .x-buttonmenu-babel-item-icon {
   text-align: center;
 }
@@ -40,12 +35,11 @@
   overflow-y: auto;
 }
 
-/*!
- * Ext JS Library 3.4.0
- * Copyright(c) 2006-2011 Sencha Inc.
- * licensing@sencha.com
- * http://www.sencha.com/license
- */
+.modx3.x-buttonmenu-babel-item-icon:before {
+  left: 2px;
+  top: 1px;
+}
+
 .x-grid3-locked, .x-grid3-unlocked {
   overflow: hidden;
   position: absolute;
@@ -112,7 +106,7 @@
   z-index: 10;
 }
 .ribbon:before, .ribbon:after {
-  border: 5px solid rgb(113.5, 0, 0);
+  border: 5px solid rgb(44.5098039216%, 0%, 0%);
   content: "";
   display: block;
   position: absolute;

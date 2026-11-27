@@ -86,6 +86,9 @@ class BabelLinks extends Snippet
         }
         $contextKeys = $this->babel->getGroupContextKeys($resource->get('context_key'), $this->getProperty('restrictToGroup'));
 
+        if (empty($contextKeys)) {
+            return '';
+        }
         $contexts = [];
         $c = $this->modx->newQuery('modContext', ['key:IN' => $contextKeys]);
         if (!empty($this->getProperty('sortby'))) {
@@ -124,16 +127,14 @@ class BabelLinks extends Snippet
             $translationAvailable = false;
             if (isset($linkedResources[$contextKey])) {
                 $c = $this->modx->newQuery('modResource');
-                $c->where([
+                $conditions = [
                     'id' => $linkedResources[$contextKey],
                     'deleted:!=' => 1,
-                    'published:=' => 1,
-                ]);
-                if ($this->getProperty('showUnpublished')) {
-                    $c->where([
-                        'OR:published:=' => 0,
-                    ]);
+                ];
+                if (!$this->getProperty('showUnpublished')) {
+                    $conditions['published:='] = 1;
                 }
+                $c->where($conditions);
                 $count = $this->modx->getCount('modResource', $c);
                 if ($count) {
                     $translationAvailable = true;

@@ -1,4 +1,4 @@
-@use "modx3";
+@use "sass:meta";
 
 $red: #be0000;
 
@@ -43,3 +43,5 @@ $red: #be0000;
   max-height: 74vh;
   overflow-y: auto;
 }
+
+@include meta.load-css("modx3");

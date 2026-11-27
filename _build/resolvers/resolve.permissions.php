@@ -6,7 +6,7 @@
  * @subpackage build
  *
  * @var array $options
- * @var xPDOObject $object
+ * @var xPDOTransport $transport
  */
 
 $accessPolicies = [
@@ -123,29 +123,28 @@ function removeAccessPermission($modx, $policy, $template, $permission)
     return true;
 }
 
-$success = true;
-if ($object->xpdo) {
-    /** @var modX $modx */
-    $modx = &$object->xpdo;
-    switch ($options[xPDOTransport::PACKAGE_ACTION]) {
-        case xPDOTransport::ACTION_INSTALL:
-        case xPDOTransport::ACTION_UPGRADE:
-            foreach ($accessPolicies as $accessPolicy) {
-                foreach ($accessPolicy['permissions'] as $accessPermission) {
-                    $result = createAccessPermission($modx, $accessPolicy['policy'], $accessPolicy['template'], $accessPermission);
-                    $success = $success && $result;
-                }
-            }
+/** @var modX $modx */
+$modx = $transport->xpdo;
 
-            break;
-        case xPDOTransport::ACTION_UNINSTALL:
-            foreach ($accessPolicies as $accessPolicy) {
-                foreach ($accessPolicy['permissions'] as $accessPermission) {
-                    $result = removeAccessPermission($modx, $accessPolicy['policy'], $accessPolicy['template'], $accessPermission);
-                    $success = $success && $result;
-                }
+$success = true;
+
+switch ($options[xPDOTransport::PACKAGE_ACTION]) {
+    case xPDOTransport::ACTION_INSTALL:
+    case xPDOTransport::ACTION_UPGRADE:
+        foreach ($accessPolicies as $accessPolicy) {
+            foreach ($accessPolicy['permissions'] as $accessPermission) {
+                $result = createAccessPermission($modx, $accessPolicy['policy'], $accessPolicy['template'], $accessPermission);
+                $success = $success && $result;
             }
-            break;
-    }
+        }
+        break;
+    case xPDOTransport::ACTION_UNINSTALL:
+        foreach ($accessPolicies as $accessPolicy) {
+            foreach ($accessPolicy['permissions'] as $accessPermission) {
+                $result = removeAccessPermission($modx, $accessPolicy['policy'], $accessPolicy['template'], $accessPermission);
+                $success = $success && $result;
+            }
+        }
+        break;
 }
 return $success;

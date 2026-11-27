@@ -13,6 +13,7 @@ class BabelResourceDeleteProcessor extends ObjectUpdateProcessor
     public $classKey = 'modResource';
     public $objectType = 'resource';
     public $languageTopics = ['resource', 'babel:default'];
+    public $permission = 'delete_document';
 
     /** @var modResource $object */
     public $object;
@@ -52,26 +53,42 @@ class BabelResourceDeleteProcessor extends ObjectUpdateProcessor
 
         $contextKey = $this->getProperty('context_key');
         if (empty($contextKey)) {
-            // Move all linked resources to the trash
+            // Collect all linked resources
+            $resources = [];
             foreach ($linkedResources as $linkedResource) {
                 foreach ($this->babel->getLinkedResources($linkedResource) as $resourceId) {
                     /** @var modResource $resource */
                     $resource = $this->modx->getObject('modResource', $resourceId);
                     if ($resource && $resource->get('id') !== $this->object->get('id')) {
-                        $resource->set('deleted', true);
-                        $resource->set('deletedon', time());
-                        $resource->set('deletedby', $this->modx->user->id);
-                        $resource->save();
+                        $resources[$resource->get('id')] = $resource;
                     }
                 }
             }
-            $this->babel->updateBabelTv($this->object->get('id'), []);
+            // Check the permissions of all resources before anything is changed
+            foreach ($resources as $resource) {
+                if (!$this->canDelete($resource)) {
+                    return $this->failure($this->modx->lexicon('permission_denied'));
+                }
+            }
+            // Move all linked resources to the trash
+            foreach ($resources as $resource) {
+                $resource->set('deleted', true);
+                $resource->set('deletedon', time());
+                $resource->set('deletedby', $this->modx->user->id);
+                $resource->save();
+            }
+            $this->babel->updateAllowedBabelTv($this->object->get('id'), [], array_keys($resources));
             $this->fireUnlinkEvent();
 
             $this->modx->log(xPDO::LOG_LEVEL_INFO, $this->modx->lexicon('babel.success_delete_resources', [
                 'id' => $this->object->get('id'),
             ]));
         } else {
+            if (!isset($linkedResources[$contextKey])) {
+                return $this->failure($this->modx->lexicon('babel.context_err_invalid_key', [
+                    'context' => $contextKey
+                ]));
+            }
             $target = $linkedResources[$contextKey];
             /** @var modResource $targetResource */
             $targetResource = $this->modx->getObject('modResource', $target);
@@ -80,14 +97,10 @@ class BabelResourceDeleteProcessor extends ObjectUpdateProcessor
                     'resource' => $target
                 ]));
             }
-            $targetResources = $this->babel->getLinkedResources($target);
-            if (empty($targetResources)) {
-                $targetResources = $this->babel->initBabelTv($targetResource);
+            if (!$this->canDelete($targetResource)) {
+                return $this->failure($this->modx->lexicon('permission_denied'));
             }
-            unset($targetResources[$this->object->get('context_key')]);
-            $this->babel->updateBabelTv($targetResources, $targetResources);
-            unset($linkedResources[$this->getProperty('context_key')]);
-            $this->babel->updateBabelTv($this->object->get('id'), $linkedResources);
+            $this->babel->removeTranslation($targetResource, $linkedResources, [$target]);
             $this->fireUnlinkEvent($targetResource);
             $targetResource->set('deleted', true);
             $targetResource->set('deletedon', time());
@@ -105,6 +118,18 @@ class BabelResourceDeleteProcessor extends ObjectUpdateProcessor
         }
 
         return $this->cleanup();
+    }
+
+    /**
+     * Check if the user is allowed to delete a resource
+     *
+     * @param modResource $resource
+     * @return bool
+     */
+    protected function canDelete($resource)
+    {
+        return $this->babel->hasContextPermission($resource->get('context_key'), 'delete_document')
+            && $resource->checkPolicy(['save' => true, 'delete' => true]);
     }
 
     /**

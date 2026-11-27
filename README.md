@@ -34,7 +34,7 @@ For more information please read the [documentation](https://mikrobi.github.io/b
 
 ## License
 
-The project is licensed under the [GPLv2 license](https://github.com/mikrobi/babel/LICENSE.md).
+The project is licensed under the [GPLv2 license](https://github.com/mikrobi/babel/blob/master/LICENSE.md).
 
 ## Translations
 

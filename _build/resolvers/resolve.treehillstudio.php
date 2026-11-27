@@ -1,25 +1,26 @@
 <?php
 /**
- * Resolves install statistics
+ * Resolve install statistics
  *
- * @package glossary
+ * @package babel
  * @subpackage build
  *
  * @var array $options
- * @var xPDOObject $object
  * @var xPDOTransport $transport
  */
 
 $url = 'https://treehillstudio.com/extras/package/statistics';
 $params = [];
 
-/** @var xPDO $modx */
-$modx =& $object->xpdo;
+/** @var modX $modx */
+$modx = $transport->xpdo;
+
+$success = true;
+
 $c = $modx->newQuery('transport.modTransportPackage');
-$c->where(
-    [
-        'workspace' => 1,
-        "(SELECT
+$c->where([
+    'workspace' => 1,
+    "(SELECT
             `signature`
             FROM {$modx->getTableName('transport.modTransportPackage')} AS `latestPackage`
             WHERE `latestPackage`.`package_name` = `modTransportPackage`.`package_name`
@@ -30,14 +31,11 @@ $c->where(
                 IF(`release` = '' OR `release` = 'ga' OR `release` = 'pl','z',`release`) DESC,
                 `latestPackage`.`release_index` DESC
                 LIMIT 1,1) = `modTransportPackage`.`signature`",
-    ]
-);
-$c->where(
-    [
-        'modTransportPackage.signature:LIKE' => $options['namespace'] . '-%',
-        'modTransportPackage.installed:IS NOT' => null
-    ]
-);
+]);
+$c->where([
+    'modTransportPackage.signature:LIKE' => $options['namespace'] . '-%',
+    'modTransportPackage.installed:IS NOT' => null
+]);
 $c->limit(1);
 
 /** @var modTransportPackage $oldPackage */
@@ -104,4 +102,4 @@ if ($curl) {
     curl_close($curl);
 }
 
-return true;
+return $success;

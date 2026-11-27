@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.5.8] - 2026-11-27
+
+### Added
+
+- Add the outputSeparator property to the BabelLinks snippet properties
+
+### Changed
+
+- Don't expose server paths in the manager page options
+- Refresh the cache only once when sorting resources
+
+### Fixed
+
+- Check the user permissions before translations are changed or synchronized
+- Fix linking, unlinking, duplicating and removing of translations
+- Fix the showUnpublished property of the BabelLinks snippet
+- Fix the change lists of the OnBabelTVSynced and OnBabelFieldSynced events
+- Escape the resource titles in the language menu
+- Show errors and finish the bulk action console on failed requests
+- Fix several PHP errors and warnings
+
 ## [3.5.7] - 2026-03-04
 
 ### Fixed

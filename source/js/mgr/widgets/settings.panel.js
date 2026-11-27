@@ -23,6 +23,14 @@ if (MODx.grid.SettingsGrid) {
 
     Babel.grid.SystemSettings = function (config) {
         config = config || {};
+        // MODX adds its toolbar filters with push. The namespace filter is not added, because only the settings of this extra are listed.
+        var tbar = [];
+        tbar.push = function () {
+            var items = Array.prototype.filter.call(arguments, function (item) {
+                return !(item && item.xtype === 'modx-combo-namespace');
+            });
+            return Array.prototype.push.apply(this, items);
+        };
         Ext.applyIf(config, {
             id: 'babel-grid-systemsettings',
             url: Babel.config.connectorUrl,
@@ -31,7 +39,7 @@ if (MODx.grid.SettingsGrid) {
                 area: MODx.request.area || ''
             },
             save_action: 'mgr/settings/updatefromgrid',
-            tbar: [],
+            tbar: tbar,
             queryParam: (Babel.config.modxversion >= 3) ? 'query' : 'key'
         });
         Babel.grid.SystemSettings.superclass.constructor.call(this, config);
@@ -114,14 +122,15 @@ if (MODx.grid.SettingsGrid) {
                 filterArea.setValue('');
             }
         },
-        listeners: {
-            afterrender: function (cmp) {
-                var filterNamespace = Ext.getCmp('modx-filter-namespace');
-                filterNamespace = filterNamespace || cmp.topToolbar.getComponent('filter-ns');
-                if (filterNamespace) {
-                    filterNamespace.hide();
-                }
-            }
+        clearGridFilters: function (items) {
+            // The namespace filter is not added, so skip the filters that don't exist in the toolbar
+            var toolbar = this.getTopToolbar();
+            var data = Array.isArray(items) ? items : items.split(',');
+            data = data.filter(function (item) {
+                var itemId = item.replace(/\s+/g, '').split(':')[0];
+                return !!toolbar.getComponent(itemId) || toolbar.find('itemId', itemId + '-container').length > 0;
+            });
+            return Babel.grid.SystemSettings.superclass.clearGridFilters.call(this, data);
         }
     });
     Ext.reg('babel-grid-system-settings', Babel.grid.SystemSettings);
