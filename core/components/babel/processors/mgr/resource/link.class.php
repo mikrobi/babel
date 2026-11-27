@@ -30,7 +30,7 @@ class BabelResourceLinkProcessor extends ObjectUpdateProcessor
             return $this->modx->lexicon($this->objectType . '_err_ns');
         }
         $primaryKey = $this->getProperty($this->primaryKeyField, false);
-        if ($target === $primaryKey) {
+        if ((int)$target === (int)$primaryKey) {
             return $this->modx->lexicon('babel.resource_err_link_of_selflink_not_possible');
         }
         $targetResource = $this->modx->getObject('modResource', $target);
@@ -77,10 +77,35 @@ class BabelResourceLinkProcessor extends ObjectUpdateProcessor
         }
 
         $context = $this->getProperty('context');
+        // One side of the new link has to be editable
+        if (!$this->babel->canUpdateAny([$this->object->get('id'), $target])) {
+            return $this->failure($this->modx->lexicon('permission_denied'));
+        }
+        // Copying the values updates all linked resources, so check the permissions before anything is changed
+        if ($this->getProperty('copy') == 1) {
+            $writtenResources = array_merge(
+                ($this->getProperty('sync') == 1) ? $targetResources : [],
+                $linkedResources,
+                [$context => $target]
+            );
+            foreach ($writtenResources as $resourceId) {
+                /** @var modResource $writtenResource */
+                $writtenResource = $this->modx->getObject('modResource', $resourceId);
+                if ($writtenResource && (int)$resourceId !== (int)$this->object->get('id') && !$this->babel->canUpdate($writtenResource)) {
+                    return $this->failure($this->modx->lexicon('permission_denied'));
+                }
+            }
+        }
         // Add or change a translation link
-        if (isset($linkedResources[$context])) {
-            // If the existing link has been changed, reset the Babel TV of the old resource
-            $this->babel->initBabelTvById($linkedResources[$context]);
+        $oldId = (int)($linkedResources[$context] ?? 0);
+        if ($oldId && $oldId !== (int)$target && $oldId !== (int)$this->object->get('id')) {
+            // If the existing link is changed, remove the old resource from the translation group
+            $oldResource = $this->modx->getObject('modResource', $oldId);
+            if ($oldResource) {
+                $this->babel->removeTranslation($oldResource, $linkedResources);
+                $linkedResources = $this->babel->getLinkedResources($this->object->get('id'));
+                $targetResources = $this->babel->getLinkedResources($target);
+            }
         }
         $linkedResources[$context] = $target;
 
@@ -88,17 +113,18 @@ class BabelResourceLinkProcessor extends ObjectUpdateProcessor
         if ($syncLinkedTranslations == 1) {
             // Join all existing linked resources from both resources
             $mergedResources = array_merge($targetResources, $linkedResources);
-            $this->babel->updateBabelTv($mergedResources, $mergedResources);
+            $this->babel->updateAllowedBabelTv($mergedResources, $mergedResources);
         } else {
             // Only join between 2 resources
             $mergeLinked = array_merge($linkedResources, [
                 $this->getProperty('context') => $target
             ]);
-            $this->babel->updateBabelTv($this->object->get('id'), $mergeLinked);
+            $this->babel->updateAllowedBabelTv($this->object->get('id'), $mergeLinked);
             $mergeTarget = array_merge($targetResources, [
-                $this->object->get('context_key') => $this->object->get('id')
+                $this->object->get('context_key') => $this->object->get('id'),
+                $context => $target,
             ]);
-            $this->babel->updateBabelTv($target, $mergeTarget);
+            $this->babel->updateAllowedBabelTv($target, $mergeTarget);
         }
 
         $copyTvValues = $this->getProperty('copy');

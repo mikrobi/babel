@@ -61,7 +61,7 @@ class OnDocFormPrerender extends Plugin
         }
         $this->modx->controller->addHtml('<script type="text/javascript">
         Ext.onReady(function () {
-            Babel.config = ' . json_encode($this->babel->config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . ';
+            Babel.config = ' . json_encode($this->babel->getManagerOptions(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . ';
             Babel.getMenu(Babel.config.menu);
         });
         </script>');

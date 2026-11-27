@@ -60,7 +60,7 @@ $_lang['babel.search'] = 'Căutare …';
 $_lang['babel.select_context'] = 'Selectați contextul';
 $_lang['babel.select_tree_node'] = 'Selectați un nod din arborele de resurse';
 $_lang['babel.settings'] = '<i class="icon icon-cog"><span class="sr-only">Setări</span></i>';
-$_lang['babel.settings_desc'] = 'Modificați setările din Babel. Puteți edita valoarea unei setări de sistem făcând dublu clic pe celula de tabel "Value" (Valoare) sau făcând clic dreapta în celula de tabel.';
+$_lang['babel.settings_desc'] = 'Modificați setările din Babel. Puteți edita valoarea unei setări de sistem făcând dublu clic pe celula de tabel „Value” (Valoare) sau făcând clic dreapta în celula de tabel.';
 $_lang['babel.success_delete_resource'] = 'Resursa tradusă [[+oldid]] a resursei [[+id]] a fost eliminată în contextul [[+context]].';
 $_lang['babel.success_delete_resources'] = 'Resursele traduse ale resursei [[+id]] au fost șterse în toate contextele.';
 $_lang['babel.success_duplicate_resource'] = 'O resursă tradusă pentru [[+id]] a fost creată în contextul [[+context]].';

@@ -60,7 +60,7 @@ $_lang['babel.search'] = 'Pesquisar …';
 $_lang['babel.select_context'] = 'Selecionar contexto';
 $_lang['babel.select_tree_node'] = 'Selecionar um nó na árvore de recursos';
 $_lang['babel.settings'] = '<i class="icon icon-cog"><span class="sr-only">Definições</span></i>';
-$_lang['babel.settings_desc'] = 'Editar as definições da Babel. Pode editar o valor de uma definição do sistema fazendo duplo clique na célula da tabela "Valor" ou clicando com o botão direito do rato na célula da tabela.';
+$_lang['babel.settings_desc'] = 'Editar as definições da Babel. Pode editar o valor de uma definição do sistema fazendo duplo clique na célula da tabela «Valor» ou clicando com o botão direito do rato na célula da tabela.';
 $_lang['babel.success_delete_resource'] = 'O recurso traduzido [[+oldid]] do recurso [[+id]] foi eliminado no contexto [[+context]].';
 $_lang['babel.success_delete_resources'] = 'Os recursos traduzidos do recurso [[+id]] foram eliminados em todos os contextos.';
 $_lang['babel.success_duplicate_resource'] = 'Um recurso traduzido para [[+id]] foi criado no contexto [[+context]].';

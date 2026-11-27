@@ -28,7 +28,7 @@ of translated resources which should be the same in every context (language).
 
 ### License
 
-The project is licensed under the [GPLv2 license](https://github.com/mikrobi/babel/LICENSE.md).
+The project is licensed under the [GPLv2 license](https://github.com/mikrobi/babel/blob/master/LICENSE.md).
 
 ### Translations [![Default Lexicon](https://hosted.weblate.org/widget/modx-extras/babel/standard/svg-badge.svg)](https://hosted.weblate.org/projects/modx-extras/babel/)
 

@@ -26,8 +26,8 @@ First of all I want to thank [digital butter](https://www.butter.com.hk/) for
 their great
 [tutorial](https://web.archive.org/web/20150402201647/http://www.butter.com.hk/blog/posts/2010/08/internationalization-in-modx-revolution.html)
 which explains how to set up a multilingual website with MODx. I referred to
-their tutorial in the official documentation. However, since there have been
-made some changes to the access control system of MODx you have to apply some
+their tutorial in the official documentation. However, since some changes
+have been made to the access control system of MODx you have to apply some
 more steps to set up your multilingual website correctly.
 
 In this article I’ll simply list all the steps necessary to set up your
@@ -72,7 +72,7 @@ and the French one via _www.​example.fr_.
 5. Install the Babel Extra via package management.
 
 Now you should be able to create documents and link translations via Babel in
-your MODx manager. For information about how to use the MODx lexicon feauture
+your MODx manager. For information about how to use the MODx lexicon feature
 you may take a look at the [tutorial at digital
 butter](https://web.archive.org/web/20150402201647/http://www.butter.com.hk/blog/posts/2010/08/internationalization-in-modx-revolution.html)
 or [official documentation](https://mikrobi.github.io/babel/).

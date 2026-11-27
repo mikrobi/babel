@@ -61,7 +61,7 @@ for a multilingual site are satisfied:
     RewriteBase /subfolder/mysite/xy/
     ```
 
-- The base URL is set via the <base> Tag in your HTML head of all your templates:
+- The base URL is set via the `<base>` tag in your HTML head of all your templates:
 
     ```
     <head>
@@ -87,13 +87,13 @@ up multilingual websites and one additional step:
     !!! warning "Differences to the non SEO version"
 
         Instead of using different domains in the `site_url` context setting you have to
-        use subfolders and additionally specifiy the `base_url` according to the context's
+        use subfolders and additionally specify the `base_url` according to the context's
         `cultureKey`.
 
     !!! hint "Use CrossContextsSettings"
     
         You should also define settings like `site_start` `error_page` etc. for each of
-        your contexts. To maintain this entries a lot easier you can use the MODX Extra
+        your contexts. To maintain these entries a lot easier you can use the MODX Extra
         [CrossContextsSettings](https://extras.modx.com/package/crosscontextssettings).
 
 3. Grant the _"Load Only"_ access policy for all your contexts to the _anonymous_
@@ -139,7 +139,7 @@ be found:
    return a 404 error code.
 
 To solve this problem you have to add another rewrite rule before
-the rule from above which internally redirects all request to _/[ck]/assets/*_ to
+the rule from above which internally redirects all requests to _/[ck]/assets/*_ to
 _/assets/*_ where _[ck]_ is a valid culture key:
 
 ```

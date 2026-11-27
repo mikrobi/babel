@@ -55,8 +55,11 @@ class BabelResourceRefreshProcessor extends ObjectUpdateProcessor
         $linkedResources = $this->babel->getLinkedResources($this->object->get('id'));
 
         /** @var modResource $linkedResource */
-        $linkedResource = ($linkedResources[$context]) ? $this->modx->getObject($this->classKey, $linkedResources[$context]) : null;
+        $linkedResource = (!empty($linkedResources[$context])) ? $this->modx->getObject($this->classKey, $linkedResources[$context]) : null;
         if ($linkedResource) {
+            if (!$this->babel->canUpdate($linkedResource)) {
+                return $this->failure($this->modx->lexicon('permission_denied'));
+            }
             $this->linkedObject = $this->babel->refreshResource($this->object, $linkedResource);
         }
 

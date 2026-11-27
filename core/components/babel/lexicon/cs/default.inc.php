@@ -60,7 +60,7 @@ $_lang['babel.search'] = 'Vyhledávání …';
 $_lang['babel.select_context'] = 'Vyberte kontext';
 $_lang['babel.select_tree_node'] = 'Výběr uzlu ve stromu zdrojů';
 $_lang['babel.settings'] = '<i class="icon icon-cog"><span class="sr-only">Nastavení</span></i>';
-$_lang['babel.settings_desc'] = 'Upravte nastavení aplikace Babel. Hodnotu nastavení systému můžete upravit dvojklikem na buňku tabulky "Hodnota" nebo kliknutím pravým tlačítkem myši do buňky tabulky.';
+$_lang['babel.settings_desc'] = 'Upravte nastavení aplikace Babel. Hodnotu nastavení systému můžete upravit dvojklikem na buňku tabulky „Hodnota“ nebo kliknutím pravým tlačítkem myši do buňky tabulky.';
 $_lang['babel.success_delete_resource'] = 'Přeložený prostředek [[+oldid]] prostředku [[+id]] byl odstraněn v kontextu [[+context]].';
 $_lang['babel.success_delete_resources'] = 'Přeložené prostředky zdroje [[+id]] byly odstraněny ve všech kontextech.';
 $_lang['babel.success_duplicate_resource'] = 'V kontextu [[+context]] byl vytvořen přeložený zdroj pro [[+id]].';

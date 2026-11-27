@@ -25,7 +25,7 @@ class BabelResourceGetMatrixListProcessor extends ObjectGetListProcessor
      */
     public function initialize()
     {
-        $this->contexts = array_map('trim', explode(',', $this->getProperty('contexts')));
+        $this->contexts = array_map('trim', explode(',', (string)$this->getProperty('contexts')));
 
         return parent::initialize();
     }
@@ -71,7 +71,7 @@ class BabelResourceGetMatrixListProcessor extends ObjectGetListProcessor
             if ($objectArray['context_key'] === $ctx) {
                 $objectArray['linkedres_id_' . $ctx] = 'x';
                 $objectArray['linkedres_pagetitle_' . $ctx] = 'x';
-            } elseif (!in_array($ctx, $contextKeyToGroup[$objectArray['context_key']])) {
+            } elseif (!in_array($ctx, $contextKeyToGroup[$objectArray['context_key']] ?? [], true)) {
                 $objectArray['linkedres_id_' . $ctx] = 'x';
                 $objectArray['linkedres_pagetitle_' . $ctx] = 'x';
             } else {

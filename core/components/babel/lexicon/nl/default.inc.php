@@ -60,7 +60,7 @@ $_lang['babel.search'] = 'Zoeken …';
 $_lang['babel.select_context'] = 'Selecteer context';
 $_lang['babel.select_tree_node'] = 'Selecteer een knooppunt in de boomstructuur';
 $_lang['babel.settings'] = '<i class="icon icon-cog"><span class="sr-only">Instellingen</span></i>';
-$_lang['babel.settings_desc'] = 'De instellingen van Babel bewerken. Je kunt de waarde van een systeeminstelling bewerken door te dubbelklikken op de tabelcel \'Waarde\' of door rechts te klikken in de tabelcel.';
+$_lang['babel.settings_desc'] = 'De instellingen van Babel bewerken. Je kunt de waarde van een systeeminstelling bewerken door te dubbelklikken op de tabelcel ‘Waarde’ of door rechts te klikken in de tabelcel.';
 $_lang['babel.success_delete_resource'] = 'De vertaalde bron [[+oldid]] van bron [[+id]] is verwijderd in context [[+context]].';
 $_lang['babel.success_delete_resources'] = 'De vertaalde bronnen van bron [[+id]] werden verwijderd in alle contexten.';
 $_lang['babel.success_duplicate_resource'] = 'Er is een vertaalde bron voor [[+id]] gemaakt in context [[+context]].';

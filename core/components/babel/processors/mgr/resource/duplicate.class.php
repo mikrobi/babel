@@ -52,6 +52,9 @@ class BabelResourceDuplicateProcessor extends ObjectUpdateProcessor
     public function process()
     {
         $context = $this->getProperty('context_key');
+        if (!$this->canCreate($context)) {
+            return $this->failure($this->modx->lexicon('permission_denied'));
+        }
         $this->duplicatedObject = $this->babel->duplicateResource($this->object, $context);
         if (!$this->duplicatedObject) {
             return $this->failure($this->modx->lexicon('babel.translation_err_could_not_duplicate_resource', [
@@ -63,21 +66,23 @@ class BabelResourceDuplicateProcessor extends ObjectUpdateProcessor
         $linkedResources = $this->babel->getLinkedResources($this->object->get('id'));
         $linkedResources[$context] = $this->duplicatedObject->get('id');
 
+        $newIds = [$this->duplicatedObject->get('id')];
         $syncLinkedTranslations = $this->getProperty('sync');
         if ($syncLinkedTranslations == 1) {
             // Join all existing linked resources from both resources
             $mergedResources = array_merge($targetResources, $linkedResources);
-            $this->babel->updateBabelTv($mergedResources, $mergedResources);
+            $this->babel->updateAllowedBabelTv($mergedResources, $mergedResources, $newIds);
         } else {
             // Only join between 2 resources
             $mergeLinked = array_merge($linkedResources, [
                 $this->getProperty('context_key') => $this->duplicatedObject->get('id')
             ]);
-            $this->babel->updateBabelTv($this->object->get('id'), $mergeLinked);
+            $this->babel->updateAllowedBabelTv($this->object->get('id'), $mergeLinked, $newIds);
             $mergeTarget = array_merge($targetResources, [
-                $this->object->get('context_key') => $this->object->get('id')
+                $this->object->get('context_key') => $this->object->get('id'),
+                $context => $this->duplicatedObject->get('id'),
             ]);
-            $this->babel->updateBabelTv($this->duplicatedObject->get('id'), $mergeTarget);
+            $this->babel->updateAllowedBabelTv($this->duplicatedObject->get('id'), $mergeTarget, $newIds);
         }
 
         $copyTvValues = $this->getProperty('copy');
@@ -100,6 +105,22 @@ class BabelResourceDuplicateProcessor extends ObjectUpdateProcessor
         }
 
         return $this->cleanup();
+    }
+
+    /**
+     * Check if the user is allowed to create the translation in the context
+     *
+     * @param string $contextKey
+     * @return bool
+     */
+    protected function canCreate($contextKey)
+    {
+        if (!$this->babel->hasContextPermission($contextKey, 'new_document')) {
+            return false;
+        }
+        $parent = $this->modx->getObject('modResource', $this->babel->getTranslatedParentId($this->object, $contextKey));
+
+        return ($parent) ? $parent->checkPolicy('add_children') : $this->babel->hasContextPermission($contextKey, 'new_document_in_root');
     }
 
     /**

@@ -52,19 +52,27 @@ class BabelResourceUnlinkProcessor extends ObjectUpdateProcessor
 
         $contextKey = $this->getProperty('context_key');
         if (empty($contextKey)) {
+            if (!$this->babel->canUpdateAny(array_merge([$this->object->get('id')], array_values($linkedResources)))) {
+                return $this->failure($this->modx->lexicon('permission_denied'));
+            }
             // Unlink this resource from all resources
             foreach ($linkedResources as $linkedResource) {
                 $diff = array_diff($this->babel->getLinkedResources($linkedResource), [
                     $this->object->get('context_key') => $this->object->get('id')
                 ]);
-                $this->babel->updateBabelTv($linkedResource, $diff);
+                $this->babel->updateAllowedBabelTv($linkedResource, $diff);
             }
-            $this->babel->updateBabelTv($this->object->get('id'), []);
+            $this->babel->updateAllowedBabelTv($this->object->get('id'), []);
             $this->fireUnlinkEvent();
             $this->modx->log(xPDO::LOG_LEVEL_INFO, $this->modx->lexicon('babel.success_unlink_resources', [
                 'id' => $this->object->get('id'),
             ]));
         } else {
+            if (!isset($linkedResources[$contextKey])) {
+                return $this->failure($this->modx->lexicon('babel.context_err_invalid_key', [
+                    'context' => $contextKey
+                ]));
+            }
             $target = $linkedResources[$contextKey];
             /** @var modResource $targetResource */
             $targetResource = $this->modx->getObject('modResource', $target);
@@ -73,14 +81,11 @@ class BabelResourceUnlinkProcessor extends ObjectUpdateProcessor
                     'resource' => $target
                 ]));
             }
-            $targetResources = $this->babel->getLinkedResources($target);
-            if (empty($targetResources)) {
-                $targetResources = $this->babel->initBabelTv($targetResource);
+            // One side of the link has to be editable
+            if (!$this->babel->canUpdateAny([$this->object->get('id'), $target])) {
+                return $this->failure($this->modx->lexicon('permission_denied'));
             }
-            unset($targetResources[$this->object->get('context_key')]);
-            $this->babel->updateBabelTv($targetResources, $targetResources);
-            unset($linkedResources[$this->getProperty('context_key')]);
-            $this->babel->updateBabelTv($this->object->get('id'), $linkedResources);
+            $this->babel->removeTranslation($targetResource, $linkedResources);
             $this->fireUnlinkEvent($targetResource);
             $this->modx->log(xPDO::LOG_LEVEL_INFO, $this->modx->lexicon('babel.success_unlink_resource', [
                 'id' => $this->object->get('id'),

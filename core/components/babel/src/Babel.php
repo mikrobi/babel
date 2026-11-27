@@ -67,7 +67,7 @@ class Babel
      * The version
      * @var string $version
      */
-    public $version = '3.5.7';
+    public $version = '3.5.8';
 
     /**
      * The class config
@@ -273,8 +273,10 @@ class Babel
             'babel_settings',
             'settings',
         ];
+        // The service is created in the setup too, where no context is initialized
+        $hasContext = is_object($this->modx->context);
         foreach ($perms as $p) {
-            $access[$p] = $this->modx->hasPermission($p);
+            $access[$p] = $hasContext && $this->modx->hasPermission($p);
         }
         return $access;
     }
@@ -353,8 +355,8 @@ class Babel
         if ($targetId) {
             /** @var modResource $linkedResource */
             $linkedResource = $this->modx->getObject('modResource', $targetId);
-            if ($linkedResource) {
-                $fieldChanges = [$this->changeFields($syncFields, $resource, $linkedResource)];
+            if ($linkedResource && $this->canSynchronize($linkedResource)) {
+                $fieldChanges = $this->changeFields($syncFields, $resource, $linkedResource);
                 $contexts[] = $linkedResource->get('context_key');
             }
         } else {
@@ -370,7 +372,7 @@ class Babel
                 }
                 /** @var modResource $linkedResource */
                 $linkedResource = $this->modx->getObject('modResource', $linkedResourceId);
-                if ($linkedResource) {
+                if ($linkedResource && $this->canSynchronize($linkedResource)) {
                     $fieldChanges = array_merge($fieldChanges, $this->changeFields($syncFields, $resource, $linkedResource));
                     $contexts[] = $linkedResource->get('context_key');
                 }
@@ -420,8 +422,8 @@ class Babel
         if ($targetId) {
             /** @var modResource $linkedResource */
             $linkedResource = $this->modx->getObject('modResource', $targetId);
-            if ($linkedResource) {
-                $tvChanges = [$this->changeTVs($syncTvs, $resource, $linkedResource)];
+            if ($linkedResource && $this->canSynchronize($linkedResource)) {
+                $tvChanges = $this->changeTVs($syncTvs, $resource, $linkedResource);
                 $contexts[] = $linkedResource->get('context_key');
             }
         } else {
@@ -438,7 +440,7 @@ class Babel
                 }
                 /** @var modResource $linkedResource */
                 $linkedResource = $this->modx->getObject('modResource', $linkedResourceId);
-                if ($linkedResource) {
+                if ($linkedResource && $this->canSynchronize($linkedResource)) {
                     $tvChanges = array_merge($tvChanges, $this->changeTVs($syncTvs, $resource, $linkedResource));
                     $contexts[] = $linkedResource->get('context_key');
                 }
@@ -479,6 +481,24 @@ class Babel
     }
 
     /**
+     * Returns the id of the translated parent of a resource in the specified context.
+     *
+     * @param modResource $resource
+     * @param string $contextKey
+     * @return int
+     */
+    public function getTranslatedParentId($resource, $contextKey): int
+    {
+        $parentId = $resource->get('parent');
+        if ($parentId == null) {
+            return 0;
+        }
+        $linkedParentResources = $this->getLinkedResources($parentId);
+
+        return (int)($linkedParentResources[$contextKey] ?? 0);
+    }
+
+    /**
      * Creates a duplicate of the specified resource in the specified context.
      *
      * @param modResource $resource
@@ -487,21 +507,14 @@ class Babel
     public function duplicateResource($resource, $contextKey)
     {
         // Determine parent id of new resource
-        $newParentId = null;
-        $parentId = $resource->get('parent');
-        if ($parentId != null) {
-            $linkedParentResources = $this->getLinkedResources($parentId);
-            if (isset($linkedParentResources[$contextKey])) {
-                $newParentId = $linkedParentResources[$contextKey];
-            }
-        }
+        $newParentId = $this->getTranslatedParentId($resource, $contextKey);
         // Create new resource
         /** @var modResource $newResource */
         $newResource = $this->modx->newObject($resource->get('class_key'));
         $newResource->fromArray($resource->toArray('', true), '', false, true);
         $newResource->set('id', 0);
         $newResource->set('pagetitle', $resource->get('pagetitle') . ' ' . $this->modx->lexicon('babel.translation_pending'));
-        $newResource->set('parent', intval($newParentId));
+        $newResource->set('parent', $newParentId);
         $newResource->set('createdby', $this->modx->user->get('id'));
         $newResource->set('createdon', time());
         $newResource->set('editedby', 0);
@@ -631,6 +644,9 @@ class Babel
     {
         /** @var modResource $resource */
         $resource = $this->modx->getObject('modResource', $resourceId);
+        if (!$resource) {
+            return [];
+        }
         return $this->initBabelTv($resource);
     }
 
@@ -665,6 +681,98 @@ class Babel
     }
 
     /**
+     * Updates the Babel TV of the specified resource(s) as far as the user is allowed to. In a resource the user is not
+     * allowed to update, only links to resources the user is allowed to update are added, changed or removed.
+     *
+     * @param mixed $resourceIds id of resource or array of resource ids which should be updated.
+     * @param array $linkedResources associative array with linked resources: [contextKey] = resourceId
+     * @param array $editableIds ids of resources which count as editable, i.e. newly created ones.
+     */
+    public function updateAllowedBabelTv($resourceIds, $linkedResources, array $editableIds = [])
+    {
+        foreach ((array)$resourceIds as $resourceId) {
+            if (!$this->modx->getObject('modResource', $resourceId)) {
+                continue;
+            }
+            $newLinks = $linkedResources;
+            if (!$this->isEditable($resourceId, $editableIds)) {
+                $newLinks = $this->getLinkedResources($resourceId);
+                foreach (array_keys($newLinks + $linkedResources) as $contextKey) {
+                    $oldId = (int)($newLinks[$contextKey] ?? 0);
+                    $newId = (int)($linkedResources[$contextKey] ?? 0);
+                    if ($oldId === $newId || ($oldId && !$this->isEditable($oldId, $editableIds)) || ($newId && !$this->isEditable($newId, $editableIds))) {
+                        continue;
+                    }
+                    if ($newId) {
+                        $newLinks[$contextKey] = $newId;
+                    } else {
+                        unset($newLinks[$contextKey]);
+                    }
+                }
+            }
+            $this->updateBabelTv($resourceId, $newLinks);
+        }
+    }
+
+    /**
+     * Removes a translation from its group. The other resources of the group stay linked with each other.
+     *
+     * @param modResource $resource resource which leaves the group.
+     * @param array $linkedResources associative array with linked resources of the resource the translation is removed from.
+     * @param array $editableIds ids of resources which count as editable.
+     */
+    public function removeTranslation($resource, array $linkedResources, array $editableIds = [])
+    {
+        $resourceId = (int)$resource->get('id');
+        $groupIds = array_unique(array_map('intval', array_merge(
+            array_values($linkedResources),
+            array_values($this->getLinkedResources($resourceId))
+        )));
+        foreach (array_diff($groupIds, [$resourceId]) as $groupId) {
+            $links = $this->getLinkedResources($groupId);
+            $remainingLinks = array_diff($links, [$resourceId]);
+            if ($remainingLinks !== $links) {
+                $this->updateAllowedBabelTv($groupId, $remainingLinks, $editableIds);
+            }
+        }
+        $this->updateAllowedBabelTv($resourceId, [$resource->get('context_key') => $resourceId], $editableIds);
+    }
+
+    /**
+     * Check if the user is allowed to update at least one of the resources.
+     *
+     * @param array $resourceIds
+     * @param array $editableIds
+     * @return bool
+     */
+    public function canUpdateAny(array $resourceIds, array $editableIds = []): bool
+    {
+        foreach ($resourceIds as $resourceId) {
+            if ($this->isEditable($resourceId, $editableIds)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param int $resourceId
+     * @param array $editableIds
+     * @return bool
+     */
+    private function isEditable($resourceId, array $editableIds = []): bool
+    {
+        if (in_array((int)$resourceId, array_map('intval', $editableIds), true)) {
+            return true;
+        }
+        /** @var modResource $resource */
+        $resource = $this->modx->getObject('modResource', (int)$resourceId);
+
+        return $resource && $this->canUpdate($resource);
+    }
+
+    /**
      * Returns an associative array of the linked resources of the specified resource.
      *
      * @param int $resourceId id of resource.
@@ -688,6 +796,10 @@ class Babel
             $contextResourcePairs = explode(';', $linkedResourcesString);
             foreach ($contextResourcePairs as $contextResourcePair) {
                 $contextResourcePair = explode(':', $contextResourcePair);
+                if (count($contextResourcePair) < 2 || $contextResourcePair[0] === '') {
+                    // Skip malformed pairs
+                    continue;
+                }
                 $contextKey = $contextResourcePair[0];
                 $resourceId = intval($contextResourcePair[1]);
                 $linkedResources[$contextKey] = $resourceId;
@@ -723,7 +835,8 @@ class Babel
     {
         // Search for resource which contain a ':$resourceId' in their Babel TV
         $templateVarResources = $this->modx->getCollection('modTemplateVarResource', [
-            'value:LIKE' => '%:' . $resourceId . '%'
+            'tmplvarid' => $this->babelTv->get('id'),
+            'value:LIKE' => '%:' . intval($resourceId) . '%'
         ]);
         if (!is_array($templateVarResources)) {
             return;
@@ -734,7 +847,10 @@ class Babel
             $linkedResources = $this->decodeTranslationLinks($oldValue);
             /* array maps context keys to resource ids
              * -> search for the context key of the specified resource id */
-            $contextKey = array_search($resourceId, $linkedResources);
+            $contextKey = array_search(intval($resourceId), $linkedResources, true);
+            if ($contextKey === false) {
+                continue;
+            }
             // Sanity check, is the contextKey really a context in babel's settings?
             $changed = false;
             if ($this->getOption('restrictToGroup')) {
@@ -743,7 +859,7 @@ class Babel
                     $changed = true;
                 }
             } else {
-                if (array_key_exists($contextKey, $this->getOption('contexts'))) {
+                if (in_array($contextKey, $this->getOption('contexts'), true)) {
                     unset($linkedResources[$contextKey]);
                     $changed = true;
                 }
@@ -765,6 +881,7 @@ class Babel
     {
         // Search for resource which contain a '$contextKey:' in their Babel TV
         $templateVarResources = $this->modx->getCollection('modTemplateVarResource', [
+            'tmplvarid' => $this->babelTv->get('id'),
             'value:LIKE' => '%' . $contextKey . ':%'
         ]);
         if (!is_array($templateVarResources)) {
@@ -774,6 +891,9 @@ class Babel
             // Go through each resource and remove the link of the specified context
             $oldValue = $templateVarResource->get('value');
             $linkedResources = $this->decodeTranslationLinks($oldValue);
+            if (!array_key_exists($contextKey, $linkedResources)) {
+                continue;
+            }
             // Array maps context keys to resource ids
             unset($linkedResources[$contextKey]);
             $newValue = $this->encodeTranslationLinks($linkedResources);
@@ -785,12 +905,17 @@ class Babel
             'key' => 'babel.contextKeys'
         ]);
         if ($setting) {
-            // Remove all spaces
-            $newValue = str_replace(' ', '', $setting->get('value'));
-            // Replace context key with leading comma
-            $newValue = str_replace(',' . $contextKey, '', $newValue);
-            // Replace context key without leading comma (if still present)
-            $newValue = str_replace($contextKey, '', $newValue);
+            // Remove the exact context key from every group and drop empty groups
+            $groups = [];
+            foreach (explode(';', (string)$setting->get('value')) as $group) {
+                $keys = array_filter(array_map('trim', explode(',', $group)), static function ($key) use ($contextKey) {
+                    return $key !== '' && $key !== $contextKey;
+                });
+                if (!empty($keys)) {
+                    $groups[] = implode(',', $keys);
+                }
+            }
+            $newValue = implode(';', $groups);
             $setting->set('value', $newValue);
             if ($setting->save()) {
                 $this->modx->reloadConfig();
@@ -857,7 +982,7 @@ class Babel
             }
             if ($linkResource) {
                 $resourceUrl = '?a=resource/update&id=' . $resourceId;
-                $resourceTitle = $linkResource->get('pagetitle');
+                $resourceTitle = htmlspecialchars((string)$linkResource->get('pagetitle'), ENT_QUOTES);
             } else {
                 $resourceId = '';
                 $resourceUrl = '#';
@@ -912,6 +1037,48 @@ class Babel
     }
 
     /**
+     * Check a permission in the current context and in the access policies of another context.
+     *
+     * @param string $contextKey
+     * @param string $permission
+     * @return bool
+     */
+    public function hasContextPermission($contextKey, $permission): bool
+    {
+        $context = $this->modx->getContext($contextKey);
+
+        return $context && $this->modx->hasPermission($permission) && $context->checkPolicy($permission);
+    }
+
+    /**
+     * Check if the user is allowed to update a resource.
+     *
+     * @param modResource $resource
+     * @return bool
+     */
+    public function canUpdate($resource): bool
+    {
+        return $this->hasContextPermission($resource->get('context_key'), 'save_document') && $resource->checkPolicy('save');
+    }
+
+    /**
+     * Check if values can be synchronized to a resource. Without a logged in user (i.e. in scripts and cron jobs) there
+     * are no permissions to check.
+     *
+     * @param modResource $resource
+     * @return bool
+     */
+    private function canSynchronize($resource): bool
+    {
+        if (!$this->modx->user || !$this->modx->user->get('id') || $this->canUpdate($resource)) {
+            return true;
+        }
+        $this->modx->log(xPDO::LOG_LEVEL_ERROR, 'Resource ' . $resource->get('id') . ' in context ' . $resource->get('context_key') . ' was not synchronized, because the user is not allowed to update it.', '', 'Babel');
+
+        return false;
+    }
+
+    /**
      * @param array $syncFields
      * @param modResource $resource
      * @param modResource $linkedResource
@@ -958,7 +1125,7 @@ class Babel
                     // Update only changed TVs
                     $tv->setValue($linkedResource->get('id'), $tvValue);
                     // Collect the changes
-                    $tvChanges = [
+                    $tvChanges[] = [
                         'tvId' => $tvId,
                         'tvValue' => $tvValue,
                         'linkedId' => $linkedResource->get('id')
@@ -983,5 +1150,26 @@ class Babel
             'key' => $settingKey,
         ]);
         return ($contextSetting) ? $contextSetting->get('value') : null;
+    }
+
+    /**
+     * Get the options used by the manager scripts, so that no server paths are output in the manager
+     *
+     * @param array|null $options Options to filter instead of the class config
+     * @return array
+     */
+    public function getManagerOptions(?array $options = null): array
+    {
+        return array_intersect_key($options ?? $this->config, array_flip([
+            'assetsUrl',
+            'connectorUrl',
+            'context_key',
+            'contexts',
+            'debug',
+            'menu',
+            'modxversion',
+            'permissions',
+            'version',
+        ]));
     }
 }

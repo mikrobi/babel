@@ -19,8 +19,10 @@ const dateStr = new Date().toISOString()
 
 const copyrightRegex = new RegExp(`Copyright ${startYear}(-\\d{4})? by`, 'g');
 const copyrightReplace = `Copyright ${yearRange} by`;
-const apiRegex = new RegExp(`&copy; ${startYear}(-\\d{4})?`, 'g');
-const apiReplace = `&copy; ${yearRange}`;
+// Own copyright range: after '&copy; ' or ', ', followed by a link (or 'by' and a link) and no later year on that line.
+// This skips the ranges of previous authors, e.g. '&copy; 2015 <a>Previous Author</a>, 2015-2025 <a>Treehill Studio</a>'.
+const apiRegex = new RegExp(`(?<=&copy; |, )${startYear}(-\\d{4})?(?= (by )?<a )(?![^\\n]*\\b(19|20)\\d{2}\\b)`, 'g');
+const apiReplace = yearRange;
 const banner = `/*!\n * ${packageJson.fullname} - ${packageJson.description}\n * Version: ${packageJson.version}\n * Build date: ${dateStr}\n */\n`;
 
 let versionParts = version.split('-');
@@ -191,13 +193,13 @@ async function taskCopy() {
         ['LICENSE.md', 'core/components/babel/docs/license.md'],
         ['CHANGELOG.md', 'core/components/babel/docs/changelog.md'],
     ];
-    copyFiles.forEach(([source, destination]) => {
+    for (const [source, destination] of copyFiles) {
         if (source && destination) {
-            copyFile(source, destination);
+            await copyFile(source, destination);
         } else {
             console.warn('⚠ copyFiles: Invalid file pair detected.');
         }
-    });
+    }
 }
 
 async function taskScripts() {

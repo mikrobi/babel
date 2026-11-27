@@ -11,7 +11,6 @@ namespace mikrobi\Babel\Helper;
 use modX;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
-use mikrobi\Babel\Babel;
 
 /**
  * Class Parse
@@ -23,12 +22,6 @@ class Parse
      * @var modX $modx
      */
     public $modx;
-
-    /**
-     * A reference to the Babel instance
-     * @var Babel $babel
-     */
-    public $babel;
 
     /**
      * Template cache
@@ -55,7 +48,6 @@ class Parse
     public function __construct(modX $modx)
     {
         $this->modx =& $modx;
-        $this->babel =& $modx->babel;
     }
 
     /**

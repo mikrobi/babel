@@ -12,6 +12,7 @@ use mikrobi\Babel\Babel;
 use modObjectUpdateProcessor;
 use modX;
 use PDO;
+use xPDO;
 
 /**
  * Class ObjectUpdateProcessor
@@ -47,6 +48,18 @@ class ObjectUpdateProcessor extends modObjectUpdateProcessor
     public function getBooleanProperty($k, $default = null)
     {
         return ($this->getProperty($k, $default) === 'true' || $this->getProperty($k, $default) === true || $this->getProperty($k, $default) === '1' || $this->getProperty($k, $default) === 1);
+    }
+
+    /**
+     * {@inheritDoc}
+     * Finish the console of the multiple translations actions even if the last request failed.
+     */
+    public function failure($msg = '', $object = null)
+    {
+        if ($this->getBooleanProperty('last')) {
+            $this->modx->log(xPDO::LOG_LEVEL_INFO, 'COMPLETED');
+        }
+        return parent::failure($msg, $object);
     }
 
     /**

@@ -3,7 +3,7 @@
   "lowCaseName": "babel",
   "description": "The easy way for your multilingual site!",
   "author": "Jakob Class, Rico Goldsky, Joshua Luckers, Thomas Jakobi",
-  "version": "3.5.7",
+  "version": "3.5.8",
   "package": {
     "menus": [
       {
@@ -81,6 +81,10 @@
             {
               "name": "sortdir",
               "value": "asc"
+            },
+            {
+              "name": "outputSeparator",
+              "value": "\n"
             }
           ]
         },
@@ -197,7 +201,7 @@
     },
     {
       "name": "modx",
-      "version": ">=2.4"
+      "version": ">=2.8"
     }
   ],
   "build": {
